@@ -3,7 +3,7 @@
 @section('title', app_name() . ' | ' . __('labels.frontend.auth.register_box_title'))
 
 @section('content')
-    <div class="row justify-content-center align-items-center">
+    <div class="row justify-content-center align-items-center" style="margin-top:20px;">
         <div class="col col-sm-8 align-self-center">
             <div class="card">
                 <div class="card-header">

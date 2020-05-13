@@ -19,6 +19,7 @@
         <!-- Check if the language is set to RTL, so apply the RTL layouts -->
         <!-- Otherwise apply the normal LTR layouts -->
         {{ style(mix('css/frontend.css')) }}
+        {{ style('css/menuf.css') }}
 
         @stack('after-styles')
     </head>

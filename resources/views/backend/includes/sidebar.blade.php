@@ -83,6 +83,99 @@
                     </ul>
                 </li>
             @endif
+
+            <li class="divider"></li>
+
+            @if ($logged_in_user->isAdmin())
+                <li class="nav-title">
+                    MÓDULO COMERCIAL
+                </li>
+
+                <li class="nav-item nav-dropdown {{
+                    active_class(Route::is('admin/auth*'), 'open')
+                }}">
+                    <a class="nav-link nav-dropdown-toggle {{
+                        active_class(Route::is('admin/auth*'))
+                    }}" href="#">
+                        <i class="nav-icon far fa-user"></i>
+                        Clientes
+
+                        @if ($pending_approval > 0)
+                            <span class="badge badge-danger">{{ $pending_approval }}</span>
+                        @endif
+                    </a>
+
+                    <ul class="nav-dropdown-items">
+                        <li class="nav-item">
+                            <a class="nav-link {{
+                                active_class(Route::is('admin/clientes*'))
+                            }}" href="{{ route('admin.clientes.index') }}">
+                                Clientes
+
+                                @if ($pending_approval > 0)
+                                    <span class="badge badge-danger">{{ $pending_approval }}</span>
+                                @endif
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{
+                                active_class(Route::is('admin/contactos*'))
+                            }}" href="{{ route('admin.contacto_clientes.index') }}">
+                                Contacto clientes
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="divider"></li>
+            @endif
+
+
+            @if ($logged_in_user->isAdmin())
+                <li class="nav-title">
+                    MÓDULO PROCESOS
+                </li>
+
+                <li class="nav-item nav-dropdown {{
+                    active_class(Route::is('admin/orden_trabajos*'), 'open')
+                }}">
+                    <a class="nav-link nav-dropdown-toggle {{
+                        active_class(Route::is('admin/orden_trabajos*'))
+                    }}" href="#">
+                        <i class="nav-icon fas fa-briefcase"></i>
+                        Trabajos
+
+                        @if ($pending_approval > 0)
+                            <span class="badge badge-danger">{{ $pending_approval }}</span>
+                        @endif
+                    </a>
+
+                    <ul class="nav-dropdown-items">
+                        <li class="nav-item">
+                            <a class="nav-link {{
+                                active_class(Route::is('admin/orden_trabajos*'))
+                            }}" href="{{ route('admin.orden_trabajos.index') }}">
+                                Orden de Trabajo
+
+                                @if ($pending_approval > 0)
+                                    <span class="badge badge-danger">{{ $pending_approval }}</span>
+                                @endif
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{
+                                active_class(Route::is('admin/orden_trabajos*'))
+                            }}" href="{{ route('admin.orden_trabajos.index') }}">
+                                Tareas y procesos
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="divider"></li>
+            @endif
+
+
         </ul>
     </nav>
 
