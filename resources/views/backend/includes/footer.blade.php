@@ -2,7 +2,7 @@
     <div>
         <strong>@lang('labels.general.copyright') &copy; {{ date('Y') }}
             <a href="https://orecal.cl">
-                @lang('strings.backend.general.boilerplate_link')
+                Ingeniería y Maestranza ORECAL
             </a>
         </strong> @lang('strings.backend.general.all_rights_reserved')
     </div>
