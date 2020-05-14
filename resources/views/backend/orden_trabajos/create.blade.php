@@ -160,7 +160,7 @@
              success:function(res){               
               if(res){
                   $("#representante_id").empty();
-                  $("#representante_id").append('<option>Seleccione</option>');
+                  //$("#representante_id").append('<option>Seleccione</option>');
                   $.each(res,function(key,value){
                       $("#representante_id").append('<option value="'+key+'">'+value+'</option>');
                   });
