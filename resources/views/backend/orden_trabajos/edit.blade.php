@@ -41,6 +41,7 @@
                         {{ html()->label(__('Contacto cliente'))->class('col-md-2 form-control-label')->for('representante_id') }}
 
                         <div class="col-md-6">
+                            @if($trabajo->representante)
                                                 
                             {{ html()->text('representante_id')
                                         ->class('form-control')
@@ -48,6 +49,17 @@
                                         ->attribute('maxlength', 191)
                                         ->disabled()                                   
                                         }}
+                                        
+                            @else
+              
+                            {{ html()->text('representante_id')
+                                        ->class('form-control')
+                                        ->value('')
+                                        ->attribute('maxlength', 191)
+                                        ->disabled()                                   
+                                        }}              
+                            
+                            @endif
                                                     
                         </div>
                     </div><!--form-group--> 

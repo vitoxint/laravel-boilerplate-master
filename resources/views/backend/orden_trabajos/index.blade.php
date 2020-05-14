@@ -42,7 +42,11 @@
                             <tr>
                                 <td>{{ $trabajo->folio }}</td>
                                 <td>{{ $trabajo->cliente->razon_social }}</td>
-                                <td>{{ $trabajo->representante->nombre }}</td>
+                                <td>
+                                    @if($trabajo->representante)
+                                        {{ $trabajo->representante->nombre }}
+                                    @endif
+                                </td>
                                 <td>{{ $trabajo->usuario->last_name }} {{ $trabajo->usuario->first_name }} </td>                               
                                 <td>avance</td>
                                 <?php   $entrega_estimada = new Carbon\Carbon($trabajo->entrega_estimada); ?>
