@@ -21,8 +21,8 @@ class CreateClientesTable extends Migration
             $table->string('celular', 12)->nullable(true);
             $table->string('email')->nullable(true);
             $table->string('direccion');
-            $table->unsignedBigInteger('region_id');
-            $table->unsignedBigInteger('commune_id');
+            $table->integer('region_id')->unsigned();
+            $table->integer('commune_id')->unsigned();
             $table->string('slug');
             
             $table->string('giro_comercial')->nullable();
