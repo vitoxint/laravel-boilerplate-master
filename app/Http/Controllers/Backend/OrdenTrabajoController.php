@@ -48,7 +48,7 @@ class OrdenTrabajoController extends Controller
     {
         $this->validate($request, [
             'cliente_id' => 'required',
-            'representante_id' => 'required',
+            //'representante_id' => 'required',
             'entrega_estimada' => 'required',
         ]);
 
