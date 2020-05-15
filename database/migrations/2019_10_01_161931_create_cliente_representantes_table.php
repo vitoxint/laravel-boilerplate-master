@@ -18,7 +18,7 @@ class CreateClienteRepresentantesTable extends Migration
             $table->string('nombre');
             $table->string('funcion_representante')->nullable();
             $table->string('telefono');
-            $table->string('email'); 
+            $table->string('email')->nullable(); 
             $table->string('slug');
 
             $table->unsignedBigInteger('cliente_id');

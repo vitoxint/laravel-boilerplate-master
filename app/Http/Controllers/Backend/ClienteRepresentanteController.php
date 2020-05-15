@@ -33,6 +33,16 @@ class ClienteRepresentanteController extends Controller
         ->withClienteRepresentantes($this->clienteRepresentanteRepository->getActivePaginated(25, 'id', 'asc'));
     }
 
+    public function buscar_clientes(Request $request)
+    {
+
+        $term = $request->input('buscar');
+
+        return view('backend.contacto_clientes.index')
+            ->withClienteRepresentantes($this->clienteRepresentanteRepository->getBuscarClientesPaginated(25, 'id', 'asc',$term));
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -65,7 +75,7 @@ class ClienteRepresentanteController extends Controller
             'nombre' => 'required|unique:cliente_representantes',
             'funcion_representante' => 'required',
             'telefono' => '',
-            'email' => 'required|email|unique:cliente_representantes',
+            //'email' => 'required|email|unique:cliente_representantes',
             
         ]);
 
@@ -114,7 +124,7 @@ class ClienteRepresentanteController extends Controller
             'nombre' => 'required',
             'funcion_representante' => 'required',
             'telefono' => '',
-            'email' => 'required|email',
+            //'email' => 'required|email',
                
         ]);
 

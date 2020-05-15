@@ -35,6 +35,14 @@ class ClienteRepresentanteRepository extends BaseRepository
             ->paginate($paged);
     }
 
+    public function getBuscarClientesPaginated($paged = 25, $orderBy = 'nombre', $sort = 'asc', $term): LengthAwarePaginator
+    {
+        return $this->model
+            ->where('nombre', 'LIKE', "%{$term}%")
+            ->orderBy($orderBy, $sort)
+            ->paginate($paged);
+    }
+
     /**
      * @param int    $paged
      * @param string $orderBy

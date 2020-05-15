@@ -39,6 +39,8 @@ Route::group(['namespace' => 'ContactoCliente'], function () {
         Route::patch('/', [ClienteRepresentanteController::class, 'update'])->name('contacto_clientes.update');
         Route::delete('/', [ClienteRepresentanteController::class, 'destroy'])->name('contacto_clientes.destroy');
     });
+
+    Route::get('contacto_clientes/resultados', [ClienteRepresentanteController::class, 'buscar_clientes'])->name('contacto_clientes.buscar_contactos');
 }); 
 
 

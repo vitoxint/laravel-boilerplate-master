@@ -15,6 +15,10 @@ Breadcrumbs::for('admin.clientes.buscar_clientes', function ($trail) {
     $trail->push('Resultado de la búsqueda', route('admin.clientes.buscar_clientes'));
 });
 
+Breadcrumbs::for('admin.contacto_clientes.buscar_contactos', function ($trail) {
+    $trail->push('Resultado de la búsqueda', route('admin.contacto_clientes.buscar_contactos'));
+});
+
 Breadcrumbs::for('admin.clientes.create', function ($trail) {
     $trail->parent('admin.clientes.index', route('admin.clientes.index'));
     $trail->push('Registrar nuevo cliente', route('admin.clientes.create'));
