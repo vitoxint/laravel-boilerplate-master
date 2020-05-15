@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 
 use App\OrdenTrabajo;
+use App\ItemOt;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Repositories\Backend\Model\OrdenTrabajoRepository;
 use Illuminate\Http\Request;
@@ -154,7 +155,7 @@ class OrdenTrabajoController extends Controller
             ]
         );
 
-        return redirect()->route('admin.orden_trabajos.index')->withFlashSuccess('Orden de trabajo actualizada');
+        return redirect()->route('admin.orden_trabajos.edit',$trabajo)->withFlashSuccess('Orden de trabajo actualizada');
 
     }
 
@@ -164,8 +165,12 @@ class OrdenTrabajoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(OrdenTrabajo $trabajo)
     {
-        //
+        ItemOt::where('ot_id' ,'=', $trabajo->id)->delete();
+
+        $trabajo->delete();
+
+        return redirect()->route('admin.orden_trabajos.index')->withFlashSuccess('Orden de trabajo eliminada');
     }
 }

@@ -44,6 +44,14 @@
                                 </select>
                                                     
                         </div>
+
+                        <div class="col-md-2">
+                                                
+                            <a href="{{ route('admin.clientes.index') }}" class="btn btn-default btn-md"><i class="fas fa-plus"></i> Ir a clientes</a>
+                                                    
+                        </div>
+
+
                     </div><!--form-group--> 
 
                         <div class="form-group row">

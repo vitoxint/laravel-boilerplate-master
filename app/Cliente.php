@@ -13,7 +13,7 @@ class Cliente extends Model
     use HasSlug;
 
     protected $fillable = [
-        'rut_cliente', 'razon_social', 'telefono','celular','email','direccion','region','commune', 'region_id', 'commune_id', 'slug'
+        'rut_cliente', 'razon_social', 'telefono','celular','email','direccion','region','commune', 'region_id', 'commune_id', 'slug','giro_comercial'
     ];
 
     /**

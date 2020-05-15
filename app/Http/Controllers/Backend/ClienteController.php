@@ -150,7 +150,8 @@ class ClienteController extends Controller
             ]
         );
 
-        return redirect()->route('admin.clientes.index')->withFlashSuccess('Cliente actualizado');
+        //return redirect()->route('admin.clientes.index')->withFlashSuccess('Cliente actualizado');
+        return redirect()->route('admin.clientes.edit',$cliente)->withFlashSuccess('Cliente actualizado');
     
     }
 

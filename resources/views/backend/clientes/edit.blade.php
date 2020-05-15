@@ -130,8 +130,8 @@
                             <div class="col-md-10">
                                 {{ html()->text('giro_comercial')
                                     ->class('form-control')
-                                    ->placeholder(__('Una breve descripción de la empresa o de los productos y servicios ofrecidos'))
-                                    ->attribute('maxlength', 1024)
+                                    ->placeholder('Una breve descripción de la empresa o de los productos y servicios ofrecidos')
+                                    ->attribute('maxlength', 191)
                                      }}
                             </div><!--col-->
                         </div><!--form-group-->   
