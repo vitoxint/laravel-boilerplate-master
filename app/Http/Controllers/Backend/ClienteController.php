@@ -33,6 +33,16 @@ class ClienteController extends Controller
 
     }
 
+    public function buscar_clientes(Request $request)
+    {
+
+        $term = $request->input('buscar');
+
+        return view('backend.clientes.index')
+            ->withClientes($this->clienteRepository->getBuscarClientesPaginated(25, 'id', 'asc',$term));
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *

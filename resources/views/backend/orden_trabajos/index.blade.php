@@ -12,7 +12,7 @@
         <div class="row">
             <div class="col-sm-5">
                 <h4 class="card-title mb-0">
-                    Ordenes de Trabajo <small class="text-muted">Todos las órdenes de trabajo</small>
+                    Ordenes de Trabajo <small class="text-muted">Todas las órdenes de trabajo</small>
                 </h4>
             </div><!--col-->
 

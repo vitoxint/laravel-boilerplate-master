@@ -11,6 +11,10 @@ Breadcrumbs::for('admin.clientes.index', function ($trail) {
     $trail->push('Clientes', route('admin.clientes.index'));
 });
 
+Breadcrumbs::for('admin.clientes.buscar_clientes', function ($trail) {
+    $trail->push('Resultado de la búsqueda', route('admin.clientes.buscar_clientes'));
+});
+
 Breadcrumbs::for('admin.clientes.create', function ($trail) {
     $trail->parent('admin.clientes.index', route('admin.clientes.index'));
     $trail->push('Registrar nuevo cliente', route('admin.clientes.create'));
@@ -38,6 +42,22 @@ Breadcrumbs::for('admin.contacto_clientes.index', function ($trail) {
 
 Breadcrumbs::for('admin.orden_trabajos.index', function ($trail) {
     $trail->push('Orden Trabajos', route('admin.orden_trabajos.index'));
+});
+
+Breadcrumbs::for('admin.orden_trabajos.anuladas', function ($trail) {
+    $trail->push('Orden Trabajos Anuladas', route('admin.orden_trabajos.anuladas'));
+});
+
+Breadcrumbs::for('admin.orden_trabajos.pendientes', function ($trail) {
+    $trail->push('Orden Trabajos En Taller', route('admin.orden_trabajos.pendientes'));
+});
+
+Breadcrumbs::for('admin.orden_trabajos.entregadas', function ($trail) {
+    $trail->push('Orden Trabajos Entregadas', route('admin.orden_trabajos.entregadas'));
+});
+
+Breadcrumbs::for('admin.orden_trabajos.px_entregas', function ($trail, $dias) {
+    $trail->push('Entregas pendientes en los próximos '.$dias.' días', route('admin.orden_trabajos.px_entregas',$dias));
 });
 
 Breadcrumbs::for('admin.orden_trabajos.create', function ($trail) {

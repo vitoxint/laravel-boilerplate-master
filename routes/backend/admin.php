@@ -23,6 +23,8 @@ Route::group(['namespace' => 'Cliente'], function () {
         Route::patch('/', [ClienteController::class, 'update'])->name('clientes.update');
         Route::delete('/', [ClienteController::class, 'destroy'])->name('clientes.destroy');
     });
+
+    Route::get('clientes/resultados', [ClienteController::class, 'buscar_clientes'])->name('clientes.buscar_clientes');
 });  
 
 
@@ -51,6 +53,12 @@ Route::group(['namespace' => 'OrdenTrabajo'], function () {
         Route::patch('/', [OrdenTrabajoController::class, 'update'])->name('orden_trabajos.update');
         Route::delete('/', [OrdenTrabajoController::class, 'destroy'])->name('orden_trabajos.destroy');
     });
+
+    Route::get('orden_trabajos/pendientes', [OrdenTrabajoController::class, 'pendientes'])->name('orden_trabajos.pendientes');
+    Route::get('orden_trabajos/entregadas', [OrdenTrabajoController::class, 'entregadas'])->name('orden_trabajos.entregadas');
+    Route::get('orden_trabajos/anuladas', [OrdenTrabajoController::class, 'anuladas'])->name('orden_trabajos.anuladas');
+
+    Route::get('orden_trabajos/{dias}', [OrdenTrabajoController::class, 'px_entregas'])->name('orden_trabajos.px_entregas');
 });  
 
 

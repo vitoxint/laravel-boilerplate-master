@@ -25,7 +25,35 @@ class OrdenTrabajoController extends Controller
     {
 
         return view('backend.orden_trabajos.index')
-        ->withOrdenTrabajos($this->ordenTrabajoRepository->getActivePaginated(25, 'id', 'asc'));
+        ->withOrdenTrabajos($this->ordenTrabajoRepository->getActivePaginated(25, 'id', 'desc'));
+    }
+
+    public function anuladas()
+    {
+
+        return view('backend.orden_trabajos.index')
+        ->withOrdenTrabajos($this->ordenTrabajoRepository->getAnuladasPaginated(25, 'id', 'desc'));
+    }
+
+
+    public function entregadas()
+    {
+
+        return view('backend.orden_trabajos.index')
+        ->withOrdenTrabajos($this->ordenTrabajoRepository->getPendientesPaginated(25, 'id', 'desc'));
+    }
+
+    public function pendientes()
+    {
+        return view('backend.orden_trabajos.index')
+        ->withOrdenTrabajos($this->ordenTrabajoRepository->getEntregadasPaginated(25, 'entrega_estimada', 'ASC'));
+    }
+
+    public function px_entregas($dias)
+    {
+
+        return view('backend.orden_trabajos.index')
+        ->withOrdenTrabajos($this->ordenTrabajoRepository->getProximasEntregasPaginated(25, 'entrega_estimada', 'ASC', $dias));
     }
 
     /**
