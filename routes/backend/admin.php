@@ -5,6 +5,8 @@ use App\Http\Controllers\Backend\ClienteController;
 use App\Http\Controllers\Backend\ClienteRepresentanteController;
 use App\Http\Controllers\Backend\OrdenTrabajoController;
 use App\Http\Controllers\Backend\ItemOtController;
+use App\Http\Controllers\Backend\ImagenItemOtController;
+
 
 // All route names are prefixed with 'admin.'.
 Route::redirect('/', '/admin/dashboard', 301);
@@ -75,6 +77,20 @@ Route::group(['namespace' => 'ItemOt'], function () {
         Route::get('edit', [ItemOtController::class, 'edit'])->name('item_ots.edit');
         Route::patch('/', [ItemOtController::class, 'update'])->name('item_ots.update');
         Route::delete('/', [ItemOtController::class, 'destroy'])->name('item_ots.destroy');
+    });
+}); 
+
+Route::group(['namespace' => 'ImagenItemOt'], function () {
+    
+    //Route::get('item_ots', [ItemOtController::class, 'index'])->name('item_ots.index');
+    //Route::get('item_ots/{trabajo}/create', [ItemOtController::class, 'create'])->name('item_ots.create');
+    //Route::post('imagen_item_ots/{item_ot}', [ImagenItemOtController::class, 'store'])->name('imagen_itemot.store');
+    Route::post('imagen_item_ots', [ImagenItemOtController::class, 'store'])->name('imagen_itemot.store');
+
+    Route::group(['prefix' => 'imagen_item_ots/{imagen}'], function () {
+        //Route::get('edit', [ItemOtController::class, 'edit'])->name('item_ots.edit');
+        //Route::patch('/', [ItemOtController::class, 'update'])->name('item_ots.update');
+        Route::delete('/', [ImagenItemOtController::class, 'destroy'])->name('imagen_itemot.destroy');
     });
 }); 
 

@@ -28,5 +28,9 @@ class ItemOt extends Model
         
         return $this->belongsTo('App\OrdenTrabajo', 'ot_id', 'id');
     }
+
+    public function imagenes(){
+        return $this->hasMany('App\ImagenItemOt','itemot_id','id');
+    }
     
 }
