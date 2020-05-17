@@ -38,7 +38,7 @@ class ImagenItemOtController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request/* , ItemOt $item_ot  */)
+    public function store(Request $request )
     {
     /*     $this->validate($request, [
                        
@@ -62,17 +62,34 @@ class ImagenItemOtController extends Controller
 
      
             return back()->withFlashSuccess('Imagen registrada correctamente'); */
-
             //$file = $request->file->getClientOriginalName();
             $imageName = request()->file->getClientOriginalName();
+            $extension = request()->file->getExtension();
+            $mime = request()->file->getClientMimeType();
+            $size = request()->file->getSize();
 
+            $type ='';
+            $cadena = $mime;
+            $array = explode("/", $mime);
+            if($array[0] == 'application'){
+                $type = $array[1];
+            }else{
+                $type = $array[0];
+            }
+               
             //request()->file->move(public_path('upload'), $imageName);
-            request()->file->store('/imagenes_itemot', 'public');
+            $name = request()->file->store('/imagenes_itemot/'.$imageName, 'public');
+
+            $imagen= ImagenItemOt::create([
+
+                'url' => $name,
+                'extension' => $type,
+                'size' => $size,
+                'itemot_id'  => $request->input('itemot_id'),                 
+            ]); 
     
-    
-            return response()->json(['uploaded' => '/imagenes_itemot/'.$imageName]);
-    
-        
+           
+            return response()->json(['uploaded' => $name]);
 
     }
 
@@ -116,11 +133,18 @@ class ImagenItemOtController extends Controller
      * @param  \App\ImagenItemOt  $imagenItemOt
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ImagenItemOt $imagen)
+    public function destroy(/* ImagenItemOt $imagen */ Request $request)
     {
-        Storage::disk('public')->delete($imagen->url);   
-        $imagen->delete();
 
-        return back()->withFlashSuccess('Imagen eliminada correctamente');
+       $key= $request->key;
+       $imagen = ImagenItemOt::find($key);
+       Storage::disk('public')->delete($imagen->url);
+       $imagen->delete();
+        
+       echo 0;  
+
+    //return json_encode(array('success' => true, 'somedata' => "somedata"));
+
+      
     }
 }

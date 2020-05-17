@@ -8,7 +8,7 @@ class ImagenItemOt extends Model
 {
 
     protected $fillable = [
-        'url','itemot_id','ot_id',
+        'url','itemot_id','ot_id','extension','size'
     ];
 
     /**

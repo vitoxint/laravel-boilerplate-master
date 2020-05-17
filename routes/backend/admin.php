@@ -85,16 +85,21 @@ Route::group(['namespace' => 'ImagenItemOt'], function () {
     //Route::get('item_ots', [ItemOtController::class, 'index'])->name('item_ots.index');
     //Route::get('item_ots/{trabajo}/create', [ItemOtController::class, 'create'])->name('item_ots.create');
     //Route::post('imagen_item_ots/{item_ot}', [ImagenItemOtController::class, 'store'])->name('imagen_itemot.store');
-    Route::post('imagen_item_ots', [ImagenItemOtController::class, 'store'])->name('imagen_itemot.store');
+    //Route::post('imagen_item_ots', [ImagenItemOtController::class, 'store'])->name('imagen_itemot.store');
+    //Route::post('imagen_item_ots', [ImagenItemOtController::class, 'store'])->name('imagen_itemot.store');
 
-    Route::group(['prefix' => 'imagen_item_ots/{imagen}'], function () {
+    
+
+    Route::group(['prefix' => 'imagen_item_ots'], function () {
         //Route::get('edit', [ItemOtController::class, 'edit'])->name('item_ots.edit');
         //Route::patch('/', [ItemOtController::class, 'update'])->name('item_ots.update');
-        Route::delete('/', [ImagenItemOtController::class, 'destroy'])->name('imagen_itemot.destroy');
+       // Route::delete('/destroy', [ImagenItemOtController::class, 'destroy'])->name('imagen_itemot.destroy');
     });
 }); 
 
+Route::post('imagen_item_ots', 'ImagenItemOtController@store')->name('imagen_itemot.store');
 
+Route::post('imagen_item_ots/destroy', 'ImagenItemOtController@destroy')->name('imagen_itemot.destroy');
 
 Route::get('get-commune-list', 'CommuneController@getCommuneList')->name('get-commune-list');
 Route::get('get-contactos-list', 'ClienteRepresentanteController@getContactoList')->name('get-contactos-list');

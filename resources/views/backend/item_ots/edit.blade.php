@@ -4,7 +4,8 @@
 
 @section('content')
 
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet">
+<meta name="csrf-token" content="{{ csrf_token() }}" />
+
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.7/css/fileinput.css" media="all" rel="stylesheet" type="text/css"/>
 
@@ -156,83 +157,18 @@
                     <div class="col-sm-5">
                         <h4 class="card-title mb-0">
                             
-                            <small class="text-muted">Galería de imágenes</small>
+                            <small class="text-muted">Galería de Archivos Adjuntos</small>
                         </h4>
                     </div><!--col-->
                 </div><!--row-->
                 <hr>
 
-            {{ html()->form('POST', route('admin.imagen_itemot.store',$item_ot))->class('form-horizontal')->acceptsFiles()->open() }}
-                
-                    <div class="row mt-2 mb-0">
-                        <div class="col">
-                            <div class="form-group row">
-                            {{ html()->label(__('Agregar Imagen :'))->class('col-md-2 form-control-label')->for('url') }}
-
-                                <div class="col-md-6">
-                                                                
-                                <input name="url" id="url" type="file" accept="image/*" class="form-control" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])">
-                                <img id="output" src="" width="auto" height="100">
-                                </div><!--col-->
-                            </div><!--form-group-->          
-
-                        </div><!--col-->
-                    </div><!--row-->
-
-                    <div class="row">
-                        <div class="col">
-                            {{ form_cancel(route('admin.orden_trabajos.edit',$trabajo), __('buttons.general.cancel')) }}
-                    
-                            {{ form_submit(__('Agregar imagen')) }}
-                        </div><!--col-->
-                        {{ html()->form()->close() }}
-                    </div><!--row-->
-
-                    <hr>
-                    <div class="row">
-                        <div class="col-sm-5">
-                            <h4 class="card-title mb-0">
-                                
-                                <small class="text-muted">Imágenes</small>
-                            </h4>
-                        </div><!--col-->
-                    </div><!--row-->
-                    <hr>
-
-                    <div class="row">
-                        @foreach($item_ot->imagenes as $imagen)
-                        <div class="col-md-4">
-                            <div class="row">
-                                <div class="col">
-                            @include('backend.item_ots.includes.actions_imagen', ['imagen' => $imagen])
-                            </div>
-                            </div>
-                            <a href="{{asset('storage/' . $imagen->url)}}" target="_blank">                              
-                            <div class="card bg-dark text-white">
-                            
-                            <img class="card-img" src="{{asset('storage/' . $imagen->url)}}" alt="Card image">
-                                <div class="card-img-overlay d-flex flex-column">
-                                    <h5 class="card-title"></h5>
-                                    <h3 class="card-text font-weight-bold"><span class="mr-auto"></span></h3>
-                                    <div class="mt-auto"></div>
-                                </div>
-                            </div>
-                            </a>
-
-                        </div>
-                        @endforeach
-
-                
-                    </div>    
-
-                    <hr>
-
                     <div class="row">
 
-                        <div class="col-lg-8 col-sm-12 col-11 main-section">
+                        <div class="col-lg-12 col-sm-12 col-12 main-section">
                            
                                 {!! csrf_field() !!}
-
+                                <input type="hidden" name="_token" value="{{csrf_token()}}">
                                 <div class="form-group">
 
                                     <div class="file-loading">
@@ -285,33 +221,146 @@ $('#valor_unitario').on('change', function() {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.7/js/locales/es.min.js" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" type="text/javascript"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.0.11/purify.min.js" type="text/javascript"></script>
+
+
 
 <script type="text/javascript">
 
+var urls = [];
+    <?php foreach($item_ot->imagenes as $imagen){ ?>
+          urls.push("<?php echo asset('storage/' . $imagen->url);?>");
+          
+    <?php } ?>
+
     $("#file-1").fileinput({
+        headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
         theme: 'fa',
-        uploadUrl: "{{route('admin.imagen_itemot.store')}}",
-        //"{{ route('admin.get-commune-list') }}?region_id=" + $(this).val(),
+        showCaption: true,
+        showPreview: true,
+        showUpload: true,
+        showRemove: false,
+        
+        initialPreview: urls,
+        initialPreviewFileType: 'image', // image is the default and can be overridden in config below
+        //previewFileType: 'any',
+        initialPreviewAsData: true,
+       
+        initialPreviewConfig: [
+
+            <?php foreach($item_ot->imagenes as $imagen){ ?>
+             <?php 
+                $infoPath = pathinfo(asset('storage/'. $imagen->url));
+                $extension = $infoPath['extension']; 
+             ?>
+
+             { type: "<?php echo $imagen->extension;?>" , size: "<?php echo $imagen->size;?>",  caption: "<?php echo $imagen->url;?>", url: "{{route('admin.imagen_itemot.destroy')}}?key="+"<?php echo $imagen->id;?>"  , downloadUrl:"<?php echo asset('storage/'. $imagen->url);?>" , key: "<?php echo $imagen->id;?>" ,extra: {id:"<?php echo $imagen->id;?>"} },
+            
+            <?php } ?>
+        ],
+        uploadUrl: "{{route('admin.imagen_itemot.store')}}?itemot_id=" + "<?php echo $item_ot->id; ?>" ,
         uploadExtraData: function() {
             return {
                 _token: $("input[name='_token']").val(),
 
             };
         },
+       
+         initialPreviewShowDelete:true,
+         deleteUrl: "{{route('admin.imagen_itemot.destroy')}}",
 
-        allowedFileExtensions: ['jpg', 'png', 'gif','txt','sql','pdf','xlsx'],
+
+        allowedFileExtensions: ['jpg', 'png', 'gif','txt','sql','pdf','xlsx','docx'],
         overwriteInitial: false,
-        maxFileSize:2000,
-        maxFilesNum: 10,
+        maxFileSize:10000000000,
+        maxFilesNum: 100,
         language : 'es',
+        fileType: "any",
+
         slugCallback: function (filename) {
 
         return filename.replace('(', '_').replace(']', '_');
 
-        }
+        },
+        purifyHtml: true,
 
+
+       /*  preferIconicPreview: true, // this will force thumbnails to display icons for following file extensions
+        previewFileIconSettings: { // configure your icon file extensions
+            'doc': '<i class="fas fa-file-word text-primary"></i>',
+            'xls': '<i class="fas fa-file-excel text-success"></i>',
+            'ppt': '<i class="fas fa-file-powerpoint text-danger"></i>',
+            'pdf': '<i class="fas fa-file-pdf text-danger"></i>',
+            'zip': '<i class="fas fa-file-archive text-muted"></i>',
+            'htm': '<i class="fas fa-file-code text-info"></i>',
+            'txt': '<i class="fas fa-file-alt text-info"></i>',
+            'mov': '<i class="fas fa-file-video text-warning"></i>',
+            'mp3': '<i class="fas fa-file-audio text-warning"></i>',
+            // note for these file types below no extension determination logic 
+            // has been configured (the keys itself will be used as extensions)
+            'jpg': '<i class="fas fa-file-image text-danger"></i>', 
+            'gif': '<i class="fas fa-file-image text-muted"></i>', 
+            'png': '<i class="fas fa-file-image text-primary"></i>'    
+        },
+        previewFileExtSettings: { // configure the logic for determining icon file extensions
+            'image': function(ext) {
+                return ext.match(/(png|jpg|jpeg|gif)$/i);
+            },         
+         
+            'doc': function(ext) {
+                return ext.match(/(doc|docx)$/i);
+            },
+            'xls': function(ext) {
+                return ext.match(/(xls|xlsx)$/i);
+            },
+            'ppt': function(ext) {
+                return ext.match(/(ppt|pptx)$/i);
+            },
+            'zip': function(ext) {
+                return ext.match(/(zip|rar|tar|gzip|gz|7z)$/i);
+            },
+            'htm': function(ext) {
+                return ext.match(/(htm|html)$/i);
+            },
+            'txt': function(ext) {
+                return ext.match(/(txt|ini|csv|java|php|js|css)$/i);
+            },
+            'mov': function(ext) {
+                return ext.match(/(avi|mpg|mkv|mov|mp4|3gp|webm|wmv)$/i);
+            },
+            'mp3': function(ext) {
+                return ext.match(/(mp3|wav)$/i);
+            }
+        } */
+
+    }).on('filebeforedelete', function() {
+        var aborted = !window.confirm('¿ Está seguro que desea eliminar este elemento ?');
+        if (aborted) {
+            window.alert('Operacion abortada! ' + krajeeGetCount('file-5'));
+        };
+        return aborted;
+    }).on('filedeleted', function() {
+        setTimeout(function() {
+
+
+            window.alert('¿Se ha eliminado el elemento! ' + krajeeGetCount('file-5'));
+        }, 900);
     });
 
+
+
+    
+
+</script>
+
+<script type="text/javascript">
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
 </script>
 
 

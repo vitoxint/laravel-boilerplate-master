@@ -19,6 +19,7 @@
         "facade/ignition": "^1.11",
         "fideloper/proxy": "^4.0",
         "freshwork/chilean-bundle": "^2.1",
+        "kartik-v/bootstrap-fileinput": "@dev",
         "lab404/laravel-impersonate": "^1.4",
         "langleyfoxall/laravel-nist-password-rules": "^4.0",
         "laravel/framework": "^6.3",
