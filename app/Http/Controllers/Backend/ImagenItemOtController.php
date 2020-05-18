@@ -78,12 +78,13 @@ class ImagenItemOtController extends Controller
             }
                
             //request()->file->move(public_path('upload'), $imageName);
-            $name = request()->file->store('/imagenes_itemot/'.$imageName, 'public');
+            $name = request()->file->store('/imagenes_itemot/', 'public');
 
             $imagen= ImagenItemOt::create([
 
                 'url' => $name,
                 'extension' => $type,
+                'image_name' => $imageName,
                 'size' => $size,
                 'itemot_id'  => $request->input('itemot_id'),                 
             ]); 

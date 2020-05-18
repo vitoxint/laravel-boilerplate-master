@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UpdateFileItemOtTable extends Migration
+class AddImagenameToImagenitemot extends Migration
 {
     /**
      * Run the migrations.
@@ -15,11 +15,10 @@ class UpdateFileItemOtTable extends Migration
     {
         Schema::table('imagen_item_ots', function($table)
         {
-            $table->string('extension')->after('url');
-            $table->integer('size')->after('extension');
+            //$table->string('extension')->after('url');
+            //$table->integer('size')->after('extension');
             $table->string('image_name')->after('extension');
         });
-
     }
 
     /**
@@ -29,6 +28,6 @@ class UpdateFileItemOtTable extends Migration
      */
     public function down()
     {
-        //
+        
     }
 }
