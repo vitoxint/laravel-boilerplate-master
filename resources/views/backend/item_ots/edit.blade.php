@@ -6,7 +6,7 @@
 
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 
-
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.7/css/fileinput.css" media="all" rel="stylesheet" type="text/css"/>
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" media="all" rel="stylesheet" type="text/css"/>
@@ -15,7 +15,9 @@
     .fileinput-remove,
     .fileinput-upload{
         display: none;
-    }
+
+    },
+    
 
 </style>
 
@@ -220,7 +222,7 @@ $('#valor_unitario').on('change', function() {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.7/themes/fa/theme.js" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.7/js/locales/es.min.js" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" type="text/javascript"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.0.11/purify.min.js" type="text/javascript"></script>
 
 
@@ -267,6 +269,7 @@ var urls = [];
 
             };
         },
+        
        
          initialPreviewShowDelete:true,
          deleteUrl: "{{route('admin.imagen_itemot.destroy')}}",
@@ -285,6 +288,8 @@ var urls = [];
 
         },
         purifyHtml: true,
+
+        
 
 
        /*  preferIconicPreview: true, // this will force thumbnails to display icons for following file extensions
@@ -362,8 +367,6 @@ $.ajaxSetup({
     }
 });
 </script>
-
-
 
 
 @endsection

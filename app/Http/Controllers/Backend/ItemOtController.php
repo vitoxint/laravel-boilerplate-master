@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 
 use App\ItemOt;
 use App\OrdenTrabajo;
+use App\ImagenItemOt;
 use DB;
 use Carbon\Carbon;
 
@@ -217,8 +218,13 @@ class ItemOtController extends Controller
         $trabajo->update(
             [    
             'valor_total' => $trabajo->valor_total - $item_ot->valor_parcial,        
-            ]);        
-        
+            ]);   
+            
+        foreach($item_ot->imagenes() as $imagen){
+            Storage::disk('public')->delete($imagen->url);
+            $imagen->delete();           
+        }
+
         $item_ot->delete();
 
         return redirect()->route('admin.orden_trabajos.edit',$trabajo)->withFlashSuccess('Se ha eliminado el ítem');
