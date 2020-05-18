@@ -231,7 +231,10 @@ $('#valor_unitario').on('change', function() {
 
 var urls = [];
     <?php foreach($item_ot->imagenes as $imagen){ ?>
-          urls.push("<?php echo url('storage/' . $imagen->url);?>");
+          urls.push("<?php echo asset('storage/' . $imagen->url);?>");
+
+          
+         // $image->url_path
           
     <?php } ?>
 

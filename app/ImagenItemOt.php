@@ -25,4 +25,8 @@ class ImagenItemOt extends Model
         return $this->belongsTo('App\ItemOt' , 'itemot_id','id');
     }
 
+    public function getUrlPathAttribute(){
+        return \Storage::url($this->url);
+    }
+
 }
