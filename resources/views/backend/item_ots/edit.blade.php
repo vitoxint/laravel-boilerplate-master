@@ -231,7 +231,7 @@ $('#valor_unitario').on('change', function() {
 
 var urls = [];
     <?php foreach($item_ot->imagenes as $imagen){ ?>
-          urls.push("<?php echo asset('storage/' . $imagen->url);?>");
+          urls.push("<?php echo url('storage/' . $imagen->url);?>");
           
     <?php } ?>
 
@@ -258,7 +258,7 @@ var urls = [];
                 $extension = $infoPath['extension']; 
              ?>
 
-             { type: "<?php echo $imagen->extension;?>" , size: "<?php echo $imagen->size;?>",  caption: "<?php echo $imagen->image_name;?>", url: "{{route('admin.imagen_itemot.destroy')}}?key="+"<?php echo $imagen->id;?>"  , downloadUrl:"<?php echo asset('storage/'. $imagen->url);?>" , key: "<?php echo $imagen->id;?>" ,extra: {id:"<?php echo $imagen->id;?>"} },
+             { type: "<?php echo $imagen->extension;?>" , size: "<?php echo $imagen->size;?>",  caption: "<?php echo $imagen->image_name;?>", url: "{{route('admin.imagen_itemot.destroy')}}?key="+"<?php echo $imagen->id;?>"  , downloadUrl:"<?php echo url('storage/'. $imagen->url);?>" , key: "<?php echo $imagen->id;?>" ,extra: {id:"<?php echo $imagen->id;?>"} },
             
             <?php } ?>
         ],
