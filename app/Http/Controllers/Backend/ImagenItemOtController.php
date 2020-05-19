@@ -68,16 +68,18 @@ class ImagenItemOtController extends Controller
             $mime = request()->file->getClientMimeType();
             $size = request()->file->getSize();
 
-            $type ='';
+            $type ='other';
             $cadena = $mime;
-            $array = explode("/", $mime);
-            if($array[0] == 'application'){
+            $array = explode('/', $mime);
+            if($array[0] === 'application'){
                 $type = $array[1];
-            }else{
+            
+            }
+            if($array[0] === 'image'){
                 $type = $array[0];
             }
-               
-            //request()->file->move(public_path('upload'), $imageName);
+
+
             $name = request()->file->store('/imagenes_itemot/', 'public');
 
             $imagen= ImagenItemOt::create([
@@ -88,11 +90,38 @@ class ImagenItemOtController extends Controller
                 'size' => $size,
                 'itemot_id'  => $request->input('itemot_id'),                 
             ]); 
+
+            if(($imagen->extension != "image")||($imagen->extension != "pdf")){
+                $imagen->update(
+                    [
+                        'extension' => "other",
+                    ]
+                    );
+            }
     
            
             return response()->json(['uploaded' => $name]);
 
+
+
     }
+
+    
+
+    public function display(Request $request)
+
+{
+
+    //$path = storage_public($filename);
+
+    $key= $request->key;
+    $imagen = ImagenItemOt::find($key);
+
+    $contents = Storage::get($imagen->url);
+
+    return $contents;
+
+}
 
     /**
      * Display the specified resource.

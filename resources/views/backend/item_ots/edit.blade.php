@@ -224,6 +224,8 @@ $('#valor_unitario').on('change', function() {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" type="text/javascript"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.0.11/purify.min.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.7.7/xlsx.core.min.js"></script>
+
 
 
 
@@ -232,10 +234,7 @@ $('#valor_unitario').on('change', function() {
 var urls = [];
     <?php foreach($item_ot->imagenes as $imagen){ ?>
           urls.push("<?php echo asset('storage/' . $imagen->url);?>");
-
-          
-         // $image->url_path
-          
+                   
     <?php } ?>
 
     $("#file-1").fileinput({
@@ -250,7 +249,6 @@ var urls = [];
         
         initialPreview: urls,
         initialPreviewFileType: 'image', // image is the default and can be overridden in config below
-        //previewFileType: 'any',
         initialPreviewAsData: true,
        
         initialPreviewConfig: [
@@ -261,7 +259,7 @@ var urls = [];
                 $extension = $infoPath['extension']; 
              ?>
 
-             { type: "<?php echo $imagen->extension;?>" , size: "<?php echo $imagen->size;?>",  caption: "<?php echo $imagen->image_name;?>", url: "{{route('admin.imagen_itemot.destroy')}}?key="+"<?php echo $imagen->id;?>"  , downloadUrl:"<?php echo url('storage/'. $imagen->url);?>" , key: "<?php echo $imagen->id;?>" ,extra: {id:"<?php echo $imagen->id;?>"} },
+             { type: "<?php echo $imagen->extension;?>" , size: "<?php echo $imagen->size;?>",  caption: "<?php echo $imagen->image_name;?>", url: "{{route('admin.imagen_itemot.destroy')}}?key="+"<?php echo $imagen->id;?>"  , downloadUrl:"<?php echo asset('storage/'. $imagen->url);?>" , key: "<?php echo $imagen->id;?>" ,extra: {id:"<?php echo $imagen->id;?>"} },
             
             <?php } ?>
         ],
@@ -278,7 +276,7 @@ var urls = [];
          deleteUrl: "{{route('admin.imagen_itemot.destroy')}}",
 
 
-        allowedFileExtensions: ['jpg', 'png', 'gif','txt','sql','pdf','xlsx','docx'],
+        allowedFileExtensions: ['jpg','jpeg','svg','png', 'gif','txt','sql','pdf','xlsx','docx','pptx','dxf','dwg'],
         overwriteInitial: false,
         maxFileSize:10000000000,
         maxFilesNum: 100,
@@ -295,22 +293,23 @@ var urls = [];
         
 
 
-       /*  preferIconicPreview: true, // this will force thumbnails to display icons for following file extensions
+         preferIconicPreview: true, // this will force thumbnails to display icons for following file extensions
         previewFileIconSettings: { // configure your icon file extensions
             'doc': '<i class="fas fa-file-word text-primary"></i>',
             'xls': '<i class="fas fa-file-excel text-success"></i>',
             'ppt': '<i class="fas fa-file-powerpoint text-danger"></i>',
-            'pdf': '<i class="fas fa-file-pdf text-danger"></i>',
+            //'pdf': '<i class="fas fa-file-pdf text-danger"></i>',
             'zip': '<i class="fas fa-file-archive text-muted"></i>',
             'htm': '<i class="fas fa-file-code text-info"></i>',
-            'txt': '<i class="fas fa-file-alt text-info"></i>',
+            //'txt': '<i class="fas fa-file-alt text-info"></i>',
             'mov': '<i class="fas fa-file-video text-warning"></i>',
             'mp3': '<i class="fas fa-file-audio text-warning"></i>',
+            'dwg': '<i class="fas fa-pencil-ruler text-secondary"></i>'
             // note for these file types below no extension determination logic 
             // has been configured (the keys itself will be used as extensions)
-            'jpg': '<i class="fas fa-file-image text-danger"></i>', 
-            'gif': '<i class="fas fa-file-image text-muted"></i>', 
-            'png': '<i class="fas fa-file-image text-primary"></i>'    
+            //'jpg': '<i class="fas fa-file-image text-danger"></i>', 
+            //'gif': '<i class="fas fa-file-image text-muted"></i>', 
+            //'png': '<i class="fas fa-file-image text-primary"></i>'    
         },
         previewFileExtSettings: { // configure the logic for determining icon file extensions
             'image': function(ext) {
@@ -340,8 +339,11 @@ var urls = [];
             },
             'mp3': function(ext) {
                 return ext.match(/(mp3|wav)$/i);
+            },
+            'dwg': function(ext) {
+                return ext.match(/(dwg|dxf)$/i);
             }
-        } */
+        } 
 
     }).on('filebeforedelete', function() {
         var aborted = !window.confirm('¿ Está seguro que desea eliminar este elemento ?');
