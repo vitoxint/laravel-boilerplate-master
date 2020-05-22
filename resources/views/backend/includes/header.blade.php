@@ -4,7 +4,7 @@
     </button>
     <a class="navbar-brand" href="#">
         <img class="navbar-brand-full" src="{{ asset('img/backend/brand/marca.png') }}" width="110" height="40" alt="CoreUI Logo">
-        <img class="navbar-brand-minimized" src="{{ asset('img/backend/brand/sygnet.svg') }}" width="30" height="30" alt="CoreUI Logo">
+        <img class="navbar-brand-minimized" src="{{ asset('img/backend/brand/dark-blue-cog.png') }}" width="30" height="30" alt="CoreUI Logo">
     </a>
     <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
         <span class="navbar-toggler-icon"></span>

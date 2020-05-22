@@ -6,6 +6,7 @@ use App\Http\Controllers\Backend\ClienteRepresentanteController;
 use App\Http\Controllers\Backend\OrdenTrabajoController;
 use App\Http\Controllers\Backend\ItemOtController;
 use App\Http\Controllers\Backend\ImagenItemOtController;
+use App\Http\Controllers\Backend\CotizacionController;
 
 
 // All route names are prefixed with 'admin.'.
@@ -64,6 +65,26 @@ Route::group(['namespace' => 'OrdenTrabajo'], function () {
 
     Route::get('orden_trabajos/{dias}', [OrdenTrabajoController::class, 'px_entregas'])->name('orden_trabajos.px_entregas');
 });  
+
+
+
+Route::group(['namespace' => 'Cotizacion'], function () {
+    
+    Route::get('cotizaciones', [CotizacionController::class, 'index'])->name('cotizaciones.index');
+    Route::get('cotizaciones/create', [CotizacionController::class, 'create'])->name('cotizaciones.create');
+    Route::post('cotizaciones', [CotizacionController::class, 'store'])->name('cotizaciones.store');
+
+    Route::group(['prefix' => 'cotizaciones/{cotizacion}'], function () {
+        Route::get('edit', [CotizacionController::class, 'edit'])->name('cotizaciones.edit');
+        Route::patch('/', [CotizacionController::class, 'update'])->name('cotizaciones.update');
+        Route::delete('/', [CotizacionController::class, 'destroy'])->name('cotizaciones.destroy');
+    });
+
+    Route::get('cotizaciones/vigentes', [CotizacionController::class, 'pendientes'])->name('orden_trabajos.vigentes');
+    Route::get('cotizaciones/aceptadas', [CotizacionController::class, 'entregadas'])->name('orden_trabajos.aceptadas');
+    Route::get('cotizaciones/vencidas', [CotizacionController::class, 'anuladas'])->name('orden_trabajos.vencidas');
+
+}); 
 
 
 

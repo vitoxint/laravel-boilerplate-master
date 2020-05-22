@@ -23,9 +23,9 @@
 
         <div class="row mt-4">
             <div class="col">
-                <div class="table-responsive" id="no-more-tables">
-                    <table class="table col-sm-12 table-bordered table-striped table-condensed cf">
-                        <thead class="cf">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
                         <tr>
                              <th>Folio</th>
                              <th>Cliente</th>

@@ -234,9 +234,9 @@
 
                 <div class="row mt-4">
                     <div class="col">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
+                    <div class="table-responsive" id="no-more-tables">
+                    <table class="table col-sm-12 table-bordered table-striped table-condensed cf">
+                        <thead class="cf">
                                 <tr>
                                     <th>Folio</th>
                                     <th>Cantidad</th>
