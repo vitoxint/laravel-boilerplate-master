@@ -68,14 +68,14 @@ class ImagenItemOtController extends Controller
             $mime = request()->file->getClientMimeType();
             $size = request()->file->getSize();
 
-            $type ='other';
+            $type ='';
             $cadena = $mime;
             $array = explode('/', $mime);
-            if($array[0] === 'application'){
+            if($array[0] == 'application'){
                 $type = $array[1];
             
             }
-            if($array[0] === 'image'){
+            if($array[0] == 'image'){
                 $type = $array[0];
             }
 
@@ -91,7 +91,7 @@ class ImagenItemOtController extends Controller
                 'itemot_id'  => $request->input('itemot_id'),                 
             ]); 
 
-            if(($imagen->extension != "image")||($imagen->extension != "pdf")){
+            if(($imagen->extension != "image")&&($imagen->extension != "pdf")){
                 $imagen->update(
                     [
                         'extension' => "other",
