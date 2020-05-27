@@ -40,12 +40,12 @@
                         <tbody>
                         @foreach($clientes as $cliente)
                             <tr>
-                                <td>{{ $cliente->razon_social }}</td>
-                                <td>{{ $cliente->rut_cliente }}</td>
-                                <td>{{ $cliente->direccion }}</td>                               
-                                <td>{{ $cliente->commune->name}}</td>
-                                <td>{{ $cliente->telefono }} - {{ $cliente->celular }} </td>
-                                <td class="btn-td">@include('backend.clientes.includes.actions', ['cliente' => $cliente])</td>
+                                <td data-title="Razón social:">{{ $cliente->razon_social }}</td>
+                                <td data-title="RUT Cliente:">{{ $cliente->rut_cliente }}</td>
+                                <td data-title="Dirección:">{{ $cliente->direccion }}</td>                               
+                                <td data-title="Ciudad:">{{ $cliente->commune->name}}</td>
+                                <td data-title="Teléfono:">{{ $cliente->telefono }} - {{ $cliente->celular }} </td>
+                                <td class="btn-td" data-title="Acciones:">@include('backend.clientes.includes.actions', ['cliente' => $cliente])</td>
                             </tr>
                         @endforeach
                         </tbody>

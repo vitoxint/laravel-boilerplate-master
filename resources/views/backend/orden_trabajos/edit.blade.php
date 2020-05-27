@@ -243,7 +243,7 @@
                                     <th>Descripcion</th>                                   
                                     <th>Val. Unitario</th>
                                     <th>Val. Parcial</th>
-                                    <th>Avance</th>
+                                    <!-- <th>Avance</th> -->
                                     <th>Estado</th>       
                                     <th>@lang('labels.general.actions')</th>
                                 </tr>
@@ -251,14 +251,14 @@
                                 <tbody>
                                 @foreach($trabajo->items_ot as $item_ot)
                                     <tr>
-                                        <td>{{ $item_ot->folio }}</td>
-                                        <td>{{ $item_ot->cantidad }}</td>
-                                        <td>{{ $item_ot->descripcion }}</td>
-                                        <td align="right">{{number_format($item_ot->valor_unitario, 0 ,',','.' )   }}</td>
-                                        <td align="right">{{number_format($item_ot->valor_parcial, 0 ,',','.')  }}</td>
+                                        <td data-title="Folio:">{{ $item_ot->folio }}</td>
+                                        <td data-title="Cantidad:">{{ $item_ot->cantidad }}</td>
+                                        <td data-title="Descripción:">{{ $item_ot->descripcion }}</td>
+                                        <td align="right" data-title="Valor Unitario:">{{number_format($item_ot->valor_unitario, 0 ,',','.' )   }}</td>
+                                        <td align="right" data-title="Valor Parcial:">{{number_format($item_ot->valor_parcial, 0 ,',','.')  }}</td>
                                         
-                                        <td>Proceso 0 de 0</td>
-                                        <td>
+                                        <!-- <td>Proceso 0 de 0</td> -->
+                                        <td data-title="Estado ítem OT:">
                                             @switch($item_ot->estado)
                                                 @case(1)
                                                     <span class="badge btn-secondary"> Sin Iniciar </span>
@@ -288,7 +288,7 @@
                                         
                                         </td>                               
                                       
-                                        <td class="btn-td">@include('backend.item_ots.includes.actions', ['item_ot' => $item_ot , 'trabajo' => $trabajo])</td>
+                                        <td class="btn-td" data-title="Acciones:">@include('backend.item_ots.includes.actions', ['item_ot' => $item_ot , 'trabajo' => $trabajo])</td>
                                     </tr>
                                 @endforeach
                                 </tbody>

@@ -187,12 +187,12 @@
                                 <tbody>
                                 @foreach($cliente->contactos as $contacto)
                                     <tr>
-                                        <td>{{ $contacto->nombre }}</td>
-                                        <td>{{ $contacto->funcion_representante }}</td>
-                                        <td>{{ $contacto->telefono }}</td>
-                                        <td>{{ $contacto->email }}</td>                               
+                                        <td data-title="Nombre:">{{ $contacto->nombre }}</td>
+                                        <td data-title="Función o cargo:">{{ $contacto->funcion_representante }}</td>
+                                        <td data-title="Contacto:">{{ $contacto->telefono }}</td>
+                                        <td data-title="Email:">{{ $contacto->email }}</td>                               
                                       
-                                        <td class="btn-td">@include('backend.contacto_clientes.includes.actions', ['contacto' => $contacto , 'cliente' => $cliente])</td>
+                                        <td class="btn-td" data-title="Acciones:">@include('backend.contacto_clientes.includes.actions', ['contacto' => $contacto , 'cliente' => $cliente])</td>
                                     </tr>
                                 @endforeach
                                 </tbody>

@@ -1,9 +1,9 @@
 @extends('backend.layouts.app')
 
-@section('title', app_name() . ' | ' . 'Ordenes de Trabajo')
+@section('title', app_name() . ' | ' . 'Cotizaciones')
 
 @section('breadcrumb-links')
-    @include('backend.orden_trabajos.includes.breadcrumb-links')
+    @include('backend.cotizaciones.includes.breadcrumb-links')
 @endsection
 
 @section('content')
@@ -12,76 +12,71 @@
         <div class="row">
             <div class="col-sm-5">
                 <h4 class="card-title mb-0">
-                    Ordenes de Trabajo <small class="text-muted">Todas las órdenes de trabajo</small>
+                    Cotizaciones <small class="text-muted">Todas las cotizaciones</small>
                 </h4>
             </div><!--col-->
 
             <div class="col-sm-7">
-                @include('backend.orden_trabajos.includes.header-buttons')
+                @include('backend.cotizaciones.includes.header-buttons')
             </div><!--col-->
         </div><!--row-->
 
         <div class="row mt-4">
             <div class="col">
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
+            <div class="table-responsive" id="no-more-tables">
+                    <table class="table col-sm-12 table-bordered table-striped table-condensed cf">
+                        <thead class="cf">
                         <tr>
                              <th>Folio</th>
                              <th>Cliente</th>
                              <th>Contacto</th>
-                             <th>Digitador</th>
-                             <th>Avance</th>
-                             <th>Entrega Comprometida</th>
-                             <th>Estado OT</th>  
+                             <th>Fecha</th>
+                             <th>Validez</th>
+                             <th>Valor Neto</th>
+                             <th>Estado</th>  
                              <th>@lang('labels.general.actions')</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($ordenTrabajos as $trabajo)
+                        @foreach($cotizaciones as $cotizacion)
                             <tr>
-                                <td>{{ $trabajo->folio }}</td>
-                                <td>{{ $trabajo->cliente->razon_social }}</td>
+                                <td>{{ $cotizacion->folio }}</td>
+                                <td>{{ $cotizacion->empresa }}</td>
                                 <td>
-                                    @if($trabajo->representante)
-                                        {{ $trabajo->representante->nombre }}
+                                    @if($cotizacion->contacto)
+                                        {{ $cotizacion->contacto }}
+                                        
+                                    @else
+                                        {{ '(No disponible)'}}
                                     @endif
                                 </td>
-                                <td>{{ $trabajo->usuario->last_name }} {{ $trabajo->usuario->first_name }} </td>                               
-                                <td>avance</td>
-                                <?php   $entrega_estimada = new Carbon\Carbon($trabajo->entrega_estimada); ?>
-                                <td>{{ $entrega_estimada->format('d/m/Y') }}</td>
+                                <?php   $fecha_cotizacion = new Carbon\Carbon($cotizacion->created_at); ?>
+                                <td>{{ $fecha_cotizacion->format('d/m/Y') }}</td>
+                                <td>{{ $cotizacion->dias_validez}} día(s)</td>
+                                <td style="text-align:right;">  @money($cotizacion->valor_neto) </td>
 
-
-                                <td>
-                                    @switch($trabajo->estado) 
+                                <td style="text-align:center;">
+                                    @switch($cotizacion->estado) 
                                             @case ('1') 
-                                               <span class="badge btn-secondary"> Sin Iniciar </span>
+                                               <span class="badge btn-success"> Vigente </span>
                                             @break;
                                             @case ('2') 
-                                                <span class="badge btn-primary"> En Proceso </span>
+                                                <span class="badge btn-primary"> Aceptada </span>
                                             @break;
                                             @case ('3')
-                                                <span class="badge btn-danger"> Atrasada </span>
+                                                <span class="badge btn-danger"> Vencida </span>
                                             @break;
                                             @case ('4') 
-                                                <span class="badge btn-success"> Terminada </span>
+                                                <span class="badge btn-secondary"> Anulada </span>
                                             @break;
-                                            @case ('5') 
-                                                <span class="badge btn-dark"> Entregada </span>
-                                            @break;
-                                            @case ('6') 
-                                                <span class="badge btn-warning"> Anulada </span>
-                                            @break;
-
                                             @default
-                                                {{$trabajo->estado}}
+                                                {{$cotizacion->estado}}
                                             @break;                   
                                     @endSwitch   
             
                                 </td>
                                 
-                                <td class="btn-td">@include('backend.orden_trabajos.includes.actions', ['trabajo' => $trabajo])</td>
+                                <td class="btn-td">@include('backend.cotizaciones.includes.actions', ['cotizacion' => $cotizacion])</td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -92,13 +87,13 @@
         <div class="row">
             <div class="col-7">
                 <div class="float-left">
-                    {!! $ordenTrabajos->count() !!} 
+                    {!! $cotizaciones->count() !!} 
                 </div>
             </div><!--col-->
 
             <div class="col-5">
                 <div class="float-right">
-                    {!! $ordenTrabajos->render() !!}
+                    {!! $cotizaciones->render() !!}
                 </div>
             </div><!--col-->
         </div><!--row-->

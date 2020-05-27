@@ -7,6 +7,8 @@ use App\Http\Controllers\Backend\OrdenTrabajoController;
 use App\Http\Controllers\Backend\ItemOtController;
 use App\Http\Controllers\Backend\ImagenItemOtController;
 use App\Http\Controllers\Backend\CotizacionController;
+use App\Http\Controllers\Backend\ItemCotizacionController;
+
 
 
 // All route names are prefixed with 'admin.'.
@@ -80,10 +82,11 @@ Route::group(['namespace' => 'Cotizacion'], function () {
         Route::delete('/', [CotizacionController::class, 'destroy'])->name('cotizaciones.destroy');
     });
 
-    Route::get('cotizaciones/vigentes', [CotizacionController::class, 'pendientes'])->name('orden_trabajos.vigentes');
-    Route::get('cotizaciones/aceptadas', [CotizacionController::class, 'entregadas'])->name('orden_trabajos.aceptadas');
-    Route::get('cotizaciones/vencidas', [CotizacionController::class, 'anuladas'])->name('orden_trabajos.vencidas');
+    Route::get('cotizaciones/vigentes', [CotizacionController::class, 'vigentes'])->name('cotizaciones.vigentes');
+    Route::get('cotizaciones/aceptadas', [CotizacionController::class, 'aceptadas'])->name('cotizaciones.aceptadas');
 
+    Route::get('cotizaciones/resultados', [CotizacionController::class, 'buscar_cotizacion'])->name('cotizaciones.buscar_cotizacion');
+   
 }); 
 
 
@@ -99,6 +102,21 @@ Route::group(['namespace' => 'ItemOt'], function () {
         Route::patch('/', [ItemOtController::class, 'update'])->name('item_ots.update');
         Route::delete('/', [ItemOtController::class, 'destroy'])->name('item_ots.destroy');
     });
+}); 
+
+
+Route::group(['namespace' => 'ItemCotizacion'], function () {
+    
+ /*    Route::get('item_ots', [ItemOtController::class, 'index'])->name('item_ots.index');
+    Route::get('item_ots/{trabajo}/create', [ItemOtController::class, 'create'])->name('item_ots.create'); */
+    Route::post('item_cotizacions', [ItemCotizacionController::class, 'store'])->name('item_cotizacions.store');
+    Route::post('item_cotizacions/destroy', [ItemCotizacionController::class, 'destroy'])->name('item_cotizacions.destroy');
+
+  /*   Route::group(['prefix' => 'item_ots/{item_ot}/{trabajo}'], function () {
+        Route::get('edit', [ItemOtController::class, 'edit'])->name('item_ots.edit');
+        Route::patch('/', [ItemOtController::class, 'update'])->name('item_ots.update');
+        Route::delete('/', [ItemOtController::class, 'destroy'])->name('item_ots.destroy');
+    }); */
 }); 
 
 

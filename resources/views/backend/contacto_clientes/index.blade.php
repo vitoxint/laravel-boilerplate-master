@@ -23,9 +23,9 @@
 
         <div class="row mt-4">
             <div class="col">
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
+            <div class="table-responsive" id="no-more-tables">
+                    <table class="table col-sm-12 table-bordered table-striped table-condensed cf">
+                        <thead class="cf">
                         <tr>
                             <th>Nombre</th>
                             <th>Cliente</th>
@@ -40,12 +40,12 @@
                         <tbody>
                         @foreach($clienteRepresentantes as $contacto)
                             <tr>
-                                <td>{{ $contacto->nombre }}</td>
-                                <td> <a href="{{route('admin.clientes.edit',$contacto->cliente)}}">  {{ $contacto->cliente->razon_social }} </a></td>
-                                <td>{{ $contacto->funcion_representante}}</td>                               
-                                <td>{{ $contacto->telefono}}</td>
-                                <td>{{ $contacto->email }} </td>
-                                <td class="btn-td">@include('backend.contacto_clientes.includes.actions', ['contacto' => $contacto, 'cliente' => $contacto->cliente])</td>
+                                <td data-title="Nombre:">{{ $contacto->nombre }}</td>
+                                <td data-title="Cliente/Empresa:"> <a href="{{route('admin.clientes.edit',$contacto->cliente)}}">  {{ $contacto->cliente->razon_social }} </a></td>
+                                <td data-title="Función/Cargo:">{{ $contacto->funcion_representante}}</td>                               
+                                <td data-title="Contacto:">{{ $contacto->telefono}}</td>
+                                <td data-title="Email:">{{ $contacto->email }} </td>
+                                <td class="btn-td" data-title="Acciones:">@include('backend.contacto_clientes.includes.actions', ['contacto' => $contacto, 'cliente' => $contacto->cliente])</td>
                             </tr>
                         @endforeach
                         </tbody>

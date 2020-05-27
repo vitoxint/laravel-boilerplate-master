@@ -46,5 +46,8 @@
     /*
     Label the data
     */
-    #no-more-tables td:before { content: attr(data-title); }
+    #no-more-tables td:before { content: attr(data-title); 
+    margin-top: -12px;}
     }
+
+    

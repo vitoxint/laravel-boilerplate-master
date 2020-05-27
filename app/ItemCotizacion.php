@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class ItemCotizacion extends Model
 {
     protected $fillable = [
-        'folio','cantidad','descripcion','valor_unitario','descuento','dias_validez','valor_parcial','observaciones','cotizacion_id'
+        'folio','cantidad','descripcion','valor_unitario','descuento','valor_parcial','observaciones','cotizacion_id'
     ];
 
     /**
@@ -18,4 +18,10 @@ class ItemCotizacion extends Model
     protected $hidden = [
          'remember_token',
     ];
+
+
+    public function Cotizacion(){
+        
+        return $this->belongsTo('App\Cotizacion', 'cotizacion_id', 'id');
+    }
 }

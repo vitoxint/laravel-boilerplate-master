@@ -20,7 +20,7 @@ class CreateItemCotizacionsTable extends Migration
             $table->string('descripcion');
             $table->double('valor_unitario');
             $table->double('descuento');
-            $table->integer('dias_validez');
+            // $table->integer('dias_validez');
             $table->double('valor_parcial');
             $table->string('observaciones')->nullable();
 

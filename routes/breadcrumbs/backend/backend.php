@@ -86,3 +86,32 @@ Breadcrumbs::for('admin.item_ots.edit', function ($trail, $item_ot, $trabajo) {
     
     $trail->push($trabajo->folio. ' / Editar ítem OT: '. $item_ot->folio, route('admin.item_ots.edit',[$item_ot, $trabajo]));
 });
+
+Breadcrumbs::for('admin.cotizaciones.index', function ($trail) {
+    $trail->push('Cotizaciones', route('admin.cotizaciones.index'));
+});
+
+Breadcrumbs::for('admin.cotizaciones.vigentes', function ($trail) {
+    $trail->parent('admin.cotizaciones.index', route('admin.cotizaciones.index'));
+    $trail->push('Cotizaciones vigentes', route('admin.cotizaciones.vigentes'));
+});
+
+Breadcrumbs::for('admin.cotizaciones.aceptadas', function ($trail) {
+    $trail->parent('admin.cotizaciones.index', route('admin.cotizaciones.index'));
+    $trail->push('Cotizaciones aceptadas', route('admin.cotizaciones.aceptadas'));
+});
+
+Breadcrumbs::for('admin.cotizaciones.buscar_cotizacion', function ($trail) {
+    $trail->parent('admin.cotizaciones.index', route('admin.cotizaciones.index'));
+    $trail->push('Resultados de la búsqueda', route('admin.cotizaciones.buscar_cotizacion'));
+});
+
+Breadcrumbs::for('admin.cotizaciones.create', function ($trail) {
+    $trail->parent('admin.cotizaciones.index', route('admin.cotizaciones.index'));
+    $trail->push('Nueva cotización', route('admin.cotizaciones.create'));
+});
+
+Breadcrumbs::for('admin.cotizaciones.edit', function ($trail, $cotizacion) {
+    $trail->parent('admin.cotizaciones.index', route('admin.cotizaciones.index'));
+    $trail->push('Editar cotización: '.$cotizacion->folio, route('admin.cotizaciones.edit',$cotizacion));
+});

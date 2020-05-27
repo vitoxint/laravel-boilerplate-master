@@ -1,26 +1,46 @@
 <li class="breadcrumb-menu">
     <div class="btn-group" role="group" aria-label="Button group">
         <div class="dropdown">
-            <a class="btn dropdown-toggle" href="#" role="button" id="breadcrumb-dropdown-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Trabajos</a>
+            <a class="btn dropdown-toggle" href="#" role="button" id="breadcrumb-dropdown-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cotizaciones</a>
 
             <div class="dropdown-menu" aria-labelledby="breadcrumb-dropdown-1">
-                <a class="dropdown-item" href="{{ route('admin.orden_trabajos.index') }}">Todas las órdenes</a>
-                <a class="dropdown-item" href="{{ route('admin.orden_trabajos.pendientes') }}">Pendientes de entrega</a>
-                <a class="dropdown-item" href="{{ route('admin.orden_trabajos.entregadas') }}">Entregadas</a>
-                <a class="dropdown-item" href="{{ route('admin.orden_trabajos.anuladas') }}">Anuladas</a>
+                <a class="dropdown-item" href="{{ route('admin.cotizaciones.index') }}">Todas las cotizaciones</a>
+                <a class="dropdown-item" href="{{ route('admin.cotizaciones.vigentes') }}">Cotizaciones vigentes</a>
+                <a class="dropdown-item" href="{{ route('admin.cotizaciones.aceptadas') }}">Cotizaciones Aceptadas</a>
+               
             </div>
         </div><!--dropdown-->
 
         <div class="dropdown">
-            <a class="btn dropdown-toggle" href="#" role="button" id="breadcrumb-dropdown-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Próximas entregas</a>
+            <a class="btn dropdown-toggle" href="#" role="button" id="breadcrumb-dropdown-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Buscar por cliente</a>
 
             <div class="dropdown-menu" aria-labelledby="breadcrumb-dropdown-1">
-                <a class="dropdown-item" href="{{ route('admin.orden_trabajos.px_entregas',['dias' => 0]) }}">Hoy</a>
-                <a class="dropdown-item" href="{{ route('admin.orden_trabajos.px_entregas',['dias' => 1]) }}">Mañana</a>
-                <a class="dropdown-item" href="{{ route('admin.orden_trabajos.px_entregas',['dias' => 3]) }}">Próximos 3 días</a>
-                <a class="dropdown-item" href="{{ route('admin.orden_trabajos.px_entregas',['dias' => 7]) }}">Próximos 7 días</a>
-                <a class="dropdown-item" href="{{ route('admin.orden_trabajos.px_entregas',['dias' => 15]) }}">Próximos 15 días</a>
-                <a class="dropdown-item" href="{{ route('admin.orden_trabajos.px_entregas',['dias' => 30]) }}">Próximos 30 días</a>
+               
+                <div class="row">
+                    <div class="col">
+                    
+                        <form action="{{route('admin.cotizaciones.buscar_cotizacion')}}">
+
+                            <div class="input-group">
+                            <input type="search" name="buscar" id="buscar" class="form-control" placeholder=" Buscar por cliente" />
+                            <div id="lista" >
+                            </div>
+                            <div class="input-group-append">
+                                <button class="btn btn-secondary btn-xs" type="button">
+                                <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                            </div>
+                            {{ csrf_field() }}
+                        </form>
+
+
+
+
+
+                    </div>
+
+                </div>
             </div>
         </div><!--dropdown-->
 

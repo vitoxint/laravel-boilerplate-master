@@ -5,6 +5,11 @@ use App\Http\Controllers\Controller;
 
 use App\Cotizacion;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use Illuminate\Pagination\LengthAwarePaginator;
+use App\Repositories\Backend\Model\CotizacionRepository;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class CotizacionController extends Controller
 {
@@ -13,11 +18,41 @@ class CotizacionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    protected $cotizacionRepository;
+
+    public function __construct(CotizacionRepository $cotizacionRepository)
+    {
+        $this->cotizacionRepository = $cotizacionRepository;
+    }
+
+
     public function index()
     {
 
+        return view('backend.cotizaciones.index')
+        ->withCotizaciones($this->cotizacionRepository->getActivePaginated(25, 'id', 'desc'));
+    }
 
-        return Cotizacion::all();
+    public function vigentes()
+    {
+
+        return view('backend.cotizaciones.index')
+        ->withCotizaciones($this->cotizacionRepository->getVigentesPaginated(25, 'id', 'desc'));
+    }
+
+    public function aceptadas()
+    {
+
+        return view('backend.cotizaciones.index')
+        ->withCotizaciones($this->cotizacionRepository->getAceptadasPaginated(25, 'id', 'desc'));
+    }
+
+    public function buscar_cotizacion(Request $request)
+    {
+        $term = $request->input('buscar');
+        return view('backend.cotizaciones.index')
+        ->withCotizaciones($this->cotizacionRepository->getBuscarCotizacionPaginated(25, 'id', 'desc', $term));
     }
 
     /**
@@ -27,7 +62,7 @@ class CotizacionController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend.cotizaciones.create');
     }
 
     /**
@@ -38,7 +73,35 @@ class CotizacionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $this->validate($request, [
+            'empresa' => 'required',
+            'dias_validez' => 'required|numeric',
+            
+        ]);
+
+        $fecha = Carbon::now();
+        $mfecha = $fecha->month;
+        $dfecha = $fecha->day;
+        $afecha = $fecha->year;  
+        
+        $maxCt = Cotizacion::max('id');
+        
+        $cotizacion= Cotizacion::create([
+            'empresa' => $request->input('empresa'),
+            'contacto' => $request->input('contacto'),
+            'telefono_contacto' => $request->input('telefono_contacto'),
+            'email_contacto' => $request->input('email_contacto'),
+            'estado' => '1',
+            'folio' => $maxCt.'/'.$afecha,
+            'dias_validez' => $request->input('dias_validez'),
+            'user_id' => Auth::user()->id, 
+            'valor_neto' => 0,
+            
+          ]);
+
+          return $cotizacion;
+    return redirect()->route('admin.cotizaciones.edit',$cotizacion)->withFlashSuccess('Cotizacion registrada | puedes agregar ítems');        
     }
 
     /**
@@ -60,7 +123,7 @@ class CotizacionController extends Controller
      */
     public function edit(Cotizacion $cotizacion)
     {
-        //
+        return view('backend.cotizaciones.edit',compact('cotizacion'));
     }
 
     /**

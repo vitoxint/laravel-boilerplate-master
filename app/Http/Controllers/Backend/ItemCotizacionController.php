@@ -37,7 +37,59 @@ class ItemCotizacionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            
+            'item' => 'required',
+            'qty' => 'required|numeric',
+            'desc' => 'required',
+            'cpu' => 'required|numeric',
+            'des' => 'required|numeric',
+            'cpi' => 'required|numeric',
+            
+        ]); 
+
+        $item_r = ItemCotizacion::where('cotizacion_id', '=', $request->id)->where('folio','=', '1')->first();
+        $cotizacion = Cotizacion::find($request->id);
+
+/*         if($item_r != null){
+
+            $input = $request->all();
+            return response()->json([
+                'success'=>'Got Simple Ajax Request.',
+                'valor_neto' => $cotizacion->valor_neto,
+                'iva' => (float)$cotizacion->valor_neto * 0.19,
+                'total' => (float)$cotizacion->valor_neto * 1.19,
+       
+                ]); 
+
+        } */
+
+
+
+        $item = ItemCotizacion::create([
+           
+            'descripcion'=>$request->get('desc'),
+            'folio' => $request->get('item'),
+            'cantidad'=> $request->get('qty'),
+            'valor_unitario' => $request->get('cpu'),
+            'descuento' => $request->get('des'),
+            'valor_parcial' => $request->get('cpi'),        
+            'cotizacion_id' => $cotizacion->id,
+
+          ]);  
+          
+          
+          $cotizacion->valor_neto = $cotizacion->valor_neto + $item->valor_parcial;
+          $cotizacion->save();
+              
+        $input = $request->all();
+        return response()->json([
+            'success'=>'Got Simple Ajax Request.',
+            'valor_neto' => $cotizacion->valor_neto,
+            'iva' => (float)$cotizacion->valor_neto * 0.19,
+            'total' => (float)$cotizacion->valor_neto * 1.19,
+   
+            ]); 
     }
 
     /**
@@ -80,8 +132,37 @@ class ItemCotizacionController extends Controller
      * @param  \App\ItemCotizacion  $itemCotizacion
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ItemCotizacion $itemCotizacion)
+    public function destroy(Request $request)
     {
-        //
+             
+        $item = ItemCotizacion::where('cotizacion_id','=', $request->id)->where('descripcion','=',$request->get('desc'))->first();
+        
+        $cotizacion = Cotizacion::find($request->id);
+
+        if($item != null){
+
+            $cotizacion->valor_neto = $cotizacion->valor_neto - $item->valor_parcial;
+            $cotizacion->save();
+            $item->delete();
+
+            return response()->json([
+                'success'=> $request->get('desc'),
+                'valor_neto' => $cotizacion->valor_neto,
+                'iva' => (float)$cotizacion->valor_neto * 0.19,
+                'total' => (float)$cotizacion->valor_neto * 1.19,
+       
+                ]); 
+
+   
+        }
+
+        return response()->json([
+            'success'=> $request->get('desc'),
+            'valor_neto' => $cotizacion->valor_neto,
+            'iva' => (float)$cotizacion->valor_neto * 0.19,
+            'total' => (float)$cotizacion->valor_neto * 1.19,
+   
+            ]); 
+        
     }
 }

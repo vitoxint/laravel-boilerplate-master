@@ -31,7 +31,7 @@
                              <th>Cliente</th>
                              <th>Contacto</th>
                              <th>Digitador</th>
-                             <th>Avance</th>
+                             <!-- <th>Avance</th> -->
                              <th>Entrega Comprometida</th>
                              <th>Estado OT</th>  
                              <th>@lang('labels.general.actions')</th>
@@ -40,20 +40,22 @@
                         <tbody>
                         @foreach($ordenTrabajos as $trabajo)
                             <tr>
-                                <td>{{ $trabajo->folio }}</td>
-                                <td>{{ $trabajo->cliente->razon_social }}</td>
-                                <td>
+                                <td data-title="Folio:">{{ $trabajo->folio }}</td>
+                                <td data-title="Cliente:">{{ $trabajo->cliente->razon_social }}</td>
+                                <td data-title="Contacto:">
                                     @if($trabajo->representante)
                                         {{ $trabajo->representante->nombre }}
+                                        @else
+                                        {{ '( no definido ) '}}
                                     @endif
                                 </td>
-                                <td>{{ $trabajo->usuario->last_name }} {{ $trabajo->usuario->first_name }} </td>                               
-                                <td>avance</td>
+                                <td data-title="Digitador:">{{ $trabajo->usuario->last_name }} {{ $trabajo->usuario->first_name }} </td>                               
+                                <!-- <td>avance</td> -->
                                 <?php   $entrega_estimada = new Carbon\Carbon($trabajo->entrega_estimada); ?>
-                                <td>{{ $entrega_estimada->format('d/m/Y') }}</td>
+                                <td data-title="Entrega comprometida:">{{ $entrega_estimada->format('d/m/Y') }}</td>
 
 
-                                <td>
+                                <td data-title="Estado OT:">
                                     @switch($trabajo->estado) 
                                             @case ('1') 
                                                <span class="badge btn-secondary"> Sin Iniciar </span>
@@ -81,7 +83,7 @@
             
                                 </td>
                                 
-                                <td class="btn-td">@include('backend.orden_trabajos.includes.actions', ['trabajo' => $trabajo])</td>
+                                <td class="btn-td" data-title="Acción:">@include('backend.orden_trabajos.includes.actions', ['trabajo' => $trabajo])</td>
                             </tr>
                         @endforeach
                         </tbody>
