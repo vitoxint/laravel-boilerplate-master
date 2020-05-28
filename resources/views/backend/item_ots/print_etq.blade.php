@@ -7,11 +7,7 @@
  *{margin:0;padding:0;}
 </style>
 
-<div style="-webkit-transform: rotate(90deg);
-    -moz-transform: rotate(90deg);
-    -o-transform: rotate(90deg);
-    -ms-transform: rotate(90deg);
-    transform: rotate(90deg);">
+<div>
     <table>
         <tr>
             <td style="text-align: center; width: 240px"><img src="{{ asset('img/backend/brand/marca.png') }}" width="90px" /></td>
@@ -40,7 +36,7 @@
 
 
 
-<table  class="table table-bordered table-sm" style="border:1px; padding-left:30px;" >
+<table  class="table table-bordered table-sm" style="border:1px; padding-left:10px; padding-right:10px;" >
 
 
     <tbody>
