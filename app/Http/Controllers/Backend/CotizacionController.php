@@ -11,6 +11,8 @@ use App\Repositories\Backend\Model\CotizacionRepository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
+use PDF;
+
 class CotizacionController extends Controller
 {
     /**
@@ -93,6 +95,8 @@ class CotizacionController extends Controller
             'telefono_contacto' => $request->input('telefono_contacto'),
             'email_contacto' => $request->input('email_contacto'),
             'estado' => '1',
+            'condicion_pago' => $request->input('condicion_pago'),
+            'forma_pago' => $request->input('forma_pago'),
             'folio' => $maxCt.'/'.$afecha,
             'dias_validez' => $request->input('dias_validez'),
             'user_id' => Auth::user()->id, 
@@ -110,9 +114,13 @@ class CotizacionController extends Controller
      * @param  \App\Cotizacion  $cotizacion
      * @return \Illuminate\Http\Response
      */
-    public function show(Cotizacion $cotizacion)
+    public function print(Cotizacion $cotizacion)
     {
-        //
+        //return $cotizacion;
+        $data = ['title' => 'coding driver test title'];
+        $pdf = PDF::loadView('backend.cotizaciones.print', compact('cotizacion'));
+  
+        return $pdf->stream('cotizacion_'.$cotizacion->folio.'.pdf');
     }
 
     /**
@@ -135,7 +143,29 @@ class CotizacionController extends Controller
      */
     public function update(Request $request, Cotizacion $cotizacion)
     {
-        //
+
+        $this->validate($request, [
+            'empresa' => 'required',
+            'dias_validez' => 'required|numeric',
+            'estado' => 'required'
+            
+        ]);
+
+
+        $cotizacion->update(
+            [                    
+                'empresa' => $request->input('empresa'),
+                'contacto' => $request->input('contacto'),
+                'telefono_contacto' => $request->input('telefono_contacto'),
+                'email_contacto' => $request->input('email_contacto'),
+                'estado' => $request->input('estado'),
+                'condicion_pago' => $request->input('condicion_pago'),
+                'forma_pago' => $request->input('forma_pago'),
+                'dias_validez' => $request->input('dias_validez'),
+            ]
+        );
+
+        return redirect()->route('admin.cotizaciones.edit',$cotizacion)->withFlashSuccess('Información de la cotización está actualizada');
     }
 
     /**

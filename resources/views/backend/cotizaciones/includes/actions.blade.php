@@ -5,6 +5,9 @@
         <a href="{{ route('admin.cotizaciones.edit', $cotizacion) }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="@lang('buttons.general.crud.edit')">
             <i class="fas fa-edit"></i>
         </a>
+        <a href="{{ route('admin.cotizaciones.print', $cotizacion) }}" target="_blank" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Imprimir PDF">
+            <i class="fas fa-file-pdf" style="color:red;"></i>
+        </a>
 
         <a href="{{ route('admin.cotizaciones.destroy', $cotizacion) }}"
            data-method="delete"

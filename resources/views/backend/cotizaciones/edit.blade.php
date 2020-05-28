@@ -139,7 +139,31 @@
                                      }}
                             </div><!--col-->
 
-                        </div><!--form-group-->                        
+                        </div><!--form-group-->
+
+                        <div class="form-group row">
+                            {{ html()->label('Forma de pago')->class('col-md-2 form-control-label')->for('forma_pago') }}
+
+                            <div class="col-md-4">
+                                {{ html()->text('forma_pago')
+                                    ->class('form-control')
+                                    ->placeholder('ej: al contado, crédito, cheque nominativo , transferencia ,etc (opcional)')
+                                    ->attribute('maxlength', 191)      
+                                    ->autofocus() }}
+                            </div><!--col-->
+                        </div><!--form-group-->
+
+                        <div class="form-group row">
+                            {{ html()->label('Condiciones de pago')->class('col-md-2 form-control-label')->for('condicion_pago') }}
+
+                            <div class="col-md-4">
+                                {{ html()->text('condicion_pago')
+                                    ->class('form-control')
+                                    ->placeholder('Agregar condiciones de compra o pago (opcional)')
+                                    ->attribute('maxlength', 191)      
+                                    ->autofocus() }}
+                            </div><!--col-->
+                        </div><!--form-group-->                                                        
 
                         <div class="form-group row">
                             {{ html()->label('Observaciones')->class('col-md-2 form-control-label')->for('observaciones') }}
@@ -161,6 +185,9 @@
             <div class="card-footer clearfix">
                 <div class="row">
                     <div class="col">
+                    <a href="{{ route('admin.cotizaciones.print', $cotizacion) }}" target="_blank" class="btn btn-default btn-sm btn-bordered" data-toggle="tooltip" data-placement="top" title="Imprimir PDF">
+                        <i class="fas fa-file-pdf" style="color:red;"></i> Exportar PDF
+                    </a>
                         {{ form_cancel(route('admin.cotizaciones.index'), __('buttons.general.cancel')) }}
                     </div><!--col-->
 
@@ -244,8 +271,6 @@
 
                             @endif
 
-
-
                             </thead>
                             <tbody id="dynamic_field">
 
@@ -263,27 +288,10 @@
 
                         </table>
                     </div>              
-            
-            
-            
-            
+          
                 </div>
   
-  
-  
-<!--     <div class="row">
-
-            <div class="col-xs-8 col-sm-8 col-md-8">
-               <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                 
-                 <button type="submit" class="btn btn-flat btn-success btn-md">Agregar</button>
-               </div>
-            
-            </div>
-    </div>   -->                  
-
-
-            </div><!--card-body-->
+          </div><!--card-body-->
         </div><!--card-->
 
 
@@ -334,7 +342,7 @@
                      document.getElementById('valor_incluido').value = data.total;
                     // $('iva').val(data.iva);
                     // $('valor_incluido').val(data.total);
-                    grandTotal();
+                    //grandTotal();
 
                 },
                 error: function() {

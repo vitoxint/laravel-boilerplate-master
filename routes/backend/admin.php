@@ -78,6 +78,7 @@ Route::group(['namespace' => 'Cotizacion'], function () {
 
     Route::group(['prefix' => 'cotizaciones/{cotizacion}'], function () {
         Route::get('edit', [CotizacionController::class, 'edit'])->name('cotizaciones.edit');
+        Route::get('print', [CotizacionController::class, 'print'])->name('cotizaciones.print');
         Route::patch('/', [CotizacionController::class, 'update'])->name('cotizaciones.update');
         Route::delete('/', [CotizacionController::class, 'destroy'])->name('cotizaciones.destroy');
     });
@@ -100,6 +101,7 @@ Route::group(['namespace' => 'ItemOt'], function () {
     Route::group(['prefix' => 'item_ots/{item_ot}/{trabajo}'], function () {
         Route::get('edit', [ItemOtController::class, 'edit'])->name('item_ots.edit');
         Route::patch('/', [ItemOtController::class, 'update'])->name('item_ots.update');
+        Route::get('print_etq', [ItemOtController::class, 'print_etq'])->name('item_ots.print_etq');
         Route::delete('/', [ItemOtController::class, 'destroy'])->name('item_ots.destroy');
     });
 }); 

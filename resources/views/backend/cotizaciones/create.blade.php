@@ -90,6 +90,32 @@
                         </div><!--form-group-->  
 
                         <div class="form-group row">
+                            {{ html()->label('Forma de pago')->class('col-md-2 form-control-label')->for('forma_pago') }}
+
+                            <div class="col-md-4">
+                                {{ html()->text('forma_pago')
+                                    ->class('form-control')
+                                    ->placeholder('ej: al contado, crédito, cheque nominativo , transferencia ,etc (opcional)')
+                                    ->value('Al contado')
+                                    ->attribute('maxlength', 191)      
+                                    ->autofocus() }}
+                            </div><!--col-->
+                        </div><!--form-group-->
+
+                        <div class="form-group row">
+                            {{ html()->label('Condiciones de pago')->class('col-md-2 form-control-label')->for('condicion_pago') }}
+
+                            <div class="col-md-4">
+                                {{ html()->text('condicion_pago')
+                                    ->class('form-control')
+                                    ->placeholder('Agregar condiciones de compra o pago (opcional)')
+                                    ->value('50% contado junto O/C, saldo contra Entrega')
+                                    ->attribute('maxlength', 191)      
+                                    ->autofocus() }}
+                            </div><!--col-->
+                        </div><!--form-group-->                                                   
+
+                        <div class="form-group row">
                             {{ html()->label('Observaciones')->class('col-md-2 form-control-label')->for('observaciones') }}
 
                             <div class="col-md-10">

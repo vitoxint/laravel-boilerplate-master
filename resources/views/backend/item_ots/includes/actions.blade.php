@@ -5,6 +5,9 @@
         <a href="{{ route('admin.item_ots.edit', [$item_ot , $trabajo]) }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="@lang('buttons.general.crud.edit')">
             <i class="fas fa-edit"></i>
         </a>
+        <a href="{{ route('admin.item_ots.print_etq',[$item_ot , $trabajo]) }}" target="_blank" class="btn btn-warning" data-toggle="tooltip" data-placement="top" title="Imprimir Etiqueta">
+            <i class="fas fa-print" style="color:white;"></i>
+        </a>
 
         <a href="{{ route('admin.item_ots.destroy', [$item_ot , $trabajo]) }}"
            data-method="delete"
