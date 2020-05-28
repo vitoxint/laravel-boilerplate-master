@@ -213,7 +213,13 @@
 
                 </div><!--row-->
                 <br>
-                
+                <?php 
+
+                if($cotizacion->items_cotizacion->count() == 0){
+                    $max_folio = 1;
+                }else{
+                    $max_folio = $cotizacion->items_cotizacion->max('folio') + 1;
+                 } ?>               
                 <div class="row">
               
                     <div class="table-responsive">
@@ -256,7 +262,7 @@
                                 </tr>
                             @endforeach
 
-                            <?php $max_folio = $cotizacion->items_cotizacion->max('folio') + 1; ?> 
+                            
 
                             <tr id="addr0">
                                     <td class="custom-tbl"><input class='form-control input-sm'style='width:100%;' type="text" value="{{$max_folio}}" id="pr_item{{$max_folio}}" name="pr_item[]" readonly required></td>
