@@ -109,7 +109,7 @@ class ItemOtController extends Controller
         $data = ['title' => 'coding driver test title'];
         $customPaper = array(0,0,141.70,170.80);
         
-        $pdf = PDF::loadView('backend.item_ots.print_etq', compact('item_ot'))->setPaper($customPaper, 'landscape');
+        $pdf = PDF::loadView('backend.item_ots.print_etq', compact('item_ot'))->setPaper($customPaper, 'portrait');
         
         return $pdf->stream('Item OT_'.$item_ot->folio.'.pdf');
     }

@@ -7,26 +7,30 @@
  *{margin:0;padding:0;}
 </style>
 
-<div>
+<div style="-webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);">
     <table>
         <tr>
-            <td style="text-align: center; width: 220px"><img src="{{ asset('img/backend/brand/marca.png') }}" width="90px" /></td>
+            <td style="text-align: center; width: 240px"><img src="{{ asset('img/backend/brand/marca.png') }}" width="90px" /></td>
         </tr>
     </table>
 
     <table>
         <tr>
-            <td style="width: 220px; padding-bottom:-18px; text-align: center;">
+            <td style="width: 240px; padding-bottom:-18px; text-align: center;">
                 <p style="font-size: 6px;"><b>INGENIERÍA Y MAESTRANZA ORECAL LTDA.</b></p>
             </td>
         </tr>
         <tr>
-            <td style="width: 220px; padding-bottom:-18px; text-align: center;">
+            <td style="width: 240px; padding-bottom:-18px; text-align: center;">
                 <p style="font-size: 6px;"><b>Lincoyán #870, Concepción.</b></p>
             </td>
         </tr>
         <tr>
-            <td style="width: 220px; padding-bottom:-10px; text-align: center;">
+            <td style="width: 240px; padding-bottom:-10px; text-align: center;">
                 <p style="font-size: 6px;"><b>Tel.(41)222 3509 - www.orecal.cl.</b></p>
             </td>
 
@@ -36,7 +40,7 @@
 
 
 
-<table  class="table table-bordered table-sm" style="border:1px;" >
+<table  class="table table-bordered table-sm" style="border:1px; padding-left:30px;" >
 
 
     <tbody>
