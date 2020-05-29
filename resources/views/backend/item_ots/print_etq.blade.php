@@ -42,11 +42,11 @@
     <tbody>
         <tr>
             <td style="padding-bottom:-15px; padding-top:2px;"> <p style="font-size: 7px; font-weight: bold; ">ORDEN: </p>
-            <td style="padding-bottom:-15px; padding-top:2px;"> <p style="font-size: 7px; ">{{$item_ot->ordenTrabajo->folio}}</p></td>
+            <td style="padding-bottom:-15px; padding-top:2px;"> <p style="font-size: 7px; font-weight:bold; ">{{$item_ot->ordenTrabajo->folio}}</p></td>
         </tr>
         <tr>
             <td style="padding-bottom:-15px; padding-top:2px;"> <p style="font-size: 7px; font-weight: bold;">ÍTEM: </p></td>
-            <td style="padding-bottom:-15px; padding-top:2px;"> <p style="font-size: 7px; ">{{$item_ot->folio}}</p></td>
+            <td style="padding-bottom:-15px; padding-top:2px;"> <p style="font-size: 7px; font-weight:bold; ">{{$item_ot->folio}}</p></td>
         </tr>
 
         <tr>

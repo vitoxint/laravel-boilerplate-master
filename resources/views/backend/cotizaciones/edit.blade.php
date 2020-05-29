@@ -188,6 +188,11 @@
                     <a href="{{ route('admin.cotizaciones.print', $cotizacion) }}" target="_blank" class="btn btn-default btn-sm btn-bordered" data-toggle="tooltip" data-placement="top" title="Imprimir PDF">
                         <i class="fas fa-file-pdf" style="color:red;"></i> Exportar PDF
                     </a>
+
+                    <a href="{{ route('admin.cotizaciones.send', $cotizacion) }}" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Enviar cotización">
+                        <i class="fas fa-envelope" style="color:green;"></i> Enviar 
+                    </a> 
+
                         {{ form_cancel(route('admin.cotizaciones.index'), __('buttons.general.cancel')) }}
                     </div><!--col-->
 

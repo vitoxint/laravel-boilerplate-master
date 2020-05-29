@@ -9,6 +9,10 @@
             <i class="fas fa-file-pdf" style="color:red;"></i>
         </a>
 
+        <a href="{{ route('admin.cotizaciones.send', $cotizacion) }}" class="btn btn-success" data-toggle="tooltip" data-placement="top" title="Enviar cotización">
+            <i class="fas fa-envelope" style="color:white;"></i>
+        </a>
+
         <a href="{{ route('admin.cotizaciones.destroy', $cotizacion) }}"
            data-method="delete"
            data-trans-button-cancel="@lang('buttons.general.cancel')"

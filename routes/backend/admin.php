@@ -79,6 +79,7 @@ Route::group(['namespace' => 'Cotizacion'], function () {
     Route::group(['prefix' => 'cotizaciones/{cotizacion}'], function () {
         Route::get('edit', [CotizacionController::class, 'edit'])->name('cotizaciones.edit');
         Route::get('print', [CotizacionController::class, 'print'])->name('cotizaciones.print');
+        Route::get('send', [CotizacionController::class, 'send'])->name('cotizaciones.send');
         Route::patch('/', [CotizacionController::class, 'update'])->name('cotizaciones.update');
         Route::delete('/', [CotizacionController::class, 'destroy'])->name('cotizaciones.destroy');
     });

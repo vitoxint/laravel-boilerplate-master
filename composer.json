@@ -28,6 +28,7 @@
         "spatie/laravel-html": "^2.22",
         "spatie/laravel-permission": "^3.0",
         "spatie/laravel-sluggable": "^2.2",
+        "tijsverkoyen/css-to-inline-styles": "^2.2",
         "torann/geoip": "^1.0"
     },
     "require-dev": {

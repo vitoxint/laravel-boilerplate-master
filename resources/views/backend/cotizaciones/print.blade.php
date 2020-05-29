@@ -56,14 +56,14 @@
                     <td style="padding-bottom:-10px;"> <p style="font-size: 10px; font-weight: bold; ">Cliente: </p>
                     <td style="padding-bottom:-10px;"> <p style="font-size: 10px; ">{{$cotizacion->empresa}}</p></td>
                     <td style="padding-bottom:-10px;"> <p style="font-size: 10px; font-weight: bold;">Vendedor: </p></td>
-                    <td style="padding-bottom:-10px;"> <p style="font-size: 10px; "><?php echo $cotizacion->usuario->first_name . ' '. $cotizacion->usuario->last_name ?></p></td>
+                    <td style="padding-bottom:-10px;"> <p style="font-size: 10px; ">{{ $cotizacion->usuario['first_name'] . ' '. $cotizacion->usuario['last_name'] }}</p></td>
                 </tr>
 
                 <tr>
                     <td style="padding-bottom:-10px;"> <p style="font-size: 10px; font-weight: bold;">Contacto: </p></td>
                     <td style="padding-bottom:-10px;"> <p style="font-size: 10px; "><?php echo $cotizacion->contacto ?></p></td>
                     <td style="padding-bottom:-10px;"> <p style="font-size: 10px; font-weight: bold;">Email vendedor: </p></td>
-                    <td style="padding-bottom:-10px;"> <p style="font-size: 10px; "><?php echo $cotizacion->usuario->email ?></p></td>
+                    <td style="padding-bottom:-10px;"> <p style="font-size: 10px; "><?php echo $cotizacion->usuario['email'] ?></p></td>
                 </tr>
 
                 <tr>
@@ -144,8 +144,8 @@
         </table>
 
         <p style="font-size: 10px;"> Usted ha sido atendido(a) por : 
-        <?php echo $cotizacion->usuario->first_name.' '. $cotizacion->usuario->last_name; ?><br>
-        <?php echo $cotizacion->usuario->email ?></p>
+        <?php echo $cotizacion->usuario['first_name'].' '. $cotizacion->usuario['last_name']; ?><br>
+        <?php echo $cotizacion->usuario['email'] ?></p>
         
     </div>
 </div>
@@ -179,9 +179,9 @@
                     <li style="font-size: 10px;">Esta  cotización  ha sido  realizada según planos enviado por el cliente, por lo que cualquier modificación de estos podría  hacer variar los valores de la presente cotización.</li>
                     <li style="font-size: 10px;">Al aceptar esta cotización el cliente aprueba los planos enviados para cotizar y/o los desarrollados por los ingenieros de Maestranza Orecal.</li>
                     <li style="font-size: 10px;">El  trabajo deberá  ser retirado  por el cliente  en las dependencias de Ingeniería y Maestranza Orecal. Se eliminará todo despunte si éste no es retirado junto con el trabajo de corte.</li>
-                    <li style="font-size: 10px;">El corte láser tiene una toleración de 0,2 mm aproximadamente. En espesores superiores la tolerancia puede ser mayor.<span style="text-decoration: underline;">El oxicorte y la guillotina no son cortes de precisión</span>, por lo que debe considerar una mayor tolerancia para piezas cortadas con esos procesos.</li>
-                    <li style="font-size: 10px;"><span style="text-decoration: underline;">Si el cliente proporciona el material éste debe venir según las condiciones exigidas por Orecal para la recepción de material, sin pintura, óxido, ni ningún otro tipo de impureza y completamente lisas.</span></li>
-                    <li style="font-size: 10px;">Los materiales deben considerar un margen para regular el láser y márgenes para el corte. Se debe considerar además la posibilidad que alguna pieza presente defectos en el corte, por lo que deba ser cortada nuevamente.</li>
+                    <li style="font-size: 10px;">El corte por agua tiene una toleración de 0,2 mm aproximadamente. En espesores superiores la tolerancia puede ser mayor.<span style="text-decoration: underline;">El oxicorte  no es un corte de precisión</span>, por lo que debe considerar una mayor tolerancia para piezas cortadas con esos procesos.</li>
+                    <li style="font-size: 10px;"><span style="text-decoration: underline;">Si el cliente proporciona el material éste debe venir según las condiciones exigidas por Orecal para la recepción de material, sin pintura, óxido, ni ningún otro tipo de impureza y completamente lisas. En caso contrario Maestranza Orecal cobrará un costo extra asociado al proceso de limpieza del material.</span></li>
+                    <li style="font-size: 10px;">Los materiales deben considerar un margen para regular la máquina de corte por agua y márgenes para el corte. Se debe considerar además la posibilidad que alguna pieza presente defectos en el corte, por lo que deba ser cortada nuevamente.</li>
                     <li style="font-size: 10px;">No se reciben retazos de planchas ni materiales ya cortados.</li>
                 </ol>
             </td>

@@ -8,7 +8,7 @@ class Cotizacion extends Model
 {
     
     protected $fillable = [
-        'folio','empresa','contacto','telefono_contacto','email_contacto','valor_neto', 'dias_validez','estado','observaciones','created_at','user_id','user','forma_pago','condicion_pago'
+        'folio','empresa','contacto','telefono_contacto','email_contacto','valor_neto', 'dias_validez','estado','observaciones','created_at','user_id','usuario', 'usuario.first_name','forma_pago','condicion_pago'
     ];
 
     /**

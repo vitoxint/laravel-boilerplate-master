@@ -11,6 +11,10 @@ use App\Repositories\Backend\Model\CotizacionRepository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
+use App\Mail\Backend\SendCotizacion;
+use Illuminate\Support\Facades\Mail;
+use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
+
 use PDF;
 
 class CotizacionController extends Controller
@@ -117,10 +121,22 @@ class CotizacionController extends Controller
     public function print(Cotizacion $cotizacion)
     {
         //return $cotizacion;
-        $data = ['title' => 'coding driver test title'];
-        $pdf = PDF::loadView('backend.cotizaciones.print', compact('cotizacion'));
+        //$data = ['title' => 'coding driver test title'];
+        $usuario = $cotizacion->usuario;
+        $pdf = PDF::loadView('backend.cotizaciones.print', compact('cotizacion','usuario'));
   
         return $pdf->stream('cotizacion_'.$cotizacion->folio.'.pdf');
+    }
+
+    public function send(Cotizacion $cotizacion){
+
+        //return view('backend.cotizaciones.mail.send_cotizacion',compact('cotizacion'));
+
+       
+        Mail::send(new SendCotizacion($cotizacion));
+
+        return redirect()->back()->withFlashSuccess(__('Cotización enviada'));
+
     }
 
     /**
