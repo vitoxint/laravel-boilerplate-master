@@ -18,7 +18,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         //
-        Commands\updateCotizacionVencida::class,
+        'App\Console\Commands\UpdateCotizacionVencida',
     ];
 
     /**
@@ -29,7 +29,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
-        $schedule->command('cotizacion:vencida')->everyMinute();
+        $schedule->command('schedule:vencida')->everyMinute();
        
     }
 
