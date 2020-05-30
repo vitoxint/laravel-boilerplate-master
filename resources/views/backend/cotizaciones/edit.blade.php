@@ -80,10 +80,8 @@
                             <div class="col-md-1">
                                 {{ html()->number('dias_validez')
                                     ->class('form-control')
-                                    ->value(30)
                                     ->attribute('maxlength', 191)      
-                                    ->autofocus()
-                                    
+                                    ->autofocus()    
                                     ->required() }}
                             </div><!--col-->
 

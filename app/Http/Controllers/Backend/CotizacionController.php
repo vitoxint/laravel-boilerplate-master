@@ -192,6 +192,6 @@ class CotizacionController extends Controller
      */
     public function destroy(Cotizacion $cotizacion)
     {
-        //
+        
     }
 }
