@@ -26,8 +26,13 @@
             </td>
             <td>
                 <span style=" font-size: 11px;"><?php
-                    setlocale(LC_TIME, 'es');
-                    echo strftime("%A, %e de %B de %Y")
+                 setlocale(LC_TIME, 'es_CL.utf8');
+                    echo strftime("%A, %e de %B de %Y");
+/*                     use Carbon\Carbon;
+                    Carbon::setLocale('es_ES');
+                    $fecha = Carbon::now();
+                    $fecha->diffForHumans();
+                    echo $fecha; */
                     ?></span>
             </td>
         </tr>
@@ -160,10 +165,10 @@
                 <p style="font-size: 10px;">
                 <b>*Efectivo</b><br>
                 <b>*Transferencia bancaria:</b><br>
-                    &nbsp; ORECAL Limitada, RUT 76.285.390-6<br>
-                    &nbsp; Cuenta corriente Banco Santander N° 7400635247<br>
-                    &nbsp; Favor enviar comprobante a : orecal@orecal.cl<br>
-                <b>*Cheque cruzado y nominativo a: ORECAL Ltda.</b>
+                    &nbsp; Ingeniería y Maestranza Orecal Ltda, RUT 76.285.390-6<br>
+                    &nbsp; Cuenta corriente Banco BICE N° 03-01643-9<br>
+                    &nbsp; Favor enviar comprobante a : vosorio@orecal.cl<br>
+                <b>*Tarjetas de débito y crédito (Transbank).</b>
                 </p>
             </td>
         </tr>
