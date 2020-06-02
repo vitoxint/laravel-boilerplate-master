@@ -66,14 +66,26 @@
 
                 <tr>
                     <td style="padding-bottom:-10px;"> <p style="font-size: 10px; font-weight: bold;">Contacto: </p></td>
-                    <td style="padding-bottom:-10px;"> <p style="font-size: 10px; "><?php echo $trabajo->representante->nombre ?></p></td>
+                    <td style="padding-bottom:-10px;"> <p style="font-size: 10px; ">
+                                    @if($trabajo->representante)
+                                        {{ $trabajo->representante->nombre }}
+                                        @else
+                                        {{ ' '}}
+                                    @endif
+                    </p></td>
                     <td style="padding-bottom:-10px;"> <p style="font-size: 10px; font-weight: bold;">Email vendedor: </p></td>
                     <td style="padding-bottom:-10px;"> <p style="font-size: 10px; "><?php echo $trabajo->usuario['email'] ?></p></td>
                 </tr>
 
                 <tr>
                     <td style="padding-bottom:-10px;"> <p style="font-size: 10px; font-weight: bold;">Teléfono/Email: </p></td>
-                    <td style="padding-bottom:-10px;"> <p style="font-size: 10px; "><?php echo $trabajo->representante->telefono .' ' ?> <?php echo $trabajo->representante->email ?></p></td>
+                    <td style="padding-bottom:-10px;"> <p style="font-size: 10px; ">
+                                    @if($trabajo->representante)
+                                        {{ $trabajo->representante->telefono . ' ' . $trabajo->representante->email  }}
+                                        @else
+                                        {{ ' '}}
+                                    @endif                    
+                   
                     <?php   $fecha_ot = new Carbon\Carbon($trabajo->created_at); ?>
                     <td style="padding-bottom:-10px;"> <p style="font-size: 10px; font-weight: bold;">Fecha/hora emisión: </p></td>
                     <td style="padding-bottom:-10px;"> <p style="font-size: 10px; ">{{ $fecha_ot->format('d/m/Y H:i') }}</p></td>
