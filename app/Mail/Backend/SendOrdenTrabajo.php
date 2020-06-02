@@ -52,8 +52,6 @@ class SendOrdenTrabajo extends Mailable
 
 
         return $this->to($this->trabajo->usuario->email, $this->trabajo->usuario->first_name . ' ' . $this->trabajo->usuario->last_name )
-            //->view('backend.cotizaciones.mail.send_cotizacion')
-            //->text($cssToInlineStyles->convert($html))
             ->html($cssToInlineStyles->convert($html))
             ->attachData($pdf->output(), 'OrdenTrabajo_'.$this->trabajo->folio.'.pdf', [
                 'mime' => 'application/pdf',
