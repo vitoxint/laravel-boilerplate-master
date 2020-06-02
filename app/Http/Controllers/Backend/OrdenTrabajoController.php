@@ -184,7 +184,7 @@ class OrdenTrabajoController extends Controller
     public function printCliente(OrdenTrabajo $trabajo){
 
         $usuario = $trabajo->usuario;
-        $pdf = PDF::loadView('backend.orden_trabajos.printCliente', compact('trabajo','usuario'));
+        $pdf = PDF::loadView('backend.orden_trabajos.printcliente', compact('trabajo','usuario'));
   
         return $pdf->stream('0rdenTrabajo_'.$trabajo->folio.'.pdf');
     }

@@ -49,7 +49,7 @@
                                         {{ '( no definido ) '}}
                                     @endif
                                 </td>
-                                <td data-title="Digitador:">{{ $trabajo->usuario->last_name }} {{ $trabajo->usuario->first_name }} </td>                               
+                                <td data-title="Digitador:"> {{ $trabajo->usuario->first_name }} {{ $trabajo->usuario->last_name }}</td>                               
                                 <!-- <td>avance</td> -->
                                 <?php   $entrega_estimada = new Carbon\Carbon($trabajo->entrega_estimada); ?>
                                 <td data-title="Entrega comprometida:">{{ $entrega_estimada->format('d/m/Y') }}</td>

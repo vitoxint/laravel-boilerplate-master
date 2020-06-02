@@ -48,7 +48,7 @@ class SendOrdenTrabajo extends Mailable
         $cssToInlineStyles = new CssToInlineStyles();
 
         $html = view('backend.orden_trabajos.mail.send_orden_trabajo',compact('trabajo'));
-        $pdf = PDF::loadView('backend.orden_trabajos.printCliente', compact('trabajo'));
+        $pdf = PDF::loadView('backend.orden_trabajos.printcliente', compact('trabajo'));
 
 
         return $this->to($this->trabajo->usuario->email, $this->trabajo->usuario->first_name . ' ' . $this->trabajo->usuario->last_name )
