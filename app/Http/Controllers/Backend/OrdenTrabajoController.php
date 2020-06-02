@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use App\Mail\Backend\SendOtAtrasada;
+use Illuminate\Support\Facades\Mail;
 
 class OrdenTrabajoController extends Controller
 {
@@ -125,6 +127,9 @@ class OrdenTrabajoController extends Controller
      */
     public function edit(OrdenTrabajo $trabajo)
     {
+        //$ordenTrabajo = $trabajo;
+        //return view('backend.orden_trabajos.mail.send_ot_atrasadas',compact('ordenTrabajo'));
+        //Mail::send(new SendOtAtrasada($trabajo));
         return view('backend.orden_trabajos.edit',compact('trabajo'));
     }
 

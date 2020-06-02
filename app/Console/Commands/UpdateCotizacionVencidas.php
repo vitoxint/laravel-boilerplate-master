@@ -46,14 +46,11 @@ class UpdateCotizacionVencidas extends Command
 
         foreach($cotizaciones as $cotizacion){
 
-            /* $cotizacion->estado = 1;
-            $cotizacion->save(); */
-
             $fecha_inicio = new Carbon($cotizacion->created_at); 
             $fecha_vencimiento = $fecha_inicio->addDays($cotizacion->dias_validez + 1);
 
              if($fecha_vencimiento <= $hoy){
-                $cotizacion->estado = 3;
+                $cotizacion->estado = '3';
                 $cotizacion->save();
             } 
             

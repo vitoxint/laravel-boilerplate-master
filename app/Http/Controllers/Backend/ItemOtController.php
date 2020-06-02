@@ -213,6 +213,24 @@ class ItemOtController extends Controller
            }
            
         } 
+
+        if (ItemOt::where('estado', '=', '5')->where('ot_id', '=', $trabajo->id)->count('id') == 
+            ItemOt::where('ot_id', '=', $trabajo->id)->count('id')) {
+        
+        $update1 = DB::table('orden_trabajos')
+        ->where('id', '=', $trabajo->id)
+        ->update([
+            'estado' =>  '5',
+            ]);
+/*         if($trabajo->estado != '5'){
+            $update1 = DB::table('orden_trabajos')
+            ->where('id', '=', $trabajo->id)
+            ->update([
+                'fecha_termino' =>  $fecha_termino,
+                ]);                
+        } */
+    
+ } 
     
         return redirect()->route('admin.orden_trabajos.edit',$trabajo)->withFlashSuccess('Se ha actualizado el ítem de la Orden de Trabajo');
       
