@@ -20,6 +20,7 @@ class Kernel extends ConsoleKernel
         //
         Commands\UpdateCotizacionVencidas::class,
         Commands\UpdateOtAtrasada::class,
+        Commands\NotificarOtSinEntregar::class,
     ];
 
     /**
@@ -31,8 +32,13 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->command('schedule:vencida')->everyMinute();
+
         $schedule->command('schedule:otatrasada')->weekdays()->at('08:15');
-       
+        $schedule->command('schedule:otatrasada')->weekdays()->at('14:45');
+
+        $schedule->command('schedule:otnoentregada')->weekdays()->at('08:15');
+        $schedule->command('schedule:otnoentregada')->weekdays()->at('14:45');
+        
     }
 
     /**

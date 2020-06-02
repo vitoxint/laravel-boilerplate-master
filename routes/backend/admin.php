@@ -59,6 +59,10 @@ Route::group(['namespace' => 'OrdenTrabajo'], function () {
         Route::get('edit', [OrdenTrabajoController::class, 'edit'])->name('orden_trabajos.edit');
         Route::patch('/', [OrdenTrabajoController::class, 'update'])->name('orden_trabajos.update');
         Route::delete('/', [OrdenTrabajoController::class, 'destroy'])->name('orden_trabajos.destroy');
+
+        Route::get('send', [OrdenTrabajoController::class, 'send'])->name('orden_trabajos.send');
+        Route::get('printCliente', [OrdenTrabajoController::class, 'printCliente'])->name('orden_trabajos.printCliente');
+        Route::get('printTaller', [OrdenTrabajoController::class, 'printTaller'])->name('orden_trabajos.printTaller');
     });
 
     Route::get('orden_trabajos/pendientes', [OrdenTrabajoController::class, 'pendientes'])->name('orden_trabajos.pendientes');

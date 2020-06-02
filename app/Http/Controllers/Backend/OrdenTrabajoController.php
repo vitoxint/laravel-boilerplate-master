@@ -12,7 +12,9 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Mail\Backend\SendOtAtrasada;
+use App\Mail\Backend\SendOrdenTrabajo;
 use Illuminate\Support\Facades\Mail;
+use PDF;
 
 class OrdenTrabajoController extends Controller
 {
@@ -128,7 +130,7 @@ class OrdenTrabajoController extends Controller
     public function edit(OrdenTrabajo $trabajo)
     {
         //$ordenTrabajo = $trabajo;
-        //return view('backend.orden_trabajos.mail.send_ot_atrasadas',compact('ordenTrabajo'));
+        //return view('backend.orden_trabajos.mail.send_ot_noentregadas',compact('ordenTrabajo'));
         //Mail::send(new SendOtAtrasada($trabajo));
         return view('backend.orden_trabajos.edit',compact('trabajo'));
     }
@@ -177,5 +179,29 @@ class OrdenTrabajoController extends Controller
         $trabajo->delete();
 
         return redirect()->route('admin.orden_trabajos.index')->withFlashSuccess('Orden de trabajo eliminada');
+    }
+
+    public function printCliente(OrdenTrabajo $trabajo){
+
+        $usuario = $trabajo->usuario;
+        $pdf = PDF::loadView('backend.orden_trabajos.printCliente', compact('trabajo','usuario'));
+  
+        return $pdf->stream('0rdenTrabajo_'.$trabajo->folio.'.pdf');
+    }
+
+    public function printTaller(OrdenTrabajo $trabajo){
+        return 'Funcionalidad pendiente , para control interno';
+        $usuario = $trabajo->usuario;
+        $pdf = PDF::loadView('backend.orden_trabajos.printTaller', compact('trabajo','usuario'));
+  
+        return $pdf->stream('0rdenTrabajo_'.$trabajo->folio.'.pdf');
+    }
+
+    public function send(OrdenTrabajo $trabajo){
+
+        Mail::send(new SendOrdenTrabajo($trabajo));
+
+        return redirect()->back()->withFlashSuccess(__('Orden de Trabajo enviada'));
+
     }
 }

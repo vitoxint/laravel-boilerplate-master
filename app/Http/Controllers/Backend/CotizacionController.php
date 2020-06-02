@@ -120,8 +120,7 @@ class CotizacionController extends Controller
      */
     public function print(Cotizacion $cotizacion)
     {
-        //return $cotizacion;
-        //$data = ['title' => 'coding driver test title'];
+
         $usuario = $cotizacion->usuario;
         $pdf = PDF::loadView('backend.cotizaciones.print', compact('cotizacion','usuario'));
   
@@ -130,9 +129,6 @@ class CotizacionController extends Controller
 
     public function send(Cotizacion $cotizacion){
 
-        //return view('backend.cotizaciones.mail.send_cotizacion',compact('cotizacion'));
-
-       
         Mail::send(new SendCotizacion($cotizacion));
 
         return redirect()->back()->withFlashSuccess(__('Cotización enviada'));

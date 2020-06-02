@@ -204,11 +204,26 @@
             <div class="card-footer">
                 <div class="row">
                     <div class="col">
-                        {{ form_cancel(route('admin.orden_trabajos.index'), __('buttons.general.cancel')) }}
+
+                    <a href="{{ route('admin.orden_trabajos.printCliente', $trabajo) }}" target="_blank" class="btn btn-default btn-sm btn-bordered" data-toggle="tooltip" data-placement="top" title="Imprimir PDF">
+                        <i class="fas fa-file-pdf" style="color:red;"></i> Exportar Cliente
+                    </a>
+
+                    <a href="{{ route('admin.orden_trabajos.printTaller', $trabajo) }}" target="_blank" class="btn btn-default btn-sm btn-bordered" data-toggle="tooltip" data-placement="top" title="Imprimir PDF">
+                        <i class="fas fa-file-pdf" style="color:red;"></i> Exportar Taller
+                    </a>
+
+                    <a href="{{ route('admin.orden_trabajos.send', $trabajo) }}" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Enviar OT">
+                        <i class="fas fa-envelope" style="color:green;"></i> Enviar 
+                    </a> 
+
+                        
                     </div><!--col-->
 
                     <div class="col text-right">
                         {{ form_submit(__('buttons.general.crud.update')) }}
+                        {{ form_cancel(route('admin.orden_trabajos.index'), __('buttons.general.cancel')) }}
+                        
                     </div><!--row-->
                 </div><!--row-->
             </div><!--card-footer-->
@@ -254,8 +269,8 @@
                                         <td data-title="Folio:">{{ $item_ot->folio }}</td>
                                         <td data-title="Cantidad:">{{ $item_ot->cantidad }}</td>
                                         <td data-title="Descripción:">{{ $item_ot->descripcion }}</td>
-                                        <td align="right" data-title="Valor Unitario:">{{number_format($item_ot->valor_unitario, 0 ,',','.' )   }}</td>
-                                        <td align="right" data-title="Valor Parcial:">{{number_format($item_ot->valor_parcial, 0 ,',','.')  }}</td>
+                                        <td align="right" data-title="Valor Unitario:">@money($item_ot->valor_unitario )</td>
+                                        <td align="right" data-title="Valor Parcial:"> @money($item_ot->valor_parcial ) </td>
                                         
                                         <!-- <td>Proceso 0 de 0</td> -->
                                         <td data-title="Estado ítem OT:">
