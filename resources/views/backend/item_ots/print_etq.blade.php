@@ -10,7 +10,7 @@
 <div>
     <table>
         <tr>
-            <td style="text-align: center; width: 450px"><img src="{{ asset('img/backend/brand/marca.png') }}" width="120px" /></td>
+            <td style="text-align: center; width: 450px"><img src="{{ asset('img/backend/brand/marca.png') }}" width="130px" /></td>
         </tr>
     </table>
 
@@ -22,12 +22,12 @@
         </tr>
         <tr>
             <td style="width: 240px; padding-bottom:-18px; text-align: center;">
-                <p style="font-size: 10px;"><b>Lincoyán #870, Concepción.</b></p>
+                <p style="font-size: 10px;"><b>LINCOYÁN #870, CONCEPCIÓN.</b></p>
             </td>
         </tr>
          <tr>
             <td style="width: 240px; padding-bottom:-10px; text-align: center;">
-                <p style="font-size: 10px;"><b>Tel.(41)222 3509 - www.orecal.cl.</b></p>
+                <p style="font-size: 10px;"><b>TEL.(41)222 3509 - WWW.ORECAL.CL.</b></p>
             </td>
 
         </tr> 
@@ -36,27 +36,27 @@
 
 
 
-<table  class="table table-bordered table-sm" style="border:1px; padding-left:10px; padding-right:10px; padding-top:5px;" >
+<table  class="table table-bordered table-sm" style="border:2px; padding-left:10px; padding-right:10px; padding-top:2px;" >
 
 
     <tbody>
+        <!-- <tr>
+            <td style="padding-bottom:-15px; padding-top:1px;"> <p style="font-size: 12px; font-weight: bold; ">ORDEN: </p>
+            <td style="padding-bottom:-15px; padding-top:1px;"> <p style="font-size: 12px; font-weight:bold; ">{{$item_ot->ordenTrabajo->folio}}</p></td>
+        </tr> -->
         <tr>
-            <td style="padding-bottom:-15px; padding-top:2px;"> <p style="font-size: 13px; font-weight: bold; ">ORDEN: </p>
-            <td style="padding-bottom:-15px; padding-top:2px;"> <p style="font-size: 13px; font-weight:bold; ">{{$item_ot->ordenTrabajo->folio}}</p></td>
-        </tr>
-        <tr>
-            <td style="padding-bottom:-15px; padding-top:2px;"> <p style="font-size: 13px; font-weight: bold;">ÍTEM: </p></td>
-            <td style="padding-bottom:-15px; padding-top:2px;"> <p style="font-size: 13px; font-weight:bold; ">{{$item_ot->folio}}</p></td>
-        </tr>
-
-        <tr>
-            <td style="padding-bottom:-15px; padding-top:2px;"> <p style="font-size: 13px; font-weight: bold;">DESCRIPCIÓN: </p></td>
-            <td style="padding-bottom:-15px; padding-top:2px;"> <p style="font-size: 13px; font-weight:bold; "><?php echo Str::limit($item_ot->descripcion, 50)  ?></p></td>
+            <td style="padding-bottom:-15px; padding-top:1px;"> <p style="font-size: 12px; font-weight: bold;">ÍTEM OT: </p></td>
+            <td style="padding-bottom:-15px; padding-top:1px;"> <p style="font-size: 12px; font-weight:bold; ">{{$item_ot->folio}}</p></td>
         </tr>
 
         <tr>
-            <td style="padding-bottom:-15px; padding-top:2px;"> <p style="font-size: 13px; font-weight: bold;">CLIENTE: </p></td>
-            <td style="padding-bottom:-15px; padding-top:2px;"> <p style="font-size: 13px; font-weight: bold; "><?php echo Str::limit($item_ot->ordenTrabajo->cliente->razon_social, 50)  ?></p></td>
+            <td style="padding-bottom:-15px; padding-top:1px;"> <p style="font-size: 12px; font-weight: bold;">DESCRIPCIÓN: </p></td>
+            <td style="padding-bottom:-15px; padding-top:1px;"> <p style="font-size: 12px; font-weight:bold; "><?php echo Str::limit($item_ot->descripcion, 50)  ?></p></td>
+        </tr>
+
+        <tr>
+            <td style="padding-bottom:-15px; padding-top:1px;"> <p style="font-size: 12px; font-weight: bold;">CLIENTE: </p></td>
+            <td style="padding-bottom:-15px; padding-top:1px;"> <p style="font-size: 12px; font-weight: bold; "><?php echo Str::limit($item_ot->ordenTrabajo->cliente->razon_social, 50)  ?></p></td>
         </tr>
 <!--         <tr>
             <td style="padding-bottom:-15px; padding-top:2px;"> <p style="font-size: 7px; font-weight: bold;">VENDEDOR: </p></td>
@@ -64,15 +64,14 @@
         </tr> -->
 
         <tr>
-            <td style="padding-bottom:-15px; padding-top:2px;"> <p style="font-size: 13px; font-weight: bold;">FECHA/HORA: </p></td>
+            <td style="padding-bottom:-15px; padding-top:1px;"> <p style="font-size: 12px; font-weight: bold;">FECHA/HORA: </p></td>
             <?php   $fecha = new Carbon\Carbon(now()); ?>
-            <td style="padding-bottom:-15px; padding-top:2px;"> <p style="font-size: 13px; font-weight: bold;">{{ $fecha->format('d/m/Y H:i') }}</p></td>
+            <td style="padding-bottom:-15px; padding-top:1px;"> <p style="font-size: 12px; font-weight: bold;">{{ $fecha->format('d/m/Y H:i') }}</p></td>
         </tr>
-<!--         <tr>
-            <td colspan="2" style="padding-bottom:-15px; padding-top:2px; text-align:center;"> <p style="font-size: 14px; font-weight: bold;">BARCODE </p></td>
-           
-            
-        </tr> -->
+        <tr>
+            <td colspan="2" style="padding-bottom:-15px; padding-top:1px; text-align:center;"> <p style="font-size: 8px; font-weight: bold;"><?php echo '<img src="data:image/png;base64,' . DNS1D::getBarcodePNG($item_ot->folio, 'C39',1.5,36,array(1,1,1), true) . '" alt="barcode"   />'; ?> </p></td>
+                      
+        </tr>
 
     </tbody>
 </table>

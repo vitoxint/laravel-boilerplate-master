@@ -50,8 +50,15 @@ class SendOrdenTrabajo extends Mailable
         $html = view('backend.orden_trabajos.mail.send_orden_trabajo',compact('trabajo'));
         $pdf = PDF::loadView('backend.orden_trabajos.printcliente', compact('trabajo'));
 
-
-        return $this->to($this->trabajo->usuario->email, $this->trabajo->usuario->first_name . ' ' . $this->trabajo->usuario->last_name )
+        if($trabajo->representante != null){
+            $destino = $this->trabajo->representante->email;
+            $nombre_destino = $this->trabajo->representante->nombre;
+        }   else{
+            $destino = $this->trabajo->cliente->email;
+            $nombre_destino = $this->trabajo->cliente->nombre;            
+        }    
+ 
+        return $this->to($this->trabajo->representante->email, $this->trabajo->representante->nombre )
             ->html($cssToInlineStyles->convert($html))
             ->attachData($pdf->output(), 'OrdenTrabajo_'.$this->trabajo->folio.'.pdf', [
                 'mime' => 'application/pdf',
