@@ -107,8 +107,7 @@ class CotizacionController extends Controller
             'valor_neto' => 0,
             
           ]);
-
-          return $cotizacion;
+        
     return redirect()->route('admin.cotizaciones.edit',$cotizacion)->withFlashSuccess('Cotizacion registrada | puedes agregar ítems');        
     }
 

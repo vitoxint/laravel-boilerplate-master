@@ -115,3 +115,15 @@ Breadcrumbs::for('admin.cotizaciones.edit', function ($trail, $cotizacion) {
     $trail->parent('admin.cotizaciones.index', route('admin.cotizaciones.index'));
     $trail->push('Editar cotización: '.$cotizacion->folio, route('admin.cotizaciones.edit',$cotizacion));
 });
+
+Breadcrumbs::for('admin.item_ots.index', function ($trail) {
+    $trail->push('Trabajos (ítems)', route('admin.item_ots.index'));
+});
+
+Breadcrumbs::for('admin.item_ots.editTaller', function ($trail,$item_ot, $trabajo) {
+
+    $trail->parent('admin.item_ots.index', route('admin.item_ots.index'));
+  
+    $trail->push('Ver trabajo : '. $item_ot->folio, route('admin.item_ots.editTaller',[$item_ot, $trabajo]));
+   
+});

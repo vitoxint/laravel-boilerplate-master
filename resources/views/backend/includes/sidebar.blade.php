@@ -164,7 +164,7 @@
                             <a class="nav-link {{
                                 active_class(Route::is('admin/orden_trabajos*'))
                             }}" href="{{ route('admin.orden_trabajos.index') }}">
-                                Orden de Trabajo
+                                Ordenes de Trabajo
 
                                 @if ($pending_approval > 0)
                                     <span class="badge badge-danger">{{ $pending_approval }}</span>
@@ -173,9 +173,9 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{
-                                active_class(Route::is('admin/orden_trabajos*'))
-                            }}" href="{{ route('admin.orden_trabajos.index') }}">
-                                Tareas y procesos
+                                active_class(Route::is('admin/item_ots*'))
+                            }}" href="{{ route('admin.item_ots.index') }}">
+                                Trabajos (ítems)
                             </a>
                         </li>
                     </ul>

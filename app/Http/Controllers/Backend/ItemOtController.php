@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
+use Illuminate\Pagination\LengthAwarePaginator;
+use App\Repositories\Backend\Model\ItemOtRepository;
 
 use App\ItemOt;
 use App\OrdenTrabajo;
@@ -14,6 +16,13 @@ use Illuminate\Http\Request;
 
 class ItemOtController extends Controller
 {
+
+    protected $itemOtRepository;
+
+    public function __construct(ItemOtRepository $itemOtRepository)
+    {
+        $this->itemOtRepository = $itemOtRepository;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -21,7 +30,9 @@ class ItemOtController extends Controller
      */
     public function index()
     {
-        //
+        return view('backend.item_ots.index')
+        ->withItemOts($this->itemOtRepository->getActivePaginated(25, 'folio', 'desc'));
+    
     }
 
     /**
@@ -124,6 +135,11 @@ class ItemOtController extends Controller
     public function edit(ItemOt $item_ot, OrdenTrabajo $trabajo)
     {
         return view('backend.item_ots.edit',compact('item_ot','trabajo'));
+    }
+
+    public function editTaller(ItemOt $item_ot, OrdenTrabajo $trabajo)
+    {
+        return view('backend.item_ots.editTaller',compact('item_ot','trabajo'));
     }
 
     /**

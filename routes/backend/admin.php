@@ -105,6 +105,7 @@ Route::group(['namespace' => 'ItemOt'], function () {
 
     Route::group(['prefix' => 'item_ots/{item_ot}/{trabajo}'], function () {
         Route::get('edit', [ItemOtController::class, 'edit'])->name('item_ots.edit');
+        Route::get('editTaller', [ItemOtController::class, 'edit'])->name('item_ots.editTaller');
         Route::patch('/', [ItemOtController::class, 'update'])->name('item_ots.update');
         Route::get('print_etq', [ItemOtController::class, 'print_etq'])->name('item_ots.print_etq');
         Route::delete('/', [ItemOtController::class, 'destroy'])->name('item_ots.destroy');
