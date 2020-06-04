@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 
 use App\Cotizacion;
+use App\ItemCotizacion;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -187,6 +188,10 @@ class CotizacionController extends Controller
      */
     public function destroy(Cotizacion $cotizacion)
     {
-        
+        ItemCotizacion::where('cotizacion_id' ,'=', $cotizacion->id)->delete();
+
+        $cotizacion->delete();
+
+        return redirect()->route('admin.cotizaciones.index')->withFlashSuccess('Cotizacion eliminada');
     }
 }
