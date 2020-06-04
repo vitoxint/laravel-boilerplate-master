@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 
-use App\Cotizacion;
+use App\Cotizacion; 
 use App\ItemCotizacion;
 use Illuminate\Http\Request;
 use Carbon\Carbon;

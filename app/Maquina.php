@@ -4,11 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Proceso extends Model
+class Maquina extends Model
 {
 
     protected $fillable = [
-        'codigo', 'descripcion', 'maquinas'
+        'id','codigo', 'nombre','estado', 'especificaciones'
     ];
 
     /**
@@ -19,4 +19,6 @@ class Proceso extends Model
     protected $hidden = [
          'remember_token',
     ]; 
+    
+    
 }

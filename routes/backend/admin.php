@@ -8,6 +8,8 @@ use App\Http\Controllers\Backend\ItemOtController;
 use App\Http\Controllers\Backend\ImagenItemOtController;
 use App\Http\Controllers\Backend\CotizacionController;
 use App\Http\Controllers\Backend\ItemCotizacionController;
+use App\Http\Controllers\Backend\ProcesoController;
+use App\Http\Controllers\Backend\MaquinaController;
 
 
 
@@ -125,6 +127,34 @@ Route::group(['namespace' => 'ItemCotizacion'], function () {
         Route::patch('/', [ItemOtController::class, 'update'])->name('item_ots.update');
         Route::delete('/', [ItemOtController::class, 'destroy'])->name('item_ots.destroy');
     }); */
+}); 
+
+Route::group(['namespace' => 'Proceso'], function () {
+    
+    Route::get('procesos', [ProcesoController::class, 'index'])->name('procesos.index');
+    Route::get('procesos/create', [ProcesoController::class, 'create'])->name('procesos.create');
+    Route::post('procesos', [ProcesoController::class, 'store'])->name('procesos.store');
+
+    Route::group(['prefix' => 'procesos/{proceso}'], function () {
+        Route::get('edit', [ProcesoController::class, 'edit'])->name('procesos.edit');
+        Route::patch('/', [ProcesoController::class, 'update'])->name('procesos.update');
+        Route::delete('/', [ProcesoController::class, 'destroy'])->name('procesos.destroy');
+    });
+
+}); 
+
+Route::group(['namespace' => 'Maquina'], function () {
+    
+    Route::get('maquinas', [MaquinaController::class, 'index'])->name('maquinas.index');
+    Route::get('maquinas/create', [MaquinaController::class, 'create'])->name('maquinas.create');
+    Route::post('maquinas', [MaquinaController::class, 'store'])->name('maquinas.store');
+
+    Route::group(['prefix' => 'maquinas/{maquina}'], function () {
+        Route::get('edit', [MaquinaController::class, 'edit'])->name('maquinas.edit');
+        Route::patch('/', [MaquinaController::class, 'update'])->name('maquinas.update');
+        Route::delete('/', [MaquinaController::class, 'destroy'])->name('maquinas.destroy');
+    });
+
 }); 
 
 

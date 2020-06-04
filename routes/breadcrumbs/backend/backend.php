@@ -127,3 +127,31 @@ Breadcrumbs::for('admin.item_ots.editTaller', function ($trail,$item_ot, $trabaj
     $trail->push('Ver trabajo : '. $item_ot->folio, route('admin.item_ots.editTaller',[$item_ot, $trabajo]));
    
 });
+
+Breadcrumbs::for('admin.procesos.index', function ($trail) {
+    $trail->push('Clasificación de procesos', route('admin.procesos.index'));
+});
+
+Breadcrumbs::for('admin.procesos.create', function ($trail) {
+    $trail->parent('admin.procesos.index', route('admin.procesos.index'));
+    $trail->push('Añadir nueva clasificación de proceso', route('admin.procesos.create'));
+});
+
+Breadcrumbs::for('admin.procesos.edit', function ($trail,$proceso) {
+    $trail->parent('admin.procesos.index', route('admin.procesos.index'));
+    $trail->push('Editar: '.$proceso->codigo, route('admin.procesos.edit' ,$proceso));
+});
+
+Breadcrumbs::for('admin.maquinas.index', function ($trail) {
+    $trail->push('Registro de máquinas', route('admin.maquinas.index'));
+});
+
+Breadcrumbs::for('admin.maquinas.create', function ($trail) {
+    $trail->parent('admin.maquinas.index', route('admin.maquinas.index'));
+    $trail->push('Registrar nueva máquina', route('admin.maquinas.create'));
+});
+
+Breadcrumbs::for('admin.maquinas.edit', function ($trail,$maquina) {
+    $trail->parent('admin.maquinas.index', route('admin.maquinas.index'));
+    $trail->push('Editar datos máquina : '. $maquina->codigo, route('admin.maquinas.edit', $maquina));
+});
