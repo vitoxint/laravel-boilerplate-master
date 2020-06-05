@@ -6,6 +6,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use App\Repositories\Backend\Model\MaquinaRepository;
 
 use App\Maquina;
+use App\MaquinaHasOperador;
 use Illuminate\Http\Request;
 
 class MaquinaController extends Controller
@@ -53,14 +54,28 @@ class MaquinaController extends Controller
             'estado' => 'required'
             
         ]);
+
+        $operadores = $request->input('operadores',[]);
+
+        //return $operadores;
              
         $maquina= Maquina::create([
             'codigo' => $request->input('codigo'),
             'nombre' => $request->input('nombre'),
+            'valor_hora'=> $request->input('valor_hora'),
             'especificaciones' => $request->input('especificaciones'),
             'estado' => $request->input('estado'),
                        
-          ]);
+        ]);
+
+        foreach($operadores as $operador){
+            MaquinaHasOperador::create([
+                'empleado_id' => $operador,
+                'maquina_id' => $maquina->id,
+
+            ]);
+        }
+
 
           return redirect()->route('admin.maquinas.edit',$maquina)->withFlashSuccess('La máquina ha sido registrada'); 
     }
@@ -84,6 +99,7 @@ class MaquinaController extends Controller
      */
     public function edit(Maquina $maquina)
     {
+       
         return view('backend.maquinas.edit', compact('maquina'));
     }
 
@@ -102,14 +118,45 @@ class MaquinaController extends Controller
             'estado' => 'required'
             
         ]);
-             
+
+        $operadores = $request->input('operadores',[]);  
+                    
         $maquina->update([
             'codigo' => $request->input('codigo'),
             'nombre' => $request->input('nombre'),
+            'valor_hora'=> $request->input('valor_hora'),
             'especificaciones' => $request->input('especificaciones'),
             'estado' => $request->input('estado'),
                        
           ]);
+
+        
+          foreach($operadores as $operador){
+
+            $aux = MaquinaHasOperador::where('maquina_id' ,'=', $maquina->id)->where('empleado_id','=',$operador)->first();
+            if($aux == null)
+                {
+                    MaquinaHasOperador::create([
+                        'empleado_id' => $operador,
+                        'maquina_id' => $maquina->id,
+
+                    ]);
+                }
+            }
+
+        foreach($maquina->maquina_has_operador as $maqops){
+            $cont = 0;
+
+            foreach($operadores as $operador){
+                if($maqops->empleado_id == $operador){
+                    $cont++;
+                }
+            }
+            if($cont == 0){
+                $maqops->delete();
+            }
+           
+        }
 
           return redirect()->route('admin.maquinas.edit',$maquina)->withFlashSuccess('La información de la máquina ha sido editada'); 
     }

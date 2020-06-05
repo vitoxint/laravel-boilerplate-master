@@ -26,7 +26,10 @@
                         <tr>
                              <th style="width:35px;">Código</th>
                              <th>Nombre máquina</th>
-                             <th>Estado</th>
+                  
+                             <th> Operadores </th>
+                             <th style="width:60px;">Valor HH.MM</th>
+                             <th style="width:35px; text-align:center;">Estado</th>
 
                              <th style="width:45px;">@lang('labels.general.actions')</th>
                         </tr>
@@ -36,7 +39,16 @@
                             <tr>
                                 <td>{{ $maquina->codigo }}</td>
                                 <td>{{ $maquina->nombre }}</td>
-                                <td style="text-align:center; width:29px;">
+                                <td>  
+                                    @foreach($maquina->maquina_has_operador as $operador)
+                                     <h6> <span class="badge badge-default">{{$operador->operador->nombres.' '.$operador->operador->apellidos}}</span>
+                                         
+                                    @endforeach
+                                    </h6>
+                                </td>
+                                <td style="text-align:right;">@money($maquina->valor_hora) </td>
+
+                                <td style="text-align:center;">
                                     @switch($maquina->estado) 
                                             @case ('1') 
                                                <span class="badge btn-success"> Disponible </span>

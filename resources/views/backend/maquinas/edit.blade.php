@@ -1,6 +1,6 @@
 @extends('backend.layouts.app')
 
-@section('title','Clasificación de procesos' . ' | ' . 'Editar proceso')
+@section('title','Registro de máquinas' . ' | ' . 'Editar máquina')
 
 @section('content')
 
@@ -49,6 +49,20 @@
                     </div><!--form-group--> 
 
                     <div class="form-group row">
+                        {{ html()->label(__('Valor hora HHMM'))->class('col-md-2 form-control-label')->for('valor_hora') }}
+
+                        <div class="col-md-1">
+                                                
+                                {{ html()->number('valor_hora')
+                                        ->class('form-control')
+                                        ->placeholder('valor HHMM')
+                                        ->attribute('maxlength', 191)
+                                                                          
+                                }}                                                    
+                        </div>
+                    </div><!--form-group-->                     
+
+                    <div class="form-group row">
                         {{ html()->label('Detalle y especificaciones')->class('col-md-2 form-control-label')->for('especificaciones') }}
 
                         <div class="col-md-10">
@@ -68,11 +82,22 @@
                             {{ html()->select('estado',array('1' => 'Disponible', '2' => 'Inhabilitada', '3' =>'En uso', '4' => 'En mantención'), $maquina->estado)
                                 ->class('form-control')
                                 ->attribute('maxlength', 191) 
-                                ->required()
-                                
+                                ->required()                                
                             }}
                             </div><!--col-->
-                        </div><!--form-group-->    
+                        </div><!--form-group--> 
+
+                    <div class="form-group row">                    
+                        {{ html()->label('Operadores')->class('col-md-2 form-control-label')->for('operadores') }}
+                            <div class="col-md-5">
+                                <select name="operadores[]" id="operadores" class="form-control" multiple="multiple" >
+                                @foreach($maquina->maquina_has_operador as $operadores)
+                                <option value="{{$operadores->operador->id}}" selected>{{$operadores->operador->nombres. ' '.$operadores->operador->apellidos}}    </option>
+
+                                @endforeach
+                                </select>
+                            </div><!--col-->
+                        </div><!--form-group-->             
 
                         </div><!--col-->
                     </div><!--row-->
@@ -91,11 +116,58 @@
             </div><!--card-footer-->
 
             {{ html()->closeModelForm() }}    
-        </div><!--card-->
-    
+        </div><!--card-->    
   
 </div>
 
+
+
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+  <!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" /> -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/i18n/es.js"></script>
+   
+  <script>
+        $.fn.select2.defaults.set('language', 'es');
+        
+        $('#operadores').select2({
+            placeholder: "Seleccionar...",
+            minimumInputLength: 3,
+            ajax: {
+                url: "{{route('admin.empleados.dataAjax')}}",
+                dataType: 'json',
+                language: "es",
+                data: function (params) {
+                    return {
+                        q: $.trim(params.term)
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data
+                    };                   
+                },
+                cache: true
+            },           
+        })/* .on("select2:unselecting", function(e){
+            var op = $('#operadores option:selected').val();
+alert(op);
+            $.ajax({
+                type:'POST',
+                url:'{{route("admin.maquinahasoperador.destroy")}}?id='+ "<?php echo $maquina->id ?>",
+                data:{op:op},
+                success:function(data){
+                    alert('Operador eliminado de la máquina');                
+                },
+                error: function() {
+                    console.log("No se ha podido obtener la información");
+                }
+
+                })     
+        }).trigger('change') */;      
+        
+    </script>
 
 
 

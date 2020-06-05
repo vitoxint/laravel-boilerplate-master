@@ -157,4 +157,18 @@ class EmpleadoController extends Controller
 
         return redirect()->route('admin.empleados.index')->withFlashSuccess('Operador eliminado de los registros');        
     }
+
+    public function dataAjax(Request $request)
+    {
+       $term = trim($request->q);
+
+       $tags = Empleado::query()
+        ->where('nombres', 'LIKE', "%{$term}%")->orWhere('apellidos', 'LIKE', "%{$term}%") 
+        ->get();
+        $formatted_tags = [];
+        foreach ($tags as $tag) {
+            $formatted_tags[] = ['id' => $tag->id, 'text' => $tag->nombres .' '.$tag->apellidos];
+        }
+        return \Response::json($formatted_tags);
+    }
 }

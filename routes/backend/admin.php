@@ -11,6 +11,7 @@ use App\Http\Controllers\Backend\ItemCotizacionController;
 use App\Http\Controllers\Backend\ProcesoController;
 use App\Http\Controllers\Backend\MaquinaController;
 use App\Http\Controllers\Backend\EmpleadoController;
+use App\Http\Controllers\Backend\MaquinaHasOperadorController;
 
 
 
@@ -163,6 +164,7 @@ Route::group(['namespace' => 'Empleado'], function () {
     Route::get('empleados', [EmpleadoController::class, 'index'])->name('empleados.index');
     Route::get('empleados/create', [EmpleadoController::class, 'create'])->name('empleados.create');
     Route::post('empleados', [EmpleadoController::class, 'store'])->name('empleados.store');
+    Route::get('empleados/dataAjax', [EmpleadoController::class, 'dataAjax'])->name('empleados.dataAjax');
 
     Route::group(['prefix' => 'empleados/{empleado}'], function () {
         Route::get('edit', [EmpleadoController::class, 'edit'])->name('empleados.edit');
@@ -174,6 +176,9 @@ Route::group(['namespace' => 'Empleado'], function () {
 
 }); 
 
+
+
+Route::post('maquinaOperadores/destroy', [MaquinaHasOperadorController::class, 'destroy'])->name('maquinahasoperador.destroy');
 
 
 Route::post('imagen_item_ots', 'ImagenItemOtController@store')->name('imagen_itemot.store');

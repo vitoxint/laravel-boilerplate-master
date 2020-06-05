@@ -8,7 +8,7 @@ class Maquina extends Model
 {
 
     protected $fillable = [
-        'id','codigo', 'nombre','estado', 'especificaciones'
+        'id','codigo', 'nombre','estado', 'especificaciones','valor_hora','operadores',
     ];
 
     /**
@@ -19,6 +19,12 @@ class Maquina extends Model
     protected $hidden = [
          'remember_token',
     ]; 
+
+    public function maquina_has_operador(){
+
+        return $this->hasMany('App\MaquinaHasOperador', 'maquina_id','id');
+
+    }
     
     
 }
