@@ -155,3 +155,22 @@ Breadcrumbs::for('admin.maquinas.edit', function ($trail,$maquina) {
     $trail->parent('admin.maquinas.index', route('admin.maquinas.index'));
     $trail->push('Editar datos máquina : '. $maquina->codigo, route('admin.maquinas.edit', $maquina));
 });
+
+Breadcrumbs::for('admin.empleados.index', function ($trail) {
+    $trail->push('Registro de operadores', route('admin.empleados.index'));
+});
+
+Breadcrumbs::for('admin.empleados.buscar_operadores', function ($trail) {
+    $trail->push('Operadores encontrados la búsqueda', route('admin.empleados.buscar_operadores'));
+});
+
+Breadcrumbs::for('admin.empleados.create', function ($trail) {
+    $trail->parent('admin.empleados.index', route('admin.empleados.index'));
+    $trail->push('Registrar nuevo operador', route('admin.empleados.create'));
+});
+
+
+Breadcrumbs::for('admin.empleados.edit', function ($trail,$empleado) {
+    $trail->parent('admin.empleados.index', route('admin.empleados.index'));
+    $trail->push('Editar operador: '.$empleado->codigo, route('admin.empleados.edit',$empleado));
+});

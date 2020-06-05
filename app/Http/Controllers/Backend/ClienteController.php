@@ -9,6 +9,7 @@ use App\Cliente;
 use App\Region;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Repositories\Backend\Model\ClienteRepository;
+use Freshwork\ChileanBundle\Rut;
 
 class ClienteController extends Controller
 {

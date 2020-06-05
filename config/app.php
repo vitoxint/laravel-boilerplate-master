@@ -205,6 +205,7 @@ return [
         Barryvdh\DomPDF\ServiceProvider::class,
         peal\barcodegenerator\BarcodeServiceProvider::class,
         Milon\Barcode\BarcodeServiceProvider::class,
+        Freshwork\ChileanBundle\Laravel\ChileanBundleServiceProvider::class,
     ],
 
     /*
@@ -260,5 +261,7 @@ return [
 
         'DNS1D' => Milon\Barcode\Facades\DNS1DFacade::class,
         'DNS2D' => Milon\Barcode\Facades\DNS2DFacade::class,
+        'Rut'   => Freshwork\ChileanBundle\Laravel\Facades\Rut::class,
+
     ],
 ];

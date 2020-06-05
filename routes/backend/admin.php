@@ -10,6 +10,7 @@ use App\Http\Controllers\Backend\CotizacionController;
 use App\Http\Controllers\Backend\ItemCotizacionController;
 use App\Http\Controllers\Backend\ProcesoController;
 use App\Http\Controllers\Backend\MaquinaController;
+use App\Http\Controllers\Backend\EmpleadoController;
 
 
 
@@ -154,6 +155,22 @@ Route::group(['namespace' => 'Maquina'], function () {
         Route::patch('/', [MaquinaController::class, 'update'])->name('maquinas.update');
         Route::delete('/', [MaquinaController::class, 'destroy'])->name('maquinas.destroy');
     });
+
+}); 
+
+Route::group(['namespace' => 'Empleado'], function () {
+    
+    Route::get('empleados', [EmpleadoController::class, 'index'])->name('empleados.index');
+    Route::get('empleados/create', [EmpleadoController::class, 'create'])->name('empleados.create');
+    Route::post('empleados', [EmpleadoController::class, 'store'])->name('empleados.store');
+
+    Route::group(['prefix' => 'empleados/{empleado}'], function () {
+        Route::get('edit', [EmpleadoController::class, 'edit'])->name('empleados.edit');
+        Route::patch('/', [EmpleadoController::class, 'update'])->name('empleados.update');
+        Route::delete('/', [EmpleadoController::class, 'destroy'])->name('empleados.destroy');
+    });
+
+    Route::get('empleados/resultados', [EmpleadoController::class, 'buscar_operadores'])->name('empleados.buscar_operadores');
 
 }); 
 

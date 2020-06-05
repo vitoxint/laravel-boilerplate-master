@@ -220,6 +220,45 @@
             @endif
 
 
+            @if ($logged_in_user->isAdmin())
+                <li class="nav-title">
+                    ADMINISTRACION EMPLEADOS
+                </li>
+
+                <li class="nav-item nav-dropdown {{
+                    active_class(Route::is('admin/empleados*'), 'open')
+                }}">
+                    <a class="nav-link nav-dropdown-toggle {{
+                        active_class(Route::is('admin/empleados*'))
+                    }}" href="#">
+                        <i class="nav-icon fas fa-users"></i>
+                        RR.HHs
+
+                        @if ($pending_approval > 0)
+                            <span class="badge badge-danger">{{ $pending_approval }}</span>
+                        @endif
+                    </a>
+
+                    <ul class="nav-dropdown-items">
+                        <li class="nav-item">
+                            <a class="nav-link {{
+                                active_class(Route::is('admin/empleados*'))
+                            }}" href="{{ route('admin.empleados.index') }}">
+                                Operadores
+                                @if ($pending_approval > 0)
+                                    <span class="badge badge-danger">{{ $pending_approval }}</span>
+                                @endif
+                            </a>
+                        </li>
+
+
+                    </ul>
+                </li>
+
+                <li class="divider"></li>
+            @endif
+
+
         </ul>
     </nav>
 
