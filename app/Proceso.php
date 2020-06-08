@@ -19,4 +19,10 @@ class Proceso extends Model
     protected $hidden = [
          'remember_token',
     ]; 
+
+    public function proceso_has_maquina(){
+
+        return $this->hasMany('App\ProcesoHasMaquina', 'proceso_id','id');
+
+    }
 }

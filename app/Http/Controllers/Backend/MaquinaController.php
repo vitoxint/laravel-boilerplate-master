@@ -7,7 +7,10 @@ use App\Repositories\Backend\Model\MaquinaRepository;
 
 use App\Maquina;
 use App\MaquinaHasOperador;
+use App\Proceso;
+use App\ProcesoHasMaquina;
 use Illuminate\Http\Request;
+use DB;
 
 class MaquinaController extends Controller
 {
@@ -57,7 +60,6 @@ class MaquinaController extends Controller
 
         $operadores = $request->input('operadores',[]);
 
-        //return $operadores;
              
         $maquina= Maquina::create([
             'codigo' => $request->input('codigo'),
@@ -171,5 +173,36 @@ class MaquinaController extends Controller
     {
         $maquina->delete();
         return redirect()->route('admin.maquinas.index')->withFlashSuccess('La máquina ha sido eliminada de los registros');  
+    }
+
+
+
+    public function dataAjax(Request $request)
+    {
+       $term = trim($request->q);
+
+       $tags = Maquina::query()
+        ->where('nombre', 'LIKE', "%{$term}%")->orWhere('codigo', 'LIKE', "%{$term}%") 
+        ->get();
+        $formatted_tags = [];
+        foreach ($tags as $tag) {
+            $formatted_tags[] = ['id' => $tag->id, 'text' => $tag->codigo .': '.$tag->nombre];
+        }
+        return \Response::json($formatted_tags);
+    }
+
+    public function getMaquinaList(Request $request)
+    {
+
+      return  $maquinas = DB::table('maquinas')
+        ->leftjoin('proceso_has_maquinas', function ($join) {
+            $join->on('maquina_id', '=', 'maquinas.id');
+                 
+        })->where('proceso_has_maquinas.proceso_id',  $request->proceso_id)
+        ->where('maquinas.estado', '=', '1')->orWhere('maquinas.estado', '=', '3')
+        ->pluck(DB::raw("CONCAT(codigo,' - ',nombre) AS name"),"maquinas.id");
+
+        return response()->json($maquinas);
+
     }
 }

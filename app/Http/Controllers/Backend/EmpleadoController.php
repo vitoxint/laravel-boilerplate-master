@@ -7,8 +7,11 @@ use App\Repositories\Backend\Model\EmpleadoRepository;
 use Freshwork\ChileanBundle\Rut;
 
 use App\Empleado;
+use App\Maquina;
+use App\MaquinaHasOperador;
 use Illuminate\Http\Request;
 use Str;
+use DB;
 
 class EmpleadoController extends Controller
 {
@@ -170,5 +173,18 @@ class EmpleadoController extends Controller
             $formatted_tags[] = ['id' => $tag->id, 'text' => $tag->nombres .' '.$tag->apellidos];
         }
         return \Response::json($formatted_tags);
+    }
+
+    public function getOperadorList(Request $request)
+    {
+
+      return  $operadores = DB::table('empleados')
+        ->leftjoin('maquina_has_operadors', function ($join) {
+            $join->on('empleado_id', '=', 'empleados.id');
+                 
+        })->where('maquina_has_operadors.maquina_id',  $request->maquina_id)->pluck(DB::raw("CONCAT(nombres,' ',apellidos) AS name"),"empleados.id");
+
+        return response()->json($operadores);
+
     }
 }

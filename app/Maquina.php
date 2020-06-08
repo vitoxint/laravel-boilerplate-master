@@ -25,6 +25,15 @@ class Maquina extends Model
         return $this->hasMany('App\MaquinaHasOperador', 'maquina_id','id');
 
     }
+
+    public function getCodigoyNombreAttribute()
+    {
+        return $this->codigo . ': ' . $this->nombre;
+    }
+
+    public function proceso_has_maquina(){
+        return $this->hasMany('App\ProcesoHasMaquina', 'id', 'maquina_id');
+    }
     
     
 }

@@ -39,11 +39,11 @@
                         <tbody>
                         @foreach($empleados as $empleado)
                             <tr>
-                                <td>{{ $empleado->codigo }}</td>
-                                <td>{{ $empleado->nombres }}</td>
-                                <td>{{ $empleado->apellidos }}</td>
-                                <td>{{ $empleado->ocupacion }}</td>
-                                <td style="text-align:center; width:29px;">
+                                <td data-title="Codigo:">{{ $empleado->codigo }}</td>
+                                <td data-title="Nombres:">{{ $empleado->nombres }}</td>
+                                <td data-title="Apellidos:">{{ $empleado->apellidos }}</td>
+                                <td data-title="Ocupación:">{{ $empleado->ocupacion }}</td>
+                                <td data-title="Activo" style="text-align:center;">
                                     @switch($empleado->estado_activo) 
                                             @case ('1') 
                                                <span class="badge btn-success"> SÍ </span>
@@ -57,7 +57,7 @@
                                             @break;                   
                                     @endSwitch </td>
 
-                                <td class="btn-td">@include('backend.empleados.includes.actions', ['empleado' => $empleado])</td>
+                                <td data-title="Acciones" class="btn-td">@include('backend.empleados.includes.actions', ['empleado' => $empleado])</td>
                             </tr>
                         @endforeach
                         </tbody>

@@ -50,6 +50,15 @@
                         </div>
                     </div><!--form-group--> 
 
+                    <div class="form-group row">
+                    
+                    {{ html()->label('Asignar máquinas')->class('col-md-2 form-control-label')->for('maquinas') }}
+                        <div class="col-md-5">
+                            <select name="maquinas[]" id="maquinas" class="form-control" multiple="multiple" >
+                            </select>
+                        </div><!--col-->
+                    </div><!--form-group--> 
+
                     </div><!--col-->
                 </div><!--row-->
             </div><!--card-body-->
@@ -70,7 +79,38 @@
 
 
 
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+  <!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" /> -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/i18n/es.js"></script>
 
+    <script>
+        $.fn.select2.defaults.set('language', 'es');
+        
+        $('#maquinas').select2({
+            placeholder: "Seleccionar...",
+            minimumInputLength: 3,
+            ajax: {
+                url: "{{route('admin.maquinas.dataAjax')}}",
+                dataType: 'json',
+                language: "es",
+                data: function (params) {
+                    return {
+                        q: $.trim(params.term)
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data
+                    };                   
+                },
+                cache: true
+            },           
+        });
+        
+        
+    </script>
 
 
 @endsection

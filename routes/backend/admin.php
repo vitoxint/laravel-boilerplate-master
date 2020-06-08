@@ -12,6 +12,7 @@ use App\Http\Controllers\Backend\ProcesoController;
 use App\Http\Controllers\Backend\MaquinaController;
 use App\Http\Controllers\Backend\EmpleadoController;
 use App\Http\Controllers\Backend\MaquinaHasOperadorController;
+use App\Http\Controllers\Backend\EtapaItemOtController;
 
 
 
@@ -109,7 +110,7 @@ Route::group(['namespace' => 'ItemOt'], function () {
 
     Route::group(['prefix' => 'item_ots/{item_ot}/{trabajo}'], function () {
         Route::get('edit', [ItemOtController::class, 'edit'])->name('item_ots.edit');
-        Route::get('editTaller', [ItemOtController::class, 'edit'])->name('item_ots.editTaller');
+        Route::get('editTaller', [ItemOtController::class, 'editTaller'])->name('item_ots.editTaller');
         Route::patch('/', [ItemOtController::class, 'update'])->name('item_ots.update');
         Route::get('print_etq', [ItemOtController::class, 'print_etq'])->name('item_ots.print_etq');
         Route::delete('/', [ItemOtController::class, 'destroy'])->name('item_ots.destroy');
@@ -150,6 +151,7 @@ Route::group(['namespace' => 'Maquina'], function () {
     Route::get('maquinas', [MaquinaController::class, 'index'])->name('maquinas.index');
     Route::get('maquinas/create', [MaquinaController::class, 'create'])->name('maquinas.create');
     Route::post('maquinas', [MaquinaController::class, 'store'])->name('maquinas.store');
+    Route::get('maquinas/dataAjax', [MaquinaController::class, 'dataAjax'])->name('maquinas.dataAjax');
 
     Route::group(['prefix' => 'maquinas/{maquina}'], function () {
         Route::get('edit', [MaquinaController::class, 'edit'])->name('maquinas.edit');
@@ -177,6 +179,20 @@ Route::group(['namespace' => 'Empleado'], function () {
 }); 
 
 
+Route::group(['namespace' => 'EtapaItemOt'], function () {
+    
+    Route::get('etapa_itemots', [EtapaItemOtController::class, 'index'])->name('etapa_itemots.index');
+    Route::get('etapa_itemots/{item_ot}/create', [EtapaItemOtController::class, 'create'])->name('etapa_itemots.create');
+    Route::post('etapa_itemots', [EtapaItemOtController::class, 'store'])->name('etapa_itemots.store');
+
+    Route::group(['prefix' => 'etapa_itemots/{item_ot}'], function () {
+        Route::get('edit', [EtapaItemOtController::class, 'edit'])->name('etapa_itemots.edit');
+        Route::patch('/', [EtapaItemOtController::class, 'update'])->name('etapa_itemots.update');
+        Route::delete('/', [EtapaItemOtController::class, 'destroy'])->name('etapa_itemots.destroy');
+    });
+}); 
+
+
 
 Route::post('maquinaOperadores/destroy', [MaquinaHasOperadorController::class, 'destroy'])->name('maquinahasoperador.destroy');
 
@@ -186,8 +202,10 @@ Route::post('imagen_item_ots', 'ImagenItemOtController@store')->name('imagen_ite
 Route::post('imagen_item_ots/destroy', 'ImagenItemOtController@destroy')->name('imagen_itemot.destroy');
 
 Route::get('get-commune-list', 'CommuneController@getCommuneList')->name('get-commune-list');
-Route::get('get-contactos-list', 'ClienteRepresentanteController@getContactoList')->name('get-contactos-list');
+Route::get('get-maquina-list', 'MaquinaController@getMaquinaList')->name('get-maquina-list');
+Route::get('get-operador-list', 'EmpleadoController@getOperadorList')->name('get-operador-list');
 
+Route::get('get-contactos-list', 'ClienteRepresentanteController@getContactoList')->name('get-contactos-list');
 
 Route::post('imagen_item_ots/display', 'ImagenItemOtController@display')->name('imagen_itemot.display');
    

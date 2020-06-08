@@ -1,5 +1,6 @@
 @extends('backend.layouts.app')
 
+
 @section('title','Item OT: '.$trabajo->folio . ' | ' . $item_ot->folio)
 
 @section('content')
@@ -159,6 +160,110 @@
 
 
         <div class="card">
+                <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-5">
+                        <h4 class="card-title mb-0">
+                            Etapas del trabajo</small>
+                        </h4>
+                    </div><!--col-->
+
+                    <div class="col-sm-7">
+                        @include('backend.etapa_itemots.includes.header-buttons')
+                    </div><!--col-->
+                </div><!--row-->
+
+                <div class="row mt-4">
+                    <div class="col">
+                    @if($item_ot->procesosOt->count() == 0)
+                    {{'¡ No existen procesos !'}}
+                    @else
+                    <div class="table-responsive" id="no-more-tables">
+                            <table class="table col-sm-12 table-bordered table-striped table-condensed cf">
+                                <thead class="cf">
+                                <tr>
+                                    <th style="width:35px;">Código</th>
+                                    <th>Proceso</th>
+                                    <th>Máquina</th>
+                                    <th>Operador</th>
+                                    <th>Hora límite<th>
+                                    <th>Hora inicio</th>
+                                    <th>Estado</th>
+                                    
+                                    <th>Hora termino </th>
+
+                                    <th style="width:45px;">@lang('labels.general.actions')</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+
+                                @foreach($item_ot->procesosOt as $proceso)
+                                    <tr>
+                                        <td data-title="Codigo:">{{ $proceso->codigo }}</td>
+                                        <td data-title="Proceso:">{{ $proceso->proceso->codigo }}</td>
+                                        <td data-title="Maquina:">{{ $proceso->maquina->codigo }}</td>
+                                        <td data-title="Operador:">{{ $proceso->operador->nombres . ' ' . $proceso->operador->apellidos }}</td>
+                                        <td date-title="Hora límite">{{$proceso->fh_limite}}</td>
+                                        <td data-title="Hora Inicio">{{$proceso->fh_inicio}}</td>
+                                        <td data-title="Estado" style="text-align:center;">
+                                            @switch($proceso->estado_avance) 
+                                            @case ('1') 
+                                               <span class="badge btn-secondary"> Sin Iniciar </span>
+                                            @break;
+                                            @case ('2') 
+                                                <span class="badge btn-primary"> En Proceso </span>
+                                            @break;
+                                            @case ('3')
+                                                <span class="badge btn-danger"> Atrasada </span>
+                                            @break;
+                                            @case ('4') 
+                                                <span class="badge btn-success"> Terminada </span>
+                                            @break;
+                                            @case ('5') 
+                                                <span class="badge btn-dark"> Detenida </span>
+                                            @break;
+                                            @case ('6') 
+                                                <span class="badge btn-warning"> Anulada </span>
+                                            @break;
+
+                                            @default
+                                                {{$proceso->estado_avance}}
+                                            @break;                     
+                                            @endSwitch 
+                                        </td>
+                                        <td data-title="Hora Termino">{{$proceso->fh_termino}}</td>
+
+                                        <td data-title="Acciones" class="btn-td">@include('backend.empleados.includes.actions', ['empleado' => $empleado])</td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        @endif
+
+                    </div><!--col-->
+                </div><!--row-->
+                <div class="row">
+                    <div class="col-7">
+                        <div class="float-left">
+                            {!! $item_ot->procesosOt->count() !!} 
+                        </div>
+                    </div><!--col-->
+
+                    <div class="col-5">
+                        <div class="float-right">
+                        </div>
+                    </div><!--col-->
+                </div><!--row-->
+    </div><!--card-body-->
+
+                    <div class="card-footer clearfix">                        
+                </div><!--card-footer-->   
+        </div><!--card-->   
+
+
+        <div class="card">
         <div class="card-body">
                 <div class="row">
                     <div class="col-sm-5">
@@ -188,17 +293,11 @@
                     </div>                  
 
                 </div><!--card-body-->
-
-                <div class="card-footer clearfix">
-                  
-                </div><!--card-footer-->
-                
-
-
-                
+                <div class="card-footer clearfix">                 
+                </div><!--card-footer-->                
             </div><!--card-->
-    
-  
+
+
 </div>
 
 
@@ -383,5 +482,8 @@ $.ajaxSetup({
 });
 </script>
 
+
+
+@extends('backend.etapa_itemots.create')
 
 @endsection

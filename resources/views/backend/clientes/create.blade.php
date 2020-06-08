@@ -67,11 +67,11 @@
                         {{ html()->label(__('Región/Comuna *'))->class('col-md-2 form-control-label')->for('region_id') }}
 
                             <div class="col-md-4">
-                            <select id="region_id" name="region_id" class="form-control" >
-                                    <option value="" selected disabled>Seleccione</option>
-                                      @foreach($regions as $region)
-                                        <option value="{{$region->id}}"> {{$region->name}}</option>
-                                      @endforeach
+                                <select id="region_id" name="region_id" class="form-control" >
+                                        <option value="" selected disabled>Seleccione</option>
+                                        @foreach($regions as $region)
+                                            <option value="{{$region->id}}"> {{$region->name}}</option>
+                                        @endforeach
                                 </select>
                             </div><!--col-->
 

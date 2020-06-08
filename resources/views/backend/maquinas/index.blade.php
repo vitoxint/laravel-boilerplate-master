@@ -27,7 +27,7 @@
                              <th style="width:35px;">Código</th>
                              <th>Nombre máquina</th>
                   
-                             <th> Operadores </th>
+                             <th> Operadores asignados </th>
                              <th style="width:60px;">Valor HH.MM</th>
                              <th style="width:35px; text-align:center;">Estado</th>
 
@@ -37,18 +37,18 @@
                         <tbody>
                         @foreach($maquinas as $maquina)
                             <tr>
-                                <td>{{ $maquina->codigo }}</td>
-                                <td>{{ $maquina->nombre }}</td>
-                                <td>  
+                                <td data-title="Código">{{ $maquina->codigo }}</td>
+                                <td data-title="Nombre:">{{ $maquina->nombre }}</td>
+                                <td data-title="Operadores asignados">  
                                     @foreach($maquina->maquina_has_operador as $operador)
                                      <h6> <span class="badge badge-default">{{$operador->operador->nombres.' '.$operador->operador->apellidos}}</span>
                                          
                                     @endforeach
                                     </h6>
                                 </td>
-                                <td style="text-align:right;">@money($maquina->valor_hora) </td>
+                                <td data-title="Valor hora" style="text-align:right;">@money($maquina->valor_hora) </td>
 
-                                <td style="text-align:center;">
+                                <td data-title="Estado disponibilidad:" style="text-align:center;">
                                     @switch($maquina->estado) 
                                             @case ('1') 
                                                <span class="badge btn-success"> Disponible </span>
@@ -67,7 +67,7 @@
                                             @break;                   
                                     @endSwitch </td>
 
-                                <td class="btn-td">@include('backend.maquinas.includes.actions', ['maquina' => $maquina])</td>
+                                <td data-title="Acciones" class="btn-td">@include('backend.maquinas.includes.actions', ['maquina' => $maquina])</td>
                             </tr>
                         @endforeach
                         </tbody>

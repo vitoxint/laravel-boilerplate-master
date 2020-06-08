@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 
 use App\Proceso;
+use App\ProcesoHasMaquina;
 use Illuminate\Http\Request;
 
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -55,12 +56,23 @@ class ProcesoController extends Controller
             'descripcion' => 'required',
             
         ]);
+
+        $maquinas = $request->input('maquinas',[]);
              
         $proceso= Proceso::create([
             'codigo' => $request->input('codigo'),
             'descripcion' => $request->input('descripcion'),
                        
           ]);
+
+          foreach($maquinas as $maquina){
+            ProcesoHasMaquina::create([
+                'proceso_id' => $proceso->id,
+                'maquina_id' => $maquina,
+
+            ]);
+        }
+
 
           return redirect()->route('admin.procesos.edit',$proceso)->withFlashSuccess('Clasificación de proceso registrada'); 
     }
@@ -101,12 +113,41 @@ class ProcesoController extends Controller
             'descripcion' => 'required',
             
         ]);
+
+        $maquinas = $request->input('maquinas',[]);
              
         $proceso->update([
             'codigo' => $request->input('codigo'),
             'descripcion' => $request->input('descripcion'),
                        
           ]);
+
+          foreach($maquinas as $maquina){
+
+            $aux = ProcesoHasMaquina::where('proceso_id' ,'=', $proceso->id)->where('maquina_id','=',$maquina)->first();
+            if($aux == null)
+                {
+                    ProcesoHasMaquina::create([
+                        'maquina_id' => $maquina,
+                        'proceso_id' => $proceso->id,
+
+                    ]);
+                }
+            }
+
+        foreach($proceso->proceso_has_maquina as $promaqs){
+            $cont = 0;
+
+            foreach($maquinas as $maquina){
+                if($promaqs->maquina_id == $maquina){
+                    $cont++;
+                }
+            }
+            if($cont == 0){
+                $promaqs->delete();
+            }
+           
+        }
 
           return redirect()->route('admin.procesos.edit',$proceso)->withFlashSuccess('Clasificación de proceso ha sido editada'); 
     }

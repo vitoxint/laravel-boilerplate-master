@@ -19,4 +19,8 @@ class Empleado extends Model
     public function usuario(){
         return $this->hasOne('App\Models\Auth\User', 'user_id', 'id');
     }
+
+    public function nombre_apellido(){
+        return $this->nombres.' '.$this->apellidos;
+    }
 }

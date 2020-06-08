@@ -55,7 +55,7 @@
 
                         <div class="form-group row">
                                              
-                        {{ html()->label('Cantidad:')->class('col-md-1 form-control-label')->for('cantidad') }}
+                        {{ html()->label('Cantidad:')->class('col-md-2 form-control-label')->for('cantidad') }}
                             <div class="col-md-1">
                                 {{ html()->text('cantidad')
                                     ->class('form-control')

@@ -8,6 +8,8 @@ use App\Repositories\Backend\Model\ItemOtRepository;
 use App\ItemOt;
 use App\OrdenTrabajo;
 use App\ImagenItemOt;
+use App\EtapaItemOt;
+use App\Proceso;
 use DB;
 use Carbon\Carbon;
 use PDF;
@@ -134,7 +136,8 @@ class ItemOtController extends Controller
      */
     public function edit(ItemOt $item_ot, OrdenTrabajo $trabajo)
     {
-        return view('backend.item_ots.edit',compact('item_ot','trabajo'));
+        $procs = Proceso::orderBy('codigo')->get();
+        return view('backend.item_ots.edit',compact('item_ot','trabajo','procs'));
     }
 
     public function editTaller(ItemOt $item_ot, OrdenTrabajo $trabajo)
