@@ -19,15 +19,15 @@ class EtapaItemOt extends Model
     }
 
     public function proceso(){
-        return $this->hasOne('App\Proceso', 'proceso_id', 'id');
+        return $this->hasOne('App\Proceso', 'id', 'proceso_id');
     }
 
     public function maquina(){
-        return $this->hasOne('App\Maquina', 'maquina_id' ,'id');
+        return $this->hasOne('App\Maquina', 'id' ,'maquina_id');
     }
 
     public function operador(){
-        return $this->hasOne('App\Empleado', 'empleado_id', 'id');
+        return $this->hasOne('App\Empleado', 'id', 'empleado_id');
     }
 
 

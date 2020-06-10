@@ -81,10 +81,12 @@ Breadcrumbs::for('admin.item_ots.create', function ($trail,$trabajo) {
 });
 
 Breadcrumbs::for('admin.item_ots.edit', function ($trail, $item_ot, $trabajo) {
-    $trail->parent('admin.orden_trabajos.index', route('admin.orden_trabajos.index'));
+    //$trail->parent('admin.orden_trabajos.index', route('admin.orden_trabajos.index'));
     //$trail->parent('admin.orden_trabajos.edit', route('admin.orden_trabajos.edit', $trabajo ));
+    $trail->push( 'Orden Trabajo', route('admin.orden_trabajos.index', $trabajo));
+    $trail->push( $trabajo->folio , route('admin.orden_trabajos.edit', $trabajo));
     
-    $trail->push($trabajo->folio. ' / Editar ítem OT: '. $item_ot->folio, route('admin.item_ots.edit',[$item_ot, $trabajo]));
+    $trail->push($item_ot->folio, route('admin.item_ots.edit',[$item_ot, $trabajo]));
 });
 
 Breadcrumbs::for('admin.cotizaciones.index', function ($trail) {
@@ -173,4 +175,18 @@ Breadcrumbs::for('admin.empleados.create', function ($trail) {
 Breadcrumbs::for('admin.empleados.edit', function ($trail,$empleado) {
     $trail->parent('admin.empleados.index', route('admin.empleados.index'));
     $trail->push('Editar operador: '.$empleado->codigo, route('admin.empleados.edit',$empleado));
+});
+
+Breadcrumbs::for('admin.etapa_itemots.create', function ($trail, $item_ot) {
+    $trail->push('Orden Trabajo', route('admin.orden_trabajos.index'));
+    $trail->push( $item_ot->ordenTrabajo->folio, route('admin.orden_trabajos.edit',[$item_ot->OrdenTrabajo]));
+    $trail->push( $item_ot->folio, route('admin.item_ots.edit',[$item_ot, $item_ot->OrdenTrabajo]));
+    $trail->push('Agregar proceso al trabajo', route('admin.etapa_itemots.create',$item_ot, $item_ot->ordenTrabajo));
+});
+
+Breadcrumbs::for('admin.etapa_itemots.edit', function ($trail,$etapaItemOt) {
+    $trail->push('Orden Trabajo', route('admin.orden_trabajos.index'));
+    $trail->push( $etapaItemOt->itemOt->ordenTrabajo->folio, route('admin.orden_trabajos.edit',[$etapaItemOt->itemOt->OrdenTrabajo]));
+    $trail->push( $etapaItemOt->itemOt->folio, route('admin.item_ots.edit',[$etapaItemOt->itemOt, $etapaItemOt->itemOt->OrdenTrabajo]));
+    $trail->push( $etapaItemOt->codigo, route('admin.etapa_itemots.edit',$etapaItemOt));
 });

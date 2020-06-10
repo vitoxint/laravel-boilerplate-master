@@ -19,9 +19,9 @@ class CreateEtapaItemOtsTable extends Migration
             $table->string('detalle')->nullable();
             $table->time('tiempo_asignado');
             $table->time('tiempo_real')->nullable();
-            $table->date('fh_inicio')->nullable();
-            $table->date('fh_termino')->nullable();
-            $table->date('fh_limite')->nullable();
+            $table->datetime('fh_inicio')->nullable();
+            $table->datetime('fh_termino')->nullable();
+            $table->datetime('fh_limite')->nullable();
             $table->integer('estado_avance')->default(1);
 
             $table->unsignedBigInteger('itemot_id');

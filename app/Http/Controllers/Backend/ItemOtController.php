@@ -241,7 +241,8 @@ class ItemOtController extends Controller
         ->where('id', '=', $trabajo->id)
         ->update([
             'estado' =>  '5',
-            ]);
+        ]);
+        
 /*         if($trabajo->estado != '5'){
             $update1 = DB::table('orden_trabajos')
             ->where('id', '=', $trabajo->id)

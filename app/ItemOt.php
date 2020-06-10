@@ -33,7 +33,14 @@ class ItemOt extends Model
     }
 
     public function procesosOt(){
-        return $this->hasMany('App\EtapaItemOt', 'id', 'itemot_id');
+        return $this->hasMany('App\EtapaItemOt', 'itemot_id', 'id');
+    }
+
+    public function avanceItemOt(){
+        $terminados = EtapaItemOt::where('itemot_id','=',$this->id)->where('estado_avance','=',4)->count();
+        $totales = EtapaItemOt::where('itemot_id','=',$this->id)->count();
+
+        return $terminados.' de ' . $totales;
     }
     
 }

@@ -139,6 +139,114 @@
 
 
         <div class="card">
+                <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-5">
+                        <h4 class="card-title mb-0">
+                            Etapas del trabajo</small>
+                        </h4>
+                    </div><!--col-->
+
+                    <div class="col-sm-7">
+                        @include('backend.etapa_itemots.includes.header-buttons')
+                    </div><!--col-->
+                </div><!--row-->
+
+                <div class="row mt-4">
+                    <div class="col">
+              
+                    <div class="table-responsive" id="no-more-tables">
+                            <table class="table col-sm-12 table-bordered table-striped table-condensed cf">
+                                <thead class="cf">
+                                <tr>
+                                    <th style="width:35px;">Código</th>
+                                    <th>Proceso</th>
+                                    <th>Máquina</th>
+                                    <th>Operador</th>
+                                    <th>Hora límite</th>
+                                    <th>Hora inicio</th>
+                                    <th>Estado</th>
+                                    
+                                    <th>Hora termino </th>
+
+                                    <th style="width:45px;">@lang('labels.general.actions')</th>
+                                </tr>
+                                </thead>
+                                <tbody id="table-procesos">
+
+
+                                @foreach($item_ot->procesosOt as $etapaItemOt)
+                                    <tr>
+                                        <td data-title="Codigo:">{{ $etapaItemOt->codigo }}</td>
+                                        <td data-title="Proceso:">{{ $etapaItemOt->proceso->descripcion }}</td>
+                                        <td data-title="Maquina:">{{ $etapaItemOt->maquina->codigo }}</td>
+                                        <td data-title="Operador:">{{ $etapaItemOt->operador->nombres . ' ' . $etapaItemOt->operador->apellidos }}</td>
+                                                <?php $flimite= new Carbon\Carbon($etapaItemOt->fh_limite);
+                                                    $flimite = $flimite->format('d-m-Y h:i'); ?>
+                                        <td date-title="Hora límite">{{$flimite}}</td>
+                                                <?php $finicio= new Carbon\Carbon($etapaItemOt->fh_inicio);
+                                                    $finicio = $finicio->format('d-m-Y h:i'); ?>
+                                        <td data-title="Hora Inicio">{{$finicio}}</td>
+                                        <td data-title="Estado" style="text-align:center;">
+                                            @switch($etapaItemOt->estado_avance) 
+                                            @case ('1') 
+                                               <span class="badge btn-secondary"> Sin Iniciar </span>
+                                            @break;
+                                            @case ('2') 
+                                                <span class="badge btn-primary"> En Proceso </span>
+                                            @break;
+                                            @case ('3')
+                                                <span class="badge btn-danger"> Atrasada </span>
+                                            @break;
+                                            @case ('4') 
+                                                <span class="badge btn-success"> Terminada </span>
+                                            @break;
+                                            @case ('5') 
+                                                <span class="badge btn-dark"> Detenida </span>
+                                            @break;
+                                            @case ('6') 
+                                                <span class="badge btn-warning"> Anulada </span>
+                                            @break;
+
+                                            @default
+                                                {{$etapaItemOt->estado_avance}}
+                                            @break;                     
+                                            @endSwitch 
+                                        </td>
+                                                <?php $ftermino= new Carbon\Carbon($etapaItemOt->fh_termino);
+                                                      $ftermino = $ftermino->format('d-m-Y h:i'); ?>                                       
+                                        <td data-title="Hora Termino">{{$ftermino}}</td>
+
+                                        <td data-title="Acciones" class="btn-td">@include('backend.etapa_itemots.includes.actions', ['etapaItemOt' => $etapaItemOt])</td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        
+
+                    </div><!--col-->
+                </div><!--row-->
+                <div class="row">
+                    <div class="col-7">
+                        <div class="float-left">
+                            {!! $item_ot->procesosOt->count() !!} 
+                        </div>
+                    </div><!--col-->
+
+                    <div class="col-5">
+                        <div class="float-right">
+                        </div>
+                    </div><!--col-->
+                </div><!--row-->
+            </div><!--card-body-->
+
+                <div class="card-footer clearfix">                        
+                </div><!--card-footer-->   
+        </div><!--card--> 
+
+
+        <div class="card">
         <div class="card-body">
                 <div class="row">
                     <div class="col-sm-5">

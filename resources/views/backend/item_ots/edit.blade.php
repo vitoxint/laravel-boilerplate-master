@@ -175,9 +175,7 @@
 
                 <div class="row mt-4">
                     <div class="col">
-                    @if($item_ot->procesosOt->count() == 0)
-                    {{'¡ No existen procesos !'}}
-                    @else
+              
                     <div class="table-responsive" id="no-more-tables">
                             <table class="table col-sm-12 table-bordered table-striped table-condensed cf">
                                 <thead class="cf">
@@ -186,7 +184,7 @@
                                     <th>Proceso</th>
                                     <th>Máquina</th>
                                     <th>Operador</th>
-                                    <th>Hora límite<th>
+                                    <th>Hora límite</th>
                                     <th>Hora inicio</th>
                                     <th>Estado</th>
                                     
@@ -195,19 +193,23 @@
                                     <th style="width:45px;">@lang('labels.general.actions')</th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="table-procesos">
 
 
-                                @foreach($item_ot->procesosOt as $proceso)
+                                @foreach($item_ot->procesosOt as $etapaItemOt)
                                     <tr>
-                                        <td data-title="Codigo:">{{ $proceso->codigo }}</td>
-                                        <td data-title="Proceso:">{{ $proceso->proceso->codigo }}</td>
-                                        <td data-title="Maquina:">{{ $proceso->maquina->codigo }}</td>
-                                        <td data-title="Operador:">{{ $proceso->operador->nombres . ' ' . $proceso->operador->apellidos }}</td>
-                                        <td date-title="Hora límite">{{$proceso->fh_limite}}</td>
-                                        <td data-title="Hora Inicio">{{$proceso->fh_inicio}}</td>
+                                        <td data-title="Codigo:">{{ $etapaItemOt->codigo }}</td>
+                                        <td data-title="Proceso:">{{ $etapaItemOt->proceso->descripcion }}</td>
+                                        <td data-title="Maquina:">{{ $etapaItemOt->maquina->codigo }}</td>
+                                        <td data-title="Operador:">{{ $etapaItemOt->operador->nombres . ' ' . $etapaItemOt->operador->apellidos }}</td>
+                                                <?php $flimite= new Carbon\Carbon($etapaItemOt->fh_limite);
+                                                    $flimite = $flimite->format('d-m-Y h:i'); ?>
+                                        <td date-title="Hora límite">{{$flimite}}</td>
+                                                <?php $finicio= new Carbon\Carbon($etapaItemOt->fh_inicio);
+                                                    $finicio = $finicio->format('d-m-Y h:i'); ?>
+                                        <td data-title="Hora Inicio">{{$finicio}}</td>
                                         <td data-title="Estado" style="text-align:center;">
-                                            @switch($proceso->estado_avance) 
+                                            @switch($etapaItemOt->estado_avance) 
                                             @case ('1') 
                                                <span class="badge btn-secondary"> Sin Iniciar </span>
                                             @break;
@@ -228,19 +230,21 @@
                                             @break;
 
                                             @default
-                                                {{$proceso->estado_avance}}
+                                                {{$etapaItemOt->estado_avance}}
                                             @break;                     
                                             @endSwitch 
                                         </td>
-                                        <td data-title="Hora Termino">{{$proceso->fh_termino}}</td>
+                                                <?php $ftermino= new Carbon\Carbon($etapaItemOt->fh_termino);
+                                                      $ftermino = $ftermino->format('d-m-Y h:i'); ?>                                       
+                                        <td data-title="Hora Termino">{{$ftermino}}</td>
 
-                                        <td data-title="Acciones" class="btn-td">@include('backend.empleados.includes.actions', ['empleado' => $empleado])</td>
+                                        <td data-title="Acciones" class="btn-td">@include('backend.etapa_itemots.includes.actions', ['etapaItemOt' => $etapaItemOt])</td>
                                     </tr>
                                 @endforeach
                                 </tbody>
                             </table>
                         </div>
-                        @endif
+                        
 
                     </div><!--col-->
                 </div><!--row-->
@@ -484,6 +488,6 @@ $.ajaxSetup({
 
 
 
-@extends('backend.etapa_itemots.create')
+
 
 @endsection

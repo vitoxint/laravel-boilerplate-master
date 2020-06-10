@@ -4,6 +4,7 @@
 <!-- load jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
+
 <!-- provide the csrf token -->
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 
@@ -21,17 +22,17 @@
   </div>
   <div class="modal-body">
       
-      <form method="POST" action="">
+      <form method="POST" action="" >
           {{ csrf_field() }}
           
           <div class="row mt-4 mb-4">
                     <div class="col">
 
-                    <div class="form-group row">
+                        <div class="form-group row">
                         
-                        {{ html()->label('Proceso:')->class('col-md-1 form-control-label')->for('proceso_id') }}
+                            {{ html()->label('Proceso:')->class('col-md-1 form-control-label')->for('proceso_id') }}
                             <div class="col-md-3">
-                                <select id="proceso_id" name="proceso_id" class="form-control" >
+                                <select id="proceso_id" name="proceso_id" class="form-control" required="true" >
                                         <option value="" selected disabled>Seleccione</option>
                                         @foreach($procs as $proc)
                                             <option value="{{$proc->id}}"> {{$proc->descripcion}}</option>
@@ -41,14 +42,14 @@
                             {{ html()->label('Máquina:')->class('col-md-1 form-control-label')->for('maquina_id') }}
                            
                             <div class="col-md-3">
-                                    <select name="maquina_id" id="maquina_id" class="form-control" >
+                                    <select name="maquina_id" id="maquina_id" class="form-control" required="true" >
                                     </select>
 
                             </div><!--col-->
 
                             {{ html()->label('Operador:')->class('col-md-1 form-control-label')->for('operador_id') }}
                             <div class="col-md-3">
-                                    <select name="operador_id" id="operador_id" class="form-control" >
+                                    <select name="operador_id" id="operador_id" class="form-control" required="true">
                                     </select>
                             </div><!--col-->
                         </div><!--form-group-->
@@ -74,15 +75,18 @@
                                     ->placeholder('hh:mm')
                                     ->attribute('maxlength', 512)
                                     ->autofocus() }}
+                                </span>
                             </div><!--col-->
 
                             {{ html()->label('Termino estimado:')->class('col-md-2 form-control-label')->for('fh_limite') }}
                            
-                            <div class="col-md-3">
-                            {{ html()->date('fh_limite')
-                                    ->class('form-control')                                    
-                                    ->attribute('maxlength', 512)
-                                    ->autofocus() }}
+                            <div class="col-md-4">
+                            <div class='input-group date' id='fh_limite' name="fh_limite">
+                                <input type='text' class="form-control" required="true" />
+                                <span class="input-group-addon">
+                                    <span class="fa fa-calendar btn btn-lg"></span>
+                                </span>
+                            </div>
 
                             </div><!--col-->
 
@@ -91,13 +95,13 @@
 
                     </div><!--col-->
                 </div><!--row-->
- 
+        </form>
           
   </div>
 
   <div class="modal-footer">
-            <!--<input type="submit" class="btn btn-success" value="Agregar" />-->
-            <button class="btn btn-success btn-md btn-block btn-flat" id="postbutton_agregar">Agregar</button>
+            
+            <button class="btn btn-success btn-md btn-block btn-flat"  id="postbutton_agregar">Agregar</button>
       
       </form>
 
@@ -108,30 +112,80 @@
 </div>
 </div>
 
+<script src="{{asset('datepicker/js/bootstrap-datetimepicker.js')}}"></script>
+<script src="{{asset('datepicker/js/moments.js')}}"></script>
+
+
+
 <script type="text/javascript">
 
 
 $(document).ready(function(){
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+       
+        $('#fh_limite').datetimepicker({
+            // Formats
+            // follow MomentJS docs: https://momentjs.com/docs/#/displaying/format/
+            format: 'DD-MM-YYYY HH:mm',
+            locale: 'es',
+            
+            // Your Icons
+            // as Bootstrap 4 is not using Glyphicons anymore
+            icons: {
+                time: 'fa fa-clock-o',
+                date: 'fa fa-calendar',
+                up: 'fa fa-chevron-up',
+                down: 'fa fa-chevron-down',
+                previous: 'fa fa-chevron-left',
+                next: 'fa fa-chevron-right',
+                today: 'fa fa-check',
+                clear: 'fa fa-trash',
+                close: 'fa fa-times'
+            }
+        });
+        
         
         $("#postbutton_agregar").click(function(){
+
+            var proceso_id = $("#proceso_id").val() ;
+            var maquina_id = $("#maquina_id").val() ;
+            var operador_id = $("#operador_id").val() ;
+            var detalle = $("#detalle").val() ;
+            var tiempo_asignado = $("#tiempo_asignado").val() ;
+            var fh_limite = $("#fh_limite").find("input").val() ;
+
+   
             $.ajax({
                 /* the route pointing to the post function */
-                url:'{{route("admin.etapa_itemots.store")}}?id='+ "<?php echo $item_ot->id; ?>",
+               
                 type: 'POST',
+                url:"{{route('admin.etapa_itemots.store')}}?id=" + "<?php echo $item_ot->id; ?>",
+                             
                 /* send the csrf-token and the input to the controller */
-                data: {_token: CSRF_TOKEN, pregunta:document.getElementsByClassName("pregunta").val() , 
-                               puntaje_maximo:document.getElementsByClassName("puntaje_maximo").val() , 
-                               factor:document.getElementsByClassName("factor").val()},
+                data: {_token: CSRF_TOKEN,
+                               proceso_id:proceso_id,
+                               maquina_id:maquina_id,
+                               operador_id:operador_id,
+                               detalle:detalle,
+                               tiempo_asignado:tiempo_asignado,
+                               fh_limite:fh_limite
+                            },
                 dataType: 'JSON',
                 /* remind that 'data' is the response of the AjaxController */
-                success: function (data) { 
-                    //$(".writeinfo").append(data.msg); 
-                   // alert(data.msg);
-                }
+                success:function (data) { 
+                    //$("#table-procesos").append(data.message); 
+                    alert(data.mensaje);
+               
+                    
+                },                
+                error: function() {
+                    console.log("No se ha podido obtener la información");
+                }   
             }); 
+     
+
         });
-      
+        
 
 
     $('#proceso_id').on('change', function() {
@@ -195,4 +249,6 @@ $(document).ready(function(){
        });    
 
 </script>
+
+
 

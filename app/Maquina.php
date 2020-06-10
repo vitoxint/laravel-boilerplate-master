@@ -34,6 +34,10 @@ class Maquina extends Model
     public function proceso_has_maquina(){
         return $this->hasMany('App\ProcesoHasMaquina', 'id', 'maquina_id');
     }
+
+    public function etapaItemOt(){
+        return $this->hasMany('App\EtapaItemOt', 'maquina_id', 'id');
+    }
     
     
 }

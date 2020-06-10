@@ -44,7 +44,7 @@
                                 <td data-title="OT:">{{ $item_ot->ordenTrabajo->folio }}</td>
                                 <td data-title="Cantidad:">{{ $item_ot->cantidad }}</td>
                                 <td data-title="Descripción:">{{ $item_ot->descripcion }}</td>
-                                <td data-title="Avance:">(no definido)</td>                              
+                                <td align="center" data-title="Avance:">{{$item_ot->avanceItemOt()}}</td>                              
                                 <?php   $entrega_estimada = new Carbon\Carbon($item_ot->ordenTrabajo->entrega_estimada); ?>
                                 <td data-title="Entrega comprometida:">{{ $entrega_estimada->format('d/m/Y') }}</td>
 

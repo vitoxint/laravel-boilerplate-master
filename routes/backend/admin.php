@@ -181,18 +181,16 @@ Route::group(['namespace' => 'Empleado'], function () {
 
 Route::group(['namespace' => 'EtapaItemOt'], function () {
     
-    Route::get('etapa_itemots', [EtapaItemOtController::class, 'index'])->name('etapa_itemots.index');
-    Route::get('etapa_itemots/{item_ot}/create', [EtapaItemOtController::class, 'create'])->name('etapa_itemots.create');
-    Route::post('etapa_itemots', [EtapaItemOtController::class, 'store'])->name('etapa_itemots.store');
+       //Route::get('item_ots', [ItemOtController::class, 'index'])->name('item_ots.index');
+       Route::get('etapa_itemots/{item_ot}', [EtapaItemOtController::class, 'create'])->name('etapa_itemots.create');
+       Route::post('etapa_itemots/{item_ot}', [EtapaItemOtController::class, 'store'])->name('etapa_itemots.store');
 
-    Route::group(['prefix' => 'etapa_itemots/{item_ot}'], function () {
-        Route::get('edit', [EtapaItemOtController::class, 'edit'])->name('etapa_itemots.edit');
-        Route::patch('/', [EtapaItemOtController::class, 'update'])->name('etapa_itemots.update');
-        Route::delete('/', [EtapaItemOtController::class, 'destroy'])->name('etapa_itemots.destroy');
-    });
-}); 
-
-
+        Route::group(['prefix' => 'etapa_itemots/{etapaItemOt}'], function () {
+           Route::get('edit', [EtapaItemOtController::class, 'edit'])->name('etapa_itemots.edit');
+           Route::patch('/', [EtapaItemOtController::class, 'update'])->name('etapa_itemots.update');
+           Route::delete('/', [EtapaItemOtController::class, 'destroy'])->name('etapa_itemots.destroy');
+       }); 
+   }); 
 
 Route::post('maquinaOperadores/destroy', [MaquinaHasOperadorController::class, 'destroy'])->name('maquinahasoperador.destroy');
 

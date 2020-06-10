@@ -20,6 +20,7 @@
     <!-- Otherwise apply the normal LTR layouts -->
     {{ style(mix('css/backend.css')) }}
     {{ style('css/no-more-table.css') }}
+    {{ style('datepicker/css/bootstrap-datetimepicker.css') }}
 
     @stack('after-styles')
 </head>
@@ -80,6 +81,9 @@
     {!! script(mix('js/manifest.js')) !!}
     {!! script(mix('js/vendor.js')) !!}
     {!! script(mix('js/backend.js')) !!}
+
+    {!! script('datepicker/js/bootstrap-datetimepicker.js') !!}
+    {!! script('datepicker/js/moments.js') !!}
     @stack('after-scripts')
 </body>
 </html>

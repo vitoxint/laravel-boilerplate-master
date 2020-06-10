@@ -258,7 +258,7 @@
                                     <th>Descripcion</th>                                   
                                     <th>Val. Unitario</th>
                                     <th>Val. Parcial</th>
-                                    <!-- <th>Avance</th> -->
+                                    <th>Avance</th>
                                     <th>Estado</th>       
                                     <th>@lang('labels.general.actions')</th>
                                 </tr>
@@ -272,7 +272,7 @@
                                         <td align="right" data-title="Valor Unitario:">@money($item_ot->valor_unitario )</td>
                                         <td align="right" data-title="Valor Parcial:"> @money($item_ot->valor_parcial ) </td>
                                         
-                                        <!-- <td>Proceso 0 de 0</td> -->
+                                        <td align="center">{{$item_ot->avanceItemOt()}}</td>
                                         <td data-title="Estado ítem OT:">
                                             @switch($item_ot->estado)
                                                 @case(1)
