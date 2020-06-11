@@ -1,7 +1,7 @@
 @extends('backend.layouts.app')
 
 
-@section('title', 'Clasificación de procesos' . ' | ' .'Crear nuevo tipo proceso')
+@section('title', 'Clasificación de procesos' . ' | ' .'Registrar nuevo proceso')
 
 @section('breadcrumb-links')
    
@@ -14,7 +14,7 @@
                     <div class="col-sm-5">
                         <h4 class="card-title mb-0">
                             Clasificación de procesos
-                            <small class="text-muted">Crear nueva clasificación</small>
+                            <small class="text-muted">Registrar nuevo proceso</small>
                         </h4>
                     </div><!--col-->
                 </div><!--row-->
@@ -39,7 +39,7 @@
                     <div class="form-group row">
                         {{ html()->label(__('Descripción *'))->class('col-md-2 form-control-label')->for('descripcion') }}
 
-                        <div class="col-md-5">
+                        <div class="col-md-6">
                                                 
                                 {{ html()->text('descripcion')
                                         ->class('form-control')
@@ -50,10 +50,40 @@
                         </div>
                     </div><!--form-group--> 
 
+
+                    <div class="form-group row">
+                        
+                        {{ html()->label('Valorización:')->class('col-md-2 form-control-label')->for('proceso_id') }}
+
+                        {{ html()->label('Modo Valorización:')->class('col-md-1 form-control-label')->for('tipo_valorizacion') }}
+                        <div class="col-md-2">
+
+                            {{ html()->select('tipo_valorizacion',array('1' => 'Por Hora Máquina (HM)', '2' => 'Por Kilogramo', '3' =>'Por Operación o Carga'))
+                                ->class('form-control')
+                                ->attribute('maxlength', 191) 
+                                ->required()
+                                
+                            }}
+                        </div><!--col-->
+
+                        {{ html()->label('Valor Unitario:')->class('col-md-1 form-control-label')->for('valor_unitario') }}
+                        <div class="col-md-2">
+
+                            {{ html()->number('valor_unitario')
+                                    ->class('form-control')
+                                    ->placeholder('$$')
+                                    ->value(0)
+                                    ->attribute('maxlength', 14)
+                                    ->required()                                   
+                            }}
+                        </div><!--col-->                        
+
+                    </div><!--form-group-->                    
+
                     <div class="form-group row">
                     
                     {{ html()->label('Asignar máquinas')->class('col-md-2 form-control-label')->for('maquinas') }}
-                        <div class="col-md-5">
+                        <div class="col-md-6">
                             <select name="maquinas[]" id="maquinas" class="form-control" multiple="multiple" >
                             </select>
                         </div><!--col-->

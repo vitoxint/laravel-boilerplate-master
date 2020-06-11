@@ -17,7 +17,8 @@ class CreateMaquinasTable extends Migration
             $table->bigIncrements('id');
             $table->string('codigo');
             $table->string('nombre');
-            $table->integer('estado');//0 inactiva 1 activa
+            $table->double('valor_hora')->default(0);
+            $table->integer('estado');//1 disponible 2 inhabilitada 3 en uso 4 en mantencion 5 
             $table->string('especificaciones')->nullable();
             $table->timestamps();
         });

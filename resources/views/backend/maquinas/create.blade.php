@@ -50,7 +50,7 @@
                         </div>
                     </div><!--form-group--> 
 
-                    <div class="form-group row">
+<!--                     <div class="form-group row">
                         {{ html()->label(__('Valor hora HHMM'))->class('col-md-2 form-control-label')->for('valor_hora') }}
 
                         <div class="col-md-1">
@@ -63,9 +63,9 @@
                                 }}
                                                     
                         </div>
-                    </div><!--form-group--> 
+                    </div> --><!--form-group--> 
 
-                    <div class="form-group row">
+<!--                     <div class="form-group row">
                         {{ html()->label('Detalle y especificaciones')->class('col-md-2 form-control-label')->for('especificaciones') }}
 
                         <div class="col-md-10">
@@ -74,8 +74,8 @@
                                 ->placeholder('información adicional')
                                 ->attribute('maxlength', 191)
                                 ->autofocus() }}
-                        </div><!--col-->
-                    </div><!--form-group-->
+                        </div>
+                    </div> --><!--form-group-->
 
                     <div class="form-group row">
                     
@@ -91,14 +91,14 @@
                             </div><!--col-->
                         </div><!--form-group-->   
 
-                    <div class="form-group row">
-                    
-                        {{ html()->label('Operadores')->class('col-md-2 form-control-label')->for('operadores') }}
-                            <div class="col-md-5">
-                                <select name="operadores[]" id="operadores" class="form-control" multiple="multiple" >
-                                </select>
-                            </div><!--col-->
-                        </div><!--form-group-->                   
+<!--                         <div class="form-group row">
+                        
+                            {{ html()->label('Operadores')->class('col-md-2 form-control-label')->for('operadores') }}
+                                <div class="col-md-5">
+                                    <select name="operadores[]" id="operadores" class="form-control" multiple="multiple" >
+                                    </select>
+                                </div>
+                        </div> --><!--form-group-->                   
 
                     </div><!--col-->
                 </div><!--row-->

@@ -8,7 +8,7 @@ class Proceso extends Model
 {
 
     protected $fillable = [
-        'codigo', 'descripcion', 'maquinas'
+        'codigo', 'descripcion', 'maquinas' , 'tipo_valorizacion' ,'valor_unitario'
     ];
 
     /**

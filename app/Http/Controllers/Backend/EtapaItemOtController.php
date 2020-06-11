@@ -46,9 +46,11 @@ class EtapaItemOtController extends Controller
         $this->validate($request, [
             'proceso_id' => 'required',
             'maquina_id' => 'required',
-            'proceso_id' => 'required',
-            'fh_limiten' => 'required',   
-            
+            'fh_limiten' => 'required',  
+            'valor_unitario' =>'required|numeric',
+            'cantidad' => 'required|numeric',
+            'valor_proceso' => 'required|numeric',  
+
         ]);
 
         $trabajo = $item_ot->ordenTrabajo;
@@ -84,7 +86,10 @@ class EtapaItemOtController extends Controller
             'fh_limite'=> $limite,
             'proceso_id' => $request->input('proceso_id'),
             'maquina_id' => $request->input('maquina_id'),
-            'empleado_id' => $request->input('operador_id'),
+            //'empleado_id' => $request->input('operador_id'),
+            'valor_unitario' => $request->input('valor_unitario'),
+            'cantidad' => $request->input('cantidad'),
+            'valor_proceso' => $request->input('valor_proceso'),
             'tiempo_asignado' => $request->input('tiempo_asignado'),
             'estado_avance' => 1 ,
                        
@@ -111,8 +116,7 @@ class EtapaItemOtController extends Controller
                 return response()->json([
                     'success'=> 'false',
                     'mensaje' => 'Faltan datos'
-                    
-           
+                               
                     ]); 
             }
    
@@ -155,8 +159,10 @@ class EtapaItemOtController extends Controller
         $this->validate($request, [
             'proceso_id' => 'required',
             'maquina_id' => 'required',
-            'proceso_id' => 'required',
-            'estado_avance' => 'required'
+            'estado_avance' => 'required',
+            'valor_unitario' =>'required|numeric',
+            'cantidad' => 'required|numeric',
+            'valor_proceso' => 'required|numeric',  
      
         ]);
         $item_ot = $etapaItemOt->itemOt;
@@ -197,7 +203,10 @@ class EtapaItemOtController extends Controller
             'fh_limite'=> $limite,
             'proceso_id' => $request->input('proceso_id'),
             'maquina_id' => $request->input('maquina_id'),
-            'empleado_id' => $request->input('operador_id'),
+            //'empleado_id' => $request->input('operador_id'),
+            'valor_unitario' => $request->input('valor_unitario'),
+            'cantidad' => $request->input('cantidad'),
+            'valor_proceso' => $request->input('valor_proceso'),
             'tiempo_asignado' => $request->input('tiempo_asignado'),
             'estado_avance' => $request->input('estado_avance'),
             'fh_inicio' => $fecha_inicio,

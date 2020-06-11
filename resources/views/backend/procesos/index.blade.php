@@ -26,6 +26,8 @@
                         <tr>
                              <th style="width:35px;">Código</th>
                              <th>Descripción</th>
+                             <th>Valor Lista (Aprox)</th>
+                             <th>Valorización</th>                            
                              <th>Máquina(s)</th>
                              <th style="width:45px;">@lang('labels.general.actions')</th>
                         </tr>
@@ -34,11 +36,31 @@
                         @foreach($procesos as $proceso)
                             <tr>
                                 <td data-title="Código">{{ $proceso->codigo }}</td>
-                                <td data-title="Descripción:">{{ $proceso->descripcion }}</td>  
+                                <td data-title="Descripción:">{{ $proceso->descripcion }}</td>                                 
+                                <td data-title="Valor lista (promedio)" align="right"> @money($proceso->valor_unitario) </td>
+                                <td data-title="Valorización">
+                                    @switch($proceso->tipo_valorizacion)
+                                        @case('1')
+                                         <h6>Hora Máquina</h6>
+
+                                        @break;
+                                        @case('2')
+                                         <h6>Kilogramos</h6>
+
+                                        @break;
+                                        @case('3')
+                                         <h6>Por operación </h6>
+
+                                        @break;
+                                        @default
+                                        <h6>  </h6>
+                                        @break;
+                                    @endswitch
+                                
+                                 </td>
                                 <td data-title="Máquinas asignadas">    
                                     @foreach($proceso->proceso_has_maquina as $maquina)
-                                     <h6> <span class="badge badge-default">{{$maquina->maquina->codigo}}</span>
-                                         
+                                     <h6> <span class="badge badge-default">{{$maquina->maquina->codigo}}</span>          
                                     @endforeach
                                     </h6>
                                 </td>                                

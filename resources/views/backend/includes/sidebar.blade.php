@@ -220,7 +220,7 @@
             @endif
 
 
-            @if ($logged_in_user->isAdmin())
+<!--             @if ($logged_in_user->isAdmin())
                 <li class="nav-title">
                     ADMINISTRACION EMPLEADOS
                 </li>
@@ -256,8 +256,46 @@
                 </li>
 
                 <li class="divider"></li>
-            @endif
+            @endif -->
 
+
+            @if ($logged_in_user->isAdmin())
+                <li class="nav-title">
+                    INVENTARIO Y EXISTENCIAS
+                </li>
+
+                <li class="nav-item nav-dropdown {{
+                    active_class(Route::is('admin/materiales*'), 'open')
+                }}">
+                    <a class="nav-link nav-dropdown-toggle {{
+                        active_class(Route::is('admin/materiales*'))
+                    }}" href="#">
+                        <i class="nav-icon fas fa-boxes"></i>
+                        Materiales
+
+                        @if ($pending_approval > 0)
+                            <span class="badge badge-danger">{{ $pending_approval }}</span>
+                        @endif
+                    </a>
+
+                    <ul class="nav-dropdown-items">
+                        <li class="nav-item">
+                            <a class="nav-link {{
+                                active_class(Route::is('admin/materiales*'))
+                            }}" href="{{ route('admin.materiales.index') }}">
+                                Base Materiales
+                                @if ($pending_approval > 0)
+                                    <span class="badge badge-danger">{{ $pending_approval }}</span>
+                                @endif
+                            </a>
+                        </li>
+
+
+                    </ul>
+                </li>
+
+                <li class="divider"></li>
+            @endif
 
         </ul>
     </nav>

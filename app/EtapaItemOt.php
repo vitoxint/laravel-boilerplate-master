@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class EtapaItemOt extends Model
 {
     protected $fillable =[
-        'itemot_id','proceso_id','maquina_id' ,'empleado_id', 'detalle', 'estado_avance', 'tiempo_asignado','tiempo_real,','fh_inicio', 'fh_termino' , 'fh_limite','codigo'
+        'itemot_id','proceso_id','maquina_id' ,'empleado_id', 'detalle', 'estado_avance', 'tiempo_asignado','tiempo_real,','fh_inicio', 'fh_termino' , 'fh_limite','codigo',
+        'valor_unitario', 'cantidad','valor_proceso'
     ];
 
     protected $hidden= [

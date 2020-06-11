@@ -25,7 +25,7 @@
                     <div class="col">
                     <div class="form-group row">
                         
-                        {{ html()->label('Proceso:')->class('col-md-1 form-control-label')->for('proceso_id') }}
+                        {{ html()->label('Proceso:')->class('col-md-2 form-control-label')->for('proceso_id') }}
                         <div class="col-md-3">
                             <select id="proceso_id" name="proceso_id" class="form-control" required="true" >
                                     <option value="" selected disabled>Seleccione</option>
@@ -42,17 +42,17 @@
 
                         </div><!--col-->
 
-                        {{ html()->label('Operador:')->class('col-md-1 form-control-label')->for('operador_id') }}
+<!--                         {{ html()->label('Operador:')->class('col-md-1 form-control-label')->for('operador_id') }}
                         <div class="col-md-3">
                                 <select name="operador_id" id="operador_id" class="form-control" required="true">
                                 </select>
-                        </div><!--col-->
+                        </div> --><!--col-->
                     </div><!--form-group-->
 
                     <div class="form-group row">
-                        {{ html()->label('Detalle: ')->class('col-md-1 form-control-label')->for('detalle') }}
+                        {{ html()->label('Detalle: ')->class('col-md-2 form-control-label')->for('detalle') }}
 
-                        <div class="col-md-12">
+                        <div class="col-md-7">
                             {{ html()->textarea('detalle')
                                 ->class('form-control')
                                 ->placeholder('Detalle')
@@ -62,8 +62,65 @@
                     </div><!--form-group-->
 
                     <div class="form-group row">
+                        
+                        {{ html()->label('Valorización:')->class('col-md-2 form-control-label')->for('') }}
+
+                        {{ html()->label('Tipo:')->class('col-md-1 form-control-label')->for('tipo_valorizacion') }}
+                        <div class="col-md-2">
+
+                        {{ html()->select('tipo_valorizacion',array('1' => 'Por Hora Máquina (HM)', '2' => 'Por Kilogramo', '3' =>'Por Operación o Carga'))
+                                ->class('form-control')
+                                ->attribute('maxlength', 191) 
+                                ->value('Seleccione')
+                                ->required()
+                                
+                            }}
+                        </div><!--col-->
+
+                        {{ html()->label('Valor Unitario:')->class('col-md-1 form-control-label')->for('valor_unitario') }}
+                        <div class="col-md-2">
+
+                            {{ html()->number('valor_unitario')
+                                    ->class('form-control')
+                                    ->placeholder('$$')
+                                    ->attribute('maxlength', 14)
+                                    ->required()                                   
+                            }}
+                        </div><!--col--> 
+                    </div>  
+
+                    <div class="form-group row">
+                        
+                        {{ html()->label('')->class('col-md-2 form-control-label')->for('') }}
+
+                        {{ html()->label('Cantidad:')->class('col-md-1 form-control-label')->for('cantidad') }}
+                        <div class="col-md-2">
+
+                            {{ html()->text('cantidad')
+                                ->class('form-control')
+                                ->value('0')
+                                ->attribute('maxlength', 191) 
+                                ->required()
+                                
+                            }}
+                        </div><!--col-->
+
+                        {{ html()->label('Valor total:')->class('col-md-1 form-control-label')->for('valor_proceso') }}
+                        <div class="col-md-2">
+
+                            {{ html()->number('valor_proceso')
+                                    ->class('form-control')
+                                    ->placeholder('$$')
+                                    ->value(0)
+                                    ->attribute('maxlength', 14)
+                                    ->required()                                   
+                            }}
+                        </div><!--col--> 
+                    </div>                                       
+
+                    <div class="form-group row">
                     
-                    {{ html()->label('Tiempo asignado:')->class('col-md-1 form-control-label')->for('tiempo_asignado') }}
+                    {{ html()->label('Tiempo asignado:')->class('col-md-2 form-control-label')->for('tiempo_asignado') }}
                         <div class="col-md-2">
                         {{ html()->time('tiempo_asignado')
                                 ->class('form-control')
@@ -73,7 +130,12 @@
                             </span>
                         </div><!--col-->
 
-                        {{ html()->label('Termino estimado:')->class('col-md-1 form-control-label')->for('fh_limite') }}
+                    </div><!--form-group-->   
+
+                    <div class="form-group row">
+
+
+                        {{ html()->label('Termino estimado:')->class('col-md-2 form-control-label')->for('fh_limite') }}
                        
                         <div class="col-md-3">
                         <div class='input-group date' id='fh_limite' name="fh_limite" >
@@ -85,7 +147,7 @@
 
                         </div><!--col-->
 
-                    </div><!--form-group-->              
+                    </div><!--form-group-->                                
 
                     </div><!--col-->
                 </div><!--row-->
@@ -177,6 +239,26 @@ $(document).ready(function(){
                 }
                }
             });
+
+/*             $.ajax({
+            
+            url: "{{ route('admin.get-valor-proceso') }}?proceso_id=" + $(this).val(),
+            method: 'GET',
+            success:function(data){               
+            if(data){
+                $("#tipo_valorizacion").val(data:valorizacion);
+                $("#valor_unitario").val(data:valor_unitario);
+                $("#maquina_id").append('<option>Seleccione</option>');
+
+
+            }else{
+               
+               console.log('no se puede obtener la información');
+            }
+           }
+        });  */           
+
+
         }else{
             $("#maquina_id").empty();
           
@@ -184,7 +266,76 @@ $(document).ready(function(){
        });
 
 
-       $('#maquina_id').on('change', function() {
+
+       $('#proceso_id').on('change', function() {
+        
+        var procesoID = this.value;  
+        
+        
+        if(procesoID){
+
+             $.ajax({
+            
+            url: "{{ route('admin.get-valor-proceso') }}?proceso_id=" + $(this).val(),
+            method: 'GET',
+            success:function(data){               
+            if(data){
+                $("#tipo_valorizacion").val(data.tipo_valorizacion).prop('selected', true);
+                $("#valor_unitario").val(data.valor_unitario);
+               
+            }else{
+               
+               console.log('no se puede obtener la información');
+            }
+           }
+        });         
+
+
+        }else{
+            $("#maquina_id").empty();
+          
+        }      
+       });
+
+
+       $('#cantidad').on('change', function() {
+ 
+            var total = parseFloat($('#valor_unitario').val())*parseFloat(this.value);
+            $('#valor_proceso').val(total.toFixed());
+            
+        });
+
+        $('#valor_unitario').on('change', function() {
+            
+            var total = parseFloat($('#cantidad').val())*parseFloat(this.value);
+            $('#valor_proceso').val(total.toFixed());
+            
+        });
+
+        $('#tiempo_asignado').on('change', function() {
+            
+            var time = this.value;
+            var hoursMinutes = time.split(/[.:]/);
+            var hours = parseInt(hoursMinutes[0], 10);
+            var minutes = hoursMinutes[1] ? parseInt(hoursMinutes[1], 10) : 0;
+            var cantidad = (hours + minutes / 60);
+            //$('#cantidad').val(cantidad.toFixed(2));
+
+            if( $('#tipo_valorizacion').val() == '1' ){
+                $('#cantidad').val(cantidad.toFixed(2));
+                var total = parseFloat($('#valor_unitario').val())*parseFloat($('#cantidad').val());
+                $('#valor_proceso').val(total);
+            }
+            
+        });
+
+ /*  var hoursMinutes = time.split(/[.:]/);
+  var hours = parseInt(hoursMinutes[0], 10);
+  var minutes = hoursMinutes[1] ? parseInt(hoursMinutes[1], 10) : 0;
+  return hours + minutes / 60; */
+
+
+/*        $('#maquina_id').on('change', function() {
         
         var maquinaID = this.value;  
         
@@ -210,7 +361,7 @@ $(document).ready(function(){
             $("#operador_id").empty();
           
         }      
-       });   
+       });  */  
 
        });    
 

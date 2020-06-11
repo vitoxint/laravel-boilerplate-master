@@ -62,6 +62,8 @@ class ProcesoController extends Controller
         $proceso= Proceso::create([
             'codigo' => $request->input('codigo'),
             'descripcion' => $request->input('descripcion'),
+            'tipo_valorizacion' => $request->input('tipo_valorizacion'),
+            'valor_unitario' => $request->input('valor_unitario')
                        
           ]);
 
@@ -119,6 +121,8 @@ class ProcesoController extends Controller
         $proceso->update([
             'codigo' => $request->input('codigo'),
             'descripcion' => $request->input('descripcion'),
+            'tipo_valorizacion' => $request->input('tipo_valorizacion'),
+            'valor_unitario' => $request->input('valor_unitario')
                        
           ]);
 
@@ -130,6 +134,7 @@ class ProcesoController extends Controller
                     ProcesoHasMaquina::create([
                         'maquina_id' => $maquina,
                         'proceso_id' => $proceso->id,
+                        
 
                     ]);
                 }
@@ -163,6 +168,20 @@ class ProcesoController extends Controller
         $proceso->delete();
         return redirect()->route('admin.procesos.index')->withFlashSuccess('Clasificación de proceso eliminada'); 
 
+    }
+
+    public function getValorProceso(Request $request)
+    {
+
+        $proceso = Proceso::find($request->proceso_id);
+
+        return response()->json([
+                
+            'tipo_valorizacion'=> $proceso->tipo_valorizacion,
+            'valor_unitario' => $proceso->valor_unitario
+            
+   
+            ]);
     }
 
 }

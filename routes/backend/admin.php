@@ -13,6 +13,7 @@ use App\Http\Controllers\Backend\MaquinaController;
 use App\Http\Controllers\Backend\EmpleadoController;
 use App\Http\Controllers\Backend\MaquinaHasOperadorController;
 use App\Http\Controllers\Backend\EtapaItemOtController;
+use App\Http\Controllers\Backend\MaterialController;
 
 
 
@@ -190,7 +191,28 @@ Route::group(['namespace' => 'EtapaItemOt'], function () {
            Route::patch('/', [EtapaItemOtController::class, 'update'])->name('etapa_itemots.update');
            Route::delete('/', [EtapaItemOtController::class, 'destroy'])->name('etapa_itemots.destroy');
        }); 
-   }); 
+   });
+
+
+   Route::group(['namespace' => 'Material'], function () {
+    
+    Route::get('materiales', [MaterialController::class, 'index'])->name('materiales.index');
+    Route::get('materiales/create', [MaterialController::class, 'create'])->name('materiales.create');
+    Route::post('materiales', [MaterialController::class, 'store'])->name('materiales.store');
+    Route::get('materiales/dataAjax', [MaterialController::class, 'dataAjax'])->name('materiales.dataAjax');
+
+    Route::group(['prefix' => 'materiales/{material}'], function () {
+        Route::get('edit', [MaterialController::class, 'edit'])->name('materiales.edit');
+        Route::patch('/', [MaterialController::class, 'update'])->name('materiales.update');
+        Route::delete('/', [MaterialController::class, 'destroy'])->name('materiales.destroy');
+    });
+
+   // Route::get('empleados/resultados', [MaterialController::class, 'buscar_operadores'])->name('empleados.buscar_operadores');
+
+});
+   
+
+Route::get('get-valor-proceso', 'ProcesoController@getValorProceso')->name('get-valor-proceso');
 
 Route::post('maquinaOperadores/destroy', [MaquinaHasOperadorController::class, 'destroy'])->name('maquinahasoperador.destroy');
 

@@ -15,6 +15,7 @@ class AddValorToMaquina extends Migration
     {
         Schema::table('maquinas', function (Blueprint $table) {
             $table->double('valor_hora')->after('nombre')->default(0);
+            
         });
     }
 

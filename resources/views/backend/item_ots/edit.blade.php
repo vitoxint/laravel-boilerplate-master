@@ -183,12 +183,13 @@
                                     <th style="width:35px;">Código</th>
                                     <th>Proceso</th>
                                     <th>Máquina</th>
-                                    <th>Operador</th>
-                                    <th>Hora límite</th>
+                                    <!-- <th>Operador</th> -->
+                                    <th>Hora planificada</th>
                                     <th>Hora inicio</th>
+                                    <th>Valor proceso</th>
                                     <th>Estado</th>
                                     
-                                    <th>Hora termino </th>
+                                    <!-- <th>Hora termino </th> -->
 
                                     <th style="width:45px;">@lang('labels.general.actions')</th>
                                 </tr>
@@ -201,13 +202,14 @@
                                         <td data-title="Codigo:">{{ $etapaItemOt->codigo }}</td>
                                         <td data-title="Proceso:">{{ $etapaItemOt->proceso->descripcion }}</td>
                                         <td data-title="Maquina:">{{ $etapaItemOt->maquina->codigo }}</td>
-                                        <td data-title="Operador:">{{ $etapaItemOt->operador->nombres . ' ' . $etapaItemOt->operador->apellidos }}</td>
+                                        <!-- <td data-title="Operador:">{{ $etapaItemOt->operador->nombres . ' ' . $etapaItemOt->operador->apellidos }}</td> -->
                                                 <?php $flimite= new Carbon\Carbon($etapaItemOt->fh_limite);
                                                     $flimite = $flimite->format('d-m-Y h:i'); ?>
-                                        <td date-title="Hora límite">{{$flimite}}</td>
+                                        <td date-title="Hora planificada">{{$flimite}}</td>
                                                 <?php $finicio= new Carbon\Carbon($etapaItemOt->fh_inicio);
                                                     $finicio = $finicio->format('d-m-Y h:i'); ?>
                                         <td data-title="Hora Inicio">{{$finicio}}</td>
+                                        <td data-title="Valor proceso" style="text-align:right;">@money($etapaItemOt->valor_proceso)</th>
                                         <td data-title="Estado" style="text-align:center;">
                                             @switch($etapaItemOt->estado_avance) 
                                             @case ('1') 
@@ -234,9 +236,9 @@
                                             @break;                     
                                             @endSwitch 
                                         </td>
-                                                <?php $ftermino= new Carbon\Carbon($etapaItemOt->fh_termino);
+                                         <!--        <?php $ftermino= new Carbon\Carbon($etapaItemOt->fh_termino);
                                                       $ftermino = $ftermino->format('d-m-Y h:i'); ?>                                       
-                                        <td data-title="Hora Termino">{{$ftermino}}</td>
+                                        <td data-title="Hora Termino">{{$ftermino}}</td> -->
 
                                         <td data-title="Acciones" class="btn-td">@include('backend.etapa_itemots.includes.actions', ['etapaItemOt' => $etapaItemOt])</td>
                                     </tr>

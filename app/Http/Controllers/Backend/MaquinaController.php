@@ -64,19 +64,19 @@ class MaquinaController extends Controller
         $maquina= Maquina::create([
             'codigo' => $request->input('codigo'),
             'nombre' => $request->input('nombre'),
-            'valor_hora'=> $request->input('valor_hora'),
-            'especificaciones' => $request->input('especificaciones'),
+            //'valor_hora'=> $request->input('valor_hora'),
+            //'especificaciones' => $request->input('especificaciones'),
             'estado' => $request->input('estado'),
                        
         ]);
 
-        foreach($operadores as $operador){
+/*         foreach($operadores as $operador){
             MaquinaHasOperador::create([
                 'empleado_id' => $operador,
                 'maquina_id' => $maquina->id,
 
             ]);
-        }
+        } */
 
 
           return redirect()->route('admin.maquinas.edit',$maquina)->withFlashSuccess('La máquina ha sido registrada'); 
@@ -121,19 +121,19 @@ class MaquinaController extends Controller
             
         ]);
 
-        $operadores = $request->input('operadores',[]);  
+        //$operadores = $request->input('operadores',[]);  
                     
         $maquina->update([
             'codigo' => $request->input('codigo'),
             'nombre' => $request->input('nombre'),
-            'valor_hora'=> $request->input('valor_hora'),
-            'especificaciones' => $request->input('especificaciones'),
+           // 'valor_hora'=> $request->input('valor_hora'),
+           //'especificaciones' => $request->input('especificaciones'),
             'estado' => $request->input('estado'),
                        
           ]);
 
         
-          foreach($operadores as $operador){
+/*           foreach($operadores as $operador){
 
             $aux = MaquinaHasOperador::where('maquina_id' ,'=', $maquina->id)->where('empleado_id','=',$operador)->first();
             if($aux == null)
@@ -158,7 +158,7 @@ class MaquinaController extends Controller
                 $maqops->delete();
             }
            
-        }
+        } */
 
           return redirect()->route('admin.maquinas.edit',$maquina)->withFlashSuccess('La información de la máquina ha sido editada'); 
     }
@@ -202,7 +202,7 @@ class MaquinaController extends Controller
         ->where('maquinas.estado', '=', '1')->orWhere('maquinas.estado', '=', '3')
         ->pluck(DB::raw("CONCAT(codigo,' - ',nombre) AS name"),"maquinas.id");
 
-        return response()->json($maquinas);
+        //return response()->json($maquinas);
 
     }
 }

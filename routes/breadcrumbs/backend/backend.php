@@ -136,7 +136,7 @@ Breadcrumbs::for('admin.procesos.index', function ($trail) {
 
 Breadcrumbs::for('admin.procesos.create', function ($trail) {
     $trail->parent('admin.procesos.index', route('admin.procesos.index'));
-    $trail->push('Añadir nueva clasificación de proceso', route('admin.procesos.create'));
+    $trail->push('Añadir nuevo proceso', route('admin.procesos.create'));
 });
 
 Breadcrumbs::for('admin.procesos.edit', function ($trail,$proceso) {
@@ -189,4 +189,18 @@ Breadcrumbs::for('admin.etapa_itemots.edit', function ($trail,$etapaItemOt) {
     $trail->push( $etapaItemOt->itemOt->ordenTrabajo->folio, route('admin.orden_trabajos.edit',[$etapaItemOt->itemOt->OrdenTrabajo]));
     $trail->push( $etapaItemOt->itemOt->folio, route('admin.item_ots.edit',[$etapaItemOt->itemOt, $etapaItemOt->itemOt->OrdenTrabajo]));
     $trail->push( $etapaItemOt->codigo, route('admin.etapa_itemots.edit',$etapaItemOt));
+});
+
+Breadcrumbs::for('admin.materiales.index', function ($trail) {
+    $trail->push('Base de materiales', route('admin.materiales.index'));
+});
+
+Breadcrumbs::for('admin.materiales.create', function ($trail) {
+    $trail->parent('admin.materiales.index', route('admin.materiales.index'));
+    $trail->push('Registrar material', route('admin.materiales.create'));
+});
+
+Breadcrumbs::for('admin.materiales.edit', function ($trail ,$material) {
+    $trail->parent('admin.materiales.index', route('admin.materiales.index'));
+    $trail->push('Editar material / Consultar dimensionado', route('admin.materiales.edit',$material));
 });

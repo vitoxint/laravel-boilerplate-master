@@ -168,7 +168,7 @@
                     &nbsp; Ingeniería y Maestranza Orecal Ltda, RUT 76.285.390-6<br>
                     &nbsp; Cuenta corriente Banco BICE N° 03-01643-9<br>
                     &nbsp; Favor enviar comprobante a : vosorio@orecal.cl<br>
-                <b>*Tarjetas de débito y crédito (Transbank).</b>
+                <!-- <b>*Tarjetas de débito y crédito (Transbank).</b> -->
                 </p>
             </td>
         </tr>
@@ -184,7 +184,7 @@
                     <li style="font-size: 10px;">Esta  cotización  ha sido  realizada según planos enviado por el cliente, por lo que cualquier modificación de estos podría  hacer variar los valores de la presente cotización.</li>
                     <li style="font-size: 10px;">Al aceptar esta cotización el cliente aprueba los planos enviados para cotizar y/o los desarrollados por los ingenieros de Maestranza Orecal.</li>
                     <li style="font-size: 10px;">El  trabajo deberá  ser retirado  por el cliente  en las dependencias de Ingeniería y Maestranza Orecal. Se eliminará todo despunte si éste no es retirado junto con el trabajo de corte.</li>
-                    <li style="font-size: 10px;">El corte por agua tiene una toleración de 0,2 mm aproximadamente. En espesores superiores la tolerancia puede ser mayor.<span style="text-decoration: underline;">El oxicorte  no es un corte de precisión</span>, por lo que debe considerar una mayor tolerancia para piezas cortadas con esos procesos.</li>
+                    <li style="font-size: 10px;">El corte por agua tiene una toleración de +- 0,3 mm aproximadamente. En espesores superiores la tolerancia puede ser mayor.<span style="text-decoration: underline;">El oxicorte y el corte por plasma no son corte de precisión</span>, por lo que debe considerar una mayor tolerancia de +- 3mm para piezas cortadas con esos procesos.</li>
                     <li style="font-size: 10px;"><span style="text-decoration: underline;">Si el cliente proporciona el material éste debe venir según las condiciones exigidas por Orecal para la recepción de material, sin pintura, óxido, ni ningún otro tipo de impureza y completamente lisas. En caso contrario Maestranza Orecal cobrará un costo extra asociado al proceso de limpieza del material.</span></li>
                     <li style="font-size: 10px;">Los materiales deben considerar un margen para regular la máquina de corte por agua y márgenes para el corte. Se debe considerar además la posibilidad que alguna pieza presente defectos en el corte, por lo que deba ser cortada nuevamente.</li>
                     <li style="font-size: 10px;">No se reciben retazos de planchas ni materiales ya cortados.</li>

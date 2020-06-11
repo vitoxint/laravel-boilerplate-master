@@ -48,6 +48,35 @@
                         </div>
                     </div><!--form-group--> 
 
+                    <div class="form-group row">
+                        
+                        {{ html()->label('Valorización:')->class('col-md-2 form-control-label')->for('proceso_id') }}
+
+                        {{ html()->label('Modo Valorización:')->class('col-md-1 form-control-label')->for('tipo_valorizacion') }}
+                        <div class="col-md-2">
+
+                            {{ html()->select('tipo_valorizacion',array('1' => 'Por Hora Máquina (HM)', '2' => 'Por Kilogramo', '3' =>'Por Operación o Carga'), $proceso->tipo_valorizacion)
+                                ->class('form-control')
+                                ->attribute('maxlength', 191) 
+                                ->required()
+                                
+                            }}
+                        </div><!--col-->
+
+                        {{ html()->label('Valor Unitario:')->class('col-md-1 form-control-label')->for('valor_unitario') }}
+                        <div class="col-md-2">
+
+                            {{ html()->number('valor_unitario')
+                                    ->class('form-control')
+                                    ->placeholder('$$')
+                                    
+                                    ->attribute('maxlength', 14)
+                                    ->required()                                   
+                            }}
+                        </div><!--col-->                        
+
+                    </div><!--form-group-->                       
+
                     <div class="form-group row">                    
                         {{ html()->label('Máquinas asignadas')->class('col-md-2 form-control-label')->for('maquinas') }}
                             <div class="col-md-5">
