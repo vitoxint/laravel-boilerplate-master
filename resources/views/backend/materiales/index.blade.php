@@ -73,7 +73,7 @@
                                 </td>
                                 <td data-title="Ø Interior" align="center"> {{$material->diam_interior}} </td>
                                 <td data-title="Espesor" align="center">  {{$material->espesor}}   </td>
-                                <td data-title="Densidad g/cm³" align="center"> {{$material->densidad}}  g/cm3</td>
+                                <td data-title="Densidad g/cm³" align="center"> {{$material->densidad}}  g/cm³</td>
                                 <td data-title="Valor Kg" style="text-align:right;">@money($material->valor_kg) </td>
                                 <td data-title="Acciones" class="btn-td">@include('backend.materiales.includes.actions', ['material' => $material])</td>
                             </tr>

@@ -142,7 +142,7 @@
             <div class="card-footer">
                 <div class="row">
                     <div class="col">
-                        {{ form_cancel(route('admin.maquinas.index'), __('buttons.general.cancel')) }}
+                        {{ form_cancel(route('admin.materiales.index'), __('buttons.general.cancel')) }}
                     </div><!--col-->
 
                     <div class="col text-right">
@@ -158,7 +158,7 @@
 <!-- CALCULAR DIMENSIONADO -->
 
 <div class="card">
-        {{ html()->modelForm($material, 'PATCH', route('admin.materiales.update', $material))->class('form-horizontal')->acceptsFiles()->open() }}
+        
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-5">
@@ -182,7 +182,7 @@
                                 <div class="col-md-1">
                                     {{ html()->text('largo')
                                         ->class('form-control')
-                                        ->value(0)                            
+                                                                   
                                         ->attribute('maxlength', 191)                                          
                                         ->autofocus()                                   
                                         }}
@@ -193,7 +193,7 @@
                                 <div class="col-md-1">
                                     {{ html()->text('ancho')
                                         ->class('form-control')
-                                        ->value(0)
+                                        
                                         ->attribute('maxlength', 191)                                            
                                         ->autofocus()
 
@@ -259,7 +259,7 @@
                 </div><!--row-->
             </div><!--card-footer-->
 
-            {{ html()->closeModelForm() }}    
+             
         </div><!--card-->    
   
 </div>
@@ -312,7 +312,7 @@
 
             $('#volumen').val(volumen.toFixed(2));
 
-            var masa = parseFloat($('#densidad').val()) * volumen;
+            var masa = parseFloat($('#densidad').val()) * (volumen/10);
             var precio = masa * ( parseFloat(   $("#valor_kg").val()  )  / 1000);
 
             $("#masa").val(masa.toFixed(2));
@@ -358,9 +358,9 @@
                     var areaExt = Math.PI * Math.pow(radioExt,2);
                     var areaInt = Math.PI * Math.pow(radioInt,2);
 
-                    var areaTotal = areaExt - areaInt;
+                    var areaTotal = (areaExt - areaInt)/1000;
                     var volumen = areaTotal * parseFloat( $('#largo').val() )
-                    return volumen/100;
+                    return volumen;
             }
 
             function volumen_barra(){
@@ -377,9 +377,9 @@
                     var areaExt = Math.PI * Math.pow(radioExt,2);
                     //var areaInt = Math.PI * Math.pow(radioInt,2);
 
-                    var areaTotal = areaExt ;
+                    var areaTotal = areaExt/1000 ;
                     var volumen = areaTotal * parseFloat( $('#largo').val() )
-                    return volumen/100;
+                    return volumen;
                    //return radioExt;
             }
 
@@ -396,8 +396,10 @@
                     }
                     var areaTotal = parseFloat( $('#largo').val() ) * parseFloat( $('#ancho').val() );
 
+                    areaTotal = areaTotal / 1000;
+
                     var volumen = areaTotal * parseFloat( $('#espesor').val() )
-                    return volumen/1000;
+                    return volumen;
                 
             }
         
