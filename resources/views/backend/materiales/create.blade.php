@@ -49,6 +49,19 @@
                             }}
                                                     
                         </div>
+
+                        {{ html()->label(__('Corte Perfil *'))->class('col-md-1 form-control-label')->for('tipo_corte') }}
+
+                        <div class="col-md-2">
+                                                
+                            {{ html()->select('tipo_corte',array('1' => 'Completo', '2' => 'Dimensionado'), null)
+                                    ->class('form-control')
+                                    ->attribute('maxlength', 191) 
+                                    ->required()
+                            }}
+
+                        </div>
+
                     </div><!--form-group--> 
 
                     <div class="form-group row">
@@ -119,7 +132,7 @@
                             <div class="col-md-1">
                                 {{ html()->text('densidad')
                                     ->class('form-control')
-                                    ->value(0)                                   
+                                    ->value(8)                                   
                                     ->attribute('maxlength', 191)    
                                     ->autofocus()                                   
                                      }}
@@ -136,7 +149,21 @@
 
                                      }}
                             </div><!--col-->
-                    </div><!--form-group-->                 
+                    </div><!--form-group-->    
+
+                    <div class="form-group row">
+                        {{ html()->label(__('Proveedor principal'))->class('col-md-2 form-control-label')->for('proveedor') }}
+
+                        <div class="col-md-4">                       
+                                {{ html()->text('proveedor')
+                                    ->class('form-control')
+                                    ->placeholder('Proveedor del material por costo')
+                                    ->attribute('maxlength', 191)
+                                                                
+                                }}
+                    
+                        </div><!--col-->
+                    </div><!--form-group-->                                 
 
                     </div><!--col-->
                 </div><!--row-->

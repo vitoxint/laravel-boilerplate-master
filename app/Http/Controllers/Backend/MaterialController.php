@@ -29,6 +29,38 @@ class MaterialController extends Controller
         ->withMateriales($this->materialRepository->getActivePaginated(25, 'id', 'asc'));
     }
 
+    public function filtrarBarras(){
+
+        return view('backend.materiales.index')
+        ->withMateriales($this->materialRepository->getMaterialBarras(25, 'codigo', 'asc'));       
+
+    }
+
+    public function filtrarPerforadas(){
+
+        return view('backend.materiales.index')
+        ->withMateriales($this->materialRepository->getMaterialPerforadas(25, 'codigo', 'asc'));       
+
+    }
+
+    public function filtrarPlanchas(){
+
+        return view('backend.materiales.index')
+        ->withMateriales($this->materialRepository->getMaterialPlanchas(25, 'codigo', 'asc'));       
+
+    }
+
+    public function buscar_material(Request $request)
+    {
+        $term = $request->input('buscar');
+
+        return view('backend.materiales.index')
+            ->withMateriales($this->materialRepository->getBuscarMaterialesPaginated(25, 'codigo', 'asc',$term));
+
+    }
+
+
+
     /**
      * Show the form for creating a new resource.
      *
@@ -53,6 +85,7 @@ class MaterialController extends Controller
             'sistema_medida' => 'required',
             'densidad' => 'required|numeric',
             'valor_kg' => 'required|numeric',
+            'tipo_corte' => 'required'
             
         ]);
 
@@ -65,6 +98,8 @@ class MaterialController extends Controller
             'diam_exterior' => $request->input('diam_exterior'),
             'diam_interior' => $request->input('diam_interior'),
             'espesor' => $request->input('espesor'),
+            'tipo_corte' => $request->input('tipo_corte'),
+            'proveedor' => $request->input('proveedor')
             
           ]);
         
@@ -109,6 +144,7 @@ class MaterialController extends Controller
             'sistema_medida' => 'required',
             'densidad' => 'required|numeric',
             'valor_kg' => 'required|numeric',
+            'tipo_corte' => 'required'
             
         ]);
 
@@ -121,6 +157,8 @@ class MaterialController extends Controller
             'diam_exterior' => $request->input('diam_exterior'),
             'diam_interior' => $request->input('diam_interior'),
             'espesor' => $request->input('espesor'),
+            'tipo_corte' => $request->input('tipo_corte'),
+            'proveedor' => $request->input('proveedor')
             
           ]);
         
@@ -135,6 +173,8 @@ class MaterialController extends Controller
      */
     public function destroy(Material $material)
     {
-        //
+        $material->delete();
+        return redirect()->back()->withFlashSuccess('El registro del material se ha eliminado correctamente');
+
     }
 }

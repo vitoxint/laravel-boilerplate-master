@@ -48,6 +48,18 @@
                             }}
                                                     
                         </div>
+
+                            {{ html()->label(__('Corte Perfil *'))->class('col-md-1 form-control-label')->for('tipo_corte') }}
+
+                        <div class="col-md-2">
+                                                
+                            {{ html()->select('tipo_corte',array('1' => 'Completo', '2' => 'Dimensionado'), null)
+                                    ->class('form-control')
+                                    ->attribute('maxlength', 191) 
+                                    ->required()
+                            }}
+
+                        </div>
                     </div><!--form-group--> 
 
                     <div class="form-group row">
@@ -133,7 +145,21 @@
                                     ->autofocus()
                                      }}
                             </div><!--col-->
-                    </div><!--form-group-->               
+                    </div><!--form-group-->  
+
+                      <div class="form-group row">
+                        {{ html()->label(__('Proveedor principal'))->class('col-md-2 form-control-label')->for('proveedor') }}
+
+                        <div class="col-md-4">                       
+                                {{ html()->text('proveedor')
+                                    ->class('form-control')
+                                    ->placeholder('Proveedor del material por costo')
+                                    ->attribute('maxlength', 191)
+                                                                
+                                }}
+                    
+                        </div><!--col-->
+                    </div><!--form-group-->                                 
 
                         </div><!--col-->
                     </div><!--row-->
@@ -205,7 +231,7 @@
                         <div class="form-group row" style="padding-top:10px;">
                                 {{ html()->label('Resultados :')->class('col-md-2 form-control-label')->for('') }}
 
-                                {{ html()->label('Volumen (ml):')->class('col-md-1 form-control-label')->for('volumen') }}
+                                {{ html()->label('Volumen (Lts):')->class('col-md-1 form-control-label')->for('volumen') }}
 
                                 <div class="col-md-1">
                                     {{ html()->text('volumen')
@@ -216,7 +242,7 @@
                                         }}
                                 </div><!--col-->
 
-                                {{ html()->label('Masa (grs):')->class('col-md-1 form-control-label')->for('masa') }}
+                                {{ html()->label('Masa (Kg):')->class('col-md-1 form-control-label')->for('masa') }}
 
                                 <div class="col-md-1">
                                     {{ html()->text('masa')
@@ -235,13 +261,16 @@
                                         ->class('form-control')
                                         ->value(0)
                                         ->disabled()
-                                        ->attribute('maxlength', 191)                                            
+                                        ->attribute('maxlength',
+                                         191)                                            
                                         ->autofocus()
 
                                         }}
                                 </div><!--col-->
 
-                        </div><!--form-group-->                         
+                        </div><!--form-group-->  
+
+                                              
 
                         </div><!--col-->
                     </div><!--row-->
@@ -292,12 +321,15 @@
                 volumen = volumen_plancha();
             }
 
-            $('#volumen').val(volumen.toFixed(2));
+            volumenLt = volumen/1000;
+
+            $('#volumen').val(volumenLt.toFixed(3));
 
             var masa = parseFloat($('#densidad').val()) * volumen;
-            var precio = masa *( parseFloat(   $("#valor_kg").val()  )  / 1000);
+            var masaKg = masa/1000
+            var precio = masa *( parseFloat( $("#valor_kg").val()  )  / 1000);
 
-            $("#masa").val(masa.toFixed(2));
+            $("#masa").val(masaKg.toFixed(3));
             $("#valor").val(precio.toFixed(2));
             
         });
@@ -310,12 +342,15 @@
                 volumen = volumen_plancha();
             }
 
-            $('#volumen').val(volumen.toFixed(2));
+            volumenLt = volumen/1000;
+
+            $('#volumen').val(volumenLt.toFixed(3));
 
             var masa = parseFloat($('#densidad').val()) * (volumen/10);
+            var masaKg = masa/1000;
             var precio = masa * ( parseFloat(   $("#valor_kg").val()  )  / 1000);
 
-            $("#masa").val(masa.toFixed(2));
+            $("#masa").val(masaKg.toFixed(3));
             $("#valor").val(precio.toFixed(2));
 
             

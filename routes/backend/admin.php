@@ -207,7 +207,13 @@ Route::group(['namespace' => 'EtapaItemOt'], function () {
         Route::delete('/', [MaterialController::class, 'destroy'])->name('materiales.destroy');
     });
 
-   // Route::get('empleados/resultados', [MaterialController::class, 'buscar_operadores'])->name('empleados.buscar_operadores');
+    Route::get('materiales/barra', [MaterialController::class, 'filtrarBarras'])->name('materiales.barra');
+    Route::get('materiales/barra_perforada', [MaterialController::class, 'filtrarPerforadas'])->name('materiales.barra_perforada');
+    Route::get('materiales/plancha', [MaterialController::class, 'filtrarPlanchas'])->name('materiales.plancha');
+
+    Route::get('materiales/resultados', [MaterialController::class, 'buscar_material'])->name('materiales.buscar_material');
+
+  
 
 });
    

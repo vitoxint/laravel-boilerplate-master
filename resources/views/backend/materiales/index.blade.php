@@ -2,6 +2,10 @@
 
 @section('title', app_name() . ' | ' . 'Registro de materiales')
 
+@section('breadcrumb-links')
+    @include('backend.materiales.includes.breadcrumb-links')
+@endsection
+
 
 @section('content')
 <div class="card">
@@ -9,7 +13,7 @@
         <div class="row">
             <div class="col-sm-5">
                 <h4 class="card-title mb-0">
-                    Registro de materiales <small class="text-muted">Todos las materiales</small>
+                    Registro de materiales <small class="text-muted">Todos los materiales</small>
                 </h4>
             </div><!--col-->
 

@@ -36,6 +36,41 @@ class MaterialRepository extends BaseRepository
             ->paginate($paged);
     }
 
+    public function getMaterialBarras($paged = 25, $orderBy = 'codigo', $sort = 'asc'): LengthAwarePaginator
+    {
+        return $this->model
+            ->where('perfil',1)
+            ->orderBy($orderBy, $sort)
+            ->paginate($paged);
+
+    }
+
+    public function getMaterialPlanchas($paged = 25, $orderBy = 'codigo', $sort = 'asc'): LengthAwarePaginator
+    {
+        return $this->model
+            ->where('perfil',3)
+            ->orderBy($orderBy, $sort)
+            ->paginate($paged);
+
+    }
+
+    public function getMaterialPerforadas($paged = 25, $orderBy = 'codigo', $sort = 'asc'): LengthAwarePaginator
+    {
+        return $this->model
+            ->where('perfil',2)
+            ->orderBy($orderBy, $sort)
+            ->paginate($paged);
+
+    }
+
+    public function getBuscarMaterialesPaginated($paged = 25, $orderBy = 'codigo', $sort = 'asc', $term): LengthAwarePaginator
+    {
+        return $this->model
+            ->where('proveedor', 'LIKE', "%{$term}%")->orWhere('codigo', 'LIKE', "%{$term}%")
+            ->orderBy($orderBy, $sort)
+            ->paginate($paged);
+    }
+
 
     
 

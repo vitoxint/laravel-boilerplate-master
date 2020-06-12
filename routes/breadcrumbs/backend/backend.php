@@ -204,3 +204,23 @@ Breadcrumbs::for('admin.materiales.edit', function ($trail ,$material) {
     $trail->parent('admin.materiales.index', route('admin.materiales.index'));
     $trail->push('Editar material / Consultar dimensionado', route('admin.materiales.edit',$material));
 });
+
+Breadcrumbs::for('admin.materiales.barra', function ($trail) {
+    $trail->parent('admin.materiales.index', route('admin.materiales.index'));
+    $trail->push('Barras Redonda', route('admin.materiales.barra'));
+});
+
+Breadcrumbs::for('admin.materiales.barra_perforada', function ($trail) {
+    $trail->parent('admin.materiales.index', route('admin.materiales.index'));
+    $trail->push('Barras Perforadas', route('admin.materiales.barra_perforada'));
+});
+
+Breadcrumbs::for('admin.materiales.plancha', function ($trail) {
+    $trail->parent('admin.materiales.index', route('admin.materiales.index'));
+    $trail->push('Planchas / Láminas', route('admin.materiales.plancha'));
+});
+
+Breadcrumbs::for('admin.materiales.buscar_material', function ($trail) {
+    $trail->parent('admin.materiales.index', route('admin.materiales.index'));
+    $trail->push('Resultados de la búsqueda', route('admin.materiales.buscar_material'));
+});
