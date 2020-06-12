@@ -26,7 +26,6 @@
 
 
 
-
         <div class="card">
         {{ html()->modelForm($item_ot, 'PATCH', route('admin.item_ots.update', ['item_ot' => $item_ot, 'trabajo' =>  $trabajo]))->class('form-horizontal')->acceptsFiles()->open() }}
             <div class="card-body">

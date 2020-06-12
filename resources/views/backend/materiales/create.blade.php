@@ -98,7 +98,7 @@
                             {{ html()->label('Espesor')->class('col-md-1 form-control-label')->for('espesor') }}
 
                             <div class="col-md-1">
-                                {{ html()->text('espesoro')
+                                {{ html()->text('espesor')
                                     ->class('form-control')
                                     ->attribute('maxlength', 191)
                                     ->value(0)                                             
@@ -114,7 +114,7 @@
 
                             {{ html()->label('Valor material')->class('col-md-2 form-control-label')->for('') }}                      
 
-                            {{ html()->label('Densidad Kg/cm2')->class('col-md-1 form-control-label')->for('densidad') }}
+                            {{ html()->label('Densidad g/cm³')->class('col-md-1 form-control-label')->for('densidad') }}
 
                             <div class="col-md-1">
                                 {{ html()->text('densidad')
@@ -149,7 +149,7 @@
                     </div><!--col-->
 
                     <div class="col text-right">
-                        {{ form_submit('Registrar') }}
+                        {{ form_submit(__('buttons.general.save')) }}
                     </div><!--col-->
                 </div><!--row-->
             </div><!--card-footer-->

@@ -28,10 +28,10 @@
                              <!-- <th>Material</th>   -->
                              <th>Perfil</th>
                              <th>Código</th>                                  
-                             <th>Ø Ext.</th>
-                             <th>Ø Int.</th>
-                             <th>Esp.</th>
-                             <th>Densidad Kg/cm2</th>
+                             <th>Ø Exterior.</th>
+                             <th>Ø Interior.</th>
+                             <th>Espesor.</th>
+                             <th>Densidad g/cm³</th>
                              <th>Valor Kg</th>
 
                              <th style="width:45px;">@lang('labels.general.actions')</th>
@@ -73,7 +73,7 @@
                                 </td>
                                 <td data-title="Ø Interior" align="center"> {{$material->diam_interior}} </td>
                                 <td data-title="Espesor" align="center">  {{$material->espesor}}   </td>
-                                <td data-title="Densidad Kg/cm2" align="center"> {{$material->densidad}}  Kg/cm2</td>
+                                <td data-title="Densidad g/cm³" align="center"> {{$material->densidad}}  g/cm3</td>
                                 <td data-title="Valor Kg" style="text-align:right;">@money($material->valor_kg) </td>
                                 <td data-title="Acciones" class="btn-td">@include('backend.materiales.includes.actions', ['material' => $material])</td>
                             </tr>

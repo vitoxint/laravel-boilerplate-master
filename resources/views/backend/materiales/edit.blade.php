@@ -98,7 +98,7 @@
                             {{ html()->label('Espesor')->class('col-md-1 form-control-label')->for('espesor') }}
 
                             <div class="col-md-1">
-                                {{ html()->text('espesoro')
+                                {{ html()->text('espesor')
                                     ->class('form-control')
                                     ->attribute('maxlength', 191)
                                                                               
@@ -114,12 +114,11 @@
 
                             {{ html()->label('Valor material')->class('col-md-2 form-control-label')->for('') }}                      
 
-                            {{ html()->label('Densidad Kg/cm2')->class('col-md-1 form-control-label')->for('densidad') }}
+                            {{ html()->label('Densidad g/cm³')->class('col-md-1 form-control-label')->for('densidad') }}
 
                             <div class="col-md-1">
                                 {{ html()->text('densidad')
-                                    ->class('form-control')
-                                                                    
+                                    ->class('form-control')                                                                    
                                     ->attribute('maxlength', 191)    
                                     ->autofocus()                                   
                                      }}
@@ -129,11 +128,9 @@
 
                             <div class="col-md-1">
                                 {{ html()->number('valor_kg')
-                                    ->class('form-control')
-                                        
+                                    ->class('form-control')                                       
                                     ->attribute('maxlength', 191)      
                                     ->autofocus()
-
                                      }}
                             </div><!--col-->
                     </div><!--form-group-->               
@@ -156,6 +153,114 @@
 
             {{ html()->closeModelForm() }}    
         </div><!--card-->    
+
+
+<!-- CALCULAR DIMENSIONADO -->
+
+<div class="card">
+        {{ html()->modelForm($material, 'PATCH', route('admin.materiales.update', $material))->class('form-horizontal')->acceptsFiles()->open() }}
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-5">
+                        <h4 class="card-title mb-0">
+                            Calcular dimensionado de material
+                            <!--<small class="text-muted">Editar material / calcular dimensión</small>-->
+                        </h4>
+                    </div><!--col-->
+                </div><!--row-->
+
+                <hr>
+
+                <div class="row mt-4 mb-4">
+                        <div class="col">
+
+                        <div class="form-group row" style="padding-top:10px;">
+                                {{ html()->label('Ingresar dimensiones :')->class('col-md-2 form-control-label')->for('') }}
+
+                                {{ html()->label('Largo (mm):')->class('col-md-1 form-control-label')->for('largo') }}
+
+                                <div class="col-md-1">
+                                    {{ html()->text('largo')
+                                        ->class('form-control')
+                                        ->value(0)                            
+                                        ->attribute('maxlength', 191)                                          
+                                        ->autofocus()                                   
+                                        }}
+                                </div><!--col-->
+
+                                {{ html()->label('Ancho (mm):')->class('col-md-1 form-control-label')->for('ancho') }}
+
+                                <div class="col-md-1">
+                                    {{ html()->text('ancho')
+                                        ->class('form-control')
+                                        ->value(0)
+                                        ->attribute('maxlength', 191)                                            
+                                        ->autofocus()
+
+                                        }}
+                                </div><!--col-->
+
+                        </div><!--form-group-->    
+
+                        <div class="form-group row" style="padding-top:10px;">
+                                {{ html()->label('Resultados :')->class('col-md-2 form-control-label')->for('') }}
+
+                                {{ html()->label('Volumen (ml):')->class('col-md-1 form-control-label')->for('volumen') }}
+
+                                <div class="col-md-1">
+                                    {{ html()->text('volumen')
+                                        ->class('form-control')
+                                        ->disabled()                          
+                                        ->attribute('maxlength', 191)                                          
+                                        ->autofocus()                                   
+                                        }}
+                                </div><!--col-->
+
+                                {{ html()->label('Masa (grs):')->class('col-md-1 form-control-label')->for('masa') }}
+
+                                <div class="col-md-1">
+                                    {{ html()->text('masa')
+                                        ->class('form-control')
+                                        ->value(0)
+                                        ->disabled()
+                                        ->attribute('maxlength', 191)                                            
+                                        ->autofocus()
+
+                                        }}
+                                </div><!--col-->
+
+                                {{ html()->label('Valor total:')->class('col-md-1 form-control-label')->for('valor') }}
+                                <div class="col-md-1">
+                                    {{ html()->text('valor')
+                                        ->class('form-control')
+                                        ->value(0)
+                                        ->disabled()
+                                        ->attribute('maxlength', 191)                                            
+                                        ->autofocus()
+
+                                        }}
+                                </div><!--col-->
+
+                        </div><!--form-group-->                         
+
+                        </div><!--col-->
+                    </div><!--row-->
+                </div><!--card-body-->
+
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col">
+                        
+                    </div><!--col-->
+
+                    <div class="col text-right">
+                        
+                    </div><!--row-->
+                </div><!--row-->
+            </div><!--card-footer-->
+
+            {{ html()->closeModelForm() }}    
+        </div><!--card-->    
   
 </div>
 
@@ -170,41 +275,51 @@
   <script>
         $.fn.select2.defaults.set('language', 'es');
         
- /*        $('#operadores').select2({
-            placeholder: "Seleccionar...",
-            minimumInputLength: 3,
-            ajax: {
-                url: "{{route('admin.empleados.dataAjax')}}",
-                dataType: 'json',
-                language: "es",
-                data: function (params) {
-                    return {
-                        q: $.trim(params.term)
-                    };
-                },
-                processResults: function (data) {
-                    return {
-                        results: data
-                    };                   
-                },
-                cache: true
-            },           
-        }); *//* .on("select2:unselecting", function(e){
-            var op = $('#operadores option:selected').val();
-alert(op);
-            $.ajax({
-                type:'POST',
-                url:'{{route("admin.maquinahasoperador.destroy")}}?id='",
-                data:{op:op},
-                success:function(data){
-                    alert('Operador eliminado de la máquina');                
-                },
-                error: function() {
-                    console.log("No se ha podido obtener la información");
-                }
 
-                })     
-        }).trigger('change') */      
+        $('#largo').on('change', function() {
+
+            var volumen ;
+ 
+            if($('#perfil').val() == '1'){
+                volumen = volumen_barra();
+            }
+
+            if($('#perfil').val() == '2'){
+                volumen = volumen_bocina();
+            }
+
+            if($('#perfil').val() == '3'){
+                volumen = volumen_plancha();
+            }
+
+            $('#volumen').val(volumen.toFixed(2));
+
+            var masa = parseFloat($('#densidad').val()) * volumen;
+            var precio = masa *( parseFloat(   $("#valor_kg").val()  )  / 1000);
+
+            $("#masa").val(masa.toFixed(2));
+            $("#valor").val(precio.toFixed(2));
+            
+        });
+
+        $('#ancho').on('change', function() {
+            
+            var volumen ;
+ 
+            if($('#perfil').val() == '3'){
+                volumen = volumen_plancha();
+            }
+
+            $('#volumen').val(volumen.toFixed(2));
+
+            var masa = parseFloat($('#densidad').val()) * volumen;
+            var precio = masa * ( parseFloat(   $("#valor_kg").val()  )  / 1000);
+
+            $("#masa").val(masa.toFixed(2));
+            $("#valor").val(precio.toFixed(2));
+
+            
+        });
 
         //alert(toDeci("1-1/4"));
 
@@ -227,6 +342,63 @@ alert(op);
                     result = +fraction;
                 }
                 return result.toFixed(2);
+            }
+
+
+            function volumen_bocina(){
+                    if($('#sistema_medida').val() == '2') //si es en pulgadas
+                    { 
+                        var radioExt = (parseFloat(   toDeci($('#diam_exterior').val())    ) / parseFloat(2)) *25.4;
+                        var radioInt = (parseFloat(   toDeci($('#diam_interior').val())    ) / parseFloat(2)) *25.4;
+                    }else{   // si es en milimetros
+
+                        var radioExt = parseFloat( $('#diam_exterior').val() ) / parseFloat(2);
+                        var radioInt = parseFloat( $('#diam_interior').val() ) / parseFloat(2);
+                    }
+                    var areaExt = Math.PI * Math.pow(radioExt,2);
+                    var areaInt = Math.PI * Math.pow(radioInt,2);
+
+                    var areaTotal = areaExt - areaInt;
+                    var volumen = areaTotal * parseFloat( $('#largo').val() )
+                    return volumen/100;
+            }
+
+            function volumen_barra(){
+
+                if($('#sistema_medida').val() == '2') //si es en pulgadas
+                    { 
+                        var radioExt =  ( parseFloat(   toDeci($('#diam_exterior').val())    ) / parseFloat(2) ) * 25.4;
+                        //var radioInt = parseFloat(   toDeci($('#diam_interior').val())    ) / parseFloat(2);
+                    }else{   // si es en milimetros
+
+                        var radioExt = parseFloat( $('#diam_exterior').val() ) / parseFloat(2);
+                        //var radioInt = parseFloat( $('#diam_interior').val() ) / parseFloat(2);
+                    }
+                    var areaExt = Math.PI * Math.pow(radioExt,2);
+                    //var areaInt = Math.PI * Math.pow(radioInt,2);
+
+                    var areaTotal = areaExt ;
+                    var volumen = areaTotal * parseFloat( $('#largo').val() )
+                    return volumen/100;
+                   //return radioExt;
+            }
+
+            function volumen_plancha(){
+
+                if($('#sistema_medida').val() == '2') //si es en pulgadas
+                    { 
+                        var espesor =   parseFloat( toDeci($('#espesor').val()) ) * 25.4;
+
+                    }else{   // si es en milimetros
+
+                        var espesor = parseFloat( $('#espesor').val() );
+                       
+                    }
+                    var areaTotal = parseFloat( $('#largo').val() ) * parseFloat( $('#ancho').val() );
+
+                    var volumen = areaTotal * parseFloat( $('#espesor').val() )
+                    return volumen/1000;
+                
             }
         
     </script>

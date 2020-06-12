@@ -52,4 +52,23 @@ return [
         'save' => 'Guardar',
         'view' => 'Visualizar',
     ],
+/* 
+    'general' => [
+        'cancel' => '<i class="fas fa-arrow-left"></i>'. ' Volver',
+        'canceld' => 'Cancelar',
+        'continue' => 'Continuar',
+
+        'crud' => [
+            'create' => 'Crear',
+            'delete' => 'Eliminar',
+            'edit' => 'Modificar',
+            'update' => '<i class="fas fa-check"></i>'. ' Actualizar',
+            'view' => 'Visualizar',
+        ],
+
+        'save' => '<i class="fas fa-check"></i>'. ' Guardar',
+        'view' => 'Visualizar',
+    ], */
+
+    
 ];
