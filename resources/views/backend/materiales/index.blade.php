@@ -28,8 +28,12 @@
                 <div class="col-md-6">                       
                     <select id="material_id" name="material_id" class="form-control" >                                       
                     </select>
+
+                    
             
                 </div><!--col-->
+                <div class="col col-md-1"><button class="btn btn-success btn-sm" onclick="calcular()"><i class="fas fa-calculator"></i> Calcular </button></div>
+                <div class="col col-md-1"><button class="btn btn-primary btn-sm" onclick="editar()"><i class="fas fa-edit"></i> Editar </button></div>
             </div><!--form-group-->
 
             <div class="form-group row" style="padding-top:10px;">
@@ -136,7 +140,7 @@
                              <th>Espesor.</th> -->
                              <th>Densidad g/cm³</th>
                              <th>Valor Kg</th>
-                             <th>Tipo corte
+                             <th>Tipo corte</th>
                              <th>Proveedor</td>
 
                              <th style="width:45px;">@lang('labels.general.actions')</th>
@@ -195,9 +199,15 @@
                                     @switch($material->tipo_corte)
                                             @case(1)
                                                  Completo 
+                                                 @if($material->dimensionado != null)
+                                                 <span> ( {{$material->dimensionado}} mm) </span>
+                                                 @endif
                                             @break
                                             @case(2)
                                                  Dimensionado 
+                                                 @if($material->dimensionado != null)
+                                                 <span> ( {{$material->dimensionado}} mm) </span>
+                                                 @endif
                                             @break
 
                                     @endswitch </td>
@@ -236,6 +246,14 @@
    
   <script>
         $.fn.select2.defaults.set('language', 'es');
+
+        var formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            });
+
+
+
 //variables tabla calculo
         var perfil ;
         var densidad;
@@ -244,6 +262,7 @@
         var diam_interior;
         var espesor;
         var sistema_medida;
+        var dimensionado = '';
  
         $('#material_id').select2({
             placeholder: "Seleccionar...",
@@ -269,61 +288,9 @@
             },           
         });
 
-
-
-        $('#material_id').on('change', function() {
-      
-            var materialID = this.value; 
-            //alert(materialID) ;
-
-             perfil = 0  ;
-             densidad = 0;
-             valor_kg = 0 ;
-             diam_exterior = '';
-             diam_interior = '';
-             espesor = '';
-             sistema_medida = 0;
-            
-            if(materialID){
-                $.ajax({
-                //    type:"GET",
-                //    url:"{{url('admin.get-commune-list')}}?region_id="+regionID,
-                    url: "{{ route('admin.get-datos-material') }}?material_id=" + materialID,
-                    method: 'GET',
-                    success:function(res){               
-                    if(res){
-                        perfil = res.perfil;
-                        densidad = res.densidad;
-                        valor_kg = res.valor_kg;
-                        diam_exterior = res.diam_exterior;
-                        diam_interior = res.diam_interior;
-                        espesor = res.espesor;
-                        sistema_medida = res.sistema_medida;
-                        
-                        $("#largo").val(0);
-                        $("#ancho").val(0)
-                        $("#volumen").val(0);
-                        $("#masa").val(0);
-                        $("#valor").val(0);
-
-                    }else{
-                       // $("#representante_id").empty();
-                    }
-                    }
-                });
-            }else{
-                //$("#commune_id").empty();
-                
-            }      
-            });
-
-
-
-        $('#largo').on('change', function() {
-
+        function calcular(){
             var volumen ;
             
- 
             if(perfil == 1){
                 volumen = volumen_barra();
                 
@@ -346,7 +313,129 @@
             var precio = masa *( parseFloat( valor_kg  )  / 1000);
 
             $("#masa").val(masaKg.toFixed(3));
-            $("#valor").val(precio.toFixed(2));
+            $("#valor").val(  formatter.format(precio.toFixed(2)));
+        }
+
+
+        function editar() {
+      
+            var materialID = $("#material_id").val(); 
+  
+            
+            if(materialID){
+                $.ajax({
+                //    type:"GET",
+                //    url:"{{url('admin.get-commune-list')}}?region_id="+regionID,
+                    url: "{{ route('admin.edit-material') }}?material_id=" + materialID,
+                    method: 'GET',
+                    success:function(res){               
+                    if(res){
+                        console.log('success');
+                        window.location.replace("{{route('admin.materiales.abrir')}}?material_id="+materialID);
+
+
+                    }else{
+                        // $("#representante_id").empty();
+                    }
+                    }
+                });
+            }else{
+                //$("#commune_id").empty();
+                
+            }      
+      }
+
+
+        $('#material_id').on('change', function() {
+      
+            var materialID = this.value; 
+            //alert(materialID) ;
+
+             perfil = 0  ;
+             densidad = 0;
+             valor_kg = 0 ;
+             diam_exterior = '';
+             diam_interior = '';
+             espesor = '';
+             sistema_medida = 0;
+             dimensionado = '';
+            
+            if(materialID){
+                $.ajax({
+                //    type:"GET",
+                //    url:"{{url('admin.get-commune-list')}}?region_id="+regionID,
+                    url: "{{ route('admin.get-datos-material') }}?material_id=" + materialID,
+                    method: 'GET',
+                    success:function(res){               
+                    if(res){
+                        perfil = res.perfil;
+                        densidad = res.densidad;
+                        valor_kg = res.valor_kg;
+                        diam_exterior = res.diam_exterior;
+                        diam_interior = res.diam_interior;
+                        espesor = res.espesor;
+                        sistema_medida = res.sistema_medida;
+                        dimensionado = res.dimensionado;
+
+                        if(dimensionado != '') {
+                            var res = dimensionado.split("x");
+                            $("#largo").val(res[0]);
+                            $("#ancho").val(res[1]);                            
+                                                        
+                        }else{
+                            $("#largo").val(0);
+                            $("#ancho").val(0);
+                        }
+                        
+                      /*   
+                        $("#largo").val(0);
+                        $("#ancho").val(0); */
+                        $("#volumen").val(0);
+                        $("#masa").val(0);
+                        $("#valor").val(0);
+
+                    }else{
+                       // $("#representante_id").empty();
+                    }
+                    }
+                });
+            }else{
+                //$("#commune_id").empty();
+                
+            }      
+            }
+            );
+
+
+
+
+        $('#largo').on('change', function () {
+
+            var volumen ;
+            
+            if(perfil == 1){
+                volumen = volumen_barra();
+                
+            }
+
+            if(perfil == 2){
+                volumen = volumen_bocina();
+            }
+
+            if(perfil == 3){
+                volumen = volumen_plancha();
+            }
+
+            volumenLt = volumen/1000;
+
+            $('#volumen').val(volumenLt.toFixed(3));
+
+            var masa = parseFloat(densidad) * volumen;
+            var masaKg = masa/1000
+            var precio = masa *( parseFloat( valor_kg  )  / 1000);
+
+            $("#masa").val(masaKg.toFixed(3));
+            $("#valor").val( formatter.format(precio.toFixed(2)));
             
         });
 
@@ -356,18 +445,21 @@
  
             if(perfil == 3){
                 volumen = volumen_plancha();
+
+                volumenLt = volumen/1000;
+
+                $('#volumen').val(volumenLt.toFixed(3));
+
+                var masa = parseFloat(densidad) * (volumen);
+                var masaKg = masa/1000;
+                var precio = masa * ( parseFloat(   valor_kg  )  / 1000);
+
+                $("#masa").val(masaKg.toFixed(3));
+                $("#valor").val( formatter.format(precio.toFixed(2)));
+
             }
 
-            volumenLt = volumen/1000;
 
-            $('#volumen').val(volumenLt.toFixed(3));
-
-            var masa = parseFloat(densidad) * (volumen/10);
-            var masaKg = masa/1000;
-            var precio = masa * ( parseFloat(   valor_kg  )  / 1000);
-
-            $("#masa").val(masaKg.toFixed(3));
-            $("#valor").val(precio.toFixed(2));
 
             
         });

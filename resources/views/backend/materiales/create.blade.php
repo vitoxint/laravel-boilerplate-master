@@ -78,6 +78,17 @@
                             }}
                         </div><!--col-->  
 
+                        {{ html()->label('Dimension corte:')->class('col-md-1 form-control-label')->for('dimensionado') }}
+                        <div class="col-md-3">
+
+                        {{ html()->text('dimensionado')
+                                ->class('form-control')
+                                ->attribute('maxlength', 191) 
+                                
+                                
+                            }}
+                        </div><!--col-->  
+
                     </div><!--form-group-->
                     {{ html()->label('')->class('col-md-2 form-control-label')->for('') }}
                     <span > Nota : Para el sistema americano ingresar las medidas de la forma 1-1/2 , si corresponde a 1 1/2"</span>

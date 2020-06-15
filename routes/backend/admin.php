@@ -216,6 +216,8 @@ Route::group(['namespace' => 'EtapaItemOt'], function () {
 
 });
 Route::get('materiales/datosMaterial' , 'MaterialController@getDatosMaterial'  )->name('get-datos-material');
+Route::get('materiales/editarMaterial' , 'MaterialController@getEditMaterial'  )->name('edit-material');
+Route::get('materiales/abrirMaterial' , 'MaterialController@getAbrirMaterial'  )->name('materiales.abrir');
 
 Route::get('get-valor-proceso', 'ProcesoController@getValorProceso')->name('get-valor-proceso');
 

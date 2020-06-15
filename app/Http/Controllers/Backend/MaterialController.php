@@ -140,6 +140,7 @@ class MaterialController extends Controller
             'tipo_corte' => $request->input('tipo_corte'),
             'proveedor' => $request->input('proveedor'),
             'material' => $nombre,
+            'dimensionado' => $request->input('dimensionado')
             
           ]);
         
@@ -237,7 +238,8 @@ class MaterialController extends Controller
             'espesor' => $request->input('espesor'),
             'tipo_corte' => $request->input('tipo_corte'),
             'proveedor' => $request->input('proveedor'),
-            'material' => $nombre
+            'material' => $nombre,
+            'dimensionado' => $request->input('dimensionado')
             
           ]);
         
@@ -268,7 +270,7 @@ class MaterialController extends Controller
         foreach ($tags as $tag) {
             $formatted_tags[] = [
                  'id' => $tag->id,
-                 'text' => $tag->material . '-'.$tag->proveedor,
+                 'text' => $tag->material . ' ('. $tag->dimensionado. 'mm) -'.$tag->proveedor,
                  'diam_exterior' => $tag->diam_exterior,
                  'diam_interior' => $tag->diam_interior,
                  'espesor' => $tag->espesor, 
@@ -292,9 +294,27 @@ class MaterialController extends Controller
             'valor_kg' => $material->valor_kg,
             'densidad' => $material->densidad,
             'perfil' => $material->perfil  ,
-            'sistema_medida' => $material->sistema_medida           
+            'sistema_medida' => $material->sistema_medida ,
+            'dimensionado' => $material->dimensionado,          
    
             ]); 
+    }
+
+
+    public function getEditMaterial(Request $request){
+
+        $material = Material::where('id', '=', $request->material_id)->first();
+
+        return redirect()->route('admin.materiales.edit',$material);
+        
+    }
+
+    public function getAbrirMaterial(Request $request){
+
+        $material = Material::where('id', '=', $request->material_id)->first();
+
+        return redirect()->route('admin.materiales.edit',$material);
+        
     }
 
 }

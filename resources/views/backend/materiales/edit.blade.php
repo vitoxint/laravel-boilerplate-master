@@ -78,6 +78,17 @@
                             }}
                         </div><!--col-->  
 
+                        {{ html()->label('Dimension corte:')->class('col-md-1 form-control-label')->for('dimensionado') }}
+                        <div class="col-md-3">
+
+                        {{ html()->text('dimensionado')
+                                ->class('form-control')
+                                ->attribute('maxlength', 191) 
+                                
+                                
+                            }}
+                        </div><!--col-->  
+
                     </div><!--form-group-->
                     
                     {{ html()->label('')->class('col-md-2 form-control-label')->for('') }}
@@ -206,27 +217,19 @@
                                 {{ html()->label('Ingresar dimensiones :')->class('col-md-2 form-control-label')->for('') }}
 
                                 {{ html()->label('Largo (mm):')->class('col-md-1 form-control-label')->for('largo') }}
+                                <?php $dim = explode('x',$material->dimensionado );  if(sizeof($dim) == 1){$dim[1] = '0';}?>
 
-                                <div class="col-md-1">
-                                    {{ html()->text('largo')
-                                        ->class('form-control')
-                                                                   
-                                        ->attribute('maxlength', 191)                                          
-                                        ->autofocus()                                   
-                                        }}
+                                <div class="col-md-1">                                    
+                                    <input id="largo" name="largo" class="form-control" value="{{$dim[0]}}"/>
                                 </div><!--col-->
 
                                 {{ html()->label('Ancho (mm):')->class('col-md-1 form-control-label')->for('ancho') }}
 
                                 <div class="col-md-1">
-                                    {{ html()->text('ancho')
-                                        ->class('form-control')
-                                        
-                                        ->attribute('maxlength', 191)                                            
-                                        ->autofocus()
-
-                                        }}
+                                    <input id="ancho" name="ancho" class="form-control" value="{{$dim[1]}}"/>
                                 </div><!--col-->
+
+                                <div class="col col-md-1"><button class="btn btn-success btn-sm" onclick="calcular()"><i class="fas fa-calculator"></i> Calcular </button></div>
 
                         </div><!--form-group-->    
 
@@ -305,7 +308,40 @@
    
   <script>
         $.fn.select2.defaults.set('language', 'es');
+
         
+        var formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            });
+        
+        function calcular(){
+            var volumen ;
+ 
+            if($('#perfil').val() == '1'){
+                volumen = volumen_barra();
+            }
+
+            if($('#perfil').val() == '2'){
+                volumen = volumen_bocina();
+            }
+
+            if($('#perfil').val() == '3'){
+                volumen = volumen_plancha();
+            }
+
+            volumenLt = volumen/1000;
+
+            $('#volumen').val(volumenLt.toFixed(3));
+
+            var masa = parseFloat($('#densidad').val()) * volumen;
+            var masaKg = masa/1000
+            var precio = masa *( parseFloat( $("#valor_kg").val()  )  / 1000);
+
+            $("#masa").val(masaKg.toFixed(3));
+            $("#valor").val( formatter.format(precio.toFixed(2)));
+        }
+
 
         $('#largo').on('change', function() {
 
@@ -332,7 +368,7 @@
             var precio = masa *( parseFloat( $("#valor_kg").val()  )  / 1000);
 
             $("#masa").val(masaKg.toFixed(3));
-            $("#valor").val(precio.toFixed(2));
+            $("#valor").val( formatter.format(precio.toFixed(2)));
             
         });
 
@@ -348,12 +384,12 @@
 
             $('#volumen').val(volumenLt.toFixed(3));
 
-            var masa = parseFloat($('#densidad').val()) * (volumen/10);
+            var masa = parseFloat($('#densidad').val()) * (volumen);
             var masaKg = masa/1000;
             var precio = masa * ( parseFloat(   $("#valor_kg").val()  )  / 1000);
 
             $("#masa").val(masaKg.toFixed(3));
-            $("#valor").val(precio.toFixed(2));
+            $("#valor").val( formatter.format(precio.toFixed(2)));
 
             
         });
