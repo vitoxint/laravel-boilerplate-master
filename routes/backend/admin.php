@@ -213,10 +213,9 @@ Route::group(['namespace' => 'EtapaItemOt'], function () {
 
     Route::get('materiales/resultados', [MaterialController::class, 'buscar_material'])->name('materiales.buscar_material');
 
-  
 
 });
-   
+Route::get('materiales/datosMaterial' , 'MaterialController@getDatosMaterial'  )->name('get-datos-material');
 
 Route::get('get-valor-proceso', 'ProcesoController@getValorProceso')->name('get-valor-proceso');
 

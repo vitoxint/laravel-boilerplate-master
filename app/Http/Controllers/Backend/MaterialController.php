@@ -89,6 +89,45 @@ class MaterialController extends Controller
             
         ]);
 
+        $perfil = '';
+    
+        switch($request->input('perfil')){
+            case(1):
+                $perfil = 'Barra'; 
+                $nombre = $perfil . ' '.$request->input('codigo'). ' '.$request->input('diam_exterior');
+            break;
+            case(2):
+                $perfil = 'Barra Perforada'; 
+                $nombre = $perfil . ' '.$request->input('codigo'). ' '.$request->input('diam_exterior') . ' x '.$request->input('diam_exterior');
+            break;
+            case(3):
+                $perfil = 'Plancha'; 
+                $nombre = $perfil . ' '.$request->input('codigo'). ' '.$request->input('espesor') ;
+            break;
+            
+        }
+
+        switch($request->input('tipo_corte')){
+            case(1):
+                $perfil = 'Completo'; 
+            break;
+            case(2):
+                $perfil = 'Dimensionado'; 
+            break;
+            
+        }
+
+        switch($request->input('sistema_medida')){
+            case(1):
+                $nombre = $nombre. ' mm -'.$perfil;  
+            break;
+            case(2):
+                $nombre = $nombre. ' " -'.$perfil;  
+            break;
+            
+        }
+        
+
         $material= Material::create([
             'codigo' => $request->input('codigo'),
             'perfil' => $request->input('perfil'),
@@ -99,7 +138,8 @@ class MaterialController extends Controller
             'diam_interior' => $request->input('diam_interior'),
             'espesor' => $request->input('espesor'),
             'tipo_corte' => $request->input('tipo_corte'),
-            'proveedor' => $request->input('proveedor')
+            'proveedor' => $request->input('proveedor'),
+            'material' => $nombre,
             
           ]);
         
@@ -148,6 +188,44 @@ class MaterialController extends Controller
             
         ]);
 
+        $perfil = '';
+    
+        switch($request->input('perfil')){
+            case(1):
+                $perfil = 'Barra'; 
+                $nombre = $perfil . ' '.$request->input('codigo'). ' '.$request->input('diam_exterior');
+            break;
+            case(2):
+                $perfil = 'Barra Perforada'; 
+                $nombre = $perfil . ' '.$request->input('codigo'). ' '.$request->input('diam_exterior') . ' x '.$request->input('diam_exterior');
+            break;
+            case(3):
+                $perfil = 'Plancha'; 
+                $nombre = $perfil . ' '.$request->input('codigo'). ' '.$request->input('espesor') ;
+            break;
+            
+        }
+
+        switch($request->input('tipo_corte')){
+            case(1):
+                $perfil = 'Completo'; 
+            break;
+            case(2):
+                $perfil = 'Dimensionado'; 
+            break;
+            
+        }
+
+        switch($request->input('sistema_medida')){
+            case(1):
+                $nombre = $nombre. ' mm -'.$perfil; 
+            break;
+            case(2):
+                $nombre = $nombre. ' " -'.$perfil;  
+            break;
+            
+        }
+
         $material->update([
             'codigo' => $request->input('codigo'),
             'perfil' => $request->input('perfil'),
@@ -158,7 +236,8 @@ class MaterialController extends Controller
             'diam_interior' => $request->input('diam_interior'),
             'espesor' => $request->input('espesor'),
             'tipo_corte' => $request->input('tipo_corte'),
-            'proveedor' => $request->input('proveedor')
+            'proveedor' => $request->input('proveedor'),
+            'material' => $nombre
             
           ]);
         
@@ -177,4 +256,45 @@ class MaterialController extends Controller
         return redirect()->back()->withFlashSuccess('El registro del material se ha eliminado correctamente');
 
     }
+    
+    public function dataAjax(Request $request)
+    {
+       $term = trim($request->q);
+
+       $tags = Material::query()
+        ->where('material', 'LIKE', "%{$term}%") 
+        ->get();
+        $formatted_tags = [];
+        foreach ($tags as $tag) {
+            $formatted_tags[] = [
+                 'id' => $tag->id,
+                 'text' => $tag->material . '-'.$tag->proveedor,
+                 'diam_exterior' => $tag->diam_exterior,
+                 'diam_interior' => $tag->diam_interior,
+                 'espesor' => $tag->espesor, 
+                 'valor_kg' => $tag->valor_kg,
+                 'densidad' => $tag->densidad,
+                 'perfil' => $tag->perfil             
+                ];
+        }
+        return \Response::json($formatted_tags);
+    }  
+    
+    public function getDatosMaterial(Request $request){
+        $material = Material::where('id', '=', $request->material_id)->first();
+
+        return response()->json([
+            'id' => $material->id,
+            'text' => $material->material . '-'.$material->proveedor,
+            'diam_exterior' => $material->diam_exterior,
+            'diam_interior' => $material->diam_interior,
+            'espesor' => $material->espesor, 
+            'valor_kg' => $material->valor_kg,
+            'densidad' => $material->densidad,
+            'perfil' => $material->perfil  ,
+            'sistema_medida' => $material->sistema_medida           
+   
+            ]); 
+    }
+
 }
