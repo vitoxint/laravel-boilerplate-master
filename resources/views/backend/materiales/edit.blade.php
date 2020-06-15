@@ -261,7 +261,7 @@
                                 </div><!--col-->
 
                                 {{ html()->label('Valor total:')->class('col-md-1 form-control-label')->for('valor') }}
-                                <div class="col-md-1">
+                                <div class="col-md-2">
                                     {{ html()->text('valor')
                                         ->class('form-control')
                                         ->value(0)
