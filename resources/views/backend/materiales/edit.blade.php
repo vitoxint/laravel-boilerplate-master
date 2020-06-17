@@ -4,7 +4,6 @@
 
 @section('content')
 
-
         <div class="card">
         {{ html()->modelForm($material, 'PATCH', route('admin.materiales.update', $material))->class('form-horizontal')->acceptsFiles()->open() }}
             <div class="card-body">
@@ -20,7 +19,6 @@
                 <hr>
 
                 
-
                 <div class="row mt-4 mb-4">
                         <div class="col">
                         <div class="form-group row">
@@ -464,8 +462,7 @@
 
                     }else{   // si es en milimetros
 
-                        var espesor = parseFloat( $('#espesor').val() );
-                       
+                        var espesor = parseFloat( $('#espesor').val() );                      
                     }
                     var areaTotal = parseFloat( $('#largo').val() ) * parseFloat( $('#ancho').val() );
 

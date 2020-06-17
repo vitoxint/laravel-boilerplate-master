@@ -340,6 +340,9 @@
                 $.ajax({
                 type:'POST',
                 url:'{{route("admin.item_cotizacions.store")}}?id='+ "<?php echo $cotizacion->id; ?>",
+                headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
                 data:{item:item, qty:qty, desc:desc , cpu:cpu , des:des , cpi:cpi},
                 success:function(data){
                     i++;  
@@ -375,6 +378,9 @@
                $.ajax({
                 type:'POST',
                 url:'{{route("admin.item_cotizacions.destroy")}}?id='+ "<?php echo $cotizacion->id; ?>",
+                headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
                 data:{item:item, qty:qty, desc:desc , cpu:cpu , des:des , cpi:cpi },
                 success:function(data){
                     

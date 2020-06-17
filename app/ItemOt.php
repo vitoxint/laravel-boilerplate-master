@@ -42,5 +42,9 @@ class ItemOt extends Model
 
         return $terminados.' de ' . $totales;
     }
+
+    public function materialOt(){
+        return $this->hasMany('App\TrabajoUseMaterial', 'itemot_id', 'id');
+    }
     
 }

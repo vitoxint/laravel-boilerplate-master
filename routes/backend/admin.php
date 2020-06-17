@@ -14,6 +14,7 @@ use App\Http\Controllers\Backend\EmpleadoController;
 use App\Http\Controllers\Backend\MaquinaHasOperadorController;
 use App\Http\Controllers\Backend\EtapaItemOtController;
 use App\Http\Controllers\Backend\MaterialController;
+use App\Http\Controllers\Backend\TrabajoUseMaterialController;
 
 
 
@@ -215,6 +216,24 @@ Route::group(['namespace' => 'EtapaItemOt'], function () {
 
 
 });
+
+
+Route::group(['namespace' => 'TrabajoUseMaterial'], function () {
+    
+    /*    Route::get('item_ots', [ItemOtController::class, 'index'])->name('item_ots.index');
+    Route::get('item_ots/{trabajo}/create', [ItemOtController::class, 'create'])->name('item_ots.create'); */
+    Route::post('trabajo_materials', [TrabajoUseMaterialController::class, 'store'])->name('trabajo_material.store');
+    Route::post('trabajo_materials/destroy', [TrabajoUseMaterialController::class, 'destroy'])->name('trabajo_material.destroy');
+
+    /*   Route::group(['prefix' => 'item_ots/{item_ot}/{trabajo}'], function () {
+        Route::get('edit', [ItemOtController::class, 'edit'])->name('item_ots.edit');
+        Route::patch('/', [ItemOtController::class, 'update'])->name('item_ots.update');
+        Route::delete('/', [ItemOtController::class, 'destroy'])->name('item_ots.destroy');
+    }); */
+}); 
+
+
+
 Route::get('materiales/datosMaterial' , 'MaterialController@getDatosMaterial'  )->name('get-datos-material');
 Route::get('materiales/editarMaterial' , 'MaterialController@getEditMaterial'  )->name('edit-material');
 Route::get('materiales/abrirMaterial' , 'MaterialController@getAbrirMaterial'  )->name('materiales.abrir');

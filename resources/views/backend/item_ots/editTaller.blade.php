@@ -143,7 +143,7 @@
                 <div class="row">
                     <div class="col-sm-5">
                         <h4 class="card-title mb-0">
-                            Etapas del trabajo</small>
+                            <small class="text-muted"> Etapas del trabajo</small>
                         </h4>
                     </div><!--col-->
 
@@ -163,8 +163,9 @@
                                     <th>Proceso</th>
                                     <th>Máquina</th>
                                     <th>Operador</th>
-                                    <th>Hora límite</th>
-                                    <th>Hora inicio</th>
+                                    <th>Hora estimada termino</th>
+                                    <th>Cantidad/Tiempo</th>
+                                    <!-- <th>Hora inicio</th> -->
                                     <th>Estado</th>
                                     
                                     <th>Hora termino </th>
@@ -186,7 +187,21 @@
                                         <td date-title="Hora límite">{{$flimite}}</td>
                                                 <?php $finicio= new Carbon\Carbon($etapaItemOt->fh_inicio);
                                                     $finicio = $finicio->format('d-m-Y h:i'); ?>
-                                        <td data-title="Hora Inicio">{{$finicio}}</td>
+                                        <!-- <td data-title="Hora Inicio">{{$finicio}}</td> -->
+                                        <td date-tittle="Cantidad/Tiempo">
+                                        @switch($etapaItemOt->proceso->tipo_valorizacion)
+                                            @case('1')
+                                               {{$etapaItemOt->tiempo_asignado}} hora/s
+                                            @break
+                                            @case('2')
+                                               {{$etapaItemOt->cantidad}} Kg
+                                            @break
+                                            @case('3')
+                                            {{$etapaItemOt->cantidad}} operacion/es
+                                            @break
+                                        @endswitch                                        
+                                        
+                                        </td>
                                         <td data-title="Estado" style="text-align:center;">
                                             @switch($etapaItemOt->estado_avance) 
                                             @case ('1') 

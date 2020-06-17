@@ -11,6 +11,17 @@
                 </div><!--card-header-->
                 <div class="card-body">
                     {!! __('strings.backend.welcome') !!}
+ 
+<!--                     <div id="app">
+                        <div class="row mb-4">
+                            <div class="col">
+                                <example-component2></example-component2>
+                            </div> 
+                        </div> 
+
+                    </div> -->
+
+
                 </div><!--card-body-->
             </div><!--card-->
         </div><!--col-->

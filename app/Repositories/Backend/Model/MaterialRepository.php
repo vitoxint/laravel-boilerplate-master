@@ -66,7 +66,7 @@ class MaterialRepository extends BaseRepository
     public function getBuscarMaterialesPaginated($paged = 25, $orderBy = 'codigo', $sort = 'asc', $term): LengthAwarePaginator
     {
         return $this->model
-            ->where('proveedor', 'LIKE', "%{$term}%")->orWhere('codigo', 'LIKE', "%{$term}%")
+            ->where('proveedor', 'LIKE', "%{$term}%")->orWhere('codigo', 'LIKE', "%{$term}%")->orWhere('material', 'LIKE', "%{$term}%")
             ->orderBy($orderBy, $sort)
             ->paginate($paged);
     }

@@ -24,6 +24,15 @@
 
 </style>
 
+        <?php 
+
+        if( '\App\TrabajoUseMaterial'::all()->count() == 0){
+            $max_id = 1;
+            echo $max_id;
+        }else{
+            $max_id = '\App\TrabajoUseMaterial'::all()->max('folio') + 1;
+        } ?>  
+
 
 
         <div class="card">
@@ -158,15 +167,211 @@
         </div><!--card-->
 
 
+
+        <div class="card">
+            <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <h4 class="card-title mb-0">
+                                
+                                <small class="text-muted">Utilización de materiales</small>
+                            </h4>
+                        </div><!--col-->
+                    </div><!--row-->
+                    <hr>
+
+
+                <div class="row mt-0 mb-4">
+
+                        <div class="col border border-secondary">
+
+
+                        <hr/>
+
+                        <div class="form-group row">
+                            {{ html()->label(__('Seleccionar material *'))->class('col-md-2 form-control-label')->for('material_id') }}
+
+                            <div class="col-md-4">                       
+                                <select id="material_id" name="material_id" class="form-control" >                                       
+                                </select>
+
+                                
+                        
+                            </div><!--col-->
+                            <div class="col col-sm-2"><button class="btn btn-success btn-sm" onclick="calcular()"><i class="fas fa-calculator"></i> Calcular </button>
+                            <button class="btn btn-primary btn-sm" onclick="editar()"><i class="fas fa-edit"></i> Editar </button></div>
+                        </div><!--form-group-->
+
+                        <div class="form-group row" style="padding-top:10px;">
+
+                                {{ html()->label('Ingresar dimensiones :')->class('col-md-2 form-control-label')->for('') }}
+
+                                {{ html()->label('Largo (mm):')->class('col-md-1 form-control-label')->for('largo') }}
+
+                                <div class="col-md-1">
+                                    {{ html()->text('largo')
+                                        ->class('form-control')
+                                                                    
+                                        ->attribute('maxlength', 191)                                          
+                                        ->autofocus()                                   
+                                        }}
+                                </div><!--col-->
+
+                                {{ html()->label('Ancho (mm):')->class('col-md-1 form-control-label')->for('ancho') }}
+
+                                <div class="col-md-1">
+                                    {{ html()->text('ancho')
+                                        ->class('form-control')
+                                        
+                                        ->attribute('maxlength', 191)                                            
+                                        ->autofocus()
+
+                                        }}
+                                </div><!--col-->
+
+                                <div class="col col-sm-2"><button id="agregar" class="btn btn-dark btn-sm" onclick="agregar()"><i class="fas fa-arrow-down"></i> Agregar </button>
+                                </div>
+
+                        </div><!--form-group-->    
+
+                        <div class="form-group row" style="padding-top:10px;">
+                                {{ html()->label('Resultados :')->class('col-md-2 form-control-label')->for('') }}
+
+                                {{ html()->label('Volumen (Lts):')->class('col-md-1 form-control-label')->for('volumen') }}
+
+                                <div class="col-md-2">
+                                    {{ html()->text('volumen')
+                                        ->class('form-control')
+                                        ->disabled()                          
+                                        ->attribute('maxlength', 191)                                          
+                                        ->autofocus()                                   
+                                        }}
+                                </div><!--col-->
+
+                                {{ html()->label('Masa (Kg):')->class('col-md-1 form-control-label')->for('masa') }}
+
+                                <div class="col-md-2">
+                                    {{ html()->text('masa')
+                                        ->class('form-control')
+                                        ->value(0)
+                                        ->disabled()
+                                        ->attribute('maxlength', 191)                                            
+                                        ->autofocus()
+
+                                        }}
+                                </div><!--col-->
+
+                                {{ html()->label('Valor total:')->class('col-md-1 form-control-label')->for('valor') }}
+                                <div class="col-md-2">
+                                    {{ html()->text('valor')
+                                        ->class('form-control')
+                                        ->value(0)
+                                        ->disabled()
+                                        ->attribute('maxlength',
+                                            191)                                            
+                                        ->autofocus()
+
+                                        }}
+                                </div><!--col-->
+
+                                <input type="text" id="valor2" hidden="true" />
+
+                        </div><!--form-group-->  
+
+                                                
+
+                        </div><!--col-->
+                    </div><!--row-->
+
+
+
+                    <div class="row">
+
+                    <div id="materiales" class="table-responsive">
+                        <table class='table table-bordered table-hover' id="tab_logic">
+                            <thead>
+                                <tr class='info'>
+                                    <th style='width:7%;'hidden="true">Item NO.</th>
+                                    <th style='width:41%;'>Material</th>
+                                    
+                                    <th style='width:9%;'>Largo</th>
+                                    <th style='width:9%;'>Ancho</th>
+                                    <th style='width:12%;'>V.unitario</th>
+                                    <th style='width:12%;'>V.parcial</th>
+                                    <th style='width:10%;'>Acción</th>
+                                </tr>
+                            </thead>
+                            <thead id="dynamic_field">
+                            @if($item_ot->materialOt->count() == 0)
+<!--                                 <tr id="addr0">
+                                    <td class="custom-tbl"><input class='form-control input-sm'style='width:100%;' type="text" value="1" id="pr_item0" name="pr_item[]" readonly required></td>
+
+                                    <td class="custom-tbl">
+                                        <input class='form-control input-sm' style='width:100%;' type="text" id="material_id00" oninput='multiply(0);' name="material_id[]">
+                                             
+                                        </td> 
+
+                                    <td class="custom-tbl"><input class='form-control input-sm' style='width:100%;' type="text" id="pr_desc0" name="pr_desc[]"></td> 
+                                    <td><input class='form-control input-sm' style='width:100%;' type="text" id="pr_largo0" oninput='multiply(0);' name="pr_largo[]"></td>
+                                    <td><input class='form-control input-sm' style='width:100%;' type="text" id="pr_ancho0" oninput='multiply(0);' name="pr_ancho[]"></td>
+                                    <td><input class='form-control input-sm' style='width:100%;' type="text" id="pr_unit0" oninput='multiply(0);' name="pr_unit[]"></td>
+                                    <td class="custom-tbl"><input class='estimated_cost form-control input-sm' id="pr_cpi0" style='width:100%;' type="text" name="pr_cpi[]" readonly></td>
+                                    <td class="custom-tbl"><button type="button" id="0" class="btn-info btn-sm btn_add" name="add"><span class="fas fa-plus"></span></button></td>
+                                </tr> -->
+                            @else
+                            @foreach($item_ot->materialOt as $material)
+                            <tr id="row{{$material->id}}">
+                                    <td class="custom-tbl" hidden="true"><input class='form-control input-sm'style='width:100%;' type="text"  value="{{$material->id}}" id="pr_item{{$material->id}}" name="pr_item[]" readonly required></td>
+                                    <td class="custom-tbl"><input class='form-control input-sm' style='width:100%;' type="text" value="{{$material->material->material}}" id="material_id{{$material->id}}" oninput='multiply("{{$material->id}}");' name="material_id[]">
+                                                           <!--  <select id="material_id{{$material->id}}" name="material_id[]" class="form-control" >    </select>  -->
+                                    </td>    
+                                    <td><input class='form-control input-sm' style='width:100%;' type="text" value="{{$material->dimension_largo}}" id="pr_largo{{$material->id}}" oninput='multiply(0);' name="pr_largo[]"></td>
+                                    <td><input class='form-control input-sm' style='width:100%;' type="text" value="{{$material->dimension_ancho}}" id="pr_ancho{{$material->id}}" oninput='multiply(0);' name="pr_ancho[]"></td>
+                                    <td><input class='form-control input-sm' style='width:100%;' type="text" value="{{$material->valor_unit}}" id="pr_unit{{$material->id}}" oninput='multiply(0);' name="pr_unit[]"></td>
+                                    <td class="custom-tbl" ><input class='estimated_cost form-control input-sm' style="text-align:right;" value="@money($material->valor_total)" id="pr_cpi{{$material->id}}" value="{{$material->valor_parcial}}" style='width:100%;' type="text" name="pr_cpi[]" readonly></td>
+                                    <td class="custom-tbl"><!-- <button type="button" id="{{$material->id}}" class="btn-info btn-sm btn_add" name="add"><span class="fas fa-sync-alt"></span></button> -->
+                                                           <button type="button" name="remove" id="{{$material->id}}" class="btn-danger btn-sm btn_remove"><span class="fas fa-times"></span></button>
+                                    </td>
+                                </tr>
+                            @endforeach
+
+                                           
+
+                            @endif
+
+                            </thead>
+                            <tbody >
+
+                            <tbody>
+                            <tfoot>
+                                <tr class='info'>
+                                    <td style='width:60%;text-align:right;padding:4px;' colspan='4'>Total Neto: $</td>
+                                    <td style='padding-right:0px;'>
+
+                                            <input style='width:100%; text-align:right;' type='text' class='form-control input-sm'  id='valor_total' name='valor_total' value='@money($item_ot->materialOt->sum("valor_total"))' readonly required>
+
+                                    </td>
+
+                            </tfoot>
+
+                        </table>
+         
+                    </div>                  
+
+            </div><!--card-body-->
+            <div class="card-footer clearfix">                 
+            </div><!--card-footer-->                
+        </div><!--card-->
+
+
         <div class="card">
                 <div class="card-body">
                 <div class="row">
                     <div class="col-sm-5">
                         <h4 class="card-title mb-0">
-                            Etapas del trabajo</small>
+                            <small class="text-muted"> Etapas del trabajo</small>
                         </h4>
                     </div><!--col-->
-
                     <div class="col-sm-7">
                         @include('backend.etapa_itemots.includes.header-buttons')
                     </div><!--col-->
@@ -183,8 +388,9 @@
                                     <th>Proceso</th>
                                     <th>Máquina</th>
                                     <!-- <th>Operador</th> -->
-                                    <th>Hora planificada</th>
-                                    <th>Hora inicio</th>
+                                    <th>Hora estimada termino</th>
+                                    <th>Cantidad/Tiempo</th>
+                                    <!-- <th>Hora inicio</th> -->
                                     <th>Valor proceso</th>
                                     <th>Estado</th>
                                     
@@ -205,9 +411,24 @@
                                                 <?php $flimite= new Carbon\Carbon($etapaItemOt->fh_limite);
                                                     $flimite = $flimite->format('d-m-Y h:i'); ?>
                                         <td date-title="Hora planificada">{{$flimite}}</td>
+                                        <td date-tittle="Cantidad/Tiempo">
+                                        @switch($etapaItemOt->proceso->tipo_valorizacion)
+                                            @case('1')
+                                               {{$etapaItemOt->tiempo_asignado}} hora/s
+                                            @break
+                                            @case('2')
+                                               {{$etapaItemOt->cantidad}} Kg
+                                            @break
+                                            @case('3')
+                                            {{$etapaItemOt->cantidad}} operacion/es
+                                            @break
+                                        @endswitch                                        
+                                        
+                                        </td>
+
                                                 <?php $finicio= new Carbon\Carbon($etapaItemOt->fh_inicio);
                                                     $finicio = $finicio->format('d-m-Y h:i'); ?>
-                                        <td data-title="Hora Inicio">{{$finicio}}</td>
+                                        <!-- <td data-title="Hora Inicio">{{$finicio}}</td> -->
                                         <td data-title="Valor proceso" style="text-align:right;">@money($etapaItemOt->valor_proceso)</th>
                                         <td data-title="Estado" style="text-align:center;">
                                             @switch($etapaItemOt->estado_avance) 
@@ -306,7 +527,7 @@
 </div>
 
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
 <script>
 
 $('#cantidad').on('change', function() {
@@ -325,7 +546,7 @@ $('#valor_unitario').on('change', function() {
 
 </script>
 
-
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.7/js/fileinput.js" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.7/themes/fa/theme.js" type="text/javascript"></script>
@@ -339,6 +560,10 @@ $('#valor_unitario').on('change', function() {
 <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script> -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/i18n/es.js"></script>
 
 
 
@@ -479,13 +704,579 @@ var urls = [];
 
 </script>
 
+
+
+
 <script type="text/javascript">
-$.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-});
+
+
+var postURL = "<?php echo url('addmore'); ?>";
+        var i= "{{$max_id}}";
+
+
+        $('tr').on('DOMNodeInserted','select',function(){
+            $(this).select2();
+        });
+
+
+//variables tabla calculo
+        var perfil ;
+        var densidad;
+        var valor_kg;
+        var diam_exterior;
+        var diam_interior;
+        var espesor;
+        var sistema_medida;
+        var dimensionado = '';
+ 
+        
+
+    $('.select-material').select2({
+            placeholder: "Seleccionar...",
+            minimumInputLength: 3,
+            ajax: {
+                url: "{{route('admin.materiales.dataAjax')}}",
+                dataType: 'json',
+                language: "es",
+                data: function (params) {
+                    return {
+                        q: $.trim(params.term)
+                    };
+
+                },
+                processResults: function (data) {
+                    return {
+                        results: data
+                    };   
+                    let perfil ;
+                   
+                },
+                cache: true
+            },           
+        });
+
+    
+
+        $('.select-material').on('change', function() {
+      
+            var materialID = this.value; 
+            var row = getNumbersInString(this.id)
+           
+            perfil = 0  ;
+            densidad = 0;
+            valor_kg = 0 ;
+            diam_exterior = '';
+            diam_interior = '';
+            espesor = '';
+            sistema_medida = 0;
+            dimensionado = '';
+
+
+            
+            if(materialID){
+                $.ajax({
+
+                    url: "{{ route('admin.get-datos-material') }}?material_id=" + materialID,
+                    method: 'GET',
+                    success:function(res){               
+                    if(res){
+                        perfil = res.perfil;
+                        densidad = res.densidad;
+                        valor_kg = res.valor_kg;
+                        diam_exterior = res.diam_exterior;
+                        diam_interior = res.diam_interior;
+                        espesor = res.espesor;
+                        sistema_medida = res.sistema_medida;
+                        dimensionado = res.dimensionado;
+
+                        if(dimensionado != '') {
+                            var res = dimensionado.split("x");
+                            $("#pr_largo"+row).val(res[0]);
+                            $("#pr_ancho"+row).val(res[1]);                            
+                                                        
+                        }else{
+                            $("#pr_largo"+row).val(0);
+                            $("#pr_ancho"+row).val(0);
+                        }
+
+                        $("#pr_unit"+row).val(valor_kg);
+                        $("#volumen").val(0);
+                        $("#masa").val(0);
+                        $("#valor").val(0);
+
+                    }else{
+                        // $("#representante_id").empty();
+                    }
+                    }
+                });
+            }else{
+                //$("#commune_id").empty();
+                
+            }      
+        }
+      );
+
+  
+
+
+      $(document).on('click', '.btn_add',function(){
+
+            var add_id = $(this).attr("id"); 
+
+            var item = $("#pr_item" + add_id).val();
+            var material_id =  $("#material_id"  + add_id).val();
+            var largo = $('#pr_largo' + add_id).val();
+            var ancho =  $("#pr_ancho" + add_id).val();
+            var cpu =  $("#pr_unit" + add_id).val();
+            var cpi =  $("#pr_cpi" + add_id).val();
+
+
+            $.ajax({
+            type:'POST',
+            url:'{{route("admin.trabajo_material.store")}}?id='+ "<?php echo $item_ot->id; ?>",
+            headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+            data:{item:item, material_id:material_id, largo:largo , ancho:ancho , unitario:cpu , parcial:cpi},
+            success:function(data){
+                i++;  
+                $('#dynamic_field').append('<tr id="row'+i+'" class="dynamic-added"><td class="custom-tbl"><input id="pr_item'+i+'" class="form-control input-sm"style="width:100%;" type="text" value="'+i+'" name="pr_item[]" readonly required></td> <td id="material_tr'+i+'" class="custom-tbl"> <select id="material_id'+i+'"  name="material_id[]" class="form-control select-material" >    </select> </td>         <td class="custom-tbl"><input id="pr_largo'+i+'" class="form-control input-sm" style="width:100%;" type="text" name="pr_largo[]"></td>   <td class="custom-tbl"><input id="pr_ancho'+i+'" class="form-control input-sm" style="width:100%;" type="text" oninput="multiply('+i+');" name="pr_ancho[]"></td>               <td class="custom-tbl"><input id="pr_unit'+i+'" class="form-control input-sm" style="width:100%;" type="text" oninput="multiply('+i+');" name="pr_unit[]"></td>               <td class="custom-tbl"><input id="pr_cpi'+i+'" class="estimated_cost form-control input-sm" style="width:100%;" type="text" name="pr_cpi[]" readonly></td>       <td class="custom-tbl"><button type="button" id="'+i+'" class="btn-info btn-sm btn_add" name="add"><span class="fas fa-plus"></span></button> <button type="button" name="remove" id="'+i+'" class="btn-danger btn-sm btn_remove"><span class="fas fa-times"></span></button></td></tr>');            
+                //$('#dynamic_field').append('<tr id="row'+i+'" class="dynamic-added"><td class="custom-tbl"><input id="pr_item'+i+'" class="form-control input-sm"style="width:100%;" type="text" value="'+i+'" name="pr_item[]" readonly required></td> <td id="material_tr'+i+'" class="custom-tbl">  </td>         <td class="custom-tbl"><input id="pr_largo'+i+'" class="form-control input-sm" style="width:100%;" type="text" name="pr_largo[]"></td>   <td class="custom-tbl"><input id="pr_ancho'+i+'" class="form-control input-sm" style="width:100%;" type="text" oninput="multiply('+i+');" name="pr_ancho[]"></td>               <td class="custom-tbl"><input id="pr_unit'+i+'" class="form-control input-sm" style="width:100%;" type="text" oninput="multiply('+i+');" name="pr_unit[]"></td>               <td class="custom-tbl"><input id="pr_cpi'+i+'" class="estimated_cost form-control input-sm" style="width:100%;" type="text" name="pr_cpi[]" readonly></td>       <td class="custom-tbl"><button type="button" id="'+i+'" class="btn-info btn-sm btn_add" name="add"><span class="fas fa-plus"></span></button> <button type="button" name="remove" id="'+i+'" class="btn-danger btn-sm btn_remove"><span class="fas fa-times"></span></button></td></tr>');  
+                //$('#material_id'+i).select2();                
+                   // $('.select-material').select2();
+
+                   alert( 'DataTables has redrawn the table' );
+               
+            },
+            error: function() {
+                console.log("No se ha podido obtener la información");
+            }
+
+            });           
+              
+        }); 
+
+
+        $(document).on('click', '.btn_remove', function(){  
+            var button_id = $(this).attr("id");
+            
+            var item = $("#pr_item" + button_id).val();
+            var material_id = $("#material_id"  + button_id).val();
+            var largo = $('#pr_largo' + button_id).val();
+            var ancho =  $("#pr_ancho" + button_id).val();
+            var cpu =  $("#pr_unit" + button_id).val();
+            var cpi =  $("#pr_cpi" + button_id).val();
+
+            $.ajax({
+            type:'POST',
+            url:'{{route("admin.trabajo_material.destroy")}}?id='+ "<?php echo $item_ot->id; ?>",
+            headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+            data:{item:button_id, material_id:material_id, largo:largo , ancho:ancho , unitario:cpu , parcial:cpi },
+            success:function(data){
+                
+                $('#row'+button_id+'').remove();  
+                var format_total = parseFloat(data.valor_total);
+                $("#valor_total").val(formatter.format(format_total.toFixed(2)));
+                    console.log(data.success);
+/*                     document.getElementById('valor_neto').value = data.valor_neto;
+                    document.getElementById('iva').value = data.iva;
+                    document.getElementById('valor_incluido').value = data.total; */
+                    
+                //grandTotal();       
+                
+            },
+            error: function() {
+                console.log("No se ha podido obtener la información");
+            }
+
+            });                      
+            
+
+        }); 
+
+
+
+      function getNumbersInString(string) {
+        var tmp = string.split("");
+        var map = tmp.map(function(current) {
+            if (!isNaN(parseInt(current))) {
+            return current;
+            }
+        });
+
+        var numbers = map.filter(function(value) {
+            return value != undefined;
+        });
+
+        return numbers.join("");
+     }
+
+
+     $.ajaxSetup({
+              headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              }
+          });
+
+
+
 </script>
+
+
+
+
+
+
+
+<!--   CALCULO FORMULARIO INSERT MATERIAL  -->
+
+<script>
+        $.fn.select2.defaults.set('language', 'es');
+
+        var formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            });
+
+
+
+//variables tabla calculo
+        var perfil ;
+        var densidad;
+        var valor_kg;
+        var diam_exterior;
+        var diam_interior;
+        var espesor;
+        var sistema_medida;
+        var dimensionado = '';
+ 
+        $('#material_id').select2({
+            placeholder: "Seleccionar...",
+            minimumInputLength: 3,
+            ajax: {
+                url: "{{route('admin.materiales.dataAjax')}}",
+                dataType: 'json',
+                language: "es",
+                data: function (params) {
+                    return {
+                        q: $.trim(params.term)
+                    };
+
+                },
+                processResults: function (data) {
+                    return {
+                        results: data
+                    };   
+                    let perfil ;
+                   
+                },
+                cache: true
+            },           
+        });
+
+        function calcular(){
+            var volumen ;
+            
+            if(perfil == 1){
+                volumen = volumen_barra();
+                
+            }
+
+            if(perfil == 2){
+                volumen = volumen_bocina();
+            }
+
+            if(perfil == 3){
+                volumen = volumen_plancha();
+            }
+
+            volumenLt = volumen/1000;
+
+            $('#volumen').val(volumenLt.toFixed(3));
+
+            var masa = parseFloat(densidad) * volumen;
+            var masaKg = masa/1000
+            var precio = masa *( parseFloat( valor_kg  )  / 1000);
+
+            $("#masa").val(masaKg.toFixed(3));
+            $("#valor").val(  formatter.format(precio.toFixed(2)));
+            $("#valor2").val( precio.toFixed(2));
+        }
+
+
+        function editar() {
+      
+            var materialID = $("#material_id").val(); 
+  
+            
+            if(materialID){
+                $.ajax({
+                //    type:"GET",
+                //    url:"{{url('admin.get-commune-list')}}?region_id="+regionID,
+                    url: "{{ route('admin.edit-material') }}?material_id=" + materialID,
+                    method: 'GET',
+                    success:function(res){               
+                    if(res){
+                        console.log('success');
+                        window.location.replace("{{route('admin.materiales.abrir')}}?material_id="+materialID);
+
+
+                    }else{
+                        // $("#representante_id").empty();
+                    }
+                    }
+                });
+            }else{
+                //$("#commune_id").empty();
+                
+            }      
+      }
+
+
+        $('#material_id').on('change', function() {
+      
+            var materialID = this.value; 
+            //alert(materialID) ;
+
+             perfil = 0  ;
+             densidad = 0;
+             valor_kg = 0 ;
+             diam_exterior = '';
+             diam_interior = '';
+             espesor = '';
+             sistema_medida = 0;
+             dimensionado = '';
+            
+            if(materialID){
+                $.ajax({
+
+                    url: "{{ route('admin.get-datos-material') }}?material_id=" + materialID,
+                    method: 'GET',
+                    success:function(res){               
+                    if(res){
+                        perfil = res.perfil;
+                        densidad = res.densidad;
+                        valor_kg = res.valor_kg;
+                        diam_exterior = res.diam_exterior;
+                        diam_interior = res.diam_interior;
+                        espesor = res.espesor;
+                        sistema_medida = res.sistema_medida;
+                        dimensionado = res.dimensionado;
+
+                        if(dimensionado != '') {
+                            var res = dimensionado.split("x");
+                            $("#largo").val(res[0]);
+                            $("#ancho").val(res[1]);                            
+                                                        
+                        }else{
+                            $("#largo").val(0);
+                            $("#ancho").val(0);
+                        }
+                        
+                      /*   
+                        $("#largo").val(0);
+                        $("#ancho").val(0); */
+                        $("#volumen").val(0);
+                        $("#masa").val(0);
+                        $("#valor").val(0);
+
+                    }else{
+                       // $("#representante_id").empty();
+                    }
+                    }
+                });
+            }else{
+                //$("#commune_id").empty();
+                
+            }      
+            }
+            );
+
+
+
+
+        $('#largo').on('change', function () {
+
+            var volumen ;
+            
+            if(perfil == 1){
+                volumen = volumen_barra();
+                
+            }
+
+            if(perfil == 2){
+                volumen = volumen_bocina();
+            }
+
+            if(perfil == 3){
+                volumen = volumen_plancha();
+            }
+
+            volumenLt = volumen/1000;
+
+            $('#volumen').val(volumenLt.toFixed(3));
+
+            var masa = parseFloat(densidad) * volumen;
+            var masaKg = masa/1000
+            var precio = masa *( parseFloat( valor_kg  )  / 1000);
+
+            $("#masa").val(masaKg.toFixed(3));
+            $("#valor").val( formatter.format(precio.toFixed(2)));
+            $("#valor2").val( precio.toFixed(2));
+            
+        });
+
+        $('#ancho').on('change', function() {
+            
+            var volumen ;
+ 
+            if(perfil == 3){
+                volumen = volumen_plancha();
+
+                volumenLt = volumen/1000;
+
+                $('#volumen').val(volumenLt.toFixed(3));
+
+                var masa = parseFloat(densidad) * (volumen);
+                var masaKg = masa/1000;
+                var precio = masa * ( parseFloat(   valor_kg  )  / 1000);
+
+                $("#masa").val(masaKg.toFixed(3));
+                $("#valor").val( formatter.format(precio.toFixed(2)));
+                $("#valor2").val( precio.toFixed(2));
+
+            }
+
+
+
+            
+        });
+
+        //alert(toDeci("1-1/4"));
+
+            function toDeci(fraction) {
+                var result, wholeNum = 0, frac, deci = 0;
+                if(fraction.search('/') >= 0){
+                    if(fraction.search('-') >= 0){
+                        var wholeNum = fraction.split('-');
+                        frac = wholeNum[1];
+                        wholeNum = parseInt(wholeNum, 10);
+                    }else{
+                        frac = fraction;
+                    }
+                    if(fraction.search('/') >=0){
+                        frac =  frac.split('/');
+                        deci = parseInt(frac[0], 10) / parseInt(frac[1], 10);
+                    }
+                    result = wholeNum + deci;
+                }else{
+                    result = +fraction;
+                }
+                return result.toFixed(2);
+            }
+
+
+            function volumen_bocina(){
+                    if(sistema_medida == 2) //si es en pulgadas
+                    { 
+                        var radioExt = (parseFloat(   toDeci(diam_exterior)    ) / parseFloat(2)) *25.4;
+                        var radioInt = (parseFloat(   toDeci(diam_interior)    ) / parseFloat(2)) *25.4;
+                    }else{   // si es en milimetros
+
+                        var radioExt = parseFloat( diam_exterior ) / parseFloat(2);
+                        var radioInt = parseFloat( diam_interior ) / parseFloat(2);
+                    }
+                    var areaExt = Math.PI * Math.pow(radioExt,2);
+                    var areaInt = Math.PI * Math.pow(radioInt,2);
+
+                    var areaTotal = (areaExt - areaInt)/1000;
+                    var volumen = areaTotal * parseFloat( $('#largo').val() )
+                    return volumen;
+            }
+
+            function volumen_barra(){
+                
+                if(sistema_medida == 2) //si es en pulgadas
+                    { 
+                        console.log(diam_exterior);
+                        var radioExt =  ( parseFloat(   toDeci(diam_exterior)    ) / parseFloat(2) ) * 25.4;
+                        
+                        //var radioInt = parseFloat(   toDeci($('#diam_interior').val())    ) / parseFloat(2);
+                    }else{   // si es en milimetros
+
+                        var radioExt = parseFloat( diam_exterior ) / parseFloat(2);
+                        //var radioInt = parseFloat( $('#diam_interior').val() ) / parseFloat(2);
+                    }
+                    var areaExt = Math.PI * Math.pow(radioExt,2);
+                    //var areaInt = Math.PI * Math.pow(radioInt,2);
+
+                    var areaTotal = areaExt/1000 ;
+                    var volumen = areaTotal * parseFloat( $('#largo').val() )
+                    return volumen;
+                   //return radioExt;
+            }
+
+            function volumen_plancha(){
+
+                //console.log('plancha');
+
+                if(sistema_medida == 2) //si es en pulgadas
+                    { 
+                        var mespesor =   parseFloat( toDeci(espesor) ) * 25.4;
+
+                    }else{   // si es en milimetros
+
+                        var mespesor = parseFloat( espesor);
+                       
+                    }
+                    var areaTotal = parseFloat( $('#largo').val() ) * parseFloat( $('#ancho').val() );
+
+                    areaTotal = areaTotal / 1000;
+
+                    var volumen = areaTotal * parseFloat( mespesor )
+                    return volumen;
+                
+            }
+
+
+            function agregar(){
+
+                var material_id =  $("#material_id").val();
+                var largo = $('#largo').val();
+                var ancho =  $("#ancho").val();
+                var valor =  $("#valor2").val();
+
+                
+                $.ajax({
+                type:'POST',
+                url:'{{route("admin.trabajo_material.store")}}?id='+ "<?php echo $item_ot->id; ?>",
+                headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                data:{ material_id:material_id, largo:largo , ancho:ancho , valor:valor},
+                success:function(data){
+                    i++;  
+                    $('#dynamic_field').append('<tr id="row'+data.id+'" class="dynamic-added"><td class="custom-tbl" hidden="true"><input id="pr_item'+data.id+'" class="form-control input-sm"style="width:100%;" type="text" value="'+data.id+'" name="pr_item[]" readonly required></td> <td id="material_tr'+data.id+'" class="custom-tbl"> <input id="material_id'+data.id+'"  name="material_id[]" class="form-control" value="'+data.material+'" / >     </td>         <td class="custom-tbl"><input id="pr_largo'+data.id+'" class="form-control input-sm" style="width:100%;" type="text" name="pr_largo[]" value="'+data.dimension_largo+'"></td>   <td class="custom-tbl"><input id="pr_ancho'+data.id+'" class="form-control input-sm" style="width:100%;" type="text" oninput="multiply('+data.id+');" name="pr_ancho[]" value="'+data.dimension_ancho+'"></td>               <td class="custom-tbl"><input id="pr_unit'+data.id+'" class="form-control input-sm" style="width:100%;" type="text" oninput="multiply('+data.id+');" name="pr_unit[]" value="'+data.valor_unit+'"></td>               <td class="custom-tbl"><input id="pr_cpi'+data.id+'" class="estimated_cost form-control input-sm" style="width:100%; text-align:right;" type="text" name="pr_cpi[]" value="'+data.valor_total+'" readonly></td>       <td class="custom-tbl"><!--<button type="button" id="'+data.id+'" class="btn-info btn-sm btn_add" hidden="true" name="add"><span class="fas fa-plus"></span></button> --><button type="button" name="remove" id="'+data.id+'" class="btn-danger btn-sm btn_remove"><span class="fas fa-times"></span></button></td></tr>');            
+                    //$('#dynamic_field').append('<tr id="row'+i+'" class="dynamic-added"><td class="custom-tbl"><input id="pr_item'+i+'" class="form-control input-sm"style="width:100%;" type="text" value="'+i+'" name="pr_item[]" readonly required></td> <td id="material_tr'+i+'" class="custom-tbl">  </td>         <td class="custom-tbl"><input id="pr_largo'+i+'" class="form-control input-sm" style="width:100%;" type="text" name="pr_largo[]"></td>   <td class="custom-tbl"><input id="pr_ancho'+i+'" class="form-control input-sm" style="width:100%;" type="text" oninput="multiply('+i+');" name="pr_ancho[]"></td>               <td class="custom-tbl"><input id="pr_unit'+i+'" class="form-control input-sm" style="width:100%;" type="text" oninput="multiply('+i+');" name="pr_unit[]"></td>               <td class="custom-tbl"><input id="pr_cpi'+i+'" class="estimated_cost form-control input-sm" style="width:100%;" type="text" name="pr_cpi[]" readonly></td>       <td class="custom-tbl"><button type="button" id="'+i+'" class="btn-info btn-sm btn_add" name="add"><span class="fas fa-plus"></span></button> <button type="button" name="remove" id="'+i+'" class="btn-danger btn-sm btn_remove"><span class="fas fa-times"></span></button></td></tr>');  
+                    var format_total = parseFloat(data.total);
+                    var format_parcial = parseFloat(data.valor_total);
+
+                    $("#pr_cpi"+data.id).val(formatter.format( format_parcial.toFixed(2) )   );
+                    $("#valor_total").val(formatter.format( format_total.toFixed(2) ) );
+                    //alert( formatter.format( format_total.toFixed(2) ));
+                   
+                
+                },
+                error: function() {
+                    console.log("No se ha podido obtener la información");
+                }
+
+                }); 
+            }
+        
+    </script>
 
 
 
