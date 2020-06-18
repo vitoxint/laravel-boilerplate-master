@@ -66,6 +66,7 @@
         "node": ">=6.0.0"
     },
     "dependencies": {
+        "@ttskch/select2-bootstrap4-theme": "^1.4.0",
         "bootstrap-fileinput": "^5.0.8",
         "vue": "^2.6.11"
     }

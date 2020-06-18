@@ -59,11 +59,12 @@
 
             <li class="divider"></li>
 
-            @if ($logged_in_user->isAdmin())
+            @role('vendedor')
                 <li class="nav-title">
                     MÓDULO COMERCIAL
                 </li>
 
+                @can('administrar clientes', 'administrar contacto clientes')
                 <li class="nav-item nav-dropdown {{
                     active_class(Route::is('admin/auth*'), 'open')
                 }}">
@@ -79,9 +80,7 @@
                     </a>
 
                     <ul class="nav-dropdown-items">
-
-
-
+                        @can('administrar clientes')
                         <li class="nav-item">
                             <a class="nav-link {{
                                 active_class(Route::is('admin/clientes*'))
@@ -93,6 +92,8 @@
                                 @endif
                             </a>
                         </li>
+                        @endcan
+                        @can('administrar contacto clientes')
                         <li class="nav-item">
                             <a class="nav-link {{
                                 active_class(Route::is('admin/contactos*'))
@@ -100,10 +101,12 @@
                                 Contacto clientes
                             </a>
                         </li>
+                        @endcan
                     </ul>
                 </li>
+                @endcan
 
-
+                @can('administrar cotizaciones')
                 <li class="nav-item nav-dropdown {{
                     active_class(Route::is('admin/auth*'), 'open')
                 }}">
@@ -134,16 +137,17 @@
 
                     </ul>
                 </li>
-
-
                 <li class="divider"></li>
-            @endif
+
+                @endcan
+            @endrole
 
 
-            @if ($logged_in_user->isAdmin())
+            @role('supervisor')
                 <li class="nav-title">
                     MÓDULO PROCESOS
                 </li>
+
 
                 <li class="nav-item nav-dropdown {{
                     active_class(Route::is('admin/orden_trabajos*'), 'open')
@@ -160,6 +164,8 @@
                     </a>
 
                     <ul class="nav-dropdown-items">
+
+                        @can('administrar ordenes de trabajo')
                         <li class="nav-item">
                             <a class="nav-link {{
                                 active_class(Route::is('admin/orden_trabajos*'))
@@ -171,18 +177,22 @@
                                 @endif
                             </a>
                         </li>
+                        @endcan
+
+                        @can('ver trabajos')
                         <li class="nav-item">
                             <a class="nav-link {{
                                 active_class(Route::is('admin/item_ots*'))
                             }}" href="{{ route('admin.item_ots.index') }}">
-                                Trabajos (ítems)
+                                Trabajos (control interno)
                             </a>
                         </li>
+                        @endcan
 
                     </ul>
                 </li>
 
-
+               @can('registro procesos','registro maquinas') 
                 <li class="nav-item nav-dropdown {{
                     active_class(Route::is('admin/procesos*'), 'open')
                 }}">
@@ -198,7 +208,7 @@
                     </a>
 
                     <ul class="nav-dropdown-items">
-                       
+                       @can('registro procesos')
                         <li class="nav-item">
                             <a class="nav-link {{
                                 active_class(Route::is('admin/procesos*'))
@@ -206,6 +216,8 @@
                                 Clasificación de procesos
                             </a>
                         </li>
+                        @endcan
+                        @can('registro maquinas')
                         <li class="nav-item">
                             <a class="nav-link {{
                                 active_class(Route::is('admin/maquinas*'))
@@ -213,11 +225,14 @@
                                 Registro de máquinas
                             </a>
                         </li>
+                        @endcan
                     </ul>
                 </li>
+                @endcan
+
 
                 <li class="divider"></li>
-            @endif
+            @endrole
 
 
 <!--             @if ($logged_in_user->isAdmin())
@@ -259,11 +274,12 @@
             @endif -->
 
 
-            @if ($logged_in_user->isAdmin())
+            @role('supervisor')
                 <li class="nav-title">
                     INVENTARIO Y EXISTENCIAS
                 </li>
 
+                @can('administracion materiales')
                 <li class="nav-item nav-dropdown {{
                     active_class(Route::is('admin/materiales*'), 'open')
                 }}">
@@ -289,13 +305,12 @@
                                 @endif
                             </a>
                         </li>
-
-
                     </ul>
                 </li>
+                @endcan
 
                 <li class="divider"></li>
-            @endif
+            @endrole
 
         </ul>
     </nav>

@@ -28,9 +28,9 @@
 
         if( '\App\TrabajoUseMaterial'::all()->count() == 0){
             $max_id = 1;
-            echo $max_id;
+            
         }else{
-            $max_id = '\App\TrabajoUseMaterial'::all()->max('folio') + 1;
+            $max_id = '\App\TrabajoUseMaterial'::all()->max('id') + 1;
         } ?>  
 
 
@@ -112,12 +112,39 @@
                         {{ html()->label('Estado  :')->class('col-md-1 form-control-label')->for('estado') }}
                             <div class="col-md-2">
 
-                            {{ html()->select('estado',array('1' => 'Sin iniciar', '2' => 'En proceso', '3' =>'Atrasada', '4' => 'Terminada', '5' => 'Entregada',  '6' => 'Anulada'), $item_ot->estado)
-                                ->class('form-control')
-                                ->attribute('maxlength', 191) 
-                                ->required()
-                                
-                            }}
+                                {{ html()->select('estado',array('1' => 'Sin iniciar', '2' => 'En proceso', '3' =>'Atrasada', '4' => 'Terminada', '5' => 'Entregada',  '6' => 'Anulada'), $item_ot->estado)
+                                    ->class('form-control')
+                                    ->attribute('maxlength', 191) 
+                                    ->required()
+                                    
+                                }}                           
+
+                                @switch($item_ot->estado) 
+                                        @case ('1') 
+                                        <span class="badge btn-secondary" style="border-radius:12px;"><p style="margin:4px; font-size:16px;"> Sin Iniciar </p>  </span>
+                                    @break;
+                                    @case ('2') 
+                                        <span class="badge btn-primary" style="border-radius:12px;"><p style="margin:4px; font-size:16px;"> En Proceso </p>  </span>
+                                    @break;
+                                    @case ('3')
+                                        <span class="badge btn-danger" style="border-radius:12px;"><p style="margin:4px; font-size:16px;"> Atrasada </p>  </span>
+                                    @break;
+                                    @case ('4') 
+                                        <span class="badge btn-success" style="border-radius:12px;"><p style="margin:4px; font-size:16px;"> Terminada </p> </span>
+                                    @break;
+                                    @case ('5') 
+                                        <span class="badge btn-dark" style="border-radius:12px;"><p style="margin:4px; font-size:16px;"> Entregada </p>  </span>
+                                    @break;
+                                    @case ('6') 
+                                        <span class="badge btn-warning" style="border-radius:12px;"><p style="margin:4px; font-size:16px;"> Anulada </p> </span>
+                                    @break;
+
+                                    @default
+                                        {{$item_ot->trabajo->estado}}
+                                    @break;                   
+                            @endSwitch   
+                                  
+
                             </div><!--col-->
 
                             {{ html()->label('Fecha inicio :')->class('col-md-1 form-control-label')->for('fecha_inicio') }}
@@ -350,7 +377,7 @@
 
                                             <input style='width:100%; text-align:right;' type='text' class='form-control input-sm'  id='valor_total' name='valor_total' value='@money($item_ot->materialOt->sum("valor_total"))' readonly required>
 
-                                    </td>
+                                    </td></tr>
 
                             </tfoot>
 
@@ -407,7 +434,7 @@
                                         <td data-title="Codigo:">{{ $etapaItemOt->codigo }}</td>
                                         <td data-title="Proceso:">{{ $etapaItemOt->proceso->descripcion }}</td>
                                         <td data-title="Maquina:">{{ $etapaItemOt->maquina->codigo }}</td>
-                                        <!-- <td data-title="Operador:">{{ $etapaItemOt->operador->nombres . ' ' . $etapaItemOt->operador->apellidos }}</td> -->
+                                        <!-- <td data-title="Operador:"></td> -->
                                                 <?php $flimite= new Carbon\Carbon($etapaItemOt->fh_limite);
                                                     $flimite = $flimite->format('d-m-Y h:i'); ?>
                                         <td date-title="Hora planificada">{{$flimite}}</td>

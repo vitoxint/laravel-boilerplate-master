@@ -23,6 +23,13 @@ class ClienteRepresentanteController extends Controller
     public function __construct(ClienteRepresentanteRepository $clienteRepresentanteRepository)
     {
         $this->clienteRepresentanteRepository = $clienteRepresentanteRepository;
+
+                  // Middleware only applied to these methods
+        /*   $this->middleware('permission:administrar ordenes de trabajo', ['only' => [
+            'index' // Could add bunch of more methods too
+        ]]); */
+
+        $this->middleware('permission:administrar contacto clientes');
     }
 
 

@@ -17,11 +17,11 @@
          </div> <!--col-->
      </div> <!--row-->
 
-     <div class="row mb-4">
+<!--      <div class="row mb-4">
         <div class="col">
             <example-component></example-component>
-        </div> <!--col-->
-     </div> <!--row-->
+        </div> 
+     </div>
 
      <div class="row">
         <div class="col">
@@ -34,8 +34,8 @@
                     <i class="fab fa-facebook"></i>
                     <i class="fab fa-twitter"></i>
                     <i class="fab fa-pinterest"></i>
-                </div> <!--card-body-->
-             </div> <!--card-->
-    -  </div> <!--col-->
-     </div> <!--row-->
+                </div> 
+             </div>
+      </div> 
+     </div>  -->
 @endsection

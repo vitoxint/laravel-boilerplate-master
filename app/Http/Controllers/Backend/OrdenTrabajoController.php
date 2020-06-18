@@ -18,11 +18,21 @@ use PDF;
 
 class OrdenTrabajoController extends Controller
 {
+
+
    
     protected $ordenTrabajoRepository;
 
     public function __construct(OrdenTrabajoRepository $ordenTrabajoRepository)
     {
+          // Middleware only applied to these methods
+        /*   $this->middleware('permission:administrar ordenes de trabajo', ['only' => [
+            'index' // Could add bunch of more methods too
+        ]]); */
+
+        $this->middleware('permission:administrar ordenes de trabajo');
+
+
         $this->ordenTrabajoRepository = $ordenTrabajoRepository;
     }
 
@@ -190,7 +200,7 @@ class OrdenTrabajoController extends Controller
     }
 
     public function printTaller(OrdenTrabajo $trabajo){
-        return 'Funcionalidad pendiente , para control interno';
+       // return 'Funcionalidad pendiente , para control interno';
         $usuario = $trabajo->usuario;
         $pdf = PDF::loadView('backend.orden_trabajos.printTaller', compact('trabajo','usuario'));
   

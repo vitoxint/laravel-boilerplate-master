@@ -20,6 +20,7 @@
     <!-- Otherwise apply the normal LTR layouts -->
     {{ style(mix('css/backend.css')) }}
     {{ style('css/no-more-table.css') }}
+    {{ style('css/select2.css') }}
     {{ style('datepicker/css/bootstrap-datetimepicker.css') }}
 
     @stack('after-styles')

@@ -24,6 +24,17 @@ class ItemOtController extends Controller
     public function __construct(ItemOtRepository $itemOtRepository)
     {
         $this->itemOtRepository = $itemOtRepository;
+        //$this->middleware('permission:administrar ordenes de trabajo');
+            // Middleware only applied to these methods
+            $this->middleware('permission:ver trabajos|administrar ordenes de trabajo', ['only' => [
+                'index','editTaller','print_etq' // Could add bunch of more methods too
+            ]]); 
+
+            $this->middleware('permission:administrar ordenes de trabajo', ['only' => [
+                'edit' ,'store' , 'update' ,'destroy' // Could add bunch of more methods too
+            ]]);
+
+        
     }
     /**
      * Display a listing of the resource.

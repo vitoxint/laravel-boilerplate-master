@@ -25,6 +25,8 @@ class PermissionRoleTableSeeder extends Seeder
         // Create Permissions
         Permission::create(['name' => 'view backend']);
 
+
+
         // Assign Permissions to other Roles
         // Note: Admin (User 1) Has all permissions via a gate in the AuthServiceProvider
         // $user->givePermissionTo('view backend');

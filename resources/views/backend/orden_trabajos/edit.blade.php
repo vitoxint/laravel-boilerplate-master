@@ -95,13 +95,43 @@
                         <div class="form-group row">
                             {{ html()->label('Estado')->class('col-md-2 form-control-label')->for('estado') }}
 
+
+
                             <div class="col-md-2">
+
                                 {{ html()->select('estado',array('1' => 'Sin iniciar', '2' => 'En proceso', '3' =>'Atrasada', '4' => 'Terminada', '5' => 'Entregada',  '6' => 'Anulada'), $trabajo->estado)
                                     ->class('form-control')
                                     ->attribute('maxlength', 191) 
                                     ->required()
                                     
                                 }}
+
+                                @switch($trabajo->estado) 
+                                        @case ('1') 
+                                            <span class="badge btn-secondary" style="border-radius:12px;"><p style="margin:4px; font-size:16px;"> Sin Iniciar </p>  </span>
+                                        @break;
+                                        @case ('2') 
+                                            <span class="badge btn-primary" style="border-radius:12px;"><p style="margin:4px; font-size:16px;"> En Proceso </p>  </span>
+                                        @break;
+                                        @case ('3')
+                                            <span class="badge btn-danger" style="border-radius:12px;"><p style="margin:4px; font-size:16px;"> Atrasada </p>  </span>
+                                        @break;
+                                        @case ('4') 
+                                            <span class="badge btn-success" style="border-radius:12px;"><p style="margin:4px; font-size:16px;"> Terminada </p> </span>
+                                        @break;
+                                        @case ('5') 
+                                            <span class="badge btn-dark" style="border-radius:12px;"><p style="margin:4px; font-size:16px;"> Entregada </p>  </span>
+                                        @break;
+                                        @case ('6') 
+                                            <span class="badge btn-warning" style="border-radius:12px;"><p style="margin:4px; font-size:16px;"> Anulada </p> </span>
+                                        @break;
+
+                                        @default
+                                            {{$item_ot->trabajo->estado}}
+                                        @break;                   
+                                @endSwitch  
+
+
                             </div><!--col-->
 
                             {{ html()->label('Usuario digitador :')->class('col-md-2 form-control-label')->for('user_id') }}

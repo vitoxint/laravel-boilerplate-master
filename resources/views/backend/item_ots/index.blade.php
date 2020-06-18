@@ -50,7 +50,7 @@
 
 
                                 <td data-title="Estado:">
-                                    @switch($item_ot->ordenTrabajo->estado) 
+                                    @switch($item_ot->estado) 
                                             @case ('1') 
                                                <span class="badge btn-secondary"> Sin Iniciar </span>
                                             @break;

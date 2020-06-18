@@ -56,7 +56,8 @@ Route::group(['namespace' => 'ContactoCliente'], function () {
 }); 
 
 
-Route::group(['namespace' => 'OrdenTrabajo'], function () {
+
+Route::group(['namespace' => 'OrdenTrabajo' ], function () {
     
     Route::get('orden_trabajos', [OrdenTrabajoController::class, 'index'])->name('orden_trabajos.index');
     Route::get('orden_trabajos/create', [OrdenTrabajoController::class, 'create'])->name('orden_trabajos.create');
@@ -191,6 +192,9 @@ Route::group(['namespace' => 'EtapaItemOt'], function () {
            Route::get('edit', [EtapaItemOtController::class, 'edit'])->name('etapa_itemots.edit');
            Route::patch('/', [EtapaItemOtController::class, 'update'])->name('etapa_itemots.update');
            Route::delete('/', [EtapaItemOtController::class, 'destroy'])->name('etapa_itemots.destroy');
+
+           Route::get('comenzar', [EtapaItemOtController::class, 'comenzar'])->name('etapa_itemots.comenzar');
+           Route::get('terminar', [EtapaItemOtController::class, 'terminar'])->name('etapa_itemots.terminar');
        }); 
    });
 

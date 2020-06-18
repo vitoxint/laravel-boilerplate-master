@@ -19,6 +19,13 @@ class ClienteController extends Controller
     public function __construct(ClienteRepository $clienteRepository)
     {
         $this->clienteRepository = $clienteRepository;
+
+                  // Middleware only applied to these methods
+        /*   $this->middleware('permission:administrar ordenes de trabajo', ['only' => [
+            'index' // Could add bunch of more methods too
+        ]]); */
+
+        $this->middleware('permission:administrar clientes');
     }
 
     /**
