@@ -15,6 +15,8 @@ use App\Http\Controllers\Backend\MaquinaHasOperadorController;
 use App\Http\Controllers\Backend\EtapaItemOtController;
 use App\Http\Controllers\Backend\MaterialController;
 use App\Http\Controllers\Backend\TrabajoUseMaterialController;
+use App\Http\Controllers\Backend\DepositoController;
+use App\Http\Controllers\Backend\ExistenciaMaterialController;
 
 
 
@@ -236,6 +238,42 @@ Route::group(['namespace' => 'TrabajoUseMaterial'], function () {
     }); */
 }); 
 
+
+
+Route::group(['namespace' => 'Deposito'], function () {
+    
+    Route::get('depositos', [DepositoController::class, 'index'])->name('depositos.index');
+    Route::get('depositos/create', [DepositoController::class, 'create'])->name('depositos.create');
+    Route::post('depositos', [DepositoController::class, 'store'])->name('depositos.store');
+    Route::get('depositos/dataAjax', [DepositoController::class, 'dataAjax'])->name('depositos.dataAjax');
+
+    Route::group(['prefix' => 'depositos/{deposito}'], function () {
+        Route::get('edit', [DepositoController::class, 'edit'])->name('depositos.edit');
+        Route::patch('/', [DepositoController::class, 'update'])->name('depositos.update');
+        Route::delete('/', [DepositoController::class, 'destroy'])->name('depositos.destroy');
+    });
+
+    //Route::get('empleados/resultados', [EmpleadoController::class, 'buscar_operadores'])->name('empleados.buscar_operadores');
+
+}); 
+
+
+Route::group(['namespace' => 'ExistenciaMaterial'], function () {
+    
+    Route::get('existencia_material', [ExistenciaMaterialController::class, 'index'])->name('existencia_material.index');
+    Route::get('existencia_material/create', [ExistenciaMaterialController::class, 'create'])->name('existencia_material.create');
+    Route::post('existencia_material', [ExistenciaMaterialController::class, 'store'])->name('existencia_material.store');
+    Route::get('existencia_material/dataAjax', [ExistenciaMaterialController::class, 'dataAjax'])->name('existencia_material.dataAjax');
+
+    Route::group(['prefix' => 'existencia_material/{deposito}'], function () {
+        Route::get('edit', [ExistenciaMaterialController::class, 'edit'])->name('existencia_material.edit');
+        Route::patch('/', [ExistenciaMaterialController::class, 'update'])->name('existencia_material.update');
+        Route::delete('/', [ExistenciaMaterialController::class, 'destroy'])->name('existencia_material.destroy');
+    });
+
+    //Route::get('empleados/resultados', [EmpleadoController::class, 'buscar_operadores'])->name('empleados.buscar_operadores');
+
+}); 
 
 
 Route::get('materiales/datosMaterial' , 'MaterialController@getDatosMaterial'  )->name('get-datos-material');

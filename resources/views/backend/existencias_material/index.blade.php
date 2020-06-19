@@ -1,23 +1,19 @@
 @extends('backend.layouts.app')
 
-@section('title', app_name() . ' | ' . 'Registro de materiales')
-
-@section('breadcrumb-links')
-    @include('backend.materiales.includes.breadcrumb-links')
-@endsection
+@section('title', app_name() . ' | ' . 'Existencia de materiales (metálicos)')
 
 
 @section('content')
 <div class="card">
     <div class="card-body">
- 
 
-        <div class="row mt-0 mb-4">
+
+    <div class="row mt-0 mb-4">
             <div class="col border border-secondary">
 
             <div class="col-sm-5">
-                <h4 class="card-title mb-0">
-                    Calcular dimensión material 
+                <h4 class="card-title mb-0" >
+                    Depositar / consumir corte de material
                 </h4>
             </div><!--col-->
             <hr/>
@@ -32,8 +28,8 @@
                     
             
                 </div><!--col-->
-                <div class="col col-md-1"><button class="btn btn-success btn-sm" onclick="calcular()"><i class="fas fa-calculator"></i> Calcular </button></div>
-                <div class="col col-md-1"><button class="btn btn-primary btn-sm" onclick="editar()"><i class="fas fa-edit"></i> Editar </button></div>
+                <div  class="col col-md-3"><button class="btn btn-success btn-sm" onclick="calcular()"><i class="fas fa-calculator"></i> Calcular </button>
+                <button class="btn btn-primary btn-sm" onclick="editar()"><i class="fas fa-edit"></i> Editar </button></div>
             </div><!--form-group-->
 
             <div class="form-group row" style="padding-top:10px;">
@@ -62,6 +58,16 @@
 
                             }}
                     </div><!--col-->
+
+                    {{ html()->label('Valor Kg:')->class('col-md-1 form-control-label')->for('valor_unit') }}
+
+                    <div class="col-md-2">
+                        {{ html()->text('valor_unit')
+                            ->class('form-control')                            
+                            ->attribute('maxlength', 191)                                            
+                            ->autofocus()
+                            }}
+                    </div><!--col-->                    
 
             </div><!--form-group-->    
 
@@ -103,25 +109,87 @@
                             ->autofocus()
 
                             }}
+                            <input type="text" id="valor2" hidden="true" />
+                    </div><!--col-->
+               
+            </div><!--form-group-->
+
+            <div class="form-group row" style="padding-top:10px;">
+                    {{ html()->label('Origen :')->class('col-md-2 form-control-label')->for('') }}
+
+                    {{ html()->label('Tipo origen:')->class('col-md-1 form-control-label')->for('sistema_medida') }}
+                        <div class="col-md-2">
+
+                        {{ html()->select('origen',array('1' => 'Mediante Compra', '2' => 'Retazo' , '3' => 'Proporcionado por cliente'))
+                                ->class('form-control')
+                                ->attribute('maxlength', 191) 
+                                ->value('Seleccione')
+                                ->required()
+                                
+                            }}
+                        </div><!--col--> 
+
+                        {{ html()->label('Depósito:')->class('col-md-1 form-control-label')->for('deposito') }}
+                        <div class="col-md-3">
+
+                        <?php $depositos = App\Deposito::where('estado_habilitada','1')->get(); ?>
+
+                                <select id="deposito" name="deposito" class="form-control" >
+                                        
+                                        @foreach($depositos as $deposito)
+                                            <option value="{{$deposito->id}}"> {{$deposito->nombre}}</option>
+                                        @endforeach
+                                </select>
+                        </div><!--col--> 
+
+            </div><!--form-group-->
+
+            <div class="form-group row" style="padding-top:10px;">
+                    {{ html()->label('')->class('col-md-2 form-control-label')->for('') }}
+
+                    {{ html()->label('Detalle:')->class('col-md-1 form-control-label')->for('detalle_origen') }}
+
+                    <div class="col-md-6">
+                        {{ html()->text('detalle_origen')
+                            ->class('form-control')
+                            ->placeholder('Guía, Factura,  Cliente ,etc')
+                            ->attribute('maxlength', 191)                                            
+                            ->autofocus()
+
+                            }}
                     </div><!--col-->
 
-            </div><!--form-group-->  
+            </div><!--form-group-->           
 
-                                    
+
+            <div class="form-group row">
+                {{ html()->label(__(''))->class('col-md-9 form-control-label')->for('') }}
+
+                <div class="col-md-8">                       
+
+                </div><!--col-->
+                <div  class="col col-md-3"><button class="btn btn-dark btn-sm" onclick="depositar()"><i class="fas fa-arrow-down"></i> Depositar </button>
+                <button class="btn btn-danger btn-sm" onclick="consumir()"><i class="fas fa-arrow-up"></i> Consumir </button></div>
+            </div><!--form-group-->
+
+            
 
             </div><!--col-->
         </div><!--row-->
+    </div>                  
+    </div>
 
-
-        <div class="row">
+<div class="card">
+    <div class="card-body">
+        <div class="row mt-0 mb-4">
             <div class="col-sm-5">
                 <h4 class="card-title mb-0">
-                    Registro de materiales <small class="text-muted">Todos los materiales</small>
+                    Existencia de materiales <small class="text-muted">Todos los materiales metálicos</small>
                 </h4>
             </div><!--col-->
 
             <div class="col-sm-7">
-                @include('backend.materiales.includes.header-buttons')
+                @include('backend.existencias_material.includes.header-buttons')
             </div><!--col-->
         </div><!--row-->
 
@@ -131,88 +199,76 @@
                     <table class="table col-sm-12 table-bordered table-striped table-condensed cf">
                         <thead class="cf">
                         <tr>
-                             
-                             <!-- <th>Material</th>   -->
-                             <th>Perfil</th>
-                             <th>Código</th>                                  
-                             <th>Medida/s</th>
-                            <!--  <th>Ø Interior.</th>
-                             <th>Espesor.</th> -->
-                             <th>Densidad g/cm³</th>
-                             <th>Valor Kg</th>
-                             <th>Tipo corte</th>
-                             <th>Proveedor</td>
+                             <th>Material</th>
+                             <th>Depósito</th>
+                             <th>Dimensiones corte</th>
+                             <th>Origen</th> 
+                             <th>Descripción origen</th>
+                             <th>Estado</th>
 
                              <th style="width:45px;">@lang('labels.general.actions')</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($materiales as $material)
+                        @foreach($existencias as $existencia)
                             <tr>
+                                <td data-title="Material">{{ $existencia->material->material }}</td>
+                                <td data-title="Ubicación:">{{ $existencia->deposito->nombre }}</td>
                                 
-                                <!-- <td data-title="Material:">{{$material->material }} </td> -->
                                 
-                                <td data-title="Perfil">  
-                                    @switch($material->perfil)
-                                        @case(1)
-                                            <h6>Barra </h6>
-                                        @break
-                                        @case(2)
-                                            <h6>Barra perforada </h6>
-                                        @break
-                                        @case(3)
-                                            <h6>Plancha </h6>
-                                        @break
-
-                                    @endswitch 
-                           
-                                </td>
-                                <td data-title="Código">  {{$material->codigo }}   </td>
-                                <td data-title="Medida/s" align="center"> 
-                                    @switch($material->perfil)
+                                <td data-title="Dimensiones"> 
+                                    @switch($existencia->material->perfil)
 
                                         @case(1)
-                                           {{$material->diam_exterior}} 
+                                             {{$existencia->dimension_largo}} mm
                                         @break;
+
                                         @case(2)
-                                            {{$material->diam_exterior}}  {{ ' x '. $material->diam_interior}}
-                                        @break
+                                             {{$existencia->dimension_largo}} mm
+                                        @break;
+
                                         @case(3)
-                                            {{$material->espesor}}
+                                            {{$existencia->dimension_largo}}  {{ ' x '. $existencia->dimension_ancho}} mm
+                                        @break;
 
                                     @endswitch
-
-                                    @switch($material->sistema_medida)
-                                            @case(1)
-                                                 mm 
-                                            @break
-                                            @case(2)
-                                                 " 
-                                            @break
-
-                                    @endswitch 
-
+                                        
+                                   
                                 </td>
-                                <td data-title="Densidad g/cm³" align="center"> {{$material->densidad}}  g/cm³</td>
-                                <td data-title="Valor Kg" style="text-align:right;">@money($material->valor_kg) </td>
-                                <td data-title="Tipo corte" >                                    
-                                    @switch($material->tipo_corte)
-                                            @case(1)
-                                                 Completo 
-                                                 @if($material->dimensionado != null)
-                                                 <span> ( {{$material->dimensionado}} mm) </span>
-                                                 @endif
-                                            @break
-                                            @case(2)
-                                                 Dimensionado 
-                                                 @if($material->dimensionado != null)
-                                                 <span> ( {{$material->dimensionado}} mm) </span>
-                                                 @endif
-                                            @break
+                                <td data-title="Tipo Origen" align="center">
+                                    @switch($existencia->origen_material)  
+                                        @case(1)
+                                            Compra
+                                        @break;
+                                        @case(2)
+                                            Retazo
+                                        @break;
+                                        @case(3)
+                                            Proporcionado por cliente
+                                        @break;
+                                    
+                                    @endswitch
+                                 </td>
+                                <td data-title="Detalle origen">   
+                                    {{$existencia->detalle_origen}}                                    
+                                </td>   
 
-                                    @endswitch </td>
-                                <td data-title="Proveedor/es" >{{$material->proveedor}}</td>
-                                <td data-title="Acciones" class="btn-td">@include('backend.materiales.includes.actions', ['material' => $material])</td>
+                                <td data-title="Estado material">
+                                    @switch($existencia->estado_consumo)  
+                                        @case(1)
+                                        <span class="badge btn-success" style="border-radius:12px;"><p style="margin:4px; font-size:14px;"> Disponible </p>  </span>
+                                        @break;
+                                        @case(2)
+                                        <span class="badge btn-warning" style="border-radius:12px;"><p style="margin:4px; font-size:14px;"> Asignado </p>  </span>
+                                        @break;
+                                        @case(3)
+                                        <span class="badge btn-dark" style="border-radius:12px;"><p style="margin:4px; font-size:14px;"> Utilizado </p>  </span>
+                                        @break;
+                                    
+                                    @endswitch
+
+                                </td>                                                             
+                                <td data-title="Acciones" class="btn-td">@include('backend.existencias_material.includes.actions', ['existencia' => $existencia])</td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -223,13 +279,13 @@
         <div class="row">
             <div class="col-7">
                 <div class="float-left">
-                    {!! $materiales->count() !!} 
+                    {!! $existencias->count() !!} 
                 </div>
             </div><!--col-->
 
             <div class="col-5">
                 <div class="float-right">
-                    {!! $materiales->render() !!}
+                    {!! $existencias->render() !!}
                 </div>
             </div><!--col-->
         </div><!--row-->
@@ -237,6 +293,8 @@
 </div><!--card-->
 
 
+
+<!-- Script -->
 
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
   <!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" /> -->
@@ -288,6 +346,12 @@
             },           
         });
 
+        $('#valor_unit').on('change', function (){
+
+            calcular();
+
+        });
+
         function calcular(){
             var volumen ;
             
@@ -310,10 +374,11 @@
 
             var masa = parseFloat(densidad) * volumen;
             var masaKg = masa/1000
-            var precio = masa *( parseFloat( valor_kg  )  / 1000);
+            var precio = masa *( parseFloat( $("#valor_unit").val()  )  / 1000);
 
             $("#masa").val(masaKg.toFixed(3));
             $("#valor").val(  formatter.format(precio.toFixed(2)));
+            $("#valor2").val(precio);
         }
 
 
@@ -343,7 +408,7 @@
                 //$("#commune_id").empty();
                 
             }      
-      }
+        }
 
 
         $('#material_id').on('change', function() {
@@ -380,11 +445,13 @@
                         if(dimensionado != '') {
                             var res = dimensionado.split("x");
                             $("#largo").val(res[0]);
-                            $("#ancho").val(res[1]);                            
+                            $("#ancho").val(res[1]);
+                            $("#valor_unit").val(valor_kg);                            
                                                         
                         }else{
                             $("#largo").val(0);
                             $("#ancho").val(0);
+                            $("#valor_unit").val(valor_kg);   
                         }
                         
                       /*   
@@ -393,6 +460,7 @@
                         $("#volumen").val(0);
                         $("#masa").val(0);
                         $("#valor").val(0);
+                        $("#valor2").val(0);
 
                     }else{
                        // $("#representante_id").empty();
@@ -432,10 +500,11 @@
 
             var masa = parseFloat(densidad) * volumen;
             var masaKg = masa/1000
-            var precio = masa *( parseFloat( valor_kg  )  / 1000);
+            var precio = masa *( parseFloat( $("#valor_unit").val()  )  / 1000);
 
             $("#masa").val(masaKg.toFixed(3));
             $("#valor").val( formatter.format(precio.toFixed(2)));
+            $("#valor2").val(precio);
             
         });
 
@@ -452,16 +521,14 @@
 
                 var masa = parseFloat(densidad) * (volumen);
                 var masaKg = masa/1000;
-                var precio = masa * ( parseFloat(   valor_kg  )  / 1000);
+                var precio = masa * ( parseFloat(   $("#valor_unit").val()  )  / 1000);
 
                 $("#masa").val(masaKg.toFixed(3));
                 $("#valor").val( formatter.format(precio.toFixed(2)));
+                $("#valor2").val(precio);
 
             }
-
-
-
-            
+  
         });
 
         //alert(toDeci("1-1/4"));
@@ -486,7 +553,6 @@
                 }
                 return result.toFixed(2);
             }
-
 
             function volumen_bocina(){
                     if(sistema_medida == 2) //si es en pulgadas
@@ -549,6 +615,53 @@
                     return volumen;
                 
             }
+
+            function depositar(){
+
+                var materialID = $("#material_id").val(); 
+    
+                var largo = $('#largo').val();
+                var ancho =  $("#ancho").val();
+                var cpu =  $("#valor_unit").val();
+                var cpi =  $("#valor2").val();
+                var origen = $("#origen").val();
+                var detalle_origen = $("#detalle_origen").val();
+                var deposito = $("#deposito").val();
+           
+                    if(materialID){
+                        $.ajax({                      
+                            url: "{{ route('admin.existencia_material.store') }}?material_id=" + materialID,
+                            method: 'POST',
+                            headers:{
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            data:{largo:largo , ancho:ancho , cpu:cpu , cpi:cpi, origen:origen,detalle_origen:detalle_origen, deposito:deposito },
+                            success:function(data){               
+                            if(data){
+                                console.log(data.success);
+                                window.location.replace("{{route('admin.existencia_material.index')}}");
+
+
+                            }else{
+                                // $("#representante_id").empty();
+                            }
+                            },
+                            error:function(){
+                                console.log('No se puede tener la informacion');
+                            }
+                        });
+                    }else{
+                        //$("#commune_id").empty();
+                        
+                    }      
+                    }
+            
+
+            function consumir(){
+                alert("Consumir");
+            }
         
     </script>
+
+
 @endsection

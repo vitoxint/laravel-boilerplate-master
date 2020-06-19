@@ -224,3 +224,21 @@ Breadcrumbs::for('admin.materiales.buscar_material', function ($trail) {
     $trail->parent('admin.materiales.index', route('admin.materiales.index'));
     $trail->push('Resultados de la búsqueda', route('admin.materiales.buscar_material'));
 });
+
+Breadcrumbs::for('admin.depositos.index', function ($trail) {
+    $trail->push('Lugares de depósito de material', route('admin.depositos.index'));
+});
+
+Breadcrumbs::for('admin.depositos.create', function ($trail) {
+    $trail->parent('admin.depositos.index', route('admin.depositos.index'));
+    $trail->push('Registrar nuevo lugar de depósito', route('admin.depositos.create'));
+});
+
+Breadcrumbs::for('admin.depositos.edit', function ($trail,$deposito) {
+    $trail->parent('admin.depositos.index', route('admin.depositos.index'));
+    $trail->push('Editar lugar de depósito material', route('admin.depositos.edit', $deposito));
+});
+
+Breadcrumbs::for('admin.existencia_material.index', function ($trail) {
+    $trail->push('Materiales existentes (metales)', route('admin.existencia_material.index'));
+});

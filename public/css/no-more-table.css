@@ -50,4 +50,25 @@
     margin-top: -12px;}
     }
 
+
+    body { font-family: "Helvetica" }
+
+    body .form-control {
+        border: 1px dotted #999;
+        padding-top: -1px;
+        padding-bottom: -1px;
+        
+        border-radius: 0 !important;
+      
+        -webkit-appearance: none;
+      }
+
+      body .btn {
+        border: 1px dotted #999;
+        
+        border-radius: 0 !important;
+      
+        -webkit-appearance: none;
+      }
+
     

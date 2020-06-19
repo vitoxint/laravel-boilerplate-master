@@ -305,6 +305,28 @@
                                 @endif
                             </a>
                         </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link {{
+                                active_class(Route::is('admin/materiales*'))
+                            }}" href="{{ route('admin.existencia_material.index') }}">
+                                Existencias / Inventario
+                                @if ($pending_approval > 0)
+                                    <span class="badge badge-danger">{{ $pending_approval }}</span>
+                                @endif
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link {{
+                                active_class(Route::is('admin/depositos*'))
+                            }}" href="{{ route('admin.depositos.index') }}">
+                                Lugares de depósito
+                                @if ($pending_approval > 0)
+                                    <span class="badge badge-danger">{{ $pending_approval }}</span>
+                                @endif
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 @endcan
