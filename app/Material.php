@@ -13,4 +13,8 @@ class Material extends Model
     protected $hidden = [
         'remember_token'
     ];
+
+    public function existenciaMaterial(){
+        return $this->hasMany('App\ExistenciaMaterial', 'material_id', 'id');
+    }
 }

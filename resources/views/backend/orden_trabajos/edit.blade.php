@@ -303,27 +303,27 @@
                                         <td align="right" data-title="Valor Parcial:"> @money($item_ot->valor_parcial ) </td>
                                         
                                         <td align="center">{{$item_ot->avanceItemOt()}}</td>
-                                        <td data-title="Estado ítem OT:">
+                                        <td style="text-align:center;" data-title="Estado ítem OT:">
                                             @switch($item_ot->estado)
                                                 @case(1)
-                                                    <span class="badge btn-secondary"> Sin Iniciar </span>
+                                                    <span class="badge btn-secondary" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Sin Iniciar </p></span>
                                                     @break
                                                     
                                                 @case(2)
-                                                    <span class="badge btn-primary"> En Proceso </span>
+                                                    <span class="badge btn-primary" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> En Proceso </p></span>
                                                     @break
                                                 @case(3)
-                                                    <span class="badge btn-danger"> Atrasada </span>
+                                                    <span class="badge btn-danger" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Atrasada </p></span>
                                                     @break
                                                 @case(4)
-                                                    <span class="badge btn-success"> Terminada </span>
+                                                    <span class="badge btn-success" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Terminada </p></span>
                                                     @break  
                                                 @case(5)
-                                                    <span class="badge btn-black"> Entregada </span>
+                                                    <span class="badge btn-black" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Entregada </p></span>
                                                     @break                                  
                                             
                                                 @case(6)
-                                                    <span class="badge btn-warning"> Anulada </span>
+                                                    <span class="badge btn-warning" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Anulada </p></span>
                                                     @break   
                                                 @default
                                                 <span>Something went wrong, please try again</span>

@@ -124,4 +124,26 @@ class DepositoController extends Controller
         return redirect()->route('admin.depositos.index')->withFlashDanger('Lugar de depósito de materiales no puede ser eliminada, porque posee existencias en su lugar'); 
         
     }
+
+
+    public function dataAjax(Request $request){
+
+        $term = trim($request->q);
+
+        $tags = Deposito::query()
+         ->where('nombre', 'LIKE', "%{$term}%")->where('estado_habilitada',1) 
+         ->get();
+         $formatted_tags = [];
+         foreach ($tags as $tag) {
+             $formatted_tags[] = [
+                  'id' => $tag->id,
+                  'text' => $tag->nombre ,
+         
+                 ];
+         }
+         return \Response::json($formatted_tags);
+
+
+
+    }
 }

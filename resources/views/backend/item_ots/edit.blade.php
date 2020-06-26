@@ -325,11 +325,12 @@
                                     <th style='width:9%;'>Ancho</th>
                                     <th style='width:12%;'>V.unitario</th>
                                     <th style='width:12%;'>V.parcial</th>
+                                    <th style='width:9%; align-text:center'>Estado</td>
                                     <th style='width:10%;'>Acción</th>
                                 </tr>
                             </thead>
                             <thead id="dynamic_field">
-                            @if($item_ot->materialOt->count() == 0)
+                           
 <!--                                 <tr id="addr0">
                                     <td class="custom-tbl"><input class='form-control input-sm'style='width:100%;' type="text" value="1" id="pr_item0" name="pr_item[]" readonly required></td>
 
@@ -345,26 +346,68 @@
                                     <td class="custom-tbl"><input class='estimated_cost form-control input-sm' id="pr_cpi0" style='width:100%;' type="text" name="pr_cpi[]" readonly></td>
                                     <td class="custom-tbl"><button type="button" id="0" class="btn-info btn-sm btn_add" name="add"><span class="fas fa-plus"></span></button></td>
                                 </tr> -->
-                            @else
-                            @foreach($item_ot->materialOt as $material)
-                            <tr id="row{{$material->id}}">
-                                    <td class="custom-tbl" hidden="true"><input class='form-control input-sm'style='width:100%;' type="text"  value="{{$material->id}}" id="pr_item{{$material->id}}" name="pr_item[]" readonly required></td>
-                                    <td class="custom-tbl"><input class='form-control input-sm' style='width:100%;' type="text" value="{{$material->material->material}}" id="material_id{{$material->id}}" oninput='multiply("{{$material->id}}");' name="material_id[]">
-                                                           <!--  <select id="material_id{{$material->id}}" name="material_id[]" class="form-control" >    </select>  -->
+
+                                @foreach($item_ot->materialOt as $materialA)
+                            <tr id="row{{$materialA->id}}">
+                                    <td class="custom-tbl" hidden="true"><input class='form-control input-sm'style='width:100%;' type="text"  value="{{$materialA->id}}" id="pr_item{{$materialA->id}}" name="pr_item[]" readonly required></td>
+                                    <td class="custom-tbl"><input class='form-control input-sm' style='width:100%;' type="text" value="{{$materialA->material->material}}" id="material_id{{$materialA->id}}" oninput='multiply("{{$materialA->id}}");' name="material_id[]">
+                                                           <!--  <select id="material_id{{$materialA->id}}" name="material_id[]" class="form-control" >    </select>  -->
                                     </td>    
-                                    <td><input class='form-control input-sm' style='width:100%;' type="text" value="{{$material->dimension_largo}}" id="pr_largo{{$material->id}}" oninput='multiply(0);' name="pr_largo[]"></td>
-                                    <td><input class='form-control input-sm' style='width:100%;' type="text" value="{{$material->dimension_ancho}}" id="pr_ancho{{$material->id}}" oninput='multiply(0);' name="pr_ancho[]"></td>
-                                    <td><input class='form-control input-sm' style='width:100%;' type="text" value="{{$material->valor_unit}}" id="pr_unit{{$material->id}}" oninput='multiply(0);' name="pr_unit[]"></td>
-                                    <td class="custom-tbl" ><input class='estimated_cost form-control input-sm' style="text-align:right;" value="@money($material->valor_total)" id="pr_cpi{{$material->id}}" value="{{$material->valor_parcial}}" style='width:100%;' type="text" name="pr_cpi[]" readonly></td>
-                                    <td class="custom-tbl"><!-- <button type="button" id="{{$material->id}}" class="btn-info btn-sm btn_add" name="add"><span class="fas fa-sync-alt"></span></button> -->
-                                                           <button type="button" name="remove" id="{{$material->id}}" class="btn-danger btn-sm btn_remove"><span class="fas fa-times"></span></button>
+                                    <td><input class='form-control input-sm' style='width:100%;' type="text" value="{{$materialA->dimension_largo}}" id="pr_largo{{$materialA->id}}" oninput='multiply(0);' name="pr_largo[]"></td>
+                                    <td><input class='form-control input-sm' style='width:100%;' type="text" value="{{$materialA->dimension_ancho}}" id="pr_ancho{{$materialA->id}}" oninput='multiply(0);' name="pr_ancho[]"></td>
+                                    <td><input class='form-control input-sm' style='width:100%;' type="text" value="{{$materialA->valor_unit}}" id="pr_unit{{$materialA->id}}" oninput='multiply(0);' name="pr_unit[]"></td>
+                                    <td class="custom-tbl" ><input class='estimated_cost form-control input-sm' style="text-align:right;" value="@money($materialA->valor_total)" id="pr_cpi{{$materialA->id}}" value="{{$materialA->valor_parcial}}" style='width:100%;' type="text" name="pr_cpi[]" readonly></td>
+                                    <td id="status{{$materialA->id}}" style="text-align:center;"> 
+                                    @switch($materialA->estado)
+                                        @case(1)
+                                        <span class="badge btn-secondary" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> En espera </p>  </span>
+                                        @break
+                                        @case(2)
+                                        <span class="badge btn-success" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Disponible </p>  </span>
+                                        @break
+                                        @case(3)
+                                        <span class="badge btn-dark" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Utilizado </p>  </span>
+                                        @break
+                                    @endswitch
+
+                                    </td>
+                                    <td class="custom-tbl"><!-- <button type="button" id="{{$materialA->id}}" class="btn-info btn-sm btn_add" name="add"><span class="fas fa-sync-alt"></span></button> -->
+                                                           <!--<button type="button" name="remove" id="{{$materialA->id}}" class="btn-danger btn-sm btn_remove"><span class="fas fa-times"></span></button> -->
+                                                           <button type="button" title="Consumir" name="consumir" id="{{$materialA->id}}" class="btn-dark btn-sm btn_use"><span class="fas fa-arrow-down"></span></button>
                                     </td>
                                 </tr>
                             @endforeach
 
-                                           
 
-                            @endif
+                            @foreach($item_ot->solicitudMaterialOt as $materialP)
+                            <tr id="row{{$materialP->id}}">
+                                    <td class="custom-tbl" hidden="true"><input class='form-control input-sm'style='width:100%;' type="text"  value="{{$materialP->id}}" id="pr_item{{$materialP->id}}" name="pr_item[]" readonly required></td>
+                                    <td class="custom-tbl"><input class='form-control input-sm' style='width:100%;' type="text" value="{{$materialP->material->material}}" id="material_id{{$materialP->material->id}}" oninput='multiply("{{$materialP->id}}");' name="material_id[]">
+                                                           <!--  <select id="material_id{{$materialP->id}}" name="material_id[]" class="form-control" >    </select>  -->
+                                    </td>    
+                                    <td><input class='form-control input-sm' style='width:100%;' type="text" value="{{$materialP->dimension_largo}}" id="pr_largo{{$materialP->id}}" oninput='multiply(0);' name="pr_largo[]"></td>
+                                    <td><input class='form-control input-sm' style='width:100%;' type="text" value="{{$materialP->dimension_ancho}}" id="pr_ancho{{$materialP->id}}" oninput='multiply(0);' name="pr_ancho[]"></td>
+                                    <td><input class='form-control input-sm' style='width:100%;' type="text" value="{{$materialP->valor_unit}}" id="pr_unit{{$materialP->id}}" oninput='multiply(0);' name="pr_unit[]"></td>
+                                    <td class="custom-tbl" ><input class='estimated_cost form-control input-sm' style="text-align:right;" value="@money($materialP->valor_total)" id="pr_cpi{{$materialP->id}}" value="{{$materialP->valor_parcial}}" style='width:100%;' type="text" name="pr_cpi[]" readonly></td>
+                                    <td> 
+                                    @switch($materialP->estado)
+                                        @case(1)
+                                        <span class="badge btn-secondary" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> En espera </p>  </span>
+                                        @break
+                                        @case(2)
+                                        <span class="badge btn-success" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Disponible </p>  </span>
+                                        @break
+                                        @case(3)
+                                        <span class="badge btn-dark" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Utilizado </p>  </span>
+                                        @break
+                                    @endswitch
+
+                                    </td>
+                                    <td class="custom-tbl"><!-- <button type="button" id="{{$materialP->id}}" class="btn-info btn-sm btn_add" name="add"><span class="fas fa-sync-alt"></span></button> -->
+                                                           <button type="button" name="remove" id="{{$materialP->id}}" class="btn-danger btn-sm btn_remove"><span class="fas fa-times"></span></button>
+                                    </td>
+                                </tr>
+                            @endforeach
 
                             </thead>
                             <tbody >
@@ -375,7 +418,7 @@
                                     <td style='width:60%;text-align:right;padding:4px;' colspan='4'>Total Neto: $</td>
                                     <td style='padding-right:0px;'>
 
-                                            <input style='width:100%; text-align:right;' type='text' class='form-control input-sm'  id='valor_total' name='valor_total' value='@money($item_ot->materialOt->sum("valor_total"))' readonly required>
+                                            <input style='width:100%; text-align:right;' type='text' class='form-control input-sm'  id='valor_total' name='valor_total' value="@money($item_ot->materialOt->sum('valor_total'))" readonly required>
 
                                     </td></tr>
 
@@ -460,22 +503,22 @@
                                         <td data-title="Estado" style="text-align:center;">
                                             @switch($etapaItemOt->estado_avance) 
                                             @case ('1') 
-                                               <span class="badge btn-secondary"> Sin Iniciar </span>
+                                               <span class="badge btn-secondary" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Sin Iniciar </p></span>
                                             @break;
                                             @case ('2') 
-                                                <span class="badge btn-primary"> En Proceso </span>
+                                                <span class="badge btn-primary" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> En Proceso </p></span>
                                             @break;
                                             @case ('3')
-                                                <span class="badge btn-danger"> Atrasada </span>
+                                                <span class="badge btn-danger" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Atrasada </p></span>
                                             @break;
                                             @case ('4') 
-                                                <span class="badge btn-success"> Terminada </span>
+                                                <span class="badge btn-success" style="border-radius:10px;"> <p style="color:white; margin:3px; font-size:12px;"> Terminada </p></span>
                                             @break;
                                             @case ('5') 
-                                                <span class="badge btn-dark"> Detenida </span>
+                                                <span class="badge btn-dark" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Detenida </p></span>
                                             @break;
                                             @case ('6') 
-                                                <span class="badge btn-warning"> Anulada </span>
+                                                <span class="badge btn-warning" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Anulada </p></span>
                                             @break;
 
                                             @default
@@ -862,14 +905,14 @@ var postURL = "<?php echo url('addmore'); ?>";
 
             $.ajax({
             type:'POST',
-            url:'{{route("admin.trabajo_material.store")}}?id='+ "<?php echo $item_ot->id; ?>",
+            url:'{{route("admin.solicitud_material.store")}}?id='+ "<?php echo $item_ot->id; ?>",
             headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
             data:{item:item, material_id:material_id, largo:largo , ancho:ancho , unitario:cpu , parcial:cpi},
             success:function(data){
                 i++;  
-                $('#dynamic_field').append('<tr id="row'+i+'" class="dynamic-added"><td class="custom-tbl"><input id="pr_item'+i+'" class="form-control input-sm"style="width:100%;" type="text" value="'+i+'" name="pr_item[]" readonly required></td> <td id="material_tr'+i+'" class="custom-tbl"> <select id="material_id'+i+'"  name="material_id[]" class="form-control select-material" >    </select> </td>         <td class="custom-tbl"><input id="pr_largo'+i+'" class="form-control input-sm" style="width:100%;" type="text" name="pr_largo[]"></td>   <td class="custom-tbl"><input id="pr_ancho'+i+'" class="form-control input-sm" style="width:100%;" type="text" oninput="multiply('+i+');" name="pr_ancho[]"></td>               <td class="custom-tbl"><input id="pr_unit'+i+'" class="form-control input-sm" style="width:100%;" type="text" oninput="multiply('+i+');" name="pr_unit[]"></td>               <td class="custom-tbl"><input id="pr_cpi'+i+'" class="estimated_cost form-control input-sm" style="width:100%;" type="text" name="pr_cpi[]" readonly></td>       <td class="custom-tbl"><button type="button" id="'+i+'" class="btn-info btn-sm btn_add" name="add"><span class="fas fa-plus"></span></button> <button type="button" name="remove" id="'+i+'" class="btn-danger btn-sm btn_remove"><span class="fas fa-times"></span></button></td></tr>');            
+                $('#dynamic_field').append('<tr id="row'+i+'" class="dynamic-added"><td class="custom-tbl"><input id="pr_item'+i+'" class="form-control input-sm"style="width:100%;" type="text" value="'+i+'" name="pr_item[]" readonly required></td> <td id="material_tr'+i+'" class="custom-tbl"> <select id="material_id'+i+'"  name="material_id[]" class="form-control select-material" >    </select> </td>         <td class="custom-tbl"><input id="pr_largo'+i+'" class="form-control input-sm" style="width:100%;" type="text" name="pr_largo[]"></td>   <td class="custom-tbl"><input id="pr_ancho'+i+'" class="form-control input-sm" style="width:100%;" type="text" oninput="multiply('+i+');" name="pr_ancho[]"></td>               <td class="custom-tbl"><input id="pr_unit'+i+'" class="form-control input-sm" style="width:100%;" type="text" oninput="multiply('+i+');" name="pr_unit[]"></td>               <td class="custom-tbl"><input id="pr_cpi'+i+'" class="estimated_cost form-control input-sm" style="width:100%;" type="text" name="pr_cpi[]" readonly></td>   <td><span class="badge btn-secondary" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> En espera </p></span></td>    <td class="custom-tbl"><button type="button" id="'+i+'" class="btn-info btn-sm btn_add" name="add"><span class="fas fa-plus"></span></button> <button type="button" name="remove" id="'+i+'" class="btn-danger btn-sm btn_remove"><span class="fas fa-times"></span></button></td></tr>');            
                 //$('#dynamic_field').append('<tr id="row'+i+'" class="dynamic-added"><td class="custom-tbl"><input id="pr_item'+i+'" class="form-control input-sm"style="width:100%;" type="text" value="'+i+'" name="pr_item[]" readonly required></td> <td id="material_tr'+i+'" class="custom-tbl">  </td>         <td class="custom-tbl"><input id="pr_largo'+i+'" class="form-control input-sm" style="width:100%;" type="text" name="pr_largo[]"></td>   <td class="custom-tbl"><input id="pr_ancho'+i+'" class="form-control input-sm" style="width:100%;" type="text" oninput="multiply('+i+');" name="pr_ancho[]"></td>               <td class="custom-tbl"><input id="pr_unit'+i+'" class="form-control input-sm" style="width:100%;" type="text" oninput="multiply('+i+');" name="pr_unit[]"></td>               <td class="custom-tbl"><input id="pr_cpi'+i+'" class="estimated_cost form-control input-sm" style="width:100%;" type="text" name="pr_cpi[]" readonly></td>       <td class="custom-tbl"><button type="button" id="'+i+'" class="btn-info btn-sm btn_add" name="add"><span class="fas fa-plus"></span></button> <button type="button" name="remove" id="'+i+'" class="btn-danger btn-sm btn_remove"><span class="fas fa-times"></span></button></td></tr>');  
                 //$('#material_id'+i).select2();                
                    // $('.select-material').select2();
@@ -898,7 +941,7 @@ var postURL = "<?php echo url('addmore'); ?>";
 
             $.ajax({
             type:'POST',
-            url:'{{route("admin.trabajo_material.destroy")}}?id='+ "<?php echo $item_ot->id; ?>",
+            url:'{{route("admin.solicitud_material.destroy")}}?id='+ "<?php echo $item_ot->id; ?>",
             headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
@@ -906,14 +949,7 @@ var postURL = "<?php echo url('addmore'); ?>";
             success:function(data){
                 
                 $('#row'+button_id+'').remove();  
-                var format_total = parseFloat(data.valor_total);
-                $("#valor_total").val(formatter.format(format_total.toFixed(2)));
-                    console.log(data.success);
-/*                     document.getElementById('valor_neto').value = data.valor_neto;
-                    document.getElementById('iva').value = data.iva;
-                    document.getElementById('valor_incluido').value = data.total; */
-                    
-                //grandTotal();       
+                    console.log(data.success);      
                 
             },
             error: function() {
@@ -1280,14 +1316,14 @@ var postURL = "<?php echo url('addmore'); ?>";
                 
                 $.ajax({
                 type:'POST',
-                url:'{{route("admin.trabajo_material.store")}}?id='+ "<?php echo $item_ot->id; ?>",
+                url:'{{route("admin.solicitud_material.store")}}?id='+ "<?php echo $item_ot->id; ?>",
                 headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                 data:{ material_id:material_id, largo:largo , ancho:ancho , valor:valor},
                 success:function(data){
-                    i++;  
-                    $('#dynamic_field').append('<tr id="row'+data.id+'" class="dynamic-added"><td class="custom-tbl" hidden="true"><input id="pr_item'+data.id+'" class="form-control input-sm"style="width:100%;" type="text" value="'+data.id+'" name="pr_item[]" readonly required></td> <td id="material_tr'+data.id+'" class="custom-tbl"> <input id="material_id'+data.id+'"  name="material_id[]" class="form-control" value="'+data.material+'" / >     </td>         <td class="custom-tbl"><input id="pr_largo'+data.id+'" class="form-control input-sm" style="width:100%;" type="text" name="pr_largo[]" value="'+data.dimension_largo+'"></td>   <td class="custom-tbl"><input id="pr_ancho'+data.id+'" class="form-control input-sm" style="width:100%;" type="text" oninput="multiply('+data.id+');" name="pr_ancho[]" value="'+data.dimension_ancho+'"></td>               <td class="custom-tbl"><input id="pr_unit'+data.id+'" class="form-control input-sm" style="width:100%;" type="text" oninput="multiply('+data.id+');" name="pr_unit[]" value="'+data.valor_unit+'"></td>               <td class="custom-tbl"><input id="pr_cpi'+data.id+'" class="estimated_cost form-control input-sm" style="width:100%; text-align:right;" type="text" name="pr_cpi[]" value="'+data.valor_total+'" readonly></td>       <td class="custom-tbl"><!--<button type="button" id="'+data.id+'" class="btn-info btn-sm btn_add" hidden="true" name="add"><span class="fas fa-plus"></span></button> --><button type="button" name="remove" id="'+data.id+'" class="btn-danger btn-sm btn_remove"><span class="fas fa-times"></span></button></td></tr>');            
+                    //i++;  
+                    $('#dynamic_field').append('<tr id="row'+data.id+'" class="dynamic-added"><td class="custom-tbl" hidden="true"><input id="pr_item'+data.id+'" class="form-control input-sm"style="width:100%;" type="text" value="'+data.id+'" name="pr_item[]" readonly required></td> <td id="material_tr'+data.id+'" class="custom-tbl"> <input id="material_id'+data.id+'"  name="material_id[]" class="form-control" value="'+data.material+'" / >     </td>         <td class="custom-tbl"><input id="pr_largo'+data.id+'" class="form-control input-sm" style="width:100%;" type="text" name="pr_largo[]" value="'+data.dimension_largo+'"></td>   <td class="custom-tbl"><input id="pr_ancho'+data.id+'" class="form-control input-sm" style="width:100%;" type="text" oninput="multiply('+data.id+');" name="pr_ancho[]" value="'+data.dimension_ancho+'"></td>               <td class="custom-tbl"><input id="pr_unit'+data.id+'" class="form-control input-sm" style="width:100%;" type="text" oninput="multiply('+data.id+');" name="pr_unit[]" value="'+data.valor_unit+'"></td>               <td class="custom-tbl"><input id="pr_cpi'+data.id+'" class="estimated_cost form-control input-sm" style="width:100%; text-align:right;" type="text" name="pr_cpi[]" value="'+data.valor_total+'" readonly></td>      <td><span class="badge btn-secondary" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> En espera </p></span></td>     <td class="custom-tbl"><!--<button type="button" id="'+data.id+'" class="btn-info btn-sm btn_add" hidden="true" name="add"><span class="fas fa-plus"></span></button> --><button type="button" name="remove" id="'+data.id+'" class="btn-danger btn-sm btn_remove"><span class="fas fa-times"></span></button></td></tr>');            
                     //$('#dynamic_field').append('<tr id="row'+i+'" class="dynamic-added"><td class="custom-tbl"><input id="pr_item'+i+'" class="form-control input-sm"style="width:100%;" type="text" value="'+i+'" name="pr_item[]" readonly required></td> <td id="material_tr'+i+'" class="custom-tbl">  </td>         <td class="custom-tbl"><input id="pr_largo'+i+'" class="form-control input-sm" style="width:100%;" type="text" name="pr_largo[]"></td>   <td class="custom-tbl"><input id="pr_ancho'+i+'" class="form-control input-sm" style="width:100%;" type="text" oninput="multiply('+i+');" name="pr_ancho[]"></td>               <td class="custom-tbl"><input id="pr_unit'+i+'" class="form-control input-sm" style="width:100%;" type="text" oninput="multiply('+i+');" name="pr_unit[]"></td>               <td class="custom-tbl"><input id="pr_cpi'+i+'" class="estimated_cost form-control input-sm" style="width:100%;" type="text" name="pr_cpi[]" readonly></td>       <td class="custom-tbl"><button type="button" id="'+i+'" class="btn-info btn-sm btn_add" name="add"><span class="fas fa-plus"></span></button> <button type="button" name="remove" id="'+i+'" class="btn-danger btn-sm btn_remove"><span class="fas fa-times"></span></button></td></tr>');  
                     var format_total = parseFloat(data.total);
                     var format_parcial = parseFloat(data.valor_total);
@@ -1304,6 +1340,42 @@ var postURL = "<?php echo url('addmore'); ?>";
 
                 }); 
             }
+
+
+            $(document).on('click', '.btn_use', function(){  
+                var button_id = $(this).attr("id");
+
+                //alert('consumir ' + button_id);
+                
+                var item = $("#pr_item" + button_id).val();
+                var material_id = $("#material_id"  + button_id).val();
+
+                $.ajax({
+                type:'POST',
+                url:'{{route("admin.trabajo_material.consumir")}}?id='+ "<?php echo $item_ot->id; ?>",
+                headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                data:{ item:button_id },
+                success:function(data){
+                    
+                   // $('#row'+button_id+'').remove(); 
+                  // $('#dynamic_field').append('<tr id="row'+data.id+'" class="dynamic-added"><td class="custom-tbl" hidden="true"><input id="pr_item'+data.id+'" class="form-control input-sm"style="width:100%;" type="text" value="'+data.id+'" name="pr_item[]" readonly required></td> <td id="material_tr'+data.id+'" class="custom-tbl"> <input id="material_id'+data.id+'"  name="material_id[]" class="form-control" value="'+data.material+'" / >     </td>         <td class="custom-tbl"><input id="pr_largo'+data.id+'" class="form-control input-sm" style="width:100%;" type="text" name="pr_largo[]" value="'+data.dimension_largo+'"></td>   <td class="custom-tbl"><input id="pr_ancho'+data.id+'" class="form-control input-sm" style="width:100%;" type="text" oninput="multiply('+data.id+');" name="pr_ancho[]" value="'+data.dimension_ancho+'"></td>               <td class="custom-tbl"><input id="pr_unit'+data.id+'" class="form-control input-sm" style="width:100%;" type="text" oninput="multiply('+data.id+');" name="pr_unit[]" value="'+data.valor_unit+'"></td>               <td class="custom-tbl"><input id="pr_cpi'+data.id+'" class="estimated_cost form-control input-sm" style="width:100%; text-align:right;" type="text" name="pr_cpi[]" value="'+data.valor_total+'" readonly></td>      <td><span class="badge btn-secondary" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> En espera </p></span></td>     <td class="custom-tbl"><!--<button type="button" id="'+data.id+'" class="btn-info btn-sm btn_add" hidden="true" name="add"><span class="fas fa-plus"></span></button> --><button type="button" name="remove" id="'+data.id+'" class="btn-danger btn-sm btn_remove"><span class="fas fa-times"></span></button></td></tr>'); 
+                    $("#status"+button_id).html('<span class="badge btn-dark" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Utilizado </p>  </span>');
+                    $(this).remove();
+                        //alert(data.success);      
+                    }
+                ,
+                error: function() {
+                    console.log("No se ha podido obtener la información");
+                }
+
+                });                       
+            
+
+        }); 
+
+
         
     </script>
 

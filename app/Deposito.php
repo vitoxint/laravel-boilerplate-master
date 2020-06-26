@@ -14,4 +14,10 @@ class Deposito extends Model
         'remember_token'
 
     ];
+
+    public function existencia_material(){
+
+        return $this->hasMany('App\ExistenciaMaterial', 'deposito_id','id');
+        
+    }
 }

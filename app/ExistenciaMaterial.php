@@ -22,4 +22,8 @@ class ExistenciaMaterial extends Model
     public function deposito(){
         return $this->belongsTo('App\Deposito', 'deposito_id', 'id');
     }
+
+    public function materialAsignadoOt(){
+        return $this->hasMany('App\TrabajoUseMaterial', 'id', 'existencia_material_id');
+    }
 }

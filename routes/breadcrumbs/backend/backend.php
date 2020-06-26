@@ -242,3 +242,35 @@ Breadcrumbs::for('admin.depositos.edit', function ($trail,$deposito) {
 Breadcrumbs::for('admin.existencia_material.index', function ($trail) {
     $trail->push('Materiales existentes (metales)', route('admin.existencia_material.index'));
 });
+
+Breadcrumbs::for('admin.solicitud_material.index', function ($trail) {
+    $trail->push('Solicitudes activas de material', route('admin.solicitud_material.index'));
+});
+
+Breadcrumbs::for('admin.solicitudes_material.edit', function ($trail,$solicitud) {
+    $trail->push('Solicitudes activas de material', route('admin.solicitud_material.index'));
+    $trail->push('Responder solicitud de material', route('admin.solicitudes_material.edit', $solicitud));
+});
+
+Breadcrumbs::for('admin.existencia_material.edit', function ($trail, $existenciaMaterial) {
+    $trail->push('Materiales existentes (metales)', route('admin.existencia_material.index'));
+    $trail->push('Ajustar existencia', route('admin.existencia_material.edit' , $existenciaMaterial));
+});
+
+Breadcrumbs::for('admin.productos-venta.index', function ($trail) {
+    $trail->push('Catálogo de productos', route('admin.productos-venta.index'));
+});
+
+Breadcrumbs::for('admin.productos-venta.create', function ($trail) {
+    $trail->push('Catálogo de productos', route('admin.productos-venta.index'));
+    $trail->push('Ingresar nuevo producto', route('admin.productos-venta.create'));
+});
+
+Breadcrumbs::for('admin.productos-venta.buscar_producto', function ($trail) {
+    $trail->push('Resultados de la búsqueda', route('admin.productos-venta.buscar_producto'));
+});
+
+Breadcrumbs::for('admin.productos-venta.edit', function ($trail, $producto) {
+    $trail->push('Catálogo de productos', route('admin.productos-venta.index'));
+    $trail->push('Editar producto : '.$producto->codigo, route('admin.productos-venta.edit' ,$producto));
+});

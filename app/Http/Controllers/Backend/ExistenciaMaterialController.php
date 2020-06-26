@@ -11,6 +11,7 @@ use App\Deposito;
 use App\Material;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use DB;
 
 class ExistenciaMaterialController extends Controller
 {
@@ -24,7 +25,7 @@ class ExistenciaMaterialController extends Controller
     public function index()
     {
         return view('backend.existencias_material.index')
-        ->withExistencias($this->existenciaMaterialRepository->getActivePaginated(25, 'id', 'desc'));
+        ->withExistencias($this->existenciaMaterialRepository->getActivePaginated(25, 'estado_consumo', 'asc'));
     }
 
     /**
@@ -63,6 +64,18 @@ class ExistenciaMaterialController extends Controller
 
         ]);
 
+        $depositoL = Deposito::where('id' ,$request->input('deposito_id'))->first();
+        //return $deposito->existencia_material;
+        if($depositoL->existencia_material->whereBetween('estado_consumo', [1,2])->count() > 0){
+            $depositoL->update([
+                'estado_utilizada' => 1,
+            ]);
+        }else{
+            $depositoL->update([
+                'estado_utilizada' => null,
+            ]);
+        }
+
         if($deposito){
             return response()->json([
                 'success'=>'BIEN !.',
@@ -73,12 +86,10 @@ class ExistenciaMaterialController extends Controller
         }else{
             return response()->json([
                 'success'=>'ERROR !.',
-                
-   
-            ]); 
+                   
+           ]); 
 
-        }
-    
+        }   
     }
 
     /**
@@ -100,7 +111,8 @@ class ExistenciaMaterialController extends Controller
      */
     public function edit(ExistenciaMaterial $existenciaMaterial)
     {
-        //
+        //return $existenciaMaterial;
+        return view('backend.existencias_material.edit', compact('existenciaMaterial'));
     }
 
     /**
@@ -112,7 +124,54 @@ class ExistenciaMaterialController extends Controller
      */
     public function update(Request $request, ExistenciaMaterial $existenciaMaterial)
     {
-        //
+        $this->validate($request, [
+            'dimension_largo' => 'required|numeric',
+            'dimension_ancho' => 'numeric',
+            'valor_unit' => 'required|numeric',
+            'valor_total2' => 'required|numeric',
+            'estado_consumo' => 'required',
+            'origen' => 'required',
+            'deposito_id' => 'required'
+            
+        ]);
+
+        if($request->input('valor_total2') == '0.00'){
+            $valor = 0;
+        }else
+        {
+            $valor = $request->input('valor_total2');
+        }
+
+        //return $request;
+
+        $existenciaMaterial->update([
+            'dimension_largo' => $request->input('dimension_largo'),
+            'dimension_ancho' => $request->input('dimension_ancho'),
+            'valor_unit' => $request->input('valor_unit'),
+            'valor_total' => $valor,
+            'estado_consumo' => $request->input('estado_consumo'),
+            'origen' => $request->input('origen'),
+            'deposito_id' => $request->input('deposito_id'),
+            'detalle_origen' => $request->input('detalle_origen'),
+
+        ]);
+
+        $deposito = Deposito::where('id' ,$request->input('deposito_id'))->first();
+        //return $deposito->existencia_material;
+        if($deposito->existencia_material->whereBetween('estado_consumo', [1,2])->count() > 0){
+            $deposito->update([
+                'estado_utilizada' => 1,
+            ]);
+        }else{
+            $deposito->update([
+                'estado_utilizada' => null,
+            ]);
+        }
+
+
+        return redirect()->route('admin.existencia_material.edit',$existenciaMaterial)->withFlashSuccess('Los datos del corte de material han sido actualizado');
+
+
     }
 
     /**
@@ -125,4 +184,53 @@ class ExistenciaMaterialController extends Controller
     {
         //
     }
+
+    
+    public function dataAjax(Request $request)
+    {
+       $term = trim($request->q);
+//  "%{$term}%"
+       $tags = Material::query()
+        ->where('estado_consumo', '=', 1);
+    
+        $formatted_tags = [];
+        foreach ($tags as $tag) {
+            $formatted_tags[] = [
+                 'id' => $tag->id_existencia,
+                 'text' => $tag->material . ' ('. $tag->dimensionado. 'mm) -'.$tag->proveedor. ' ' .$tag->id_existencia . ' '.$tag->id_material ,
+                 'dimension_largo' => $tag->dimension_largo,
+                 'diam_interior' => $tag->diam_interior,
+                 'espesor' => $tag->espesor, 
+                 'valor_kg' => $tag->valor_kg,
+                 'densidad' => $tag->densidad,
+                 'perfil' => $tag->perfil             
+                ];
+        }
+        return \Response::json($formatted_tags);
+    }  
+
+
+    public function getDatosTrozado(Request $request){
+
+        $trozo = ExistenciaMaterial::where('id', '=', $request->trozado_id)->first();
+
+        $material = Material::where('id', '=', $trozo->material_id)->first();
+
+        return response()->json([
+            'id' => $material->id,
+            'text' => $material->material . '-'.$material->proveedor,
+            'diam_exterior' => $material->diam_exterior,
+            'diam_interior' => $material->diam_interior,
+            'espesor' => $material->espesor, 
+            'valor_kg' => $material->valor_kg,
+            'densidad' => $material->densidad,
+            'perfil' => $material->perfil  ,
+            'sistema_medida' => $material->sistema_medida ,
+            'dimensionado' => $material->dimensionado, 
+            'dimensionado_corte' => $trozo->dimension_largo.'x'.$trozo->dimension_ancho,
+            'valor_kg_corte' => $trozo->valor_unit    
+   
+            ]); 
+    }
+
 }

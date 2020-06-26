@@ -58,16 +58,16 @@
                                 <td style="text-align:center;">
                                     @switch($cotizacion->estado) 
                                             @case ('1') 
-                                               <span class="badge btn-success"> Vigente </span>
+                                               <span class="badge btn-success" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Vigente </p></span>
                                             @break;
                                             @case ('2') 
-                                                <span class="badge btn-primary"> Aceptada </span>
+                                                <span class="badge btn-primary" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Aceptada </p></span>
                                             @break;
                                             @case ('3')
-                                                <span class="badge btn-danger"> Vencida </span>
+                                                <span class="badge btn-danger" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Vencida </p></span>
                                             @break;
                                             @case ('4') 
-                                                <span class="badge btn-secondary"> Anulada </span>
+                                                <span class="badge btn-secondary" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;">  Anulada </p></span>
                                             @break;
                                             @default
                                                 {{$cotizacion->estado}}

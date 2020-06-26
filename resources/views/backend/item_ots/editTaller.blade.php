@@ -184,10 +184,11 @@
                             <thead>
                                 <tr class='info'>
                                     <th style='width:7%;'hidden="true">Item NO.</th>
-                                    <th style='width:41%;'>Material</th>
+                                    <th>Material</th>
                                     
-                                    <th style='width:9%;'>Largo a consumir</th>
-                                    <th style='width:9%;'>Ancho a consumir</th>
+                                    <th style='width:9%;'>Largo a consumir mm</th>
+                                    <th style='width:9%;'>Ancho a consumir mm</th>
+                                    <th style='width:20%;'>Estado disponibilidad</th>
                                     <!-- <th style='width:12%;'>V.unitario</th>
                                     <th style='width:12%;'>V.parcial</th> -->
                                     <th style='width:10%;'>Acción</th>
@@ -221,8 +222,22 @@
                                     <td><input class='form-control input-sm' style='width:100%;' type="text" value="{{$material->dimension_ancho}}" id="pr_ancho{{$material->id}}" oninput='multiply(0);' name="pr_ancho[]"></td>
                                    <!--  <td><input class='form-control input-sm' style='width:100%;' type="text" value="{{$material->valor_unit}}" id="pr_unit{{$material->id}}" oninput='multiply(0);' name="pr_unit[]"></td>
                                     <td class="custom-tbl" ><input class='estimated_cost form-control input-sm' style="text-align:right;" value="@money($material->valor_total)" id="pr_cpi{{$material->id}}" value="{{$material->valor_parcial}}" style='width:100%;' type="text" name="pr_cpi[]" readonly></td> -->
+                                    <td id="status{{$material->id}}" style="text-align:center;">  
+                                        @switch($material->estado)
+                                            @case(1)
+                                            <span class="badge btn-secondary" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> En espera </p>  </span>
+                                            @break
+                                            @case(2)
+                                            <span class="badge btn-success" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Disponible </p>  </span>
+                                            @break
+                                            @case(3)
+                                            <span class="badge btn-dark" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Utilizado </p>  </span>
+                                            @break
+                                        @endswitch                                   
+                                                                       
+                                     </td>
                                     <td class="custom-tbl"><!-- <button type="button" id="{{$material->id}}" class="btn-info btn-sm btn_add" name="add"><span class="fas fa-sync-alt"></span></button> -->
-                                                           <button type="button" title="Consumir" name="remove" id="{{$material->id}}" class="btn-dark btn-sm btn_use"><span class="fas fa-arrow-down"></span></button>
+                                    <button type="button" title="Consumir" name="consumir" id="{{$material->id}}" class="btn-dark btn-sm btn_use"><span class="fas fa-arrow-down"></span></button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -324,22 +339,22 @@
                                         <td data-title="Estado" style="text-align:center;">
                                             @switch($etapaItemOt->estado_avance) 
                                             @case ('1') 
-                                               <span class="badge btn-secondary"> Sin Iniciar </span>
+                                               <span class="badge btn-secondary" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Sin Iniciar </p></span>
                                             @break;
                                             @case ('2') 
-                                                <span class="badge btn-primary"> En Proceso </span>
+                                                <span class="badge btn-primary" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> En Proceso </p></span>
                                             @break;
                                             @case ('3')
-                                                <span class="badge btn-danger"> Atrasada </span>
+                                                <span class="badge btn-danger" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Atrasada </p></span>
                                             @break;
                                             @case ('4') 
-                                                <span class="badge btn-success"> Terminada </span>
+                                                <span class="badge btn-success" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Terminada </p> </span>
                                             @break;
                                             @case ('5') 
-                                                <span class="badge btn-dark"> Detenida </span>
+                                                <span class="badge btn-dark" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Detenida </p></span>
                                             @break;
                                             @case ('6') 
-                                                <span class="badge btn-warning"> Anulada </span>
+                                                <span class="badge btn-warning" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Anulada </p></span>
                                             @break;
 
                                             @default
@@ -591,6 +606,39 @@ var urls = [];
         }, 900);
     });
 
+
+    $(document).on('click', '.btn_use', function(){  
+                var button_id = $(this).attr("id");
+
+                //alert('consumir ' + button_id);
+                
+                var item = $("#pr_item" + button_id).val();
+                var material_id = $("#material_id"  + button_id).val();
+
+                $.ajax({
+                type:'POST',
+                url:'{{route("admin.trabajo_material.consumir")}}?id='+ "<?php echo $item_ot->id; ?>",
+                headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                data:{ item:button_id },
+                success:function(data){
+                    
+                   // $('#row'+button_id+'').remove(); 
+                  // $('#dynamic_field').append('<tr id="row'+data.id+'" class="dynamic-added"><td class="custom-tbl" hidden="true"><input id="pr_item'+data.id+'" class="form-control input-sm"style="width:100%;" type="text" value="'+data.id+'" name="pr_item[]" readonly required></td> <td id="material_tr'+data.id+'" class="custom-tbl"> <input id="material_id'+data.id+'"  name="material_id[]" class="form-control" value="'+data.material+'" / >     </td>         <td class="custom-tbl"><input id="pr_largo'+data.id+'" class="form-control input-sm" style="width:100%;" type="text" name="pr_largo[]" value="'+data.dimension_largo+'"></td>   <td class="custom-tbl"><input id="pr_ancho'+data.id+'" class="form-control input-sm" style="width:100%;" type="text" oninput="multiply('+data.id+');" name="pr_ancho[]" value="'+data.dimension_ancho+'"></td>               <td class="custom-tbl"><input id="pr_unit'+data.id+'" class="form-control input-sm" style="width:100%;" type="text" oninput="multiply('+data.id+');" name="pr_unit[]" value="'+data.valor_unit+'"></td>               <td class="custom-tbl"><input id="pr_cpi'+data.id+'" class="estimated_cost form-control input-sm" style="width:100%; text-align:right;" type="text" name="pr_cpi[]" value="'+data.valor_total+'" readonly></td>      <td><span class="badge btn-secondary" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> En espera </p></span></td>     <td class="custom-tbl"><!--<button type="button" id="'+data.id+'" class="btn-info btn-sm btn_add" hidden="true" name="add"><span class="fas fa-plus"></span></button> --><button type="button" name="remove" id="'+data.id+'" class="btn-danger btn-sm btn_remove"><span class="fas fa-times"></span></button></td></tr>'); 
+                    $("#status"+button_id).html('<span class="badge btn-dark" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Utilizado </p>  </span>');
+                    $(this).remove();
+                        //alert(data.success);      
+                    }
+                ,
+                error: function() {
+                    console.log("No se ha podido obtener la información");
+                }
+
+                });                       
+            
+
+        }); 
 
 
     

@@ -165,7 +165,7 @@
                      </p> </td> 
                      <td style="align-text:center; padding-top:3px; padding-bottom:-10px;">
                         @if($proceso->estado_avance == 4)
-                            <p style="font-size: 10px; font-weight:bold;">OK</b>
+                            <p style="font-size: 10px; font-weight:bold;">OK</p>
                         @endif
                      </td>
                 </tr>
@@ -205,13 +205,40 @@
                                     @break
                                 @endswitch  
                           </p> </td>
-                     <td></td>
-                     <td></td>
+
+                     <td style="align-text:center; padding-top:3px; padding-bottom:-10px;">
+                        @switch($material->estado)
+                            @case(1)
+                            <p style="font-size: 10px; font-weight:bold;"> NO </p>
+                            @break
+                            @case(2)
+                            <p style="font-size: 10px; font-weight:bold;"> SI </p>
+                            @break
+                        @endswitch
+                     
+                     </td>
+                     <td style="align-text:center; padding-top:3px; padding-bottom:-10px;">
+                         @switch($material->estado)
+                            @case(1)
+                            <p style="font-size: 10px; font-weight:bold;">  - </p>
+                            @break
+                            @case(2)
+                            <p style="font-size: 10px; font-weight:bold;">  NO </p>
+                            @break
+                            @case(3)
+                            <p style="font-size: 10px; font-weight:bold;">  SI </p>
+                            @break
+                        @endswitch
+                       
+                     
+                     
+                     </td>
                 </tr>
+                <?php endforeach ?> 
                 <tr >
                     <td colspan="4" style=" text-align:center;  padding-bottom:-10px; padding-left:5px; padding-top:3px;"> <p style=" font-size: 10px;">**************************************************** </p> </td>
                 </tr>
-                <?php endforeach ?>   
+                  
             </tbody>
         </table>
 

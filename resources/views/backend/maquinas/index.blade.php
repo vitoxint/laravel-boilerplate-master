@@ -51,16 +51,16 @@
                                 <td data-title="Estado disponibilidad:" style="text-align:center;">
                                     @switch($maquina->estado) 
                                             @case ('1') 
-                                               <span class="badge btn-success"> Disponible </span>
+                                               <span class="badge btn-success" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Disponible </p></span>
                                             @break;
                                             @case ('2') 
-                                                <span class="badge btn-danger"> Inhabilitada </span>
+                                                <span class="badge btn-danger" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Inhabilitada </p></span>
                                             @break;
                                             @case ('3')
-                                                <span class="badge btn-primary"> En uso </span>
+                                                <span class="badge btn-primary" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> En uso </p></span>
                                             @break;
                                             @case ('4') 
-                                                <span class="badge btn-warning"> En mantención </span>
+                                                <span class="badge btn-warning" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> En mantención </p></span>
                                             @break;
                                             @default
                                                 {{$maquina->estado}}

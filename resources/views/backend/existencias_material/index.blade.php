@@ -169,7 +169,7 @@
 
                 </div><!--col-->
                 <div  class="col col-md-3"><button class="btn btn-dark btn-sm" onclick="depositar()"><i class="fas fa-arrow-down"></i> Depositar </button>
-                <button class="btn btn-danger btn-sm" onclick="consumir()"><i class="fas fa-arrow-up"></i> Consumir </button></div>
+                <!-- <button class="btn btn-danger btn-sm" onclick="consumir()"><i class="fas fa-arrow-up"></i> Consumir </button> --></div>
             </div><!--form-group-->
 
             
@@ -201,9 +201,10 @@
                         <tr>
                              <th>Material</th>
                              <th>Depósito</th>
-                             <th>Dimensiones corte</th>
+                             <th>Dimensión disponible</th>
                              <th>Origen</th> 
                              <th>Descripción origen</th>
+                             <th>Valor corte</td>
                              <th>Estado</th>
 
                              <th style="width:45px;">@lang('labels.general.actions')</th>
@@ -252,22 +253,23 @@
                                 <td data-title="Detalle origen">   
                                     {{$existencia->detalle_origen}}                                    
                                 </td>   
-
-                                <td data-title="Estado material">
+                                <td data-title="Valor"> @money($existencia->valor_total)</td>
+                                <td style="text-align:center;" data-title="Estado material">
                                     @switch($existencia->estado_consumo)  
                                         @case(1)
-                                        <span class="badge btn-success" style="border-radius:12px;"><p style="margin:4px; font-size:14px;"> Disponible </p>  </span>
+                                        <span class="badge btn-success" style="border-radius:10px;"><p style="margin:4px; font-size:12px;"> Disponible </p>  </span>
                                         @break;
                                         @case(2)
-                                        <span class="badge btn-warning" style="border-radius:12px;"><p style="margin:4px; font-size:14px;"> Asignado </p>  </span>
+                                        <span class="badge btn-warning" style="border-radius:10px;"><p style="margin:4px; font-size:12px;"> Asignado </p>  </span>
                                         @break;
                                         @case(3)
-                                        <span class="badge btn-dark" style="border-radius:12px;"><p style="margin:4px; font-size:14px;"> Utilizado </p>  </span>
+                                        <span class="badge btn-dark" style="border-radius:10px;"><p style="margin:4px; font-size:12px;"> Utilizado </p>  </span>
                                         @break;
                                     
                                     @endswitch
 
-                                </td>                                                             
+                                </td>  
+                                                                                           
                                 <td data-title="Acciones" class="btn-td">@include('backend.existencias_material.includes.actions', ['existencia' => $existencia])</td>
                             </tr>
                         @endforeach
@@ -446,17 +448,18 @@
                             var res = dimensionado.split("x");
                             $("#largo").val(res[0]);
                             $("#ancho").val(res[1]);
-                            $("#valor_unit").val(valor_kg);                            
+                                                       
                                                         
                         }else{
                             $("#largo").val(0);
                             $("#ancho").val(0);
-                            $("#valor_unit").val(valor_kg);   
+                            //$("#valor_unit").val(valor_kg);   
                         }
                         
                       /*   
                         $("#largo").val(0);
                         $("#ancho").val(0); */
+                        $("#valor_unit").val(valor_kg); 
                         $("#volumen").val(0);
                         $("#masa").val(0);
                         $("#valor").val(0);

@@ -1,9 +1,9 @@
 @extends('backend.layouts.app')
 
-@section('title', app_name() . ' | ' . 'Registro de materiales')
+@section('title', app_name() . ' | ' . 'Catálogo de productos de venta')
 
 @section('breadcrumb-links')
-    @include('backend.materiales.includes.breadcrumb-links')
+    @include('backend.productos_venta.includes.breadcrumb-links')
 @endsection
 
 
@@ -11,117 +11,15 @@
 <div class="card">
     <div class="card-body">
  
-
-        <div class="row mt-0 mb-4">
-            <div class="col border border-secondary">
-
-            <div class="col-sm-5">
-                <h4 class="card-title mb-0">
-                    Calcular dimensión material 
-                </h4>
-            </div><!--col-->
-            <hr/>
-
-            <div class="form-group row">
-                {{ html()->label(__('Seleccionar material *'))->class('col-md-2 form-control-label')->for('material_id') }}
-
-                <div class="col-md-6">                       
-                    <select id="material_id" name="material_id" class="form-control" >                                       
-                    </select>
-
-                    
-            
-                </div><!--col-->
-                <div class="col col-md-1"><button class="btn btn-success btn-sm" onclick="calcular()"><i class="fas fa-calculator"></i> Calcular </button></div>
-                <div class="col col-md-1"><button class="btn btn-primary btn-sm" onclick="editar()"><i class="fas fa-edit"></i> Editar </button></div>
-            </div><!--form-group-->
-
-            <div class="form-group row" style="padding-top:10px;">
-
-                    {{ html()->label('Ingresar dimensiones :')->class('col-md-2 form-control-label')->for('') }}
-
-                    {{ html()->label('Largo (mm):')->class('col-md-1 form-control-label')->for('largo') }}
-
-                    <div class="col-md-2">
-                        {{ html()->text('largo')
-                            ->class('form-control')
-                                                        
-                            ->attribute('maxlength', 191)                                          
-                            ->autofocus()                                   
-                            }}
-                    </div><!--col-->
-
-                    {{ html()->label('Ancho (mm):')->class('col-md-1 form-control-label')->for('ancho') }}
-
-                    <div class="col-md-2">
-                        {{ html()->text('ancho')
-                            ->class('form-control')
-                            
-                            ->attribute('maxlength', 191)                                            
-                            ->autofocus()
-
-                            }}
-                    </div><!--col-->
-
-            </div><!--form-group-->    
-
-            <div class="form-group row" style="padding-top:10px;">
-                    {{ html()->label('Resultados :')->class('col-md-2 form-control-label')->for('') }}
-
-                    {{ html()->label('Volumen (Lts):')->class('col-md-1 form-control-label')->for('volumen') }}
-
-                    <div class="col-md-2">
-                        {{ html()->text('volumen')
-                            ->class('form-control')
-                            ->disabled()                          
-                            ->attribute('maxlength', 191)                                          
-                            ->autofocus()                                   
-                            }}
-                    </div><!--col-->
-
-                    {{ html()->label('Masa (Kg):')->class('col-md-1 form-control-label')->for('masa') }}
-
-                    <div class="col-md-2">
-                        {{ html()->text('masa')
-                            ->class('form-control')
-                            ->value(0)
-                            ->disabled()
-                            ->attribute('maxlength', 191)                                            
-                            ->autofocus()
-
-                            }}
-                    </div><!--col-->
-
-                    {{ html()->label('Valor total:')->class('col-md-1 form-control-label')->for('valor') }}
-                    <div class="col-md-2">
-                        {{ html()->text('valor')
-                            ->class('form-control')
-                            ->value(0)
-                            ->disabled()
-                            ->attribute('maxlength',
-                                191)                                            
-                            ->autofocus()
-
-                            }}
-                    </div><!--col-->
-
-            </div><!--form-group-->  
-
-                                    
-
-            </div><!--col-->
-        </div><!--row-->
-
-
         <div class="row">
             <div class="col-sm-5">
                 <h4 class="card-title mb-0">
-                    Registro de materiales <small class="text-muted">Todos los materiales</small>
+                    Catálogo de productos <small class="text-muted">Todos los productos</small>
                 </h4>
             </div><!--col-->
 
             <div class="col-sm-7">
-                @include('backend.materiales.includes.header-buttons')
+                @include('backend.productos_venta.includes.header-buttons')
             </div><!--col-->
         </div><!--row-->
 
@@ -133,85 +31,57 @@
                         <tr>
                              
                              <!-- <th>Material</th>   -->
-                             <th>Perfil</th>
+                             <th>Item</th>
                              <th>Código</th>                                  
-                             <th>Medida/s</th>
-                            <!--  <th>Ø Interior.</th>
-                             <th>Espesor.</th> -->
-                             <th>Densidad g/cm³</th>
-                             <th>Valor Kg</th>
-                             <th>Tipo corte</th>
-                             <th>Proveedor</td>
+                             <th>Descripcion</th>
+                            
+                             <th>Marca</th>
+                             <th>Categoría</td>
+                             <th>Stock mínimo</th>
+                             <th>Stock actual</th>
+                             <th>Precio lista</th>
 
                              <th style="width:45px;">@lang('labels.general.actions')</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($materiales as $material)
-                            <tr>
+                        @foreach($productoVentas as $producto)
+                            <tr>   
+                                <td data-title="Item"> 
                                 
-                                <!-- <td data-title="Material:">{{$material->material }} </td> -->
+                                    <div class="thumbnail">
+                                            
+                                            <img src="{{ asset( 'storage/'.$producto->imagen_url) }}" alt="Imagen Referencial" width="auto" height="60">
+                                            <div class="caption">
+                                            <p><b> {{ ucwords($producto->codigo) }} </b></p>
+                                            </div>
+                                        
+                                    </div>
                                 
-                                <td data-title="Perfil">  
-                                    @switch($material->perfil)
-                                        @case(1)
-                                            <h6>Barra </h6>
-                                        @break
-                                        @case(2)
-                                            <h6>Barra perforada </h6>
-                                        @break
-                                        @case(3)
-                                            <h6>Plancha </h6>
-                                        @break
-
-                                    @endswitch 
-                           
                                 </td>
-                                <td data-title="Código">  {{$material->codigo }}   </td>
-                                <td data-title="Medida/s" align="center"> 
-                                    @switch($material->perfil)
-                                        @case(1)
-                                           {{$material->diam_exterior}} 
-                                        @break;
-                                        @case(2)
-                                            {{$material->diam_exterior}}  {{ ' x '. $material->diam_interior}}
-                                        @break
-                                        @case(3)
-                                            {{$material->espesor}}
-
-                                    @endswitch
-
-                                    @switch($material->sistema_medida)
-                                            @case(1)
-                                                 mm 
-                                            @break
-                                            @case(2)
-                                                 " 
-                                            @break
-
-                                    @endswitch 
-
-                                </td>
-                                <td data-title="Densidad g/cm³" align="center"> {{$material->densidad}}  g/cm³</td>
-                                <td data-title="Valor Kg" style="text-align:right;">@money($material->valor_kg) </td>
-                                <td data-title="Tipo corte" >                                    
-                                    @switch($material->tipo_corte)
-                                            @case(1)
-                                                 Completo 
-                                                 @if($material->dimensionado != null)
-                                                 <span> ( {{$material->dimensionado}} mm) </span>
-                                                 @endif
-                                            @break
-                                            @case(2)
-                                                 Dimensionado 
-                                                 @if($material->dimensionado != null)
-                                                 <span> ( {{$material->dimensionado}} mm) </span>
-                                                 @endif
-                                            @break
-
-                                    @endswitch </td>
-                                <td data-title="Proveedor/es" >{{$material->proveedor}}</td>
-                                <td data-title="Acciones" class="btn-td">@include('backend.materiales.includes.actions', ['material' => $material])</td>
+                                <td data-title="Código"> <a href="{{route('admin.productos-venta.edit',$producto)}}"> <p style="color:blue; font-weight:bold; font:18px;"> {{ $producto->codigo }}  </p></a></td>
+                                <td data-title="Descripción"> {{ $producto->descripcion }}  </td>
+                                <td data-title="Marca" style="text-align:center;"> <p style="color:green; font-weight:bold; font:18px;">  {{ $producto->marca->nombre }} </p> </td>
+                                <td data-title="Familia"> {{ $producto->familia->nombre }}  </td>
+                                <td data-title="Stock mínimo" style="text-align:center;"> {{ $producto->stock_seguridad }}  </td>
+                                <td data-title="Stock actual" style="text-align:center;">
+                                    @if($producto->stock_seguridad <= $producto->existencias->sum('cantidad') )
+                                     <p style="color:green; font-weight:bold; font-size:18px;"> {{$producto->existencias->sum('cantidad')}} </p> 
+                                    
+                                    @endif
+                                    @if(($producto->stock_seguridad > $producto->existencias->sum('cantidad') ) && ($producto->existencias->sum('cantidad') > 0))
+                                     <p style="color:orange; font-weight:bold; font-size:18px;"> {{$producto->existencias->sum('cantidad')}} </p> 
+                                    
+                                    @endif
+                                    @if($producto->existencias->sum('cantidad') == 0)
+                                     <p style="color:red; font-weight:bold; font-size:18px;"> {{$producto->existencias->sum('cantidad')}} </p> 
+                                    
+                                    @endif
+                                     
+                                     
+                                     </td> 
+                                <td data-title="Precio lista"> <p style="color:black; font-weight:bold; font-size:15px;">   @money($producto->precio_lista) </p> </td>                              
+                                <td data-title="Acciones" class="btn-td">@include('backend.productos_venta.includes.actions', ['producto' => $producto])</td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -222,13 +92,13 @@
         <div class="row">
             <div class="col-7">
                 <div class="float-left">
-                    {!! $materiales->count() !!} 
+                    Total : {!! $productoVentas->count() !!} productos
                 </div>
             </div><!--col-->
 
             <div class="col-5">
                 <div class="float-right">
-                    {!! $materiales->render() !!}
+                    {!! $productoVentas->render() !!}
                 </div>
             </div><!--col-->
         </div><!--row-->
