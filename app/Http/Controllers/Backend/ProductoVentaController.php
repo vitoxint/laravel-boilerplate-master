@@ -273,7 +273,7 @@ class ProductoVentaController extends Controller
         $customPaper = array(0,0,141.70,188.80); // 50 60
         //$customPaper = array(0,0,227.56,332.90); // 70 100
         
-        $pdf = PDF::loadView('backend.productos_venta.print_etq', compact('producto'))->setPaper($customPaper, 'landscape');
+        $pdf = PDF::loadView('backend.productos_venta.print_etq', compact('producto'))->setPaper($customPaper, 'portrait');
         
         return $pdf->stream('Producto_'.$producto->codigo.'.pdf');
     }
