@@ -284,3 +284,8 @@ Breadcrumbs::for('admin.item_ots.opencode', function ($trail) {
     $trail->push('Trabajos (items)', route('admin.item_ots.index'));
     $trail->push('Buscar trabajo por código', route('admin.item_ots.opencode'));
 });
+
+Breadcrumbs::for('admin.productos-venta.opencode', function ($trail) {
+    $trail->push('Catálogo de productos', route('admin.productos-venta.index'));
+    $trail->push('Producto encontrado por código', route('admin.productos-venta.opencode'));
+});

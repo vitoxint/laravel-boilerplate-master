@@ -273,9 +273,30 @@ class ProductoVentaController extends Controller
         $customPaper = array(0,0,141.70,188.80); // 50 60
         //$customPaper = array(0,0,227.56,332.90); // 70 100
         
-        $pdf = PDF::loadView('backend.productos_venta.print_etq', compact('producto'))->setPaper($customPaper, 'portrait');
+        $pdf = PDF::loadView('backend.productos_venta.print_etq', compact('producto'))->setPaper($customPaper, 'landscape');
         
         return $pdf->stream('Producto_'.$producto->codigo.'.pdf');
+    }
+
+    public function opencode(Request $request){
+
+        $string = strtoupper(
+            
+            $request->input('codigo_id')
+        );
+
+        $producto   = ProductoVenta::where('codigo', $string)->first();
+       
+
+        if($producto){
+
+            return view('backend.productos_venta.edit',compact('producto'));
+
+        }
+
+        return redirect()->route('admin.productos-venta.index')->withFlashDanger('No se encontró el ítem escaneado');
+
+
     }
 
 }

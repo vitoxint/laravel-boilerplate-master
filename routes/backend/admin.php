@@ -309,6 +309,8 @@ Route::group(['namespace' => 'ProductoVenta'], function () {
     Route::post('productos-venta', [ProductoVentaController::class, 'store'])->name('productos-venta.store');
     Route::get('productos-venta/dataAjax', [ProductoVentaController::class, 'dataAjax'])->name('productos-venta.dataAjax');
 
+    Route::post('productos-ventas', [ProductoVentaController::class, 'opencode'])->name('productos-venta.opencode');
+
     Route::get('marca-select2', [ProductoVentaController::class, 'marcaSelect2'])->name('marcas.dataAjax');
     Route::get('familia-select2', [ProductoVentaController::class, 'familiaSelect2'])->name('familias.dataAjax');
 
