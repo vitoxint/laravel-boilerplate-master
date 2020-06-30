@@ -5,6 +5,10 @@
         <a href="{{ route('admin.productos-venta.edit', $producto) }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="@lang('buttons.general.crud.edit')">
             <i class="fas fa-edit"></i>
         </a>
+
+        <a href="{{ route('admin.productos-venta.print_etq', $producto) }}" target="_blank" class="btn btn-warning" data-toggle="tooltip" data-placement="top" title="Imprimir Etiqueta">
+            <i class="fas fa-print" style="color:white;"></i>
+        </a>
        
     @if($producto->existencias->count() == 0)
         <a href="{{ route('admin.productos-venta.destroy', $producto) }}"

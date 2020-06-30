@@ -21,6 +21,24 @@
             </div><!--col-->
         </div><!--row-->
 
+        {{ html()->form('POST', route('admin.item_ots.opencode'))->class('form-horizontal')->open() }}
+
+        <div class="row mt-4 mb-4">
+            <div class="col">
+            <div class="form-group row has-search">                      
+                <div class="col-md-3">    
+                <span class="fa fa-search form-control-feedback"></span>                   
+                    <input id="codigo_id" name="codigo_id" class="form-control" placeholder="Buscar por código" >                                                                                
+                </div><!--col-->
+            
+            <div class="col text">
+                {{ form_submit('Abrir') }}
+            </div><!--col-->
+            </div><!--row-->
+    
+        {{ html()->form()->close() }}
+        </row>
+
         <div class="row mt-4">
             <div class="col">
                 <div class="table-responsive" id="no-more-tables">

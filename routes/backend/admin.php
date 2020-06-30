@@ -67,6 +67,7 @@ Route::group(['namespace' => 'OrdenTrabajo' ], function () {
     Route::get('orden_trabajos', [OrdenTrabajoController::class, 'index'])->name('orden_trabajos.index');
     Route::get('orden_trabajos/create', [OrdenTrabajoController::class, 'create'])->name('orden_trabajos.create');
     Route::post('orden_trabajos', [OrdenTrabajoController::class, 'store'])->name('orden_trabajos.store');
+    Route::post('orden_trabajos', [OrdenTrabajoController::class, 'opencode'])->name('orden_trabajos.opencode');
 
     Route::group(['prefix' => 'orden_trabajos/{trabajo}'], function () {
         Route::get('edit', [OrdenTrabajoController::class, 'edit'])->name('orden_trabajos.edit');
@@ -116,6 +117,8 @@ Route::group(['namespace' => 'ItemOt'], function () {
     Route::get('item_ots/{trabajo}/create', [ItemOtController::class, 'create'])->name('item_ots.create');
     Route::post('item_ots/{trabajo}', [ItemOtController::class, 'store'])->name('item_ots.store');
 
+    
+
     Route::group(['prefix' => 'item_ots/{item_ot}/{trabajo}'], function () {
         Route::get('edit', [ItemOtController::class, 'edit'])->name('item_ots.edit');
         Route::get('editTaller', [ItemOtController::class, 'editTaller'])->name('item_ots.editTaller');
@@ -124,6 +127,9 @@ Route::group(['namespace' => 'ItemOt'], function () {
         Route::delete('/', [ItemOtController::class, 'destroy'])->name('item_ots.destroy');
     });
 }); 
+
+
+Route::post('item_ots', [ItemOtController::class, 'opencode'])->name('item_ots.opencode');
 
 
 Route::group(['namespace' => 'ItemCotizacion'], function () {
@@ -310,6 +316,8 @@ Route::group(['namespace' => 'ProductoVenta'], function () {
         Route::get('edit', [ProductoVentaController::class, 'edit'])->name('productos-venta.edit');
         Route::patch('/', [ProductoVentaController::class, 'update'])->name('productos-venta.update');
         Route::delete('/', [ProductoVentaController::class, 'destroy'])->name('productos-venta.destroy');
+
+        Route::get('print_etq', [ProductoVentaController::class, 'print_etq'])->name('productos-venta.print_etq');
     });
 
    /*  Route::get('materiales/barra', [MaterialController::class, 'filtrarBarras'])->name('materiales.barra');

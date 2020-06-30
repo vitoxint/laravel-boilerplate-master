@@ -274,3 +274,13 @@ Breadcrumbs::for('admin.productos-venta.edit', function ($trail, $producto) {
     $trail->push('Catálogo de productos', route('admin.productos-venta.index'));
     $trail->push('Editar producto : '.$producto->codigo, route('admin.productos-venta.edit' ,$producto));
 });
+
+Breadcrumbs::for('admin.orden_trabajos.opencode', function ($trail) {
+    $trail->push('Orden Trabajos', route('admin.orden_trabajos.index'));
+    $trail->push('Buscar OT por código', route('admin.orden_trabajos.opencode'));
+});
+
+Breadcrumbs::for('admin.item_ots.opencode', function ($trail) {
+    $trail->push('Trabajos (items)', route('admin.item_ots.index'));
+    $trail->push('Buscar trabajo por código', route('admin.item_ots.opencode'));
+});

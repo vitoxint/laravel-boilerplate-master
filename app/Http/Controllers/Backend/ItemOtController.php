@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Repositories\Backend\Model\ItemOtRepository;
+use Illuminate\Http\Request;
 
 use App\ItemOt;
 use App\OrdenTrabajo;
@@ -14,7 +15,7 @@ use DB;
 use Carbon\Carbon;
 use PDF;
 
-use Illuminate\Http\Request;
+
 
 class ItemOtController extends Controller
 {
@@ -27,11 +28,11 @@ class ItemOtController extends Controller
         //$this->middleware('permission:administrar ordenes de trabajo');
             // Middleware only applied to these methods
             $this->middleware('permission:ver trabajos|administrar ordenes de trabajo', ['only' => [
-                'index','editTaller','print_etq' // Could add bunch of more methods too
+                'index','editTaller','print_etq', 'opencode' // Could add bunch of more methods too
             ]]); 
 
             $this->middleware('permission:administrar ordenes de trabajo', ['only' => [
-                'edit' ,'store' , 'update' ,'destroy' // Could add bunch of more methods too
+                'edit' ,'store' , 'update' ,'destroy' , 'opencode' // Could add bunch of more methods too
             ]]);
 
         
@@ -290,5 +291,28 @@ class ItemOtController extends Controller
         $item_ot->delete();
 
         return redirect()->route('admin.orden_trabajos.edit',$trabajo)->withFlashSuccess('Se ha eliminado el ítem');
+    }
+
+
+    public function opencode(Request $request){
+
+        $string = str_replace(
+            array('-', "'"),
+            array('/', '-'),
+            $request->input('codigo_id')
+        );
+
+        $item_ot   = ItemOt::where('folio', $string)->first();
+        $trabajo = $item_ot->ordenTrabajo;
+
+        if($item_ot){
+
+            return view('backend.item_ots.editTaller',compact('item_ot', 'trabajo'));
+
+        }
+
+        return redirect()->route('admin.item_ots.index')->withFlashDanger('No se encontró un trabajo con el folio del ítem escaneado');
+
+
     }
 }

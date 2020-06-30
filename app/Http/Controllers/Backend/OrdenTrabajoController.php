@@ -145,6 +145,29 @@ class OrdenTrabajoController extends Controller
         return view('backend.orden_trabajos.edit',compact('trabajo'));
     }
 
+    public function opencode(Request $request){
+
+        $string = str_replace(
+            array('-', "'"),
+            array('/', '-'),
+            $request->input('codigo_id')
+        );
+
+        $item_ot    = ItemOt::where('folio', $string)->first();
+
+        if($item_ot){
+
+            $trabajo = $item_ot->ordenTrabajo;
+
+            return view('backend.orden_trabajos.edit',compact('trabajo'));
+
+        }
+
+        return redirect()->route('admin.orden_trabajos.index')->withFlashDanger('No se encontró una OT con el folio del ítem escaneado');
+
+
+    }
+
     /**
      * Update the specified resource in storage.
      *

@@ -163,6 +163,9 @@
 
                     <div class="col text-right">
                         {{ form_submit(__('buttons.general.crud.update')) }}
+                        <a style="color:white;" href="{{ route('admin.productos-venta.print_etq', $producto) }}" target="_blank" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Imprimir Etiqueta">
+                        <i class="fas fa-print" style="color:white;"></i> Etiqueta
+                    </a>
                     </div><!--row-->
                 </div><!--row-->
             </div><!--card-footer-->

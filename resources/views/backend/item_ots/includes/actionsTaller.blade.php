@@ -8,7 +8,7 @@
         <a href="{{ route('admin.item_ots.print_etq',[$item_ot , $trabajo]) }}" target="_blank" class="btn btn-warning" data-toggle="tooltip" data-placement="top" title="Imprimir Etiqueta">
             <i class="fas fa-print" style="color:white;"></i>
         </a>
-        <a href="{{ route('admin.orden_trabajos.printTaller',$trabajo) }}" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Imprimir OT Asociada">
+        <a href="{{ route('admin.orden_trabajos.printTaller',$trabajo) }}" target="_blank" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Imprimir OT Asociada">
             <i class="fas fa-file-pdf" style="color:red;"></i>
         </a>
 

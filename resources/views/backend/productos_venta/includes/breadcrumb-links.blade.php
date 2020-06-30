@@ -18,7 +18,7 @@
         </div><!--dropdown-->
 
         <div class="dropdown">
-            <a class="btn dropdown-toggle" href="#" role="button" id="breadcrumb-dropdown-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Buscar material &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</a>
+            <a class="btn dropdown-toggle" href="#" role="button" id="breadcrumb-dropdown-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Buscar ítem &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</a>
 
             <div class="dropdown-menu" aria-labelledby="breadcrumb-dropdown-1">
                
@@ -39,10 +39,6 @@
                             </div>
                             {{ csrf_field() }}
                         </form>
-
-
-
-
 
                     </div>
 
