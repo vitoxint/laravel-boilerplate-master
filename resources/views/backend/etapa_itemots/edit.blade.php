@@ -45,7 +45,7 @@
                         {{ html()->label('Operador:')->class('col-md-1 form-control-label')->for('operador_id') }}
                         <div class="col-md-3">
                                 <select name="operador_id" id="operador_id" class="form-control" required="true" >
-                                    <option value="{{$etapaItemOt->empleado_id}}" selected>{{$etapaItemOt->operador->nombres . ' '. $etapaItemOt->operador->apellidos}}</option>
+                                    <option value="" selected></option>
                                 </select>
                         </div> -->
                     </div><!--form-group-->
