@@ -4,6 +4,7 @@ namespace App\Repositories\Backend\Model;
 
 use App\Exceptions\GeneralException;
 use App\ProductoVenta;
+use App\Marca;
 
 use Carbon\Carbon;
 use App\Repositories\BaseRepository;
@@ -38,10 +39,13 @@ class ProductoVentaRepository extends BaseRepository
 
 
 
-    public function getBuscarMaterialesPaginated($paged = 25, $orderBy = 'codigo', $sort = 'asc', $term): LengthAwarePaginator
+    public function getBuscarProductosPaginated($paged = 25, $orderBy = 'codigo', $sort = 'asc', $term): LengthAwarePaginator
     {
+
+        $marcas = Marca::where('nombre', 'LIKE', "%{$term}%")->get('id');
+
         return $this->model
-            ->where('codigo', 'LIKE', "%{$term}%")->orWhere('descripcion', 'LIKE', "%{$term}%")
+            ->where('codigo', 'LIKE', "%{$term}%")->orWhere('descripcion', 'LIKE', "%{$term}%")->orWhereIn('marca_id', $marcas)
             ->orderBy($orderBy, $sort)
             ->paginate($paged);
     }

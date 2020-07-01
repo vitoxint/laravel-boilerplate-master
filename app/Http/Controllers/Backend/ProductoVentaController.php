@@ -15,7 +15,6 @@ use Illuminate\Http\Request;
 use PDF;
 
 
-
 class ProductoVentaController extends Controller
 {
     
@@ -40,7 +39,7 @@ class ProductoVentaController extends Controller
         $term = $request->input('buscar');
 
         return view('backend.productos_venta.index')
-            ->withProductoVentas($this->productoRepository->getBuscarMaterialesPaginated(25, 'codigo', 'asc',$term));
+            ->withProductoVentas($this->productoRepository->getBuscarProductosPaginated(25, 'codigo', 'asc',$term));
 
     }
 
@@ -270,13 +269,15 @@ class ProductoVentaController extends Controller
     {
         //return $item_ot;
         $data = ['title' => 'etiqueta producto venta'];
-        $customPaper = array(0,0,141.70,188.80); // 50 60
+        $customPaper = array(0,0,178.80,145.70 ); // 50 60
         //$customPaper = array(0,0,227.56,332.90); // 70 100
         
         $pdf = PDF::loadView('backend.productos_venta.print_etq', compact('producto'))->setPaper($customPaper, 'portrait');
         
         return $pdf->stream('Producto_'.$producto->codigo.'.pdf');
     }
+
+
 
     public function opencode(Request $request){
 

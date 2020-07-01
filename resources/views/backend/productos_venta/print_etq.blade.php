@@ -10,7 +10,7 @@
 <div style="margin-top: 2px;">
     <table>
         <tr>
-            <td style="text-align: left; width: 100px"><img src="{{ asset('img/backend/brand/marca.png') }}" width="62px" height="20px" /></td>
+            <td style="text-align: left; width: 100px"><img src="{{ asset('img/backend/brand/marca.png') }}" width="42px" height="15px" /></td>
             <!-- <td style="text-align: right; width: 70px"><p style="font-size: 10px;  "><?php echo $producto->codigo  ?></p></td> -->
 
 
@@ -23,15 +23,15 @@
 
     <tbody>
 
-        <tr>
+        <!-- <tr>
             <td style="padding-bottom:-15px; padding-top:1px;"> <p style="font-size: 6px; ">DESCRIPCIÓN: </p></td>         
-        </tr>
+        </tr> -->
         <tr>            
             <td style="padding-bottom:-15px; padding-top:1px;"> <p style="font-size: 9px;  "><?php echo Str::limit(strtoupper($producto->descripcion),30 )  ?></p></td>
         </tr>
-        <tr>
+      <!--   <tr>
             <td style="padding-bottom:-15px; padding-top:1px;"> <p style="font-size: 6px; ">MARCA: </p></td>           
-        </tr>
+        </tr> -->
 
         <tr>
             <td style="padding-bottom:-15px; padding-top:1px;"> <p style="font-size: 9px;  "><?php echo Str::limit(strtoupper($producto->marca->nombre), 30)  ?></p></td>
@@ -54,7 +54,7 @@
 <div style="margin-top: -10px;">
     <table>
         <tr>
-            <td style="text-align: left; width: 100px"><img src="{{ asset('img/backend/brand/marca.png') }}"  width="62px" height="20px" /></td>
+            <td style="text-align: left; width: 100px"><img src="{{ asset('img/backend/brand/marca.png') }}"  width="42px" height="15px" /></td>
            <!--  <td style="text-align: right; width: 70px"><p style="font-size: 10px;  "><?php echo $producto->codigo  ?></p></td> -->
 
 
@@ -67,15 +67,15 @@
 
     <tbody>
 
-        <tr>
+<!--         <tr>
             <td style="padding-bottom:-15px; padding-top:1px;"> <p style="font-size: 6px; ">DESCRIPCIÓN: </p></td>         
-        </tr>
-        <tr>            
+        </tr>-->
+        <tr>             
             <td style="padding-bottom:-15px; padding-top:1px;"> <p style="font-size: 9px;  "><?php echo Str::limit(strtoupper($producto->descripcion), 30)  ?></p></td>
         </tr>
-        <tr>
+<!--         <tr>
             <td style="padding-bottom:-15px; padding-top:1px;"> <p style="font-size: 6px; ">MARCA: </p></td>           
-        </tr>
+        </tr> -->
 
         <tr>
             <td style="padding-bottom:-15px; padding-top:1px;"> <p style="font-size: 9px;  "><?php echo Str::limit(strtoupper($producto->marca->nombre), 30)  ?></p></td>
