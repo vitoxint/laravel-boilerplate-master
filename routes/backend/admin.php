@@ -67,7 +67,7 @@ Route::group(['namespace' => 'OrdenTrabajo' ], function () {
     Route::get('orden_trabajos', [OrdenTrabajoController::class, 'index'])->name('orden_trabajos.index');
     Route::get('orden_trabajos/create', [OrdenTrabajoController::class, 'create'])->name('orden_trabajos.create');
     Route::post('orden_trabajos', [OrdenTrabajoController::class, 'store'])->name('orden_trabajos.store');
-    Route::post('orden_trabajos', [OrdenTrabajoController::class, 'opencode'])->name('orden_trabajos.opencode');
+    Route::post('orden_trabajos/opencode', [OrdenTrabajoController::class, 'opencode'])->name('orden_trabajos.opencode');
 
     Route::group(['prefix' => 'orden_trabajos/{trabajo}'], function () {
         Route::get('edit', [OrdenTrabajoController::class, 'edit'])->name('orden_trabajos.edit');
