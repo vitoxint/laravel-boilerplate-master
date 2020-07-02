@@ -699,7 +699,16 @@
                                 //window.location.replace("{{route('admin.existencia_material.index')}}");
                                 //window.location.href = window.location.href;
 
-                                $('#list-table').append('<tr id="tr'+data.id+'"><td data-title="Material">'+data.material+'</td> <td data-title="Ubicación:">'+data.deposito+'</td> <td data-title="Dimensiones"> '+data.dimension+'</td><td data-title="Tipo Origen" align="center">'+data.tipo_origen+' </td> <td data-title="Detalle origen">'+data.detalle_origen+'</td>  <td data-title="Valor">' +data.valor_total+'</td>'+
+                                
+                                var strEx = data.valor_total;
+                                //primer paso: fuera puntos
+                                strEx = strEx.replace(",","");
+                                //cambiamos la coma por un punto
+                                //strEx = strEx.replace(",",".");
+                                //listo
+                                var numFinal = parseFloat(strEx);
+
+                                $('#list-table').append('<tr id="tr'+data.id+'"><td data-title="Material">'+data.material+'</td> <td data-title="Ubicación:">'+data.deposito+'</td> <td data-title="Dimensiones"> '+data.dimension+'</td><td data-title="Tipo Origen" align="center">'+data.tipo_origen+' </td> <td data-title="Detalle origen">'+data.detalle_origen+'</td>  <td data-title="Valor"> ' +formatter.format(numFinal.toFixed(2))+'</td>'+
                                 ' <td style="text-align:center;" data-title="Estado material"> <span class="badge btn-success" style="border-radius:10px;"><p style="margin:4px; font-size:12px;"> Disponible </p>  </span></td>' +
                                 '<td data-title="Acciones" > <button class="btn btn-dark btn-sm" onclick="editar_deposito('+data.id+')"><i class="fas fa-sliders-h"></i>  </button> ' +
                                 '<button class="btn btn-danger btn-sm" onclick="eliminar_deposito('+data.id+')"><i class="fas fa-trash"></i>  </button></td></tr>'

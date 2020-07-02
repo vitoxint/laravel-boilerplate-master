@@ -36,7 +36,7 @@
     <li class="nav-item d-md-down-none">
             <a class="nav-link" href="#">
                 <i class="fas fa-bell"></i>
-                jksdfjshgf
+                
             </a>
         </li>
         <li class="nav-item d-md-down-none">
