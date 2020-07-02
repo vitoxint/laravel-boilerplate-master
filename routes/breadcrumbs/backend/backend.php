@@ -69,6 +69,11 @@ Breadcrumbs::for('admin.orden_trabajos.create', function ($trail) {
     $trail->push('Ingresar nueva OT', route('admin.orden_trabajos.create'));
 });
 
+Breadcrumbs::for('admin.orden_trabajos.buscar_trabajo', function ($trail) {
+    $trail->push('Orden Trabajos', route('admin.orden_trabajos.index'));
+    $trail->push('Trabajos encontrados', route('admin.orden_trabajos.buscar_trabajo'));
+});
+
 Breadcrumbs::for('admin.orden_trabajos.edit', function ($trail, $trabajo) {
     $trail->parent('admin.orden_trabajos.index', route('admin.orden_trabajos.index'));
     $trail->push($trabajo->folio, route('admin.orden_trabajos.edit',$trabajo));

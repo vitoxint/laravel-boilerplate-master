@@ -210,7 +210,7 @@
                              <th style="width:45px;">@lang('labels.general.actions')</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="list-table">
                         @foreach($existencias as $existencia)
                             <tr>
                                 <td data-title="Material">{{ $existencia->material->material }}</td>
@@ -411,6 +411,60 @@
                 
             }      
         }
+
+
+    function editar_deposito(id) {
+        
+      if(id){
+          $.ajax({
+          //    type:"GET",
+          //    url:"{{url('admin.get-commune-list')}}?region_id="+regionID,
+              url: "{{ route('admin.edit-existencia_material') }}?id=" +id,
+              method: 'GET',
+              success:function(res){               
+                if(res){
+                    console.log('success');
+                    window.location.replace("{{route('admin.existencia_material.abrir')}}?id="+id);
+
+
+                }else{
+                    // $("#representante_id").empty();
+                }
+                }
+            });
+        }else{
+            //$("#commune_id").empty();
+            
+        }      
+    }
+
+    function eliminar_deposito(id){
+
+        if(id){
+          $.ajax({
+          //    type:"GET",
+          //    url:"{{url('admin.get-commune-list')}}?region_id="+regionID,
+              url: "{{ route('admin.eliminar-existencia_material') }}?id=" +id,
+              method: 'GET',
+              success:function(res){               
+                if(res){
+                    console.log('success');
+                    $("#tr"+id).remove();
+
+
+                }else{
+                    // $("#representante_id").empty();
+                }
+                }
+            });
+        }else{
+            //$("#commune_id").empty();
+            
+        }      
+
+    }
+
+
 
 
         $('#material_id').on('change', function() {
@@ -642,7 +696,14 @@
                             success:function(data){               
                             if(data){
                                 console.log(data.success);
-                                window.location.replace("{{route('admin.existencia_material.index')}}");
+                                //window.location.replace("{{route('admin.existencia_material.index')}}");
+                                //window.location.href = window.location.href;
+
+                                $('#list-table').append('<tr id="tr'+data.id+'"><td data-title="Material">'+data.material+'</td> <td data-title="Ubicación:">'+data.deposito+'</td> <td data-title="Dimensiones"> '+data.dimension+'</td><td data-title="Tipo Origen" align="center">'+data.tipo_origen+' </td> <td data-title="Detalle origen">'+data.detalle_origen+'</td>  <td data-title="Valor">' +data.valor_total+'</td>'+
+                                ' <td style="text-align:center;" data-title="Estado material"> <span class="badge btn-success" style="border-radius:10px;"><p style="margin:4px; font-size:12px;"> Disponible </p>  </span></td>' +
+                                '<td data-title="Acciones" > <button class="btn btn-dark btn-sm" onclick="editar_deposito('+data.id+')"><i class="fas fa-sliders-h"></i>  </button> ' +
+                                '<button class="btn btn-danger btn-sm" onclick="eliminar_deposito('+data.id+')"><i class="fas fa-trash"></i>  </button></td></tr>'
+                                );
 
 
                             }else{

@@ -84,6 +84,8 @@ Route::group(['namespace' => 'OrdenTrabajo' ], function () {
     Route::get('orden_trabajos/anuladas', [OrdenTrabajoController::class, 'anuladas'])->name('orden_trabajos.anuladas');
 
     Route::get('orden_trabajos/{dias}', [OrdenTrabajoController::class, 'px_entregas'])->name('orden_trabajos.px_entregas');
+
+    Route::get('ordenTrabajos/resultados', [OrdenTrabajoController::class, 'buscar_ot'])->name('orden_trabajos.buscar_trabajo');
 });  
 
 
@@ -322,9 +324,6 @@ Route::group(['namespace' => 'ProductoVenta'], function () {
         Route::get('print_etq', [ProductoVentaController::class, 'print_etq'])->name('productos-venta.print_etq');
     });
 
-   /*  Route::get('materiales/barra', [MaterialController::class, 'filtrarBarras'])->name('materiales.barra');
-    Route::get('materiales/barra_perforada', [MaterialController::class, 'filtrarPerforadas'])->name('materiales.barra_perforada');
-    Route::get('materiales/plancha', [MaterialController::class, 'filtrarPlanchas'])->name('materiales.plancha'); */
 
     Route::get('productos-venta/resultados', [ProductoVentaController::class, 'buscar_producto'])->name('productos-venta.buscar_producto');
 
@@ -356,6 +355,13 @@ Route::group(['namespace' => 'ExistenciaProductoVenta'], function () {
 Route::get('materiales/datosMaterial' , 'MaterialController@getDatosMaterial'  )->name('get-datos-material');
 Route::get('materiales/editarMaterial' , 'MaterialController@getEditMaterial'  )->name('edit-material');
 Route::get('materiales/abrirMaterial' , 'MaterialController@getAbrirMaterial'  )->name('materiales.abrir');
+
+
+Route::get('existenciaMaterial/editarMaterial' , 'ExistenciaMaterialController@getEditExistenciaMaterial'  )->name('edit-existencia_material');
+Route::get('existenciaMaterial/abrirMaterial' , 'ExistenciaMaterialController@getAbrirExistenciaMaterial'  )->name('existencia_material.abrir');
+Route::get('existenciaMaterial/eliminarMaterial' , 'ExistenciaMaterialController@eliminarMaterial'  )->name('eliminar-existencia_material');
+
+
 
 Route::get('existencia_materiales/datosExistenciaMaterial' , 'ExistenciaMaterialController@getDatosTrozado'  )->name('get-datos-trozado');
 

@@ -4,6 +4,8 @@ namespace App\Repositories\Backend\Model;
 
 use App\Exceptions\GeneralException;
 use App\OrdenTrabajo;
+use App\Cliente;
+use App\ClienteRepresentante;
 
 use Carbon\Carbon;
 use App\Repositories\BaseRepository;
@@ -67,6 +69,18 @@ class OrdenTrabajoRepository extends BaseRepository
         return $this->model
             ->whereBetween('estado', ['1', '4'])
             ->where('entrega_estimada' , '<=' , $fecha)
+            ->orderBy($orderBy, $sort)
+            ->paginate($paged);
+    }
+
+
+    public function getBuscarOtPaginated($paged = 25, $orderBy = 'created_at', $sort = 'desc', $term): LengthAwarePaginator
+    {
+        $clientes = Cliente::where('razon_social', 'LIKE', "%{$term}%")->orWhere('rut_cliente', 'LIKE', "%{$term}%")->get('id');
+        $contactos = ClienteRepresentante::where('nombre', 'LIKE', "%{$term}%")->get('id');
+
+        return $this->model
+            ->whereIn('cliente_id', $clientes)->orWhereIn('representante_id', $contactos)
             ->orderBy($orderBy, $sort)
             ->paginate($paged);
     }

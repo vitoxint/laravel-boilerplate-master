@@ -43,6 +43,14 @@ class OrdenTrabajoController extends Controller
         ->withOrdenTrabajos($this->ordenTrabajoRepository->getActivePaginated(25, 'id', 'desc'));
     }
 
+
+    public function buscar_ot(Request $request)
+    {
+        $term = $request->input('buscar');
+        return view('backend.orden_trabajos.index')
+        ->withOrdenTrabajos($this->ordenTrabajoRepository->getBuscarOtPaginated(25, 'id', 'desc', $term));
+    }
+
     public function anuladas()
     {
 

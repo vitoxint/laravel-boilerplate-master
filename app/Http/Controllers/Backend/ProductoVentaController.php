@@ -33,6 +33,11 @@ class ProductoVentaController extends Controller
         ->withProductoVentas($this->productoRepository->getActivePaginated(10, 'codigo', 'asc'));
     }
 
+    public function getLista(){
+        return $this->productoRepository->getActivePaginated(10, 'codigo', 'asc');
+
+    }
+
 
     public function buscar_producto(Request $request)
     {
@@ -223,7 +228,8 @@ class ProductoVentaController extends Controller
      */
     public function destroy(ProductoVenta $productoVenta)
     {
-        //
+        $producto->delete();
+        return redirect()->route('admin.productos-venta.index')->withFlashSuccess('Producto de venta eliminado'); 
     }
 
 

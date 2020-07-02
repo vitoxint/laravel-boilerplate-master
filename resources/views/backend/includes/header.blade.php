@@ -31,9 +31,12 @@
     </ul>
 
     <ul class="nav navbar-nav ml-auto">
-        <li class="nav-item d-md-down-none">
+       
+    
+    <li class="nav-item d-md-down-none">
             <a class="nav-link" href="#">
                 <i class="fas fa-bell"></i>
+                jksdfjshgf
             </a>
         </li>
         <li class="nav-item d-md-down-none">
@@ -46,6 +49,10 @@
                 <i class="fas fa-map-marker-alt"></i>
             </a>
         </li>
+
+
+
+
         <li class="nav-item dropdown">
           <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
             <img src="{{ $logged_in_user->picture }}" class="img-avatar" alt="{{ $logged_in_user->email }}">

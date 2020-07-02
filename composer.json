@@ -15,6 +15,7 @@
         "altek/eventually": "^1.0",
         "arcanedev/log-viewer": "^5.0",
         "barryvdh/laravel-dompdf": "^0.8.6",
+        "beyondcode/laravel-websockets": "^1.4",
         "creativeorange/gravatar": "~1.0",
         "davejamesmiller/laravel-breadcrumbs": "^5.0",
         "facade/ignition": "^1.11",

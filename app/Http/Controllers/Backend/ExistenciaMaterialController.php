@@ -64,7 +64,7 @@ class ExistenciaMaterialController extends Controller
 
         ]);
 
-        $depositoL = Deposito::where('id' ,$request->input('deposito_id'))->first();
+        $depositoL = Deposito::where('id' ,$request->input('deposito'))->first();
         //return $deposito->existencia_material;
         if($depositoL->existencia_material->whereBetween('estado_consumo', [1,2])->count() > 0){
             $depositoL->update([
@@ -77,10 +77,43 @@ class ExistenciaMaterialController extends Controller
         }
 
         if($deposito){
+
+            switch($deposito->material->perfil){
+                case(1):
+                    $dimension = $deposito->dimension_largo . ' mm';
+                break;
+                case(2):
+                    $dimension = $deposito->dimension_largo . ' mm';
+                break;
+                case(3):
+                    $dimension = $deposito->dimension_largo.' x '. $deposito->dimension_ancho . ' mm';
+                break;
+
+            }
+
+            switch($deposito->origen_material){
+                case(1):
+                    $origen = 'Compra';
+                break;
+                case(2):
+                    $origen = 'Retazo';
+                break;
+                case(3):
+                    $origen = 'Proporcionado por el cliente';
+                break;
+
+            }
+
+
             return response()->json([
                 'success'=>'BIEN !.',
-                
-   
+                 'material' => $deposito->material->material,
+                 'deposito' => $depositoL->nombre,
+                 'dimension' => $dimension,
+                 'tipo_origen' => $origen,
+                 'detalle_origen' => $deposito->detalle_origen,
+                 'valor_total' => $deposito->valor_total,
+                 'id' => $deposito->id
             ]); 
 
         }else{
@@ -182,7 +215,23 @@ class ExistenciaMaterialController extends Controller
      */
     public function destroy(ExistenciaMaterial $existenciaMaterial)
     {
-        //
+        $id_deposito = $existenciaMaterial->deposito_id;
+        $existenciaMaterial->delete();
+
+        $deposito = Deposito::where('id' ,$id_deposito)->first();
+        //return $deposito->existencia_material;
+        if($deposito->existencia_material->whereBetween('estado_consumo', [1,2])->count() > 0){
+            $deposito->update([
+                'estado_utilizada' => 1,
+            ]);
+        }else{
+            $deposito->update([
+                'estado_utilizada' => null,
+            ]);
+        }
+       
+        return redirect()->route('admin.existencia_material.index')->withFlashSuccess('Existencia de material eliminada');
+
     }
 
     
@@ -231,6 +280,50 @@ class ExistenciaMaterialController extends Controller
             'valor_kg_corte' => $trozo->valor_unit    
    
             ]); 
+    }
+
+    public function eliminarMaterial(Request $request){
+
+        $trozo = ExistenciaMaterial::where('id', '=', $request->id)->first();
+
+        $id_deposito = $trozo->deposito_id;
+        $trozo->delete();
+
+        $deposito = Deposito::where('id' ,$id_deposito)->first();
+        //return $deposito->existencia_material;
+        if($deposito->existencia_material->whereBetween('estado_consumo', [1,2])->count() > 0){
+            $deposito->update([
+                'estado_utilizada' => 1,
+            ]);
+        }else{
+            $deposito->update([
+                'estado_utilizada' => null,
+            ]);
+        }
+
+    
+        return response()->json([
+            'success' => 'Bien'
+          
+   
+            ]); 
+    }
+
+
+    public function getEditExistenciaMaterial(Request $request){
+
+        $existencia = ExistenciaMaterial::where('id', '=', $request->id)->first();
+
+        return redirect()->route('admin.existencia_material.edit',$existencia);
+        
+    }
+
+    public function getAbrirExistenciaMaterial(Request $request){
+
+        $existencia = ExistenciaMaterial::where('id', '=', $request->id)->first();
+
+        return redirect()->route('admin.existencia_material.edit',$existencia);
+        
     }
 
 }

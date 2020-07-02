@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 
+use App\Http\Controllers\Backend\ProductoVentaController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -16,5 +18,33 @@ use Illuminate\Http\Request;
 /*Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });*/
+
+Route::group(['namespace' => 'ProductoVenta'], function () {
+    
+    Route::get('productos-venta/lista', [ProductoVentaController::class, 'getLista'])->name('productos-venta.lista');
+/*     Route::get('productos-venta/create', [ProductoVentaController::class, 'create'])->name('productos-venta.create');
+    Route::post('productos-venta', [ProductoVentaController::class, 'store'])->name('productos-venta.store');
+    Route::get('productos-venta/dataAjax', [ProductoVentaController::class, 'dataAjax'])->name('productos-venta.dataAjax');
+
+    Route::post('productos-ventas', [ProductoVentaController::class, 'opencode'])->name('productos-venta.opencode');
+
+    Route::get('marca-select2', [ProductoVentaController::class, 'marcaSelect2'])->name('marcas.dataAjax');
+    Route::get('familia-select2', [ProductoVentaController::class, 'familiaSelect2'])->name('familias.dataAjax'); */
+
+/*     Route::group(['prefix' => 'productos-venta/{producto}'], function () {
+        Route::get('edit', [ProductoVentaController::class, 'edit'])->name('productos-venta.edit');
+        Route::patch('/', [ProductoVentaController::class, 'update'])->name('productos-venta.update');
+        Route::delete('/', [ProductoVentaController::class, 'destroy'])->name('productos-venta.destroy');
+
+        Route::get('print_etq', [ProductoVentaController::class, 'print_etq'])->name('productos-venta.print_etq');
+    });
+
+
+    Route::get('productos-venta/resultados', [ProductoVentaController::class, 'buscar_producto'])->name('productos-venta.buscar_producto'); */
+
+
+});
+
+
 
 
