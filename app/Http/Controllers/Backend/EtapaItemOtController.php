@@ -193,11 +193,141 @@ class EtapaItemOtController extends Controller
             
         } 
 
-        return redirect()->route('admin.item_ots.editTaller',[$item_ot, $item_ot->ordenTrabajo])->withFlashSuccess(__('Proceso actualizado'));       
+        return redirect()->route('admin.item_ots.edit',[$item_ot, $item_ot->ordenTrabajo])->withFlashSuccess(__('Proceso actualizado'));       
     }
 
   
     public function terminar(EtapaItemOt $etapaItemOt){
+
+        $item_ot = $etapaItemOt->itemOt;
+        $trabajo = $item_ot->ordenTrabajo;
+
+        $estado_proceso_nuevo = 4;
+
+        if($estado_proceso_nuevo == 4  && ($etapaItemOt->estado_avance == 3 || $etapaItemOt->estado_avance == 2 )){
+                $fecha_termino = Carbon::now();
+                $fecha_termino = $fecha_termino->format('Y-m-d H:i:s'); 
+        }else{
+               $fecha_termino = null;
+        } 
+
+        $etapaItemOt->update([
+
+            'estado_avance' => 4,
+            'fh_inicio' => $fecha_termino,
+                                 
+        ]);
+
+        // CONSULTAS DE ACTUALIZACION DE ESTADOS SUPERIORES CASO ITEM OT
+
+        if (EtapaItemOt::where('estado_avance', '=', 4)->where('itemot_id', '=', $item_ot->id)->count('id') == 
+                EtapaItemOt::where('itemot_id', '=', $item_ot->id)->count('id')) {
+            
+            $update1 = DB::table('item_ots')
+              ->where('id', '=', $item_ot->id)
+              ->update([
+                  'estado' =>  '4',
+                  ]);
+            if($item_ot->estado != '4'){
+                $update1 = DB::table('item_ots')
+                   ->where('id', '=', $item_ot->id)
+                   ->update([
+                       'fecha_termino' =>  $fecha_termino,
+                       ]);                
+            }
+            
+         } 
+
+// CONSULTAS DE ACTUALIZACION DE ESTADOS SUPERIORES CASO ORDEN TRABAJO
+
+        if (ItemOt::where('estado', '=', '4')->where('ot_id', '=', $item_ot->ordenTrabajo->id)->count('id') == 
+                ItemOt::where('ot_id', '=', $item_ot->ordenTrabajo->id)->count('id')) {
+            
+            $update1 = DB::table('orden_trabajos')
+            ->where('id', '=', $item_ot->ordenTrabajo->id)
+            ->update([
+                'estado' =>  '4',
+                ]);
+            if($item_ot->ordenTrabajo->estado != '4'){
+                $update1 = DB::table('orden_trabajos')
+                ->where('id', '=', $item_ot->ordenTrabajo->id)
+                ->update([
+                    'fecha_termino' =>  $fecha_termino,
+                    ]);                
+            }
+            
+        } 
+        return redirect()->route('admin.item_ots.edit',[$item_ot, $item_ot->ordenTrabajo])->withFlashSuccess(__('Proceso actualizado'));
+
+
+    }
+
+
+
+
+    public function comenzarTaller(EtapaItemOt $etapaItemOt){
+ 
+        $estado_proceso_nuevo = 2;
+
+        $item_ot = $etapaItemOt->itemOt;
+        $trabajo = $item_ot->ordenTrabajo;
+
+        if($estado_proceso_nuevo == 2 && $etapaItemOt->estado_avance == 1){
+                $fecha_inicio = Carbon::now();
+                $fecha_inicio = $fecha_inicio->format('Y-m-d H:i:s'); 
+        }else{
+               $fecha_inicio = $etapaItemOt->fh_inicio;
+        }
+
+        $etapaItemOt->update([
+
+            'estado_avance' => 2,
+            'fh_inicio' => $fecha_inicio,
+                                 
+        ]);
+
+        // CONSULTAS DE ACTUALIZACION DE ESTADOS SUPERIORES CASO ITEM OT
+
+        if (EtapaItemOt::where('estado_avance', '=', 2)->where('itemot_id', '=', $item_ot->id)->exists()) {
+            $update1 = DB::table('item_ots')
+              ->where('id', '=', $item_ot->id)
+              ->update([
+                  'estado' =>  '2',
+                  ]);
+
+            if($item_ot->estado == '1'){
+                $update1 = DB::table('item_ots')
+                   ->where('id', '=', $item_ot->id)
+                   ->update([
+                       'fecha_inicio' =>  $fecha_inicio,
+                       ]);                
+            }           
+         }
+
+        // CONSULTAS DE ACTUALIZACION DE ESTADOS SUPERIORES CASO ORDEN TRABAJO
+
+        if (ItemOt::where('estado', '=', '2')->where('ot_id', '=', $item_ot->ordenTrabajo->id)->exists()) {
+            $update1 = DB::table('orden_trabajos')
+            ->where('id', '=', $item_ot->ordenTrabajo->id)
+            ->update([
+                'estado' =>  '2',
+                ]);
+
+            if($item_ot->ordenTrabajo->estado == '1'){
+                $update1 = DB::table('orden_trabajos')
+                ->where('id', '=', $item_ot->ordenTrabajo->id)
+                ->update([
+                    'fecha_inicio' =>  $fecha_inicio,
+                    ]);                
+            }
+            
+        } 
+
+        return redirect()->route('admin.item_ots.editTaller',[$item_ot, $item_ot->ordenTrabajo])->withFlashSuccess(__('Proceso actualizado'));       
+    }
+
+  
+    public function terminarTaller(EtapaItemOt $etapaItemOt){
 
         $item_ot = $etapaItemOt->itemOt;
         $trabajo = $item_ot->ordenTrabajo;

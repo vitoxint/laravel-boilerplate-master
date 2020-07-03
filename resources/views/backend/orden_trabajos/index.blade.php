@@ -61,7 +61,7 @@
                         </thead>
                         <tbody>
                         @foreach($ordenTrabajos as $trabajo)
-                            <tr>
+                            <tr data-toggle="collapse" data-target="#data{{$trabajo->id}}" class="accordion-toggle">
                                 <td data-title="Folio:">{{ $trabajo->folio }}</td>
                                 <td data-title="Cliente:">{{ $trabajo->cliente->razon_social }}</td>
                                 <td data-title="Contacto:">
@@ -107,7 +107,75 @@
                                 
                                 <td class="btn-td" data-title="Acción:">@include('backend.orden_trabajos.includes.actions', ['trabajo' => $trabajo])</td>
                             </tr>
-                        @endforeach
+
+                            <tr class="p">
+                                <td colspan="7" class="hiddenRow">
+                                    <div class="accordian-body collapse p-1" id="data{{$trabajo->id}}">
+                                    <div class="table-responsive" id="no-more-tables">
+                                        <table class="table table-condensed cf">
+                                            <thead class="cf">
+                                                    <tr>
+                                                        <th>Item</th>
+                                                        <th>Ctd</th>
+                                                        <th>Descripcion</th>                                   
+                                                        <th>Val. Unitario</th>
+                                                        <th>Val. Parcial</th>
+                                                        <th>Avance</th>
+                                                        <th>Estado</th>       
+                                                        <th>@lang('labels.general.actions')</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    @foreach($trabajo->items_ot as $item_ot)
+                                                        <tr>
+                                                            <td data-title="Folio:">{{ $item_ot->folio }}</td>
+                                                            <td data-title="Cantidad:">{{ $item_ot->cantidad }}</td>
+                                                            <td data-title="Descripción:">{{ $item_ot->descripcion }}</td>
+                                                            <td align="right" data-title="Valor Unitario:">@money($item_ot->valor_unitario )</td>
+                                                            <td align="right" data-title="Valor Parcial:"> @money($item_ot->valor_parcial ) </td>
+                                                            
+                                                            <td align="center">{{$item_ot->avanceItemOt()}}</td>
+                                                            <td style="text-align:center;" data-title="Estado ítem OT:">
+                                                                @switch($item_ot->estado)
+                                                                    @case(1)
+                                                                        <span class="badge btn-secondary" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Sin Iniciar </p></span>
+                                                                        @break
+                                                                        
+                                                                    @case(2)
+                                                                        <span class="badge btn-primary" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> En Proceso </p></span>
+                                                                        @break
+                                                                    @case(3)
+                                                                        <span class="badge btn-danger" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Atrasada </p></span>
+                                                                        @break
+                                                                    @case(4)
+                                                                        <span class="badge btn-success" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Terminada </p></span>
+                                                                        @break  
+                                                                    @case(5)
+                                                                        <span class="badge btn-black" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Entregada </p></span>
+                                                                        @break                                  
+                                                                
+                                                                    @case(6)
+                                                                        <span class="badge btn-warning" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Anulada </p></span>
+                                                                        @break   
+                                                                    @default
+                                                                    <span>Something went wrong, please try again</span>
+                                                                
+                                                                        
+                                                                @endswitch
+                                                            
+                                                            </td>                               
+                                                        
+                                                            <td class="btn-td" data-title="Acciones:">@include('backend.item_ots.includes.actions', ['item_ot' => $item_ot , 'trabajo' => $trabajo])</td>
+                                                        </tr>
+                                                    @endforeach
+                                                    </tbody>
+                                                </table>
+                                    </div> 
+                                </td> 
+                            </tr>
+
+
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -128,4 +196,19 @@
         </div><!--row-->
     </div><!--card-body-->
 </div><!--card-->
+
+
+<script>
+
+    $('.accordion-toggle').click(function(){
+        $('.hiddenRow').hide();
+        $(this).next('tr').find('.hiddenRow').show();
+    });
+
+</script>
+
+
+
+
+
 @endsection

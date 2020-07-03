@@ -4,13 +4,13 @@
 <div class="btn-group btn-group-sm" role="group" aria-label="@lang('labels.backend.access.users.user_actions')">
 
     @if($etapaItemOt->estado_avance == 1)
-        <a href="{{ route('admin.etapa_itemots.comenzar', $etapaItemOt) }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Comenzar">
+        <a href="{{ route('admin.etapa_itemots.comenzarTaller', $etapaItemOt) }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Comenzar">
             <i class="fas fa-play"></i> 
         </a>
     @endif
 
     @if($etapaItemOt->estado_avance == 2 || $etapaItemOt->estado_avance == 3)
-        <a href="{{ route('admin.etapa_itemots.terminar', $etapaItemOt) }}" class="btn btn-success" data-toggle="tooltip" data-placement="top" title="Terminar">
+        <a href="{{ route('admin.etapa_itemots.terminarTaller', $etapaItemOt) }}" class="btn btn-success" data-toggle="tooltip" data-placement="top" title="Terminar">
             <i class="fas fa-check"></i> 
         </a>
     @endif
