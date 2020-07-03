@@ -94,9 +94,11 @@
 
 
 
-      body{
-        background-color:#004C70 !important;
-      }
+
+
+/*       body{
+        background-color:#004C70;
+      } */
       .table tr {
           cursor: pointer;
       }
