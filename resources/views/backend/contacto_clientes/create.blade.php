@@ -55,7 +55,7 @@
                             <div class="col-md-3">
                                 {{ html()->text('telefono')
                                     ->class('form-control')
-                                    ->placeholder(__('+569999999999'))
+                                    ->placeholder(__('+56 99 999 99 999'))
                                     ->attribute('maxlength', 12)
                                     ->required()
                                      }}
@@ -96,6 +96,17 @@
 
 
 
+
+<script src="https://code.jquery.com/jquery-git.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js" ></script>
+
+<script src="{{asset('js/jquery.rut.js')}}" ></script>
+
+<script>
+
+    $('#telefono').mask('+56 99 999 99 99');
+    
+</script>
 
 
 @endsection

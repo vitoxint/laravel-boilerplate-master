@@ -78,7 +78,7 @@ class ClienteController extends Controller
                 'direccion' => 'required',
                 'region_id' => ['required'],
                 'commune_id' => ['required'],
-                'telefono' => ['required'],
+                //'telefono' => ['required'],
                 'email' => 'email',
     
             ]);
@@ -138,7 +138,7 @@ class ClienteController extends Controller
             'direccion' => 'required',
             'region_id' => ['required'],
             'commune_id' => ['required'],
-            'telefono' => ['required'],
+            //'telefono' => ['required'],
             'email' => 'email',
 
         ]);

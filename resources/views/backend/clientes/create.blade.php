@@ -159,6 +159,25 @@
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js" ></script>
+
+<script src="{{asset('js/jquery.rut.js')}}" ></script>
+
+<script>
+
+    $("#rut_cliente")
+    .rut({formatOn: 'keyup', validateOn: 'keyup'})
+    .on('rutInvalido', function(){ 
+        $(this).parents(".control-group").addClass("error")
+    })
+    .on('rutValido', function(){ 
+        $(this).parents(".control-group").removeClass("error")
+    });
+
+    $('#telefono').mask('+56 99 999 99 99');
+    $('#celular').mask('+56 9 999 99 999');
+</script>
 
 
 
