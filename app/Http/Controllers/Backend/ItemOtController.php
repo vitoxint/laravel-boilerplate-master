@@ -315,4 +315,22 @@ class ItemOtController extends Controller
 
 
     }
+
+
+    public function dataAjax(Request $request)
+    {
+       $term = trim($request->q);
+
+       $tags = ItemOt::query()
+        ->where('descripcion', 'LIKE', "%{$term}%")/* ->orWhere('folio', 'LIKE', "%{$term}%") */->where('estado','=', '4')->where('ot_id',$request->id) 
+        ->get();
+        $formatted_tags = [];
+        foreach ($tags as $tag) {
+            $formatted_tags[] = [
+                 'id' => $tag->id,
+                 'text' => '['.$tag->folio.'] '. $tag->descripcion ,           
+                ];
+        }
+        return \Response::json($formatted_tags);
+    } 
 }

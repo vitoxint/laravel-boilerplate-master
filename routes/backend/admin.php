@@ -20,6 +20,7 @@ use App\Http\Controllers\Backend\ExistenciaMaterialController;
 use App\Http\Controllers\Backend\SolicitudMaterialOtController;
 use App\Http\Controllers\Backend\ProductoVentaController;
 use App\Http\Controllers\Backend\ExistenciaProductoVentaController;
+use App\Http\Controllers\Backend\EntregaOtController;
 
 
 
@@ -119,7 +120,7 @@ Route::group(['namespace' => 'ItemOt'], function () {
     Route::get('item_ots/{trabajo}/create', [ItemOtController::class, 'create'])->name('item_ots.create');
     Route::post('item_ots/{trabajo}', [ItemOtController::class, 'store'])->name('item_ots.store');
 
-    
+    Route::get('items_terminados/dataAjax', [ItemOtController::class, 'dataAjax'])->name('item_ots.dataAjax');
 
     Route::group(['prefix' => 'item_ots/{item_ot}/{trabajo}'], function () {
         Route::get('edit', [ItemOtController::class, 'edit'])->name('item_ots.edit');
@@ -353,6 +354,22 @@ Route::group(['namespace' => 'ExistenciaProductoVenta'], function () {
     }); */
 
 }); 
+
+Route::group(['namespace' => 'EntregaOt'], function () {
+    
+    Route::get('entrega_ot', [EntregaOtController::class, 'index'])->name('entrega_ot.index');
+    Route::get('entrega_ot/create', [EntregaOtController::class, 'create'])->name('entrega_ot.create');
+    Route::post('entrega_ot', [EntregaOtController::class, 'store'])->name('entrega_ot.store');
+    Route::post('entrega_ot/delete', [EntregaOtController::class, 'destroy'])->name('entrega_ot.destroy');
+    //Route::get('existencia_material/dataAjax', [EntregaOtControllerController::class, 'dataAjax'])->name('existencia-material.dataAjax');
+
+    Route::group(['prefix' => 'entrega_ot/{entregaOt}'], function () {
+        Route::get('edit', [EntregaOtController::class, 'edit'])->name('entrega_ot.edit');
+        Route::patch('/', [EntregaOtController::class, 'update'])->name('entrega_ot.update');
+        
+    });
+
+});
 
 
 Route::get('materiales/datosMaterial' , 'MaterialController@getDatosMaterial'  )->name('get-datos-material');

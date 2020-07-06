@@ -151,7 +151,7 @@
                                                                         <span class="badge btn-success" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Terminada </p></span>
                                                                         @break  
                                                                     @case(5)
-                                                                        <span class="badge btn-black" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Entregada </p></span>
+                                                                        <span class="badge btn-dark" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Entregada </p></span>
                                                                         @break                                  
                                                                 
                                                                     @case(6)

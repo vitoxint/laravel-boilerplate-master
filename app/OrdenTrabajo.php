@@ -36,5 +36,13 @@ class OrdenTrabajo extends Model
     public function items_ot() {
         return $this->hasMany('App\ItemOt', 'ot_id', 'id');
     }  
+
+    public function entregasOt(){
+        return $this->hasMany('App\EntregaOt', 'ot_id', 'id');
+    }
+
+/*     public function items_otEntregadas() {
+        return $this->hasMany('App\ItemOt', 'ot_id', 'id')->where('estado','5')->count();
+    }  */ 
     
 }

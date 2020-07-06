@@ -105,6 +105,7 @@
                                     ->required()
                                     
                                 }}
+                                <div id="statusOt">
 
                                 @switch($trabajo->estado) 
                                         @case ('1') 
@@ -130,6 +131,7 @@
                                             {{$item_ot->trabajo->estado}}
                                         @break;                   
                                 @endSwitch  
+                                </div>
 
 
                             </div><!--col-->
@@ -303,7 +305,7 @@
                                         <td align="right" data-title="Valor Parcial:"> @money($item_ot->valor_parcial ) </td>
                                         
                                         <td align="center">{{$item_ot->avanceItemOt()}}</td>
-                                        <td style="text-align:center;" data-title="Estado ítem OT:">
+                                        <td style="text-align:center;" data-title="Estado ítem OT:" id="itemOt{{$item_ot->id}}">
                                             @switch($item_ot->estado)
                                                 @case(1)
                                                     <span class="badge btn-secondary" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Sin Iniciar </p></span>
@@ -319,7 +321,7 @@
                                                     <span class="badge btn-success" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Terminada </p></span>
                                                     @break  
                                                 @case(5)
-                                                    <span class="badge btn-black" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Entregada </p></span>
+                                                    <span class="badge btn-dark" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Entregada </p></span>
                                                     @break                                  
                                             
                                                 @case(6)
@@ -358,48 +360,337 @@
         </div><!--card-->
 
 
-    
+        <div class="card">
+            
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-5">
+                        <h4 class="card-title mb-0">
+                            Entregas del trabajo
+                           <!--  <small class="text-muted">disponibles</small> -->
+                        </h4>
+                    </div><!--col-->
+                </div><!--row-->
+
+                <hr>
+
+                
+                <div class="row mt-4 mb-4">
+                    <div class="col">
+
+                    <div class="form-group row">
+
+                        
+                            {{ html()->label('Agregar entrega:')->class('col-md-6 form-control-label')->for('') }}  
+                        
+
+                    </div>
+
+                    <div class="form-group row" >
+
+                        {{ html()->label('Receptor :')->class('col-md-1 form-control-label')->for('receptor') }}
+
+                        <div class="col-md-3">
+                            {{ html()->text('receptor')
+                                ->class('form-control')
+                                                            
+                                ->attribute('maxlength', 191)                                          
+                                ->autofocus()
+                                ->required()                                   
+                                }}
+                        </div><!--col-->
+
+                        {{ html()->label('RUT Receptor:')->class('col-md-1 form-control-label')->for('rut_receptor') }}
+
+                        <div class="col-md-2">
+                            {{ html()->text('rut_receptor')
+                                ->class('form-control')                                
+                                ->attribute('maxlength', 12)                                            
+                                ->autofocus()
+
+                                }}
+                        </div><!--col-->
+
+                        {{ html()->label('Fecha:')->class('col-md-1 form-control-label')->for('hora') }}
+
+                        <div class="col-md-3">
+                            <div class='input-group date' id='hora' name="hora">
+                            <?php $fecha = Carbon\Carbon::now(); $fecha = $fecha->format('d-m-Y H:i'); ?>
+                                <input type='text' class="form-control" required="true" value="{{$fecha}}"/>
+                                <span class="input-group-addon">
+                                    <span class="fa fa-calendar btn btn-md"></span>
+                                </span>
+                            </div>
+                        </div><!--col-->
+
+                    </div>
+
+                    <div class="form-group row">
+
+                         {{ html()->label('Agregar ítems')->class('col-md-1 form-control-label')->for('items') }}
+                        <div class="col-md-7">
+                            <select name="items[]" id="items" class="form-control" multiple="multiple" >
+                            </select>
+                        </div><!--col-->
+
+                   
+                        <div class="col col-md-2">
+                            <button class="btn btn-dark btn-xs" onclick="añadir_entrega()"><i class="fas fa-check"></i> Registrar </button>
+                        </div>
+
+                    </div><!--form-group--> 
+
+                    <div class="form-group row" style="">
+
+                        <div class="col-md-12">
+                            <div id="materiales" class="table-responsive">
+                                <table class='table table-bordered table-hover' id="tab_logic">
+                                    <thead>
+                                        <tr class='info'>
+                                            <th style='width:7%;'hidden="true">ID entrega.</th>
+                                            <th style='width:16%;'>Fecha</th>        
+                                            <th style='width:24%;'>Receptor</th>
+                                            <th style='width:17%;'>Encargado </th>
+                                            <th style='width:40%;'>Ítems</th>
+                                           
+                                            <th style='width:13%;'>Acción</th>
+                                        </tr>
+                                    </thead>
+                                    <thead id="dynamic_field">
+
+                                    @foreach($trabajo->entregasOt as $entrega)
+                                    <tr id="row{{$entrega->id}}">
+                                            <td class="custom-tbl" hidden="true"><input class='form-control input-sm'style='width:100%;' type="text"  value="{{$entrega->id}}" id="pr_item{{$entrega->id}}" name="pr_item[]" readonly required></td>
+                                            <td> <p id="hora_entrega{{$entrega->id}}" name="entrega_id[]"> {{$entrega->hora_entrega}} </p></td>  
+                                            <td><p  id="receptor{{$entrega->id}}"  name="receptor[]">[{{$entrega->rut_receptor}}]-{{$entrega->receptor}}</p></td>
+                                            <td><p  id="encargado{{$entrega->id}}"  name="encargado[]">{{$entrega->encargado->first_name}} {{$entrega->encargado->last_name}}</p></td>
+
+                                            <td id="items{{$entrega->id}}"  name="items[]"> 
+                                              @foreach($entrega->entregasItemOt as $itemEntrega)
+                                                <span><p>[{{$itemEntrega->item_ot->folio}}]-{{$itemEntrega->item_ot->descripcion}}</p><span>
+                                              @endforeach                                            
+                                            </td>
+                                         
+                                            <td class="custom-tbl"><!-- <button type="button" id="{{$entrega->id}}" class="btn-info btn-sm btn_add" name="add"><span class="fas fa-sync-alt"></span></button> -->
+                                                           
+                                                <button type="button" name="remove" id="{{$entrega->id}}" class="btn-danger btn-sm btn_remove"><span class="fas fa-times"></span></button>
+                                                           
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                                                   
+                                    </thead>
+                                </table>
+                        </div><!--col-->
+
+                        </div><!--form-group-->  
+                                
+                    </div><!--col-->
+                </div><!--row-->
+            </div><!--card-body-->
+
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col">
+                       
+                    </div><!--col-->
+
+                    <div class="col text-right">
+                        
+                    </div><!--row-->
+                </div><!--row-->
+            </div><!--card-footer-->
+
+           
+        </div><!--card-->
+
+
 </div>
 
 
 
-<script src="https://code.jquery.com/jquery-git.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+  <!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" /> -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/i18n/es.js"></script>
 
-<script type="text/javascript">
-    
+  <script src="{{asset('datepicker/js/bootstrap-datetimepicker.js')}}"></script>
+  <script src="{{asset('datepicker/js/moments.js')}}"></script>
 
-      $('#region_id').on('change', function() {
+  
+  <script src="{{asset('js/jquery.rut.js')}}" ></script>
+
+    <script>
+
+        $("#rut_receptor")
+        .rut({formatOn: 'keyup', validateOn: 'keyup'})
+        .on('rutInvalido', function(){ 
+            $(this).parents(".control-group").addClass("error")
+        })
+        .on('rutValido', function(){ 
+            $(this).parents(".control-group").removeClass("error")
+        });
+
+    </script>
+
+
+    <script>
+
+        $(document).ready(function(){
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         
-        var regionID = this.value;  
-        
-        if(regionID){
-            $.ajax({
-            //    type:"GET",
-            //    url:"{{url('get-commune-list')}}?region_id="+regionID,
-                url: "{{ route('admin.get-commune-list') }}?region_id=" + $(this).val(),
-                method: 'GET',
-               success:function(res){               
-                if(res){
-                    $("#commune_id").empty();
-                    $("#commune_id").append('<option>Seleccione</option>');
-                    $.each(res,function(key,value){
-                        $("#commune_id").append('<option value="'+key+'">'+value+'</option>');
-                    });
-
-                }else{
-                   $("#commune_id").empty();
+            $('#hora').datetimepicker({
+                // Formats
+                // follow MomentJS docs: https://momentjs.com/docs/#/displaying/format/
+                format: 'DD-MM-YYYY HH:mm',
+                locale: 'es',
+                
+                // Your Icons
+                // as Bootstrap 4 is not using Glyphicons anymore
+                icons: {
+                    time: 'fa fa-clock-o',
+                    date: 'fa fa-calendar',
+                    up: 'fa fa-chevron-up',
+                    down: 'fa fa-chevron-down',
+                    previous: 'fa fa-chevron-left',
+                    next: 'fa fa-chevron-right',
+                    today: 'fa fa-check',
+                    clear: 'fa fa-trash',
+                    close: 'fa fa-times'
                 }
-               }
             });
-        }else{
-            $("#commune_id").empty();
-          
-        }      
-       });
-</script>
+        }); 
 
+    </script>
+
+
+    <script>
+        $.fn.select2.defaults.set('language', 'es');
+        
+        $('#items').select2({
+            placeholder: "Seleccionar ítem a entregar...",
+            minimumInputLength: 1,
+            ajax: {
+                url: "{{route('admin.item_ots.dataAjax')}}?id="+ <?php echo $trabajo->id ?>,
+                dataType: 'json',
+                language: "es",
+                data: function (params) {
+                    return {
+                        q: $.trim(params.term)
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data
+                    };                   
+                },
+                cache: true
+            },           
+        });
+
+
+
+        function añadir_entrega(){
+  
+            var ot_id =  <?php echo $trabajo->id; ?>;
+            var receptor = $('#receptor').val();
+            var rut_receptor = $("#rut_receptor").val();
+            var hora = $("#hora").find("input").val();
+            var items = $("#items").val();
+
+            //if((itemslength != 0)&&(receptor != "")&&(hora != "")){
+
+                $.ajax({
+                type:'POST',
+                url:'{{route("admin.entrega_ot.store")}}',
+                headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                data:{ ot_id:ot_id, receptor:receptor, rut_receptor:rut_receptor ,hora:hora , items:items },
+                success:function(data){
+                    //alert(data.success);
+                    $('#dynamic_field').append(
+                        '<tr id="row'+data.id+'">'+
+                                           ' <td class="custom-tbl" hidden="true"><input class="form-control input-sm" style="width:100%;" type="text"  value="'+data.id+'" id="pr_item'+data.id+'" name="pr_item[]" readonly required></td>'+
+                                            ' <td> <p id="hora_entrega'+data.id+'" name="entrega_id[]">'+ data.hora_entrega+' </p></td>'  +
+                                            ' <td> <p  id="receptor'+data.id+'"  name="receptor[]"> ['+ data.rut_receptor+']-'+data.receptor + '</p></td>'+
+                                            ' <td> <p  id="encargado'+data.id+'"  name="encargado[]">'+data.encargado+'</p></td>'+
+
+                                            ' <td id="items'+data.id+'"  name="items[]"> '+data.items+'</td>'+
+  
+                                            ' <td class="custom-tbl"><!-- <button type="button" id="" class="btn-info btn-sm btn_add" name="add"><span class="fas fa-sync-alt"></span></button> -->'+
+                                                           
+                                            '     <button type="button" name="remove" id="'+data.id+'" class="btn-danger btn-sm btn_remove"><span class="fas fa-times"></span></button>  </td></tr>'
+                      ); 
+
+                      for (var i=0; i< data.items_id.length; i++)
+                            {
+                                var id= data.items_id[i];
+                                //Para obtener el objeto de tu lista
+                                $("#itemOt"+id).html('<span class="badge btn-dark" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Entregado </p>  </span>');
+                                
+                            }    
+
+                      if(data.estado_ot == '5'){
+                              $("#statusOt").html('<span class="badge btn-dark" style="border-radius:12px;"><p style="margin:4px; font-size:16px;"> Entregada </p>  </span>');
+                              $("#estado").val('5');
+                      }    
+                      $("#items").empty();   
+                
+                },
+                error: function() {
+                    console.log("No se ha podido obtener la información");
+                }
+
+                });
+            /* }else{
+                alert('Faltan datos a ingresar');
+            } */
+
+
+        }
+
+
+
+
+        $(document).on('click', '.btn_remove', function(){  
+            var button_id = $(this).attr("id");
+
+            $.ajax({
+            type:'POST',
+            url:'{{route("admin.entrega_ot.destroy")}}',
+            headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+            data:{item:button_id},
+            success:function(data){
+                
+                $('#row'+button_id+'').remove(); 
+
+                for (var i=0; i< data.array.length; i++)
+                {
+                    var id= data.array[i];
+                    //Para obtener el objeto de tu lista
+                    $("#itemOt"+id).html('<span class="badge btn-success" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Terminado </p>  </span>');
+                    
+                }
+
+                $("#statusOt").html('<span class="badge btn-success" style="border-radius:12px;"><p style="margin:4px; font-size:16px;"> Terminada </p>  </span>');
+                    $("#estado").val('4');  
+
+                    //console.log(data.success);
+                     
+            },
+            error: function() {
+                console.log("No se ha podido obtener la información");
+            }
+
+            });                      
+            
+        });  
+
+    </script>
 
 
 
