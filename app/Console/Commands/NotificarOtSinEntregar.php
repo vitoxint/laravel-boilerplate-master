@@ -43,7 +43,7 @@ class NotificarOtSinEntregar extends Command
     public function handle()
     {
         $hoy = Carbon::now();
-        $hoy = $hoy->addDays(1);
+        //$hoy = $hoy->addDays(1);
 
         $ordenTrabajos = OrdenTrabajo::where('estado','=','4')->get();
 
@@ -51,7 +51,7 @@ class NotificarOtSinEntregar extends Command
 
             $fecha_termino = new Carbon($ordenTrabajo->fecha_termino); 
 
-             if($fecha_termino < $hoy){
+             if($fecha_termino->addDays(1) < $hoy){
                 Mail::send(new SendOtSinEntregar($ordenTrabajo));
             } 
             

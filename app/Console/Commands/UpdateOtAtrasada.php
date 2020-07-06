@@ -44,7 +44,7 @@ class UpdateOtAtrasada extends Command
     {
 
         $hoy = Carbon::now();
-        $hoy = $hoy->addDays(1);
+        //$hoy = $hoy->addDays(1);
 
         $ordenTrabajos = OrdenTrabajo::where('estado','=','1')->orwhere('estado','=','2')->orwhere('estado','=','3')->get();
 
@@ -54,7 +54,7 @@ class UpdateOtAtrasada extends Command
             
            
 
-             if($fecha_compromiso < $hoy){
+             if($fecha_compromiso->addDays(1) < $hoy){
                 $ordenTrabajo->estado = '3';
                 $ordenTrabajo->save();
 
