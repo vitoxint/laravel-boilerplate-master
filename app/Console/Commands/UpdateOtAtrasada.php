@@ -44,12 +44,15 @@ class UpdateOtAtrasada extends Command
     {
 
         $hoy = Carbon::now();
+        $hoy = $hoy->addDays(1);
 
         $ordenTrabajos = OrdenTrabajo::where('estado','=','1')->orwhere('estado','=','2')->orwhere('estado','=','3')->get();
 
         foreach($ordenTrabajos as $ordenTrabajo){
 
-            $fecha_compromiso = new Carbon($ordenTrabajo->entrega_estimada); 
+            $fecha_compromiso = new Carbon($ordenTrabajo->entrega_estimada);
+            
+           
 
              if($fecha_compromiso < $hoy){
                 $ordenTrabajo->estado = '3';

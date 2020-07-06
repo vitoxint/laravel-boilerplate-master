@@ -43,6 +43,7 @@ class NotificarOtSinEntregar extends Command
     public function handle()
     {
         $hoy = Carbon::now();
+        $hoy = $hoy->addDays(1);
 
         $ordenTrabajos = OrdenTrabajo::where('estado','=','4')->get();
 
