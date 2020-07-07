@@ -21,6 +21,7 @@ use App\Http\Controllers\Backend\SolicitudMaterialOtController;
 use App\Http\Controllers\Backend\ProductoVentaController;
 use App\Http\Controllers\Backend\ExistenciaProductoVentaController;
 use App\Http\Controllers\Backend\EntregaOtController;
+use App\Http\Controllers\Backend\PagoOtController;
 
 
 
@@ -366,6 +367,22 @@ Route::group(['namespace' => 'EntregaOt'], function () {
     Route::group(['prefix' => 'entrega_ot/{entregaOt}'], function () {
         Route::get('edit', [EntregaOtController::class, 'edit'])->name('entrega_ot.edit');
         Route::patch('/', [EntregaOtController::class, 'update'])->name('entrega_ot.update');
+        
+    });
+
+});
+
+Route::group(['namespace' => 'PagoOt'], function () {
+    
+    Route::get('pago_ot', [PagoOtController::class, 'index'])->name('pago_ot.index');
+    Route::get('pago_ot/create', [PagoOtController::class, 'create'])->name('pago_ot.create');
+    Route::post('pago_ot', [PagoOtController::class, 'store'])->name('pago_ot.store');
+    Route::post('pago_ot/delete', [PagoOtController::class, 'destroy'])->name('pago_ot.destroy');
+    //Route::get('existencia_material/dataAjax', [EntregaOtControllerController::class, 'dataAjax'])->name('existencia-material.dataAjax');
+
+    Route::group(['prefix' => 'pago_ot/{pagoOt}'], function () {
+        Route::get('edit', [PagoOtController::class, 'edit'])->name('pago_ot.edit');
+        Route::patch('/', [PagoOtController::class, 'update'])->name('pago_ot.update');
         
     });
 

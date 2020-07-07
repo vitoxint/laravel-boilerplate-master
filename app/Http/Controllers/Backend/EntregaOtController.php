@@ -83,12 +83,15 @@ class EntregaOtController extends Controller
             $ie_text = $ie_text . '['.$ie->item_ot->folio. ']-'.$ie->item_ot->descripcion.' ' ;
         }
 
+        $fecha = new Carbon($entregaOt->hora_entrega);
+        $fecha = $fecha->format('d-m-Y H:i');
+
         
         return response()->json([
             'success'=>'Got Simple Ajax Request.',
             'receptor' => $entregaOt->receptor,
             'rut_receptor' => $entregaOt->rut_receptor,
-            'hora_entrega' => $entregaOt->hora_entrega,
+            'hora_entrega' => $fecha,
             'encargado' => $entregaOt->encargado->first_name . ' '.$entregaOt->encargado->last_name,
             'items' => $ie_text,
             'id' =>$entregaOt->id,
@@ -168,15 +171,6 @@ class EntregaOtController extends Controller
 
         return response()->json([
             'array'=> $array,
-/*             'receptor' => $entregaOt->receptor,
-            'rut_receptor' => $entregaOt->rut_receptor,
-            'hora_entrega' => $entregaOt->hora_entrega,
-            'encargado' => $entregaOt->encargado->first_name . ' '.$entregaOt->encargado->last_name,
-            'items' => $ie_text,
-            'id' =>$entregaOt->id,
-            'items_id' => $items_id,
-            'estado_ot' => $ot->estado */
-            
            
             ]); 
     }

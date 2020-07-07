@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class OrdenTrabajo extends Model
 {
     protected $fillable = [
-        'cliente_id', 'folio', 'representante_id','user_id', 'estado','cotizacion','orden_compra','fecha_inicio','fecha_termino','entrega_estimada',
+        'cliente_id', 'folio', 'representante_id','user_id', 'estado' , 'estado_pago','cotizacion','orden_compra','fecha_inicio','fecha_termino','entrega_estimada',
         'valor_total',
     ];
 
@@ -39,6 +39,10 @@ class OrdenTrabajo extends Model
 
     public function entregasOt(){
         return $this->hasMany('App\EntregaOt', 'ot_id', 'id');
+    }
+
+    public function abonosOt(){
+        return $this->hasMany('App\PagoOt', 'ot_id', 'id');
     }
 
 /*     public function items_otEntregadas() {

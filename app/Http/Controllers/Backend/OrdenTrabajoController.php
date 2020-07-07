@@ -118,6 +118,7 @@ class OrdenTrabajoController extends Controller
             'cotizacion' => $request->input('cotizacion'),
             'orden_compra' => $request->input('orden_compra'),
             'estado' => '1',
+            'estado_pago' => 1 , 
             'folio' => $maxOt.'/'.$afecha,
             'user_id' => Auth::user()->id, 
             'entrega_estimada' => $entrega_estimada,
@@ -187,7 +188,7 @@ class OrdenTrabajoController extends Controller
     {
         $this->validate($request, [
             
-            'estado' => 'required',
+            //'estado' => 'required',
             'entrega_estimada' => 'required',
         ]);
 
@@ -198,7 +199,7 @@ class OrdenTrabajoController extends Controller
             [                    
                 'cotizacion' => $request->input('cotizacion'),
                 'orden_compra' => $request->input('orden_compra'),
-                'estado' => $request->input('estado'),
+                //'estado' => $request->input('estado'),
                 'entrega_estimada' => $entrega_estimada,
             ]
         );

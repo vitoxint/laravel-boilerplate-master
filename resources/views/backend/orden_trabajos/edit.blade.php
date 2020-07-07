@@ -93,18 +93,18 @@
   
 
                         <div class="form-group row">
-                            {{ html()->label('Estado')->class('col-md-2 form-control-label')->for('estado') }}
+                            {{ html()->label('Estado cumplimiento')->class('col-md-2 form-control-label')->for('statusOt') }}
 
 
 
                             <div class="col-md-2">
-
-                                {{ html()->select('estado',array('1' => 'Sin iniciar', '2' => 'En proceso', '3' =>'Atrasada', '4' => 'Terminada', '5' => 'Entregada',  '6' => 'Anulada'), $trabajo->estado)
+<!-- 
+                                {{ html()->select('estado',array('1' => 'Sin iniciar', '2' => 'En proceso', '3' =>'Atrasada', '4' => 'Terminada', '5' => 'Entregada',  '6' => 'Anulada' ), $trabajo->estado)
                                     ->class('form-control')
                                     ->attribute('maxlength', 191) 
                                     ->required()
                                     
-                                }}
+                                }} -->
                                 <div id="statusOt">
 
                                 @switch($trabajo->estado) 
@@ -126,6 +126,7 @@
                                         @case ('6') 
                                             <span class="badge btn-warning" style="border-radius:12px;"><p style="margin:4px; font-size:16px;"> Anulada </p> </span>
                                         @break;
+                                       
 
                                         @default
                                             {{$item_ot->trabajo->estado}}
@@ -136,7 +137,35 @@
 
                             </div><!--col-->
 
-                            {{ html()->label('Usuario digitador :')->class('col-md-2 form-control-label')->for('user_id') }}
+                            {{ html()->label('Estado Pago:')->class('col-md-1 form-control-label')->for('statusPagoOt') }}
+                            <div class="col-md-2">
+
+                           
+                                <div id="statusPagoOt">
+
+                                @switch($trabajo->estado_pago) 
+                                       
+                                        @case ('1')
+                                            <span class="badge btn-danger" style="border-radius:12px;"><p style="margin:4px; font-size:16px;"> Pendiente </p>  </span>
+                                        @break;
+                                        @case ('2') 
+                                            <span class="badge btn-warning" style="border-radius:12px;"><p style="margin:4px; font-size:16px;"> Abonado </p> </span>
+                                        @break;
+                                        @case ('3') 
+                                            <span class="badge btn-info" style="border-radius:12px;"><p style="margin:4px; font-size:16px;"> Pagada </p>  </span>
+                                        @break;
+                                       
+
+                                        @default
+                                            {{$trabajo->estado_pago}}
+                                        @break;                   
+                                @endSwitch  
+                                </div>
+
+
+                            </div><!--col-->
+
+                            {{ html()->label('Usuario digitador :')->class('col-md-1 form-control-label')->for('user_id') }}
 
                             <div class="col-md-3">
                             
@@ -270,7 +299,7 @@
                 <div class="row">
                     <div class="col-sm-5">
                         <h4 class="card-title mb-0">
-                            Ítems OT <small class="text-muted">Todos los ítems</small>
+                            Ítems de la Orden de Trabajo <small class="text-muted">Todos los ítems</small>
                         </h4>
                     </div><!--col-->
 
@@ -360,6 +389,153 @@
         </div><!--card-->
 
 
+
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-5">
+                        <h4 class="card-title mb-0">
+                            Registro de pagos/abonos
+                        </h4>
+                    </div><!--col-->
+
+                </div><!--row-->
+
+                <div class="row mt-4 mb-4">
+                    <div class="col">
+
+                    <div class="form-group row">
+
+                    <div class="col-md-12">
+                        <a style="color:black;" class="btn-btn-default"  data-toggle="collapse" href="#formAbono" role="button" aria-expanded="false" aria-controls="#formAbono">
+                            Agregar abono
+                        </a>   
+                    </div>  
+                        
+
+                    </div>
+
+                    <div id="formAbono" >
+                    <div class="card card-body">
+
+                        <div class="form-group row" >
+
+                            {{ html()->label('Método pago:')->class('col-md-1 form-control-label')->for('medio_pago') }}
+
+                            <div class="col-md-2">
+                                {{ html()->select('medio_pago',array('1' => 'Efectivo', '2' => 'Tarjeta (Transbank)', '3' =>'Transferencia bancaria', '4' => 'Cuenta cliente'),null)
+                                    ->class('form-control')
+                                    ->attribute('maxlength', 191) 
+                                    ->required()
+                                    
+                                }}
+                            </div><!--col-->                        
+
+                            {{ html()->label('Monto $:')->class('col-md-1 form-control-label')->for('monto') }}
+
+                            <div class="col-md-2">
+                                {{ html()->text('monto')
+                                    ->class('form-control')  
+                                    ->value(0)                                                              
+                                    ->attribute('maxlength', 191)                                          
+                                    ->autofocus()
+                                    ->required()                                   
+                                    }}
+                            </div><!--col-->
+
+
+                            {{ html()->label('Cuenta cliente:')->class('col-md-1 form-control-label')->for('cuenta_cl') }}
+
+                            
+
+                            <div class="col-md-2">
+                                {{ html()->select('cuenta_cl',null)
+                                    ->class('form-control')
+                                    ->attribute('maxlength', 191) 
+                              
+                                    
+                                }}
+                            </div><!--col-->
+
+                            <div class="col col-md-2">
+                                <button class="btn btn-dark btn-xs" onclick="añadir_abono()"><i class="fas fa-check"></i> Confirmar abono </button>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    </div>
+                    <div class="col">
+
+                    </div><!--form-group--> 
+
+                    <div class="form-group row" style="">
+
+                        <div class="col-md-12">
+                            <div id="abonos" class="table-responsive">
+                                <table class='table table-bordered table-hover' id="tab_logic">
+                                    <thead>
+                                        <tr class='info'>
+                                            <th style='width:7%;'hidden="true">ID abono.</th>
+                                            <th style='width:16%;'>Fecha</th>        
+                                            <th style='width:24%;'>Monto</th>
+                                            <th style='width:17%;'>Medio Pago </th>
+                                            <th style='width:40%;'>Digitador</th>                                          
+                                            <th style='width:13%;'>Acción</th>
+                                        </tr>
+                                    </thead>
+                                    <thead id="dynamic_field2">
+
+                                    @foreach($trabajo->abonosOt as $abono)
+                                    <tr id="row2{{$abono->id}}">
+                                            <td class="custom-tbl" hidden="true"><input class='form-control input-sm'style='width:100%;' type="text"  value="{{$abono->id}}" id="pr_item{{$abono->id}}" name="pr_item[]" readonly required></td>
+                                            <?php $fecha_ab = new Carbon\Carbon($abono->fecha_abono); $fecha_ab = $fecha_ab->format('d-m-Y H:i'); ?>
+                                            <td> <p id="fecha_abono{{$abono->id}}" name="abono_id[]"> {{$fecha_ab}} </p></td>  
+                                            <td style="text-align:right;"><p  id="monto{{$abono->id}}"  name="monto[]">@money($abono->monto)</p></td>
+                                            <td><p  id="medio_pago{{$abono->id}}"  name="medio_pago[]">
+                                                @switch($abono->medio_pago)
+                                                    @case(1)
+                                                        Efectivo
+                                                    @break
+                                                    @case(2)
+                                                        Tarjeta (Transbank)
+                                                    @break
+                                                    @case(3)
+                                                        Transferencia bancaria
+                                                    @break
+                                                    @case(4)
+                                                        Cuenta cliente
+                                                    @break
+
+                                                @endswitch
+                                            
+                                            </p></td>
+
+                                            <td><p  id="digitador{{$abono->id}}"  name="digitador[]">{{$abono->encargado->first_name}} {{$abono->encargado->last_name}}</p></td>
+                                         
+                                            <td class="custom-tbl"><!-- <button type="button" id="{{$abono->id}}" class="btn-info btn-sm btn_add" name="add"><span class="fas fa-sync-alt"></span></button> -->
+                                                           
+                                                <button type="button" name="remove" id="{{$abono->id}}" class="btn-danger btn-sm btn_remove_abono"><span class="fas fa-times"></span></button>
+                                                           
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                                                   
+                                    </thead>
+                                </table>
+                        </div><!--col--></div>
+
+                        </div><!--form-group-->  
+                                
+                    </div><!--col-->
+                </div><!--row-->
+            </div><!--card-body-->
+        </div><!--card-->
+        
+
+
         <div class="card">
             
             <div class="card-body">
@@ -380,70 +556,82 @@
 
                     <div class="form-group row">
 
-                        
-                            {{ html()->label('Agregar entrega:')->class('col-md-6 form-control-label')->for('') }}  
+                    <div class="col-md-12">
+                        <a style="color:black;" class="btn-btn-default"  data-toggle="collapse" href="#formEntrega" role="button" aria-expanded="false" aria-controls="#formEntrega">
+                            Agregar entrega
+                        </a>   
+                    </div>  
                         
 
                     </div>
 
-                    <div class="form-group row" >
+                    <div id="formEntrega" >
+                    <div class="card card-body">
 
-                        {{ html()->label('Receptor :')->class('col-md-1 form-control-label')->for('receptor') }}
+                        <div class="form-group row" >
 
-                        <div class="col-md-3">
-                            {{ html()->text('receptor')
-                                ->class('form-control')
-                                                            
-                                ->attribute('maxlength', 191)                                          
-                                ->autofocus()
-                                ->required()                                   
-                                }}
-                        </div><!--col-->
+                            {{ html()->label('Receptor :')->class('col-md-1 form-control-label')->for('receptor') }}
 
-                        {{ html()->label('RUT Receptor:')->class('col-md-1 form-control-label')->for('rut_receptor') }}
+                            <div class="col-md-3">
+                                {{ html()->text('receptor')
+                                    ->class('form-control')
+                                                                
+                                    ->attribute('maxlength', 191)                                          
+                                    ->autofocus()
+                                    ->required()                                   
+                                    }}
+                            </div><!--col-->
 
-                        <div class="col-md-2">
-                            {{ html()->text('rut_receptor')
-                                ->class('form-control')                                
-                                ->attribute('maxlength', 12)                                            
-                                ->autofocus()
+                            {{ html()->label('RUT Receptor:')->class('col-md-1 form-control-label')->for('rut_receptor') }}
 
-                                }}
-                        </div><!--col-->
+                            <div class="col-md-2">
+                                {{ html()->text('rut_receptor')
+                                    ->class('form-control')                                
+                                    ->attribute('maxlength', 12)                                            
+                                    ->autofocus()
 
-                        {{ html()->label('Fecha:')->class('col-md-1 form-control-label')->for('hora') }}
+                                    }}
+                            </div><!--col-->
 
-                        <div class="col-md-3">
-                            <div class='input-group date' id='hora' name="hora">
-                            <?php $fecha = Carbon\Carbon::now(); $fecha = $fecha->format('d-m-Y H:i'); ?>
-                                <input type='text' class="form-control" required="true" value="{{$fecha}}"/>
-                                <span class="input-group-addon">
-                                    <span class="fa fa-calendar btn btn-md"></span>
-                                </span>
-                            </div>
-                        </div><!--col-->
+                            {{ html()->label('Fecha:')->class('col-md-1 form-control-label')->for('hora') }}
 
-                    </div>
+                            <div class="col-md-3">
+                                <div class='input-group date' id='hora' name="hora">
+                                <?php $fecha = Carbon\Carbon::now(); $fecha = $fecha->format('d-m-Y H:i'); ?>
+                                    <input type='text' class="form-control" required="true" value="{{$fecha}}"/>
+                                    <span class="input-group-addon">
+                                        <span class="fa fa-calendar btn btn-md"></span>
+                                    </span>
+                                </div>
+                            </div><!--col-->
 
-                    <div class="form-group row">
-
-                         {{ html()->label('Agregar ítems')->class('col-md-1 form-control-label')->for('items') }}
-                        <div class="col-md-7">
-                            <select name="items[]" id="items" class="form-control" multiple="multiple" >
-                            </select>
-                        </div><!--col-->
-
-                   
-                        <div class="col col-md-2">
-                            <button class="btn btn-dark btn-xs" onclick="añadir_entrega()"><i class="fas fa-check"></i> Registrar </button>
                         </div>
+
+                        <div class="form-group row">
+
+                            {{ html()->label('Agregar ítems')->class('col-md-1 form-control-label')->for('items') }}
+                            <div class="col-md-7" >
+                                <select name="items[]" id="items" class="form-control" multiple="multiple" >
+                                </select>
+                            </div><!--col-->
+
+                    
+                            <div class="col col-md-2">
+                                <button class="btn btn-dark btn-xs" onclick="añadir_entrega()"><i class="fas fa-check"></i> Registrar </button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    </div>
+                    <div class="col">
 
                     </div><!--form-group--> 
 
                     <div class="form-group row" style="">
 
                         <div class="col-md-12">
-                            <div id="materiales" class="table-responsive">
+                            <div id="entregas" class="table-responsive">
                                 <table class='table table-bordered table-hover' id="tab_logic">
                                     <thead>
                                         <tr class='info'>
@@ -461,7 +649,8 @@
                                     @foreach($trabajo->entregasOt as $entrega)
                                     <tr id="row{{$entrega->id}}">
                                             <td class="custom-tbl" hidden="true"><input class='form-control input-sm'style='width:100%;' type="text"  value="{{$entrega->id}}" id="pr_item{{$entrega->id}}" name="pr_item[]" readonly required></td>
-                                            <td> <p id="hora_entrega{{$entrega->id}}" name="entrega_id[]"> {{$entrega->hora_entrega}} </p></td>  
+                                            <?php $fecha_en = new Carbon\Carbon($entrega->hora_entrega); $fecha_en = $fecha_en->format('d-m-Y H:i'); ?>
+                                            <td> <p id="hora_entrega{{$entrega->id}}" name="entrega_id[]"> {{$fecha_en}} </p></td>  
                                             <td><p  id="receptor{{$entrega->id}}"  name="receptor[]">[{{$entrega->rut_receptor}}]-{{$entrega->receptor}}</p></td>
                                             <td><p  id="encargado{{$entrega->id}}"  name="encargado[]">{{$entrega->encargado->first_name}} {{$entrega->encargado->last_name}}</p></td>
 
@@ -473,7 +662,7 @@
                                          
                                             <td class="custom-tbl"><!-- <button type="button" id="{{$entrega->id}}" class="btn-info btn-sm btn_add" name="add"><span class="fas fa-sync-alt"></span></button> -->
                                                            
-                                                <button type="button" name="remove" id="{{$entrega->id}}" class="btn-danger btn-sm btn_remove"><span class="fas fa-times"></span></button>
+                                                <button type="button" name="remove" id="{{$entrega->id}}" class="btn-danger btn-sm btn_remove_entrega"><span class="fas fa-times"></span></button>
                                                            
                                             </td>
                                         </tr>
@@ -503,6 +692,10 @@
 
            
         </div><!--card-->
+
+
+
+        
 
 
 </div>
@@ -654,7 +847,7 @@
 
 
 
-        $(document).on('click', '.btn_remove', function(){  
+        $(document).on('click', '.btn_remove_entrega', function(){  
             var button_id = $(this).attr("id");
 
             $.ajax({
@@ -690,6 +883,109 @@
             
         });  
 
+    </script>
+
+
+    <script type="text/javascript">
+
+        var formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+        });
+
+   
+        function añadir_abono(){
+        
+        var ot_id =  <?php echo $trabajo->id; ?>;
+        var valor = $('#monto').val();
+        var medio_pago = $("#medio_pago").val();
+        var cuenta_cl = $("#cuenta_cl").val();
+        
+
+       
+
+            $.ajax({
+            type:'POST',
+            url:'{{route("admin.pago_ot.store")}}',
+            headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+            data:{ ot_id:ot_id, valor:valor, medio_pago:medio_pago ,cuenta_cl:cuenta_cl  },
+            success:function(data){
+                //alert(data.success);
+
+                var monto_abono = data.monto;
+                var numFinal = parseFloat(monto_abono);
+                $('#dynamic_field2').append(
+                    '<tr id="row2'+data.id+'">'+
+                                        ' <td class="custom-tbl" hidden="true"><input class="form-control input-sm" style="width:100%;" type="text"  value="'+data.id+'" id="pr_item'+data.id+'" name="pr_item[]" readonly required></td>'+
+                                        ' <td> <p id="fecha_abono'+data.id+'" name="abono_id[]">'+ data.fecha_abono+' </p></td>'  +
+                                        ' <td> <p  id="monto'+data.id+'"  name="monto[]"> '+ formatter.format(numFinal.toFixed(2)) +'</p></td>'+
+                                        ' <td> <p  id="medio_pago'+data.id+'"  name="medio_pago[]">'+data.medio_pago+'</p></td>'+
+
+                                        ' <td id="items'+data.id+'"  name="encargado[]"> '+data.encargado+'</td>'+
+
+                                        ' <td class="custom-tbl"><!-- <button type="button" id="" class="btn-info btn-sm btn_add" name="add"><span class="fas fa-sync-alt"></span></button> -->'+
+                                                        
+                                        '     <button type="button" name="remove" id="'+data.id+'" class="btn-danger btn-sm btn_remove_abono"><span class="fas fa-times"></span></button>  </td></tr>'
+                    ); 
+
+                    if(data.estado_pago == '3'){
+                              $("#statusPagoOt").html('<span class="badge btn-info" style="border-radius:12px;"><p style="margin:4px; font-size:16px;"> Pagado </p>  </span>');
+                              //$("#estado").val('7');
+                      }   
+
+                    if(data.estado_pago == '2'){
+                            $("#statusPagoOt").html('<span class="badge btn-warning" style="border-radius:12px;"><p style="margin:4px; font-size:16px;"> Abonado </p>  </span>');
+                            //$("#estado").val('7');
+                    } 
+           
+            },
+
+            error: function() {
+                console.log("No se ha podido obtener la información");
+            }
+
+            });
+      
+
+
+        }
+
+
+
+        $(document).on('click', '.btn_remove_abono', function(){  
+            var button_id = $(this).attr("id");
+
+            $.ajax({
+            type:'POST',
+            url:'{{route("admin.pago_ot.destroy")}}',
+            headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+            data:{item:button_id},
+            success:function(data){
+                
+                $('#row2'+button_id+'').remove(); 
+
+
+                if(data.estado_pago == 2){
+                    $("#statusPagoOt").html('<span class="badge btn-warning" style="border-radius:12px;"><p style="margin:4px; font-size:16px;"> Abonada </p>  </span>');
+                }   
+                if(data.estado_pago == 1){
+                    $("#statusPagoOt").html('<span class="badge btn-danger" style="border-radius:12px;"><p style="margin:4px; font-size:16px;"> Pendiente </p>  </span>');
+                } 
+
+                   
+                     
+            },
+            error: function() {
+                console.log("No se ha podido obtener la información");
+            }
+
+            });                      
+            
+        }); 
     </script>
 
 
