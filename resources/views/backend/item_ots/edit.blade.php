@@ -152,6 +152,7 @@
                             <div class="col-md-2">
                                 {{ html()->date('fecha_inicio')
                                     ->class('form-control')
+                                    ->value($item_ot->fecha_inicio) 
                                     ->attribute('maxlength', 191)      
                                     ->autofocus()
                                     
@@ -163,7 +164,8 @@
                             <div class="col-md-2">
                                 {{ html()->date('fecha_termino')
                                     ->class('form-control')
-                                    ->attribute('maxlength', 191)      
+                                    ->attribute('maxlength', 191)  
+                                       
                                     ->autofocus()
                                     
                                     }}
@@ -193,8 +195,17 @@
             {{ html()->closeModelForm() }}    
         </div><!--card-->
 
+<nav>
+    <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+        <a class="nav-item nav-link" id="nav-adjuntos-tab" data-toggle="tab" href="#nav-adjuntos" role="tab" aria-controls="nav-adjuntos" aria-selected="true"><i class="fas fa-photo-video"> </i> Archivos adjuntos</a>
+        <!-- <a class="nav-item nav-link" id="nav-rubros-tab" data-toggle="tab" href="#nav-rubros" role="tab" aria-controls="nav-rubros" aria-selected="false">Rubros e ítems</a> -->
+        <a class="nav-item nav-link active" id="nav-procesos-tab" data-toggle="tab" href="#nav-procesos" role="tab" aria-controls="nav-procesos" aria-selected="false"><i class="fas fa-tasks"></i> Procesos y tareas</a>
+        <a class="nav-item nav-link" id="nav-materiales-tab" data-toggle="tab" href="#nav-materiales" role="tab" aria-controls="nav-materiales" aria-selected="false"><i class="fas fa-pallet"></i> Utilización de materiales</a>
+    </div>
+</nav>
 
-
+<div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+    <div class="tab-pane fade" id="nav-materiales" role="tabpanel" aria-labelledby="nav-materiales-tab">
         <div class="card">
             <div class="card-body">
                     <div class="row">
@@ -219,7 +230,7 @@
                             {{ html()->label(__('Seleccionar material *'))->class('col-md-2 form-control-label')->for('material_id') }}
 
                             <div class="col-md-4">                       
-                                <select id="material_id" name="material_id" class="form-control" >                                       
+                                <select id="material_id" name="material_id" style="width:100%;" class="form-control" >                                       
                                 </select>
 
                                 
@@ -331,23 +342,7 @@
                             </thead>
                             <thead id="dynamic_field">
                            
-<!--                                 <tr id="addr0">
-                                    <td class="custom-tbl"><input class='form-control input-sm'style='width:100%;' type="text" value="1" id="pr_item0" name="pr_item[]" readonly required></td>
-
-                                    <td class="custom-tbl">
-                                        <input class='form-control input-sm' style='width:100%;' type="text" id="material_id00" oninput='multiply(0);' name="material_id[]">
-                                             
-                                        </td> 
-
-                                    <td class="custom-tbl"><input class='form-control input-sm' style='width:100%;' type="text" id="pr_desc0" name="pr_desc[]"></td> 
-                                    <td><input class='form-control input-sm' style='width:100%;' type="text" id="pr_largo0" oninput='multiply(0);' name="pr_largo[]"></td>
-                                    <td><input class='form-control input-sm' style='width:100%;' type="text" id="pr_ancho0" oninput='multiply(0);' name="pr_ancho[]"></td>
-                                    <td><input class='form-control input-sm' style='width:100%;' type="text" id="pr_unit0" oninput='multiply(0);' name="pr_unit[]"></td>
-                                    <td class="custom-tbl"><input class='estimated_cost form-control input-sm' id="pr_cpi0" style='width:100%;' type="text" name="pr_cpi[]" readonly></td>
-                                    <td class="custom-tbl"><button type="button" id="0" class="btn-info btn-sm btn_add" name="add"><span class="fas fa-plus"></span></button></td>
-                                </tr> -->
-
-                                @foreach($item_ot->materialOt as $materialA)
+                            @foreach($item_ot->materialOt as $materialA)
                             <tr id="row{{$materialA->id}}">
                                     <td class="custom-tbl" hidden="true"><input class='form-control input-sm'style='width:100%;' type="text"  value="{{$materialA->id}}" id="pr_item{{$materialA->id}}" name="pr_item[]" readonly required></td>
                                     <td class="custom-tbl"><input class='form-control input-sm' style='width:100%;' type="text" value="{{$materialA->material->material}}" id="material_id{{$materialA->id}}" oninput='multiply("{{$materialA->id}}");' name="material_id[]">
@@ -412,7 +407,7 @@
                             </thead>
                             <tbody >
 
-                            <tbody>
+                            </tbody>
                             <tfoot>
                                 <tr class='info'>
                                     <td style='width:60%;text-align:right;padding:4px;' colspan='4'>Total Neto: $</td>
@@ -426,13 +421,15 @@
 
                         </table>
          
-                    </div>                  
+                    </div>  </div>                
 
             </div><!--card-body-->
             <div class="card-footer clearfix">                 
             </div><!--card-footer-->                
         </div><!--card-->
+    </div>
 
+    <div class="tab-pane fade show active" id="nav-procesos" role="tabpanel" aria-labelledby="nav-procesos-tab">
 
         <div class="card">
                 <div class="card-body">
@@ -536,7 +533,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        
+                       
 
                     </div><!--col-->
                 </div><!--row-->
@@ -552,15 +549,20 @@
                         </div>
                     </div><!--col-->
                 </div><!--row-->
-    </div><!--card-body-->
+            </div><!--card-body-->
 
-                    <div class="card-footer clearfix">                        
+            <div class="card-footer clearfix">                        
                 </div><!--card-footer-->   
-        </div><!--card-->   
+        </div><!--card-->  
 
+    </div> 
+
+    
+    
+    <div class="tab-pane fade" id="nav-adjuntos" role="tabpanel" aria-labelledby="nav-adjuntos-tab">
 
         <div class="card">
-        <div class="card-body">
+            <div class="card-body">
                 <div class="row">
                     <div class="col-sm-5">
                         <h4 class="card-title mb-0">
@@ -588,11 +590,15 @@
               
                     </div>                  
 
-                </div><!--card-body-->
-                <div class="card-footer clearfix">                 
-                </div><!--card-footer-->                
-            </div><!--card-->
+            </div><!--card-body-->
 
+            <div class="card-footer clearfix">                 
+            </div><!--card-footer-->  
+
+        </div><!--card-->
+    </div>
+
+</div>
 
 </div>
 

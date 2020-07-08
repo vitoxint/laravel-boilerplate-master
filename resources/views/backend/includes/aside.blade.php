@@ -1,26 +1,28 @@
 <aside class="aside-menu col-md-2">
 
-Tema fondo: 
-<select name="select" class="form-control">
-    <option value="black" selected>-Seleccione un color para otra cosa-</option> 
-    <option value="black">Negro</option> 
-    <option value="lavender">Claro</option> 
-    <option value="salmon">Salmón</option> 
-    <option value="lightpink">Light Pink</option>
-    <option value="olive">Olivo</option>
-    <option value="orangered">Naranja</option>
+<div style="padding-top:50%;">
+  Tema fondo: 
+  <select name="select" class="form-control">
+      <option value="black" selected>-Seleccione un color para otra cosa-</option> 
+      <option value="black">Negro</option> 
+      <option value="lavender">Claro</option> 
+      <option value="salmon">Salmón</option> 
+      <option value="lightpink">Light Pink</option>
+      <option value="olive">Olivo</option>
+      <option value="orangered">Naranja</option>
 
-    <option value="brown">Marrón</option> 
-    <option value="orange">Amarillo</option>
-    <option value="magenta">Magenta</option>
-    <option value="green">Verde</option> 
-    <option value="#004C70">Azul metálico</option> 
-    <option value="Blue">Azul</option>
-    <option value="Cyan">Cyan</option>
-    <option value="darkviolet">Violeta</option> 
+      <option value="brown">Marrón</option> 
+      <option value="orange">Amarillo</option>
+      <option value="magenta">Magenta</option>
+      <option value="green">Verde</option> 
+      <option value="#004C70">Azul metálico</option> 
+      <option value="Blue">Azul</option>
+      <option value="Cyan">Cyan</option>
+      <option value="darkviolet">Violeta</option> 
 
-    
- </select>
+      
+  </select>
+ </div>
 
 
 </aside>

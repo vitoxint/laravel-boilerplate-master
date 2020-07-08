@@ -26,7 +26,7 @@
                 {{ html()->label(__('Seleccionar material *'))->class('col-md-2 form-control-label')->for('material_id') }}
 
                 <div class="col-md-6">                       
-                    <select id="material_id" name="material_id" class="form-control" >                                       
+                    <select id="material_id" name="material_id" style="width: 100%" class="form-control" >                                       
                     </select>
 
                     

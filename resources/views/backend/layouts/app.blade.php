@@ -21,6 +21,8 @@
     {{ style(mix('css/backend.css')) }}
     {{ style('css/no-more-table.css') }}
     {{ style('css/select2.css') }}
+    {{ style('css/nav-tabs.css') }}
+
     {{ style('datepicker/css/bootstrap-datetimepicker.css') }}
 
     @stack('after-styles')

@@ -291,9 +291,20 @@
 
             {{ html()->closeModelForm() }}    
         </div><!--card-->
+
+
+        <nav>
+            <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                <a class="nav-item nav-link active" id="nav-items-tab" data-toggle="tab" href="#nav-items" role="tab" aria-controls="nav-general" aria-selected="true"><i class="fas fa-boxes"> </i> ítems de la Orden de Trabajo</a>
+                <!-- <a class="nav-item nav-link" id="nav-rubros-tab" data-toggle="tab" href="#nav-rubros" role="tab" aria-controls="nav-rubros" aria-selected="false">Rubros e ítems</a> -->
+                <a class="nav-item nav-link" id="nav-pagos-tab" data-toggle="tab" href="#nav-pagos" role="tab" aria-controls="nav-contact" aria-selected="false"><i class="fas fa-coins"></i> Registro de pagos</a>
+                <a class="nav-item nav-link" id="nav-entregas-tab" data-toggle="tab" href="#nav-entregas" role="tab" aria-controls="nav-about" aria-selected="false"><i class="fas fa-truck-loading"></i> Registro de entregas</a>
+            </div>
+        </nav>
     
 
-
+<div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="nav-items" role="tabpanel" aria-labelledby="nav-items-tab">
         <div class="card">
             <div class="card-body">
                 <div class="row">
@@ -333,7 +344,7 @@
                                         <td align="right" data-title="Valor Unitario:">@money($item_ot->valor_unitario )</td>
                                         <td align="right" data-title="Valor Parcial:"> @money($item_ot->valor_parcial ) </td>
                                         
-                                        <td align="center">{{$item_ot->avanceItemOt()}}</td>
+                                        <td data-title="Avance:" align="center">{{$item_ot->avanceItemOt()}}</td>
                                         <td style="text-align:center;" data-title="Estado ítem OT:" id="itemOt{{$item_ot->id}}">
                                             @switch($item_ot->estado)
                                                 @case(1)
@@ -387,10 +398,10 @@
                 </div><!--row-->
             </div><!--card-body-->
         </div><!--card-->
+    </div>
 
 
-
-
+    <div class="tab-pane fade" id="nav-pagos" role="tabpanel" aria-labelledby="nav-pagos-tab">
         <div class="card">
             <div class="card-body">
                 <div class="row">
@@ -416,7 +427,7 @@
 
                     </div>
 
-                    <div id="formAbono" >
+                    <div id="formAbono" class="collapse" >
                     <div class="card card-body">
 
                         <div class="form-group row" >
@@ -533,9 +544,9 @@
                 </div><!--row-->
             </div><!--card-body-->
         </div><!--card-->
-        
+    </div>    
 
-
+    <div class="tab-pane fade" id="nav-entregas" role="tabpanel" aria-labelledby="nav-entregas-tab">
         <div class="card">
             
             <div class="card-body">
@@ -565,7 +576,7 @@
 
                     </div>
 
-                    <div id="formEntrega" >
+                    <div class="collapse" id="formEntrega" >
                     <div class="card card-body">
 
                         <div class="form-group row" >
@@ -611,7 +622,7 @@
 
                             {{ html()->label('Agregar ítems')->class('col-md-1 form-control-label')->for('items') }}
                             <div class="col-md-7" >
-                                <select name="items[]" id="items" class="form-control" multiple="multiple" >
+                                <select name="items[]" id="items" class="form-control" style="width:100%" multiple="multiple" >
                                 </select>
                             </div><!--col-->
 
@@ -694,7 +705,8 @@
         </div><!--card-->
 
 
-
+    </div>
+</div>
         
 
 
