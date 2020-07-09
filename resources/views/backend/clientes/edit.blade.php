@@ -93,7 +93,7 @@
                                     ->class('form-control')
                                     ->placeholder(__('+569999999999'))
                                     ->attribute('maxlength', 12)
-                                    ->required()
+                                    
                                      }}
                             </div><!--col-->
                         </div><!--form-group-->
