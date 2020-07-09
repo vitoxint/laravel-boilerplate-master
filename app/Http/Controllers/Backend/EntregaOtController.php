@@ -50,6 +50,7 @@ class EntregaOtController extends Controller
             'receptor' => $request->get('receptor'),
             'rut_receptor' => $request->get('rut_receptor'),
             'ot_id' => $ot->id,
+            'guia_despacho' => $request->get('guia_despacho'),
             'user_id' => Auth::user()->id, 
             'hora_entrega' => $entrega_fecha,
 
@@ -96,7 +97,8 @@ class EntregaOtController extends Controller
             'items' => $ie_text,
             'id' =>$entregaOt->id,
             'items_id' => $items_id,
-            'estado_ot' => $ot->estado
+            'estado_ot' => $ot->estado,
+            'guia_despacho' =>  $entregaOt->guia_despacho ? $entregaOt->guia_despacho : 'N/A',
             
            
             ]); 

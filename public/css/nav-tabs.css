@@ -11,7 +11,7 @@
   
   }
   
-  nav > div a.nav-item.nav-link
+   nav > div a.nav-item.nav-link
   {
     border: none;
       padding: 18px 25px;
@@ -19,6 +19,7 @@
       background:#272e38;
       border-radius:0;
   }
+  
   
   nav > div a.nav-item.nav-link.active
   {
@@ -38,14 +39,17 @@
     border: 15px solid transparent;
     border-top-color: hsla(240, 85%, 34%, 0.795) ;
   }
+
+  
   .tab-content{
     background: #fdfdfd;
-      line-height: 25px;
+      line-height: 15px;
       border: 1px solid #ddd;
       border-top:5px solid hsla(240, 85%, 34%, 0.795);
       border-bottom:5px solid hsla(240, 85%, 34%, 0.795);
       padding:30px 25px;
   }
+  
   
   nav > div a.nav-item.nav-link:hover
   {
@@ -64,4 +68,4 @@
       font-weight: bold;
       border-radius:0;
       transition:background 0.20s linear;
-  }
+  } 

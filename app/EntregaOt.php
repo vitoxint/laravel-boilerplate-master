@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class EntregaOt extends Model
 {
     protected $fillable = [
-        'user_id' , 'receptor' , 'rut_receptor' , 'hora_entrega'  ,'ot_id'
+        'user_id' , 'receptor' , 'rut_receptor' , 'hora_entrega'  ,'ot_id', 'guia_despacho'
     ];
 
     protected $hidden = [ 

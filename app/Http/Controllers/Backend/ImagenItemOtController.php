@@ -40,29 +40,7 @@ class ImagenItemOtController extends Controller
      */
     public function store(Request $request )
     {
-    /*     $this->validate($request, [
-                       
-            'url'  =>  'required|max:32048',
-            
-        ]); 
 
-        $file   =   $request->file('url');
-
-        if($file){
-            $name = $file->store('/imagenes_itemot', 'public');
-        }else{
-            return back()->withFlashDanger('Error al guardar la imagen');
-        }
-          
-        $imagen= ImagenItemOt::create([
-
-            'url' => $name,
-            'itemot_id'  => $item_ot->id,                 
-        ]); 
-
-     
-            return back()->withFlashSuccess('Imagen registrada correctamente'); */
-            //$file = $request->file->getClientOriginalName();
             $imageName = request()->file->getClientOriginalName();
             $extension = request()->file->getExtension();
             $mime = request()->file->getClientMimeType();
@@ -96,32 +74,26 @@ class ImagenItemOtController extends Controller
                     [
                         'extension' => "other",
                     ]
-                    );
+                );
             }
-    
-           
+              
             return response()->json(['uploaded' => $name]);
-
-
 
     }
 
     
 
     public function display(Request $request)
+    {
 
-{
+        $key= $request->key;
+        $imagen = ImagenItemOt::find($key);
 
-    //$path = storage_public($filename);
+        $contents = Storage::get($imagen->url);
 
-    $key= $request->key;
-    $imagen = ImagenItemOt::find($key);
+        return $contents;
 
-    $contents = Storage::get($imagen->url);
-
-    return $contents;
-
-}
+    }
 
     /**
      * Display the specified resource.

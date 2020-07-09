@@ -98,8 +98,9 @@ class PagoOtController extends Controller
             'estado_ot' => $ot->estado ,
             'medio_pago' => $medio_pago,
             'estado_pago' => $ot->estado_pago,
-            
-           
+            'abonos' => $ot->abonosOt->sum('monto'),
+            'saldos' =>   (float)$ot->valor_total * 1.19 - (float)$ot->abonosOt->sum('monto'),
+                       
             ]); 
     }
 
@@ -172,6 +173,8 @@ class PagoOtController extends Controller
 
         return response()->json([
             'estado_pago'=> $ot->estado_pago,
+            'abonos' => $ot->abonosOt->sum('monto'),
+            'saldos' =>   (float)$ot->valor_total * 1.19 - (float)$ot->abonosOt->sum('monto'),
            
             ]); 
     }

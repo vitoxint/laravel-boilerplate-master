@@ -29,7 +29,7 @@
                             
                             {{ html()->text('cliente_id')
                                     ->class('form-control')
-                                    ->value($trabajo->cliente->razon_social)
+                                    ->value('['.$trabajo->cliente->rut_cliente.'] - '. $trabajo->cliente->razon_social)
                                     ->attribute('maxlength', 191)
                                     ->disabled()                                   
                                      }}
@@ -65,9 +65,9 @@
                     </div><!--form-group--> 
 
                         <div class="form-group row">
-                        {{ html()->label('Cotización')->class('col-md-2 form-control-label')->for('cotizacion') }}
+                        {{ html()->label('Cotización :')->class('col-md-2 form-control-label')->for('cotizacion') }}
 
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 {{ html()->text('cotizacion')
                                     ->class('form-control')
                                     ->placeholder('Cotización referencia (opcional)')
@@ -75,20 +75,34 @@
                                      }}
                             </div><!--col-->
 
-                            
-                        </div><!--form-group-->
+                            {{ html()->label('O/C :')->class('col-md-1 form-control-label')->for('orden_compra') }}
 
-
-                        <div class="form-group row">
-                            {{ html()->label('Orden compra')->class('col-md-2 form-control-label')->for('orden_compra') }}
-
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 {{ html()->text('orden_compra')
                                     ->class('form-control')
                                     ->placeholder('orden compra referencia (opcional)')
                                     ->attribute('maxlength', 191)      
                                     ->autofocus() }}
-                            </div><!--col-->
+                            </div><!--col-->  
+
+                            {{ html()->label('Digitador :')->class('col-md-1 form-control-label')->for('user_id') }}
+
+                            <div class="col-md-2">
+                            
+                                {{ html()->text('user_id')
+                                    ->class('form-control')
+                                    ->value($trabajo->usuario->first_name .' '.$trabajo->usuario->last_name )
+                                    ->disabled()
+                                    ->attribute('maxlength', 191)      
+                                    ->autofocus() }}
+                            </div><!--col-->                          
+
+                            
+                        </div><!--form-group-->
+
+
+                        <div class="form-group row">
+
                         </div><!--form-group-->                        
   
 
@@ -165,17 +179,17 @@
 
                             </div><!--col-->
 
-                            {{ html()->label('Usuario digitador :')->class('col-md-1 form-control-label')->for('user_id') }}
+                            {{ html()->label('N°Factura:')->class('col-md-1 form-control-label')->for('factura') }}
 
-                            <div class="col-md-3">
-                            
-                                {{ html()->text('user_id')
+                            <div class="col-md-2">
+                                {{ html()->text('factura')
                                     ->class('form-control')
-                                    ->value($trabajo->usuario->first_name .' '.$trabajo->usuario->last_name )
-                                    ->disabled()
+                                    ->placeholder('N°Factura (opcional)')
                                     ->attribute('maxlength', 191)      
                                     ->autofocus() }}
-                            </div><!--col-->
+                            </div><!--col--> 
+
+
                             
                         </div><!--form-group-->  
 
@@ -256,7 +270,39 @@
                                      }}
                             </div><!--col-->
 
-                        </div><!--form-group-->                                                     
+                        </div><!--form-group-->    
+
+
+                        <div class="form-group row">
+                            {{ html()->label('Total abonos :')->class('col-md-2 form-control-label')->for('abonos') }}
+
+                            <div class="col-md-2">
+                                {{ html()->text('abonos')
+                                    ->class('form-control')
+                                    ->value('$  '. number_format($trabajo->abonosOt->sum('monto'),0, ',' , '.'  ))                                   
+                                    ->attribute('maxlength', 191)
+                                    ->disabled()      
+                                    ->autofocus()
+                                    
+                                    ->required() }}
+                            </div><!--col-->
+
+                            {{ html()->label('Saldos :')->class('col-md-1 form-control-label')->for('saldos') }}
+
+                            <div class="col-md-2">
+                                {{ html()->text('saldos')
+                                    ->class('form-control')
+                                    ->value('$  '.number_format(   $trabajo->valor_total * 1.19 - $trabajo->abonosOt->sum('monto')   ,0, ',' , '.' ) )      
+                                    ->attribute('maxlength', 191)  
+                                    ->disabled()      
+                                    ->autofocus()
+                                    
+                                     }}
+                            </div><!--col-->
+
+                        </div><!--form-group-->   
+
+
 
                         </div><!--col-->
                     </div><!--row-->
@@ -621,9 +667,20 @@
                         <div class="form-group row">
 
                             {{ html()->label('Agregar ítems')->class('col-md-1 form-control-label')->for('items') }}
-                            <div class="col-md-7" >
+                            <div class="col-md-6" >
                                 <select name="items[]" id="items" class="form-control" style="width:100%" multiple="multiple" >
                                 </select>
+                            </div><!--col-->
+
+                            {{ html()->label('N° Guía Despacho:')->class('col-md-1 form-control-label')->for('guia_despacho') }}
+
+                            <div class="col-md-2">
+                                {{ html()->text('guia_despacho')
+                                    ->class('form-control')                                
+                                    ->attribute('maxlength', 12)                                            
+                                    ->autofocus()
+
+                                    }}
                             </div><!--col-->
 
                     
@@ -649,7 +706,9 @@
                                             <th style='width:7%;'hidden="true">ID entrega.</th>
                                             <th style='width:16%;'>Fecha</th>        
                                             <th style='width:24%;'>Receptor</th>
-                                            <th style='width:17%;'>Encargado </th>
+                                            <th style='width:15%;'>Encargado </th>
+                                            <th style='width:10%;'>N° Guía Desp. </th>
+
                                             <th style='width:40%;'>Ítems</th>
                                            
                                             <th style='width:13%;'>Acción</th>
@@ -664,6 +723,7 @@
                                             <td> <p id="hora_entrega{{$entrega->id}}" name="entrega_id[]"> {{$fecha_en}} </p></td>  
                                             <td><p  id="receptor{{$entrega->id}}"  name="receptor[]">[{{$entrega->rut_receptor}}]-{{$entrega->receptor}}</p></td>
                                             <td><p  id="encargado{{$entrega->id}}"  name="encargado[]">{{$entrega->encargado->first_name}} {{$entrega->encargado->last_name}}</p></td>
+                                            <td style="text-align:center;"><p  id="guia{{$entrega->id}}"  name="guia[]">{{$entrega->guia_despacho}} </p></td>
 
                                             <td id="items{{$entrega->id}}"  name="items[]"> 
                                               @foreach($entrega->entregasItemOt as $itemEntrega)
@@ -803,6 +863,7 @@
             var rut_receptor = $("#rut_receptor").val();
             var hora = $("#hora").find("input").val();
             var items = $("#items").val();
+            var guia_despacho = $("#guia_despacho").val();
 
             //if((itemslength != 0)&&(receptor != "")&&(hora != "")){
 
@@ -812,7 +873,7 @@
                 headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                data:{ ot_id:ot_id, receptor:receptor, rut_receptor:rut_receptor ,hora:hora , items:items },
+                data:{ ot_id:ot_id, receptor:receptor, rut_receptor:rut_receptor ,hora:hora , items:items , guia_despacho:guia_despacho },
                 success:function(data){
                     //alert(data.success);
                     $('#dynamic_field').append(
@@ -822,12 +883,19 @@
                                             ' <td> <p  id="receptor'+data.id+'"  name="receptor[]"> ['+ data.rut_receptor+']-'+data.receptor + '</p></td>'+
                                             ' <td> <p  id="encargado'+data.id+'"  name="encargado[]">'+data.encargado+'</p></td>'+
 
+                                            ' <td style="text-align:center;"><p  id="guia'+data.id+'"  name="guia[]">'+data.guia_despacho+' </p></td>' + 
+
                                             ' <td id="items'+data.id+'"  name="items[]"> '+data.items+'</td>'+
   
                                             ' <td class="custom-tbl"><!-- <button type="button" id="" class="btn-info btn-sm btn_add" name="add"><span class="fas fa-sync-alt"></span></button> -->'+
                                                            
                                             '     <button type="button" name="remove" id="'+data.id+'" class="btn-danger btn-sm btn_remove"><span class="fas fa-times"></span></button>  </td></tr>'
-                      ); 
+                      );
+
+                      $("#guia_despacho").val(''); 
+                      $("#receptor").val();
+                      $("#rut_receptor").val();
+
 
                       for (var i=0; i< data.items_id.length; i++)
                             {
@@ -841,6 +909,7 @@
                               $("#statusOt").html('<span class="badge btn-dark" style="border-radius:12px;"><p style="margin:4px; font-size:16px;"> Entregada </p>  </span>');
                               $("#estado").val('5');
                       }    
+
                       $("#items").empty();   
                 
                 },
@@ -932,7 +1001,7 @@
                     '<tr id="row2'+data.id+'">'+
                                         ' <td class="custom-tbl" hidden="true"><input class="form-control input-sm" style="width:100%;" type="text"  value="'+data.id+'" id="pr_item'+data.id+'" name="pr_item[]" readonly required></td>'+
                                         ' <td> <p id="fecha_abono'+data.id+'" name="abono_id[]">'+ data.fecha_abono+' </p></td>'  +
-                                        ' <td> <p  id="monto'+data.id+'"  name="monto[]"> '+ formatter.format(numFinal.toFixed(2)) +'</p></td>'+
+                                        ' <td style="text-align:right;"> <p  id="monto'+data.id+'"  name="monto[]"> '+ formatter.format(numFinal.toFixed(2)) +'</p></td>'+
                                         ' <td> <p  id="medio_pago'+data.id+'"  name="medio_pago[]">'+data.medio_pago+'</p></td>'+
 
                                         ' <td id="items'+data.id+'"  name="encargado[]"> '+data.encargado+'</td>'+
@@ -941,6 +1010,16 @@
                                                         
                                         '     <button type="button" name="remove" id="'+data.id+'" class="btn-danger btn-sm btn_remove_abono"><span class="fas fa-times"></span></button>  </td></tr>'
                     ); 
+
+                    var total_abono = data.abonos;
+                    var abonoFinal = parseFloat(total_abono);
+
+                    var total_saldo = data.saldos;
+                    var saldoFinal = parseFloat(total_saldo);
+
+                    $("#abonos").val(formatter.format(abonoFinal.toFixed(0)));
+                    $("#saldos").val(formatter.format(saldoFinal.toFixed(0)));
+                    $('#monto').val('');
 
                     if(data.estado_pago == '3'){
                               $("#statusPagoOt").html('<span class="badge btn-info" style="border-radius:12px;"><p style="margin:4px; font-size:16px;"> Pagado </p>  </span>');
@@ -988,7 +1067,14 @@
                     $("#statusPagoOt").html('<span class="badge btn-danger" style="border-radius:12px;"><p style="margin:4px; font-size:16px;"> Pendiente </p>  </span>');
                 } 
 
-                   
+                var total_abono = data.abonos;
+                var abonoFinal = parseFloat(total_abono);
+
+                var total_saldo = data.saldos;
+                var saldoFinal = parseFloat(total_saldo);
+
+                $("#abonos").val(formatter.format(abonoFinal.toFixed(0)));
+                $("#saldos").val(formatter.format(saldoFinal.toFixed(0)));                   
                      
             },
             error: function() {

@@ -28,5 +28,9 @@ class Cotizacion extends Model
         return $this->belongsTo('App\Models\Auth\User', 'user_id', 'id');
     }
 
+    public function imagenes(){
+        return $this->hasMany('App\FileCotizacion','cotizacion_id','id');
+    }
+
 
 }

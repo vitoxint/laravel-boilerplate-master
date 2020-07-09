@@ -117,6 +117,7 @@ class OrdenTrabajoController extends Controller
             'representante_id' => $request->input('representante_id'),
             'cotizacion' => $request->input('cotizacion'),
             'orden_compra' => $request->input('orden_compra'),
+            
             'estado' => '1',
             'estado_pago' => 1 , 
             'folio' => $maxOt.'/'.$afecha,
@@ -199,6 +200,7 @@ class OrdenTrabajoController extends Controller
             [                    
                 'cotizacion' => $request->input('cotizacion'),
                 'orden_compra' => $request->input('orden_compra'),
+                'factura' => $request->input('factura'),
                 //'estado' => $request->input('estado'),
                 'entrega_estimada' => $entrega_estimada,
             ]

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class OrdenTrabajo extends Model
 {
     protected $fillable = [
-        'cliente_id', 'folio', 'representante_id','user_id', 'estado' , 'estado_pago','cotizacion','orden_compra','fecha_inicio','fecha_termino','entrega_estimada',
+        'cliente_id', 'folio', 'representante_id','user_id', 'estado' , 'estado_pago','factura','cotizacion','orden_compra','fecha_inicio','fecha_termino','entrega_estimada',
         'valor_total',
     ];
 

@@ -22,6 +22,7 @@ use App\Http\Controllers\Backend\ProductoVentaController;
 use App\Http\Controllers\Backend\ExistenciaProductoVentaController;
 use App\Http\Controllers\Backend\EntregaOtController;
 use App\Http\Controllers\Backend\PagoOtController;
+use App\Http\Controllers\Backend\FileCotizacionController;
 
 
 
@@ -408,8 +409,10 @@ Route::post('maquinaOperadores/destroy', [MaquinaHasOperadorController::class, '
 
 
 Route::post('imagen_item_ots', 'ImagenItemOtController@store')->name('imagen_itemot.store');
-
 Route::post('imagen_item_ots/destroy', 'ImagenItemOtController@destroy')->name('imagen_itemot.destroy');
+
+Route::post('imagen_cotizacions', 'FileCotizacionController@store')->name('file_cotizacion.store');
+Route::post('imagen_cotizacions/destroy', 'FileCotizacionController@destroy')->name('file_cotizacion.destroy');
 
 Route::get('get-commune-list', 'CommuneController@getCommuneList')->name('get-commune-list');
 Route::get('get-maquina-list', 'MaquinaController@getMaquinaList')->name('get-maquina-list');

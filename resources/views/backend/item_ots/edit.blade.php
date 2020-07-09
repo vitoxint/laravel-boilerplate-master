@@ -575,7 +575,7 @@
 
                     <div class="row">
 
-                        <div class="col-lg-12 col-sm-12 col-12 main-section">
+                        <div class="col-lg-12 col-sm-12 col-12 ">
                            
                                 {!! csrf_field() !!}
                                 <input type="hidden" name="_token" value="{{csrf_token()}}">
