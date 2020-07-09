@@ -47,6 +47,7 @@ class PagoOtController extends Controller
 
         $abonoOt = PagoOt::create([
             'medio_pago' => $request->get('medio_pago'),
+            'cuenta_cliente_id' => $request->get('cuenta_cl'),
             'monto' => $request->get('valor'),
             'ot_id' => $ot->id,
             'user_id' => Auth::user()->id, 

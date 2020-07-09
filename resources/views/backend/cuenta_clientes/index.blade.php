@@ -37,7 +37,7 @@
                             <tr>
                                 <td data-title="Cliente"> <a href="{{route('admin.clientes.edit',$cuenta->cliente)}}"> [{{ $cuenta->cliente->rut_cliente }}] - {{$cuenta->cliente->razon_social }}</a></td>
                                 <td data-title="Nombre/descripción:">{{$cuenta->nombre}}</td> 
-                                <td style="text-align:right;" data-title="Saldo deuda:">@money( $cuenta->saldo )</td>                                 
+                                <td style="text-align:right;" data-title="Saldo deuda:">@money( $cuenta->pagosOt->sum('monto') )</td>                                 
                                
                                 <td style="text-align:center;" data-title="Activa">
 

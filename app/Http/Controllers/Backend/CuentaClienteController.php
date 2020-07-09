@@ -70,9 +70,9 @@ class CuentaClienteController extends Controller
      * @param  \App\CuentaCliente  $cuentaCliente
      * @return \Illuminate\Http\Response
      */
-    public function show(CuentaCliente $cuentaCliente)
+    public function show(CuentaCliente $cuenta)
     {
-        //
+
     }
 
     /**
@@ -93,9 +93,24 @@ class CuentaClienteController extends Controller
      * @param  \App\CuentaCliente  $cuentaCliente
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, CuentaCliente $cuentaCliente)
+    public function update(Request $request, CuentaCliente $cuenta)
     {
-        //
+        $this->validate($request, [
+            'cliente_id' => 'required',
+            //'descripcion' => 'required',
+            
+        ]);
+
+        $activa = $request->input('estado_activa') ? $request->input('estado_activa'): 0;
+
+        $cuenta->update([
+
+            'cliente_id'    => $request->input('cliente_id'),
+            'estado_activa' => $activa,
+            'nombre' => $request->input('nombre')
+        ]);
+
+        return redirect()->route('admin.cuenta_clientes.edit',$cuenta)->withFlashSuccess('Los datos de la cuenta de crédito del cliente se han actualizado'); 
     }
 
     /**

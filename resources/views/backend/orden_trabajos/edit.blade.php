@@ -507,12 +507,12 @@
                             
 
                             <div class="col-md-2">
-                                {{ html()->select('cuenta_cl',null)
-                                    ->class('form-control')
-                                    ->attribute('maxlength', 191) 
-                              
-                                    
-                                }}
+                                <select id="cuenta_cl" name="cuenta_cl" class="form-control"  >
+                                            <option value="" selected>No Aplica</option>
+                                        @foreach($trabajo->cliente->cuentaCliente as $cuenta)
+                                            <option value="{{$cuenta->id}}"> {{$cuenta->nombre}}</option>
+                                        @endforeach
+                                </select>
                             </div><!--col-->
 
                             <div class="col col-md-2">
@@ -563,7 +563,7 @@
                                                         Transferencia bancaria
                                                     @break
                                                     @case(4)
-                                                        Cuenta cliente
+                                                        Cuenta cliente ({{$abono->cuentaCliente->nombre}})
                                                     @break
 
                                                 @endswitch

@@ -65,7 +65,7 @@
 
 
                         {{ html()->label('Estado:')->class('col-md-1 form-control-label')->for('statusCuenta') }}
-                        <div class="col-md-2">
+                        <div class="col-md-1">
 
                         
                             <div id="statusPagoOt">
@@ -88,6 +88,20 @@
                             @endSwitch  
                             </div>
                         </div>
+
+                        {{ html()->label('Saldo :')->class('col-md-1 form-control-label')->for('saldo') }}
+
+                        <div class="col-md-2">
+                            {{ html()->text('saldo')
+                                ->class('form-control')
+                                ->value('$  '. number_format($cuenta->pagosOt->sum('monto'),0, ',' , '.'  ))                                   
+                                ->attribute('maxlength', 191)
+                                ->disabled()      
+                                ->autofocus()
+                                
+                                ->required() }}
+                        </div><!--col-->
+
                                        
                     </div><!--form-group-->    
 
@@ -108,6 +122,72 @@
             </div><!--card-footer-->
 
             {{ html()->closeModelForm() }}    
+        </div><!--card-->
+
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-5">
+                        <h4 class="card-title mb-0">
+                            Cargos a la cuenta
+                        </h4>
+                    </div><!--col-->
+
+                </div><!--row-->
+
+                <div class="row mt-4 mb-4">
+                    <div class="col">
+
+                    <div class="form-group row"> 
+                        
+                    </div>
+
+                    <div class="form-group row" style="">
+
+                        <div class="col-md-12">
+                            <div id="abonos" class="table-responsive">
+                                <table class='table table-bordered table-hover' id="tab_logic">
+                                    <thead>
+                                        <tr class='info'>
+                                            <th style='width:7%;'hidden="true">ID cargo.</th>
+                                            <th style='width:16%;'>Fecha</th> 
+                                            <th style='width:17%;'>Orden Trabajo/Factura</th>       
+                                            <th style='width:24%;'>Monto</th>
+                                           
+                                            <th style='width:40%;'>Digitador</th>                                          
+                                            <th style='width:13%;'>Acción</th>
+                                        </tr>
+                                    </thead>
+                                    <thead id="dynamic_field2">
+
+                                    @foreach($cuenta->pagosOt as $abono)
+                                    <tr id="row2{{$abono->id}}">
+                                            <td class="custom-tbl" hidden="true"><input class='form-control input-sm'style='width:100%;' type="text"  value="{{$abono->id}}" id="pr_item{{$abono->id}}" name="pr_item[]" readonly required></td>
+                                            <?php $fecha_ab = new Carbon\Carbon($abono->fecha_abono); $fecha_ab = $fecha_ab->format('d-m-Y H:i'); ?>
+                                            <td> <p id="fecha_abono{{$abono->id}}" name="abono_id[]"> {{$fecha_ab}} </p></td>  
+                                            <td> <p id="ot{{$abono->id}}" name="ot_id[]"> {{$abono->ordenTrabajo->folio}} <?php echo $abono->ordenTrabajo->factura ? 'Factura:'.$abono->ordenTrabajo->factura : '' ?>  </p></td>  
+                                            <td style="text-align:right;"><p  id="monto{{$abono->id}}"  name="monto[]">@money($abono->monto)</p></td>
+                                
+                                            <td><p  id="digitador{{$abono->id}}"  name="digitador[]">{{$abono->encargado->first_name}} {{$abono->encargado->last_name}}</p></td>
+                                         
+                                            <td class="custom-tbl"><!-- <button type="button" id="{{$abono->id}}" class="btn-info btn-sm btn_add" name="add"><span class="fas fa-sync-alt"></span></button> -->
+                                                           
+                                                <button type="button" name="remove" id="{{$abono->id}}" class="btn-danger btn-sm btn_remove_abono"><span class="fas fa-times"></span></button>
+                                                           
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                                                   
+                                    </thead>
+                                </table>
+                        </div><!--col--></div>
+
+                        </div><!--form-group-->  
+                                
+                    </div><!--col-->
+                </div><!--row-->
+            </div><!--card-body-->
         </div><!--card-->
     
   

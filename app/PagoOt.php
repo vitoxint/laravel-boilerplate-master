@@ -22,4 +22,8 @@ class PagoOt extends Model
         return $this->hasOne('App\Models\Auth\User', 'id','user_id');
     }
 
+    public function cuentaCliente(){
+        return $this->belongsTo('App\CuentaCliente', 'cuenta_cliente_id', 'id');
+    }
+
 }

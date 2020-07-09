@@ -56,6 +56,11 @@ class Cliente extends Model
         return $this->hasMany('App\ClienteRepresentante', 'cliente_id', 'id');
     } 
 
+    public function cuentaCliente(){
+        return $this->hasMany('App\CuentaCliente', 'cliente_id', 'id');
+    } 
+
+
 
 
 
