@@ -83,9 +83,7 @@
                             </div>
 
                         </div><!--form-group--> 
-
-              
-
+            
                         <div class="form-group row">
                             {{ html()->label(__('Teléfono'))->class('col-md-2 form-control-label')->for('telefono') }}
 
@@ -94,7 +92,7 @@
                                     ->class('form-control')
                                     ->placeholder(__('+569999999999'))
                                     ->attribute('maxlength', 12)
-                                    ->required()
+                                    
                                      }}
                             </div><!--col-->
                         </div><!--form-group-->

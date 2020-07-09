@@ -44,6 +44,20 @@ Breadcrumbs::for('admin.contacto_clientes.index', function ($trail) {
     $trail->push('Contacto clientes', route('admin.contacto_clientes.index'));
 });
 
+Breadcrumbs::for('admin.cuenta_clientes.index', function ($trail) {
+    $trail->push('Cuenta clientes (crédito)', route('admin.cuenta_clientes.index'));
+});
+
+Breadcrumbs::for('admin.cuenta_clientes.create', function ($trail) {
+    $trail->push('Cuenta clientes (crédito)', route('admin.cuenta_clientes.index'));
+    $trail->push('Registrar nueva cuenta', route('admin.cuenta_clientes.create'));
+});
+
+Breadcrumbs::for('admin.cuenta_clientes.edit', function ($trail, $cuenta) {
+    $trail->push('Cuenta clientes (crédito)', route('admin.cuenta_clientes.index'));
+    $trail->push('Editar cuenta', route('admin.cuenta_clientes.edit', $cuenta));
+});
+
 Breadcrumbs::for('admin.orden_trabajos.index', function ($trail) {
     $trail->push('Orden Trabajos', route('admin.orden_trabajos.index'));
 });

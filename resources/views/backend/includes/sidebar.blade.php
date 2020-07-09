@@ -102,6 +102,15 @@
                             </a>
                         </li>
                         @endcan
+                        @can('administrar cuenta clientes')
+                        <li class="nav-item">
+                            <a class="nav-link {{
+                                active_class(Route::is('admin/cuenta_clientes*'))
+                            }}" href="{{ route('admin.cuenta_clientes.index') }}">
+                                Cuenta clientes
+                            </a>
+                        </li>
+                        @endcan
                     </ul>
                 </li>
                 @endcan

@@ -23,6 +23,7 @@ use App\Http\Controllers\Backend\ExistenciaProductoVentaController;
 use App\Http\Controllers\Backend\EntregaOtController;
 use App\Http\Controllers\Backend\PagoOtController;
 use App\Http\Controllers\Backend\FileCotizacionController;
+use App\Http\Controllers\Backend\CuentaClienteController;
 
 
 
@@ -62,6 +63,22 @@ Route::group(['namespace' => 'ContactoCliente'], function () {
 
     Route::get('contacto_clientes/resultados', [ClienteRepresentanteController::class, 'buscar_clientes'])->name('contacto_clientes.buscar_contactos');
 }); 
+
+
+Route::group(['namespace' => 'CuentaCliente'], function () {
+    
+    Route::get('cuenta_clientes', [CuentaClienteController::class, 'index'])->name('cuenta_clientes.index');
+    Route::get('cuenta_clientes/create', [CuentaClienteController::class, 'create'])->name('cuenta_clientes.create');
+    Route::post('cuenta_clientes', [CuentaClienteController::class, 'store'])->name('cuenta_clientes.store');
+
+    Route::group(['prefix' => 'cuenta_clientes/{cuenta}'], function () {
+        Route::get('edit', [CuentaClienteController::class, 'edit'])->name('cuenta_clientes.edit');
+        Route::patch('/', [CuentaClienteController::class, 'update'])->name('cuenta_clientes.update');
+        Route::delete('/', [CuentaClienteController::class, 'destroy'])->name('cuenta_clientes.destroy');
+    });
+
+    //Route::get('contacto_clientes/resultados', [ClienteRepresentanteController::class, 'buscar_clientes'])->name('contacto_clientes.buscar_contactos');
+});
 
 
 
