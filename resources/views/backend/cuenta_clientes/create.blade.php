@@ -26,7 +26,7 @@
                     <div class="form-group row">
                         {{ html()->label(__('Cliente: '))->class('col-md-2 form-control-label')->for('cliente_id') }}
 
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <select name="cliente_id" id="cliente_id" class="form-control" style="width:100%;" >
                             </select>
                         </div><!--col-->
@@ -35,7 +35,7 @@
                     <div class="form-group row">
                         {{ html()->label(__('Nombre/Encargado:'))->class('col-md-2 form-control-label')->for('nombre') }}
 
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                                                 
                                 {{ html()->text('nombre')
                                         ->class('form-control')

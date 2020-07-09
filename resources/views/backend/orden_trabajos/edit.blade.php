@@ -509,7 +509,7 @@
                             <div class="col-md-2">
                                 <select id="cuenta_cl" name="cuenta_cl" class="form-control"  >
                                             <option value="" selected>No Aplica</option>
-                                        @foreach($trabajo->cliente->cuentaCliente as $cuenta)
+                                        @foreach($trabajo->cliente->cuentaCliente->where('estado_activa',1) as $cuenta)
                                             <option value="{{$cuenta->id}}"> {{$cuenta->nombre}}</option>
                                         @endforeach
                                 </select>
