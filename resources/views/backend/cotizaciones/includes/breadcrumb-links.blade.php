@@ -12,7 +12,7 @@
         </div><!--dropdown-->
 
         <div class="dropdown">
-            <a class="btn dropdown-toggle" href="#" role="button" id="breadcrumb-dropdown-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Buscar por cliente</a>
+            <a class="btn dropdown-toggle" href="#" role="button" id="breadcrumb-dropdown-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Buscar por cliente / contacto</a>
 
             <div class="dropdown-menu" aria-labelledby="breadcrumb-dropdown-1">
                
@@ -22,7 +22,7 @@
                         <form action="{{route('admin.cotizaciones.buscar_cotizacion')}}">
 
                             <div class="input-group">
-                            <input type="search" name="buscar" id="buscar" class="form-control" placeholder=" Buscar por cliente" />
+                            <input type="search" name="buscar" id="buscar" class="form-control" width="40px" placeholder=" Buscar por cliente" />
                             <div id="lista" >
                             </div>
                             <div class="input-group-append">

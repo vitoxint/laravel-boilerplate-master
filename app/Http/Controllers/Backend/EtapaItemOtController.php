@@ -217,7 +217,7 @@ class EtapaItemOtController extends Controller
         $etapaItemOt->update([
 
             'estado_avance' => 4,
-            'fh_inicio' => $fecha_termino,
+            'fh_termino' => $fecha_termino,
                                  
         ]);
 
@@ -354,7 +354,7 @@ class EtapaItemOtController extends Controller
         $etapaItemOt->update([
 
             'estado_avance' => 4,
-            'fh_inicio' => $fecha_termino,
+            'fh_termino' => $fecha_termino,
                                  
         ]);
 
