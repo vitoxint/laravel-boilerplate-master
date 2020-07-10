@@ -663,4 +663,16 @@ var urls = [];
 
 </script>
 
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js" ></script>
+
+<script>
+
+
+    $('#telefono_contacto').mask('+56 99 999 99 99');
+    
+</script>
+
 @endsection

@@ -140,7 +140,7 @@
                         $limite = $limite->format('d-m-y H:i'); ?>
                             <input type='text' class="form-control" id='fh_limiten' name="fh_limiten" value="{{$limite}}" />
                             <span class="input-group-addon">
-                                <span class="fa fa-calendar btn btn-lg"></span>
+                                <span class="fa fa-calendar btn btn-md"></span>
                             </span>
                         </div>
 
@@ -161,7 +161,14 @@
                             </div><!--col--> 
 
                             {{ html()->label('Hora inicio:')->class('col-md-1 form-control-label')->for('fh_inicio') }}
-                            <?php $finicio = new Carbon\Carbon($etapaItemOt->fh_inicio); $finicio = $finicio->format('d-m-Y H:i'); ?>
+                            <?php 
+                                if($etapaItemOt->fh_inicio != null){
+                                    $finicio = new Carbon\Carbon($etapaItemOt->fh_inicio); $finicio = $finicio->format('d-m-Y H:i'); 
+                                }else{
+                                    $finicio = null;
+                                }
+                                
+                            ?>
                             <div class="col-md-2">
                                 {{ html()->text('fh_inicio')
                                     ->class('form-control')
@@ -171,7 +178,15 @@
                             </div><!--col-->
 
                             {{ html()->label('Hora termino:')->class('col-md-1 form-control-label')->for('fh_termino') }}
-                            <?php $ftermino = new Carbon\Carbon($etapaItemOt->fh_termino); $ftermino = $ftermino->format('d-m-Y H:i'); ?>
+                            <?php 
+
+                                if($etapaItemOt->fh_termino != null){
+                                    $ftermino = new Carbon\Carbon($etapaItemOt->fh_termino); $ftermino = $ftermino->format('d-m-Y H:i');
+                                }else{
+                                    $ftermino = null;
+                                }
+                            
+                             ?>
                             <div class="col-md-2">
                                 {{ html()->text('fh_termino')
                                     ->class('form-control')
