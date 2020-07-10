@@ -24,4 +24,9 @@ class CuentaCliente extends Model
         return $this->hasMany('App\PagoOt',  'cuenta_cliente_id' ,'id');
 
     }
+
+    public function abonosCuenta(){
+
+        return $this->hasMany('App\AbonoCuentaCliente', 'cuentacl_id', 'id');
+    }
 }

@@ -24,6 +24,7 @@ use App\Http\Controllers\Backend\EntregaOtController;
 use App\Http\Controllers\Backend\PagoOtController;
 use App\Http\Controllers\Backend\FileCotizacionController;
 use App\Http\Controllers\Backend\CuentaClienteController;
+use App\Http\Controllers\Backend\AbonoCuentaClienteController;
 
 
 
@@ -155,17 +156,11 @@ Route::post('item_ots', [ItemOtController::class, 'opencode'])->name('item_ots.o
 
 
 Route::group(['namespace' => 'ItemCotizacion'], function () {
-    
- /*    Route::get('item_ots', [ItemOtController::class, 'index'])->name('item_ots.index');
-    Route::get('item_ots/{trabajo}/create', [ItemOtController::class, 'create'])->name('item_ots.create'); */
+ 
     Route::post('item_cotizacions', [ItemCotizacionController::class, 'store'])->name('item_cotizacions.store');
     Route::post('item_cotizacions/destroy', [ItemCotizacionController::class, 'destroy'])->name('item_cotizacions.destroy');
 
-  /*   Route::group(['prefix' => 'item_ots/{item_ot}/{trabajo}'], function () {
-        Route::get('edit', [ItemOtController::class, 'edit'])->name('item_ots.edit');
-        Route::patch('/', [ItemOtController::class, 'update'])->name('item_ots.update');
-        Route::delete('/', [ItemOtController::class, 'destroy'])->name('item_ots.destroy');
-    }); */
+
 }); 
 
 Route::group(['namespace' => 'Proceso'], function () {
@@ -401,6 +396,22 @@ Route::group(['namespace' => 'PagoOt'], function () {
     Route::group(['prefix' => 'pago_ot/{pagoOt}'], function () {
         Route::get('edit', [PagoOtController::class, 'edit'])->name('pago_ot.edit');
         Route::patch('/', [PagoOtController::class, 'update'])->name('pago_ot.update');
+        
+    });
+
+});
+
+Route::group(['namespace' => 'AbonoCuentaCliente'], function () {
+    
+    Route::get('abono_cuenta', [AbonoCuentaClienteController::class, 'index'])->name('abono_cuenta.index');
+    Route::get('abono_cuenta/create', [AbonoCuentaClienteController::class, 'create'])->name('abono_cuenta.create');
+    Route::post('abono_cuenta', [AbonoCuentaClienteController::class, 'store'])->name('abono_cuenta.store');
+    Route::post('abono_cuenta/delete', [AbonoCuentaClienteController::class, 'destroy'])->name('abono_cuenta.destroy');
+    //Route::get('existencia_material/dataAjax', [EntregaOtControllerController::class, 'dataAjax'])->name('existencia-material.dataAjax');
+
+    Route::group(['prefix' => 'abono_cuenta/{pagoOt}'], function () {
+        Route::get('edit', [AbonoCuentaClienteController::class, 'edit'])->name('abono_cuenta.edit');
+        Route::patch('/', [AbonoCuentaClienteController::class, 'update'])->name('abono_cuenta.update');
         
     });
 

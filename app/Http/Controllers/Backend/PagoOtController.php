@@ -8,6 +8,7 @@ use App\OrdenTrabajo;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\CuentaCliente;
 
 class PagoOtController extends Controller
 {
@@ -44,6 +45,7 @@ class PagoOtController extends Controller
 
         $pago_fecha = new Carbon();
         $pago_fecha = $pago_fecha->format('Y-m-d H:i');
+
 
         $abonoOt = PagoOt::create([
             'medio_pago' => $request->get('medio_pago'),
@@ -84,6 +86,27 @@ class PagoOtController extends Controller
                 $medio_pago = "Cuenta cliente";
             break;
   
+        }
+
+        if($abonoOt->medio_pago == 4){
+            $cuentaCliente = CuentaCliente::find($abonoOt->cuenta_cliente_id);
+
+            $cuentaCliente->update([
+                'saldo' =>  $cuentaCliente->saldo + $abonoOt->monto,
+
+            ]) ;
+            
+            if($cuentaCliente->abonosCuenta->sum('monto') >= $cuentaCliente->pagosOt->sum('monto')){
+                $cuentaCliente->update([
+                    'estado_cuenta' => 1
+                ]);
+            }else{
+                $cuentaCliente->update([
+                    'estado_cuenta' => 2          
+                ]);
+    
+            }
+
         }
 
         $fecha = new Carbon($abonoOt->fecha_abono);
@@ -149,12 +172,34 @@ class PagoOtController extends Controller
     {
         
         $pago = PagoOt::find($request->get('item'));
-
         $ot = OrdenTrabajo::find($pago->ot_id);
 
-        //$items = EntregaItemOt::where('entregaot_id', $entrega->id)->get();
-               
+        $medio_pago =    $pago->medio_pago;
+        $cuentaCl   = $pago->cuenta_cliente_id;
+        $montoPago      = $pago->monto;
+
         $pago->delete();
+
+        if($medio_pago == 4){
+            $cuentaCliente = CuentaCliente::find($cuentaCl);
+
+            $cuentaCliente->update([
+                'saldo' =>  $cuentaCliente->saldo - $montoPago,
+
+            ]) ;
+            
+            if($cuentaCliente->abonosCuenta->sum('monto') >= $cuentaCliente->pagosOt->sum('monto')){
+                $cuentaCliente->update([
+                    'estado_cuenta' => 1
+                ]);
+            }else{
+                $cuentaCliente->update([
+                    'estado_cuenta' => 2          
+                ]);
+    
+            }
+
+        }
 
         $valor_ot = $ot->valor_total * 1.19 ;
 
