@@ -2,7 +2,7 @@
     <div class="btn-group" role="group" aria-label="Button group">
 
     <div class="dropdown">
-            <a class="btn dropdown-toggle" href="#" role="button" id="breadcrumb-dropdown-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Buscar por cliente</a>
+            <a class="btn dropdown-toggle" href="#" role="button" id="breadcrumb-dropdown-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Buscar por cliente / Factura</a>
 
             <div class="dropdown-menu" aria-labelledby="breadcrumb-dropdown-1">
                
@@ -12,9 +12,9 @@
                         <form action="{{route('admin.orden_trabajos.buscar_trabajo')}}">
 
                             <div class="input-group row has-search">
-                            <div class="col-md-3">    
+                            <div class="col-md-4">    
                             <span class="fa fa-search form-control-feedback"></span>    
-                            <input type="search" name="buscar" style="width:200px;" id="buscar" class="form-control" placeholder=" Buscar por cliente" />
+                            <input type="search" name="buscar" style="width:250px;" id="buscar" class="form-control" placeholder=" Buscar por cliente / N° Factura" />
                             </div>
                          
                             </div>

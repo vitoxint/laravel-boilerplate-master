@@ -140,6 +140,7 @@ class EtapaItemOtController extends Controller
         $estado_proceso_nuevo = 2;
 
         $item_ot = $etapaItemOt->itemOt;
+        $estado_item_anterior = $item_ot->estado;
         $trabajo = $item_ot->ordenTrabajo;
 
         if($estado_proceso_nuevo == 2 && $etapaItemOt->estado_avance == 1){
@@ -165,7 +166,7 @@ class EtapaItemOtController extends Controller
                   'estado' =>  '2',
                   ]);
 
-            if($item_ot->estado == '1'){
+            if($estado_item_anterior == 1){
                 $update1 = DB::table('item_ots')
                    ->where('id', '=', $item_ot->id)
                    ->update([
@@ -176,6 +177,8 @@ class EtapaItemOtController extends Controller
 
         // CONSULTAS DE ACTUALIZACION DE ESTADOS SUPERIORES CASO ORDEN TRABAJO
 
+        $estado_ot_anterior = $item_ot->ordenTrabajo->estado;
+
         if (ItemOt::where('estado', '=', '2')->where('ot_id', '=', $item_ot->ordenTrabajo->id)->exists()) {
             $update1 = DB::table('orden_trabajos')
             ->where('id', '=', $item_ot->ordenTrabajo->id)
@@ -183,7 +186,7 @@ class EtapaItemOtController extends Controller
                 'estado' =>  '2',
                 ]);
 
-            if($item_ot->ordenTrabajo->estado == '1'){
+            if($estado_ot_anterior == 1){
                 $update1 = DB::table('orden_trabajos')
                 ->where('id', '=', $item_ot->ordenTrabajo->id)
                 ->update([
@@ -220,6 +223,8 @@ class EtapaItemOtController extends Controller
 
         // CONSULTAS DE ACTUALIZACION DE ESTADOS SUPERIORES CASO ITEM OT
 
+        $estado_item_anterior = $item_ot->estado;
+
         if (EtapaItemOt::where('estado_avance', '=', 4)->where('itemot_id', '=', $item_ot->id)->count('id') == 
                 EtapaItemOt::where('itemot_id', '=', $item_ot->id)->count('id')) {
             
@@ -228,17 +233,19 @@ class EtapaItemOtController extends Controller
               ->update([
                   'estado' =>  '4',
                   ]);
-            if($item_ot->estado != '4'){
+            if($estado_item_anterior != 4){
                 $update1 = DB::table('item_ots')
                    ->where('id', '=', $item_ot->id)
                    ->update([
                        'fecha_termino' =>  $fecha_termino,
-                       ]);                
+                ]);                
             }
             
          } 
 
 // CONSULTAS DE ACTUALIZACION DE ESTADOS SUPERIORES CASO ORDEN TRABAJO
+
+        $estado_ot_anterior = $item_ot->ordenTrabajo->estado;
 
         if (ItemOt::where('estado', '=', '4')->where('ot_id', '=', $item_ot->ordenTrabajo->id)->count('id') == 
                 ItemOt::where('ot_id', '=', $item_ot->ordenTrabajo->id)->count('id')) {
@@ -248,7 +255,7 @@ class EtapaItemOtController extends Controller
             ->update([
                 'estado' =>  '4',
                 ]);
-            if($item_ot->ordenTrabajo->estado != '4'){
+            if($estado_ot_anterior != 4){
                 $update1 = DB::table('orden_trabajos')
                 ->where('id', '=', $item_ot->ordenTrabajo->id)
                 ->update([
@@ -268,6 +275,7 @@ class EtapaItemOtController extends Controller
     public function comenzarTaller(EtapaItemOt $etapaItemOt){
  
         $estado_proceso_nuevo = 2;
+        $estado_item_anterior = $item_ot->estado;
 
         $item_ot = $etapaItemOt->itemOt;
         $trabajo = $item_ot->ordenTrabajo;
@@ -295,7 +303,7 @@ class EtapaItemOtController extends Controller
                   'estado' =>  '2',
                   ]);
 
-            if($item_ot->estado == '1'){
+            if($estado_item_anterior == 1){
                 $update1 = DB::table('item_ots')
                    ->where('id', '=', $item_ot->id)
                    ->update([
@@ -306,6 +314,8 @@ class EtapaItemOtController extends Controller
 
         // CONSULTAS DE ACTUALIZACION DE ESTADOS SUPERIORES CASO ORDEN TRABAJO
 
+        $estado_ot_anterior = $item_ot->ordenTrabajo->estado;
+
         if (ItemOt::where('estado', '=', '2')->where('ot_id', '=', $item_ot->ordenTrabajo->id)->exists()) {
             $update1 = DB::table('orden_trabajos')
             ->where('id', '=', $item_ot->ordenTrabajo->id)
@@ -313,7 +323,7 @@ class EtapaItemOtController extends Controller
                 'estado' =>  '2',
                 ]);
 
-            if($item_ot->ordenTrabajo->estado == '1'){
+            if($estado_ot_anterior == 1){
                 $update1 = DB::table('orden_trabajos')
                 ->where('id', '=', $item_ot->ordenTrabajo->id)
                 ->update([

@@ -107,7 +107,7 @@
                             <a class="nav-link {{
                                 active_class(Route::is('admin/cuenta_clientes*'))
                             }}" href="{{ route('admin.cuenta_clientes.index') }}">
-                                Cuenta clientes
+                                Cuentas cliente (crédito)
                             </a>
                         </li>
                         @endcan

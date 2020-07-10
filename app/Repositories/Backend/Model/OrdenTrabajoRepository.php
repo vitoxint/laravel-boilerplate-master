@@ -80,7 +80,7 @@ class OrdenTrabajoRepository extends BaseRepository
         $contactos = ClienteRepresentante::where('nombre', 'LIKE', "%{$term}%")->get('id');
 
         return $this->model
-            ->whereIn('cliente_id', $clientes)->orWhereIn('representante_id', $contactos)
+            ->whereIn('cliente_id', $clientes)->orWhereIn('representante_id', $contactos)->orWhere('factura', 'LIKE', "%{$term}%")
             ->orderBy($orderBy, $sort)
             ->paginate($paged);
     }
