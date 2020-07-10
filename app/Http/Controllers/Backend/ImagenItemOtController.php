@@ -135,7 +135,7 @@ class ImagenItemOtController extends Controller
      * @param  \App\ImagenItemOt  $imagenItemOt
      * @return \Illuminate\Http\Response
      */
-    public function destroy(/* ImagenItemOt $imagen */ Request $request)
+    public function destroy( Request $request)
     {
 
        $key= $request->key;

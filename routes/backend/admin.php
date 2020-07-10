@@ -438,4 +438,5 @@ Route::get('get-operador-list', 'EmpleadoController@getOperadorList')->name('get
 Route::get('get-contactos-list', 'ClienteRepresentanteController@getContactoList')->name('get-contactos-list');
 
 Route::post('imagen_item_ots/display', 'ImagenItemOtController@display')->name('imagen_itemot.display');
+Route::post('imagen_cotizacions/display', 'FileCotizacionController@display')->name('file_cotizacion.display');
    
