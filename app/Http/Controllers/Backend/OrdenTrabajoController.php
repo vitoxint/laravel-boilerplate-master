@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 
 use App\OrdenTrabajo;
 use App\ItemOt;
+use App\PagoOt;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Repositories\Backend\Model\OrdenTrabajoRepository;
 use Illuminate\Http\Request;
@@ -101,6 +102,69 @@ class OrdenTrabajoController extends Controller
 
 
     }
+
+
+    public function getOtsOfMonthIngresosGraph(){
+
+        $fecha = Carbon::now();
+        $mfecha = $fecha->format('m');
+        //$dfecha = $fecha->day;
+        $afecha = $fecha->format('Y');
+        
+        $dia1= $afecha . '-'.$mfecha .'-1' ;
+        $dian= $afecha . '-'.$mfecha .'-1' ;
+ 
+            $oStart = new Carbon($dia1);
+
+            
+            //$oStart = $dia1;
+            $oEnd = new Carbon($dian);
+            $oEnd = $oEnd->addMonth(1);
+
+             //aux prueba 
+
+            /*  $oStart = $oStart->addMonth(-2);
+             $oEnd = $oEnd->addMonth(-2); */
+             
+
+             //fin auxiliar
+
+             $aData = array() ;
+             //$numOts = array() ;
+
+            while ($oStart < $oEnd) {
+                
+                //array_push($aDates ,$oStart->format('d'));
+                //$aDates = $aDates . '/'.$oStart->format('d');
+                //$aDates[$i] = $oStart->format('d');
+
+                $otsI = OrdenTrabajo::where('fecha_termino' ,'<=', $oStart)->get('valor_total')
+                ->sum('valor_total');
+
+                $otsP = PagoOt::where('fecha_abono' , '<=', $oStart)->get('monto')
+                ->sum('monto');
+
+                $otsC = (float)$otsP   -  (float)$otsI * 1.19;
+
+                array_push($aData, [ 'day' => $oStart->format('d'), 'otsI' => $otsI, 'otsP' => $otsP , 'otsC' => $otsC]);
+               // $numOts = $numOts .'/'.$ots;
+                
+                $oStart = $oStart->addDay(1); 
+                
+            }
+            $oStart = $oStart->addMonth(-1);
+            $mes = $oStart->format('M-Y');
+
+            return response()->json([
+                'data'=> $aData,
+                'mes' => $mes,
+               
+                ]); 
+
+
+
+    }
+
 
 
     public function buscar_ot(Request $request)

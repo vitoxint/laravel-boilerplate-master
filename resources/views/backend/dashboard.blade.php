@@ -9,7 +9,7 @@
                 <div class="card-header">
                     <strong>@lang('strings.backend.dashboard.welcome') {{ $logged_in_user->name }}!</strong>
                 </div><!--card-header-->
-                <div class="card-body">
+                <div class="card-body" >
                    <!--  {!! __('strings.backend.welcome') !!} -->
  
                     <div id="app">
@@ -18,15 +18,26 @@
                                 <!-- <example-component2></example-component2> -->
                                 <grafica-component></grafica-component>
                             </div> 
+
+                            <div class="col">
+                                <graficaingresos-component></graficaingresos-component> 
+                               
+                            </div>
                         </div> 
+
+                        
+
+                       
 
                     </div>
 
-                    <div class="row">
+              <!--       <div class="row">
                         <div class="col col-md-5">
                                 <grafica-component></grafica-component>
                         </div>
-                    </row>
+                    </row> -->
+
+                                      
 
 
                 </div><!--card-body-->

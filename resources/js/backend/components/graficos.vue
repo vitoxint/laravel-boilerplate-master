@@ -1,6 +1,6 @@
 <template>
   <div class="small">
-    <h4>Trabajos iniciados y terminados del mes {{this.mes}}</h4>
+    <h4>Trabajos iniciados y terminados en el mes {{this.mes}}</h4>
     
     <canvas
       ref="canvas"
@@ -113,7 +113,7 @@ export default {
 
 <style lang="css">
 .small {
-  max-width: 1000px;
+  max-width: 1200px;
   /* max-height: 500px; */
   margin:  50px auto;
 }

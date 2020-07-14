@@ -91,6 +91,7 @@ Route::group(['namespace' => 'OrdenTrabajo' ], function () {
     Route::post('orden_trabajos/opencode', [OrdenTrabajoController::class, 'opencode'])->name('orden_trabajos.opencode');
 
     Route::get('ordenTrabajo/getChartMonth', [OrdenTrabajoController::class, 'getOtsOfMonthGraph']);
+    Route::get('ordenTrabajo/getChartMonthIngresos', [OrdenTrabajoController::class, 'getOtsOfMonthIngresosGraph']);
 
     Route::group(['prefix' => 'orden_trabajos/{trabajo}'], function () {
         Route::get('edit', [OrdenTrabajoController::class, 'edit'])->name('orden_trabajos.edit');

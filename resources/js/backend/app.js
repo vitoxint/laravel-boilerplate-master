@@ -20,6 +20,8 @@ Vue.component('example-component2', require('./components/ExampleComponent2.vue'
 
 Vue.component('grafica-component', require('./components/graficos.vue').default);
 
+ Vue.component('graficaingresos-component', require('./components/graficosIngresos.vue').default);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -29,7 +31,4 @@ Vue.component('grafica-component', require('./components/graficos.vue').default)
 const app = new Vue({
     el: '#app',
     
-
-
-
 });
