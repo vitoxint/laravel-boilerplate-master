@@ -57,6 +57,7 @@ export default {
          //let NumsI = new Array();
          let NumsSI = new Array();
          let NumsEP = new Array();
+         let NumsAT = new Array();
          let NumsTE = new Array();
          let NumsEN = new Array();
 
@@ -70,6 +71,9 @@ export default {
         .getContext("2d")
         .createLinearGradient(0, 0, 0, 450);
         this.gradient4 = this.$refs.canvas
+        .getContext("2d")
+        .createLinearGradient(0, 0, 0, 450);
+        this.gradient5 = this.$refs.canvas
         .getContext("2d")
         .createLinearGradient(0, 0, 0, 450);
 
@@ -89,6 +93,11 @@ export default {
         this.gradient4.addColorStop(0.65, "rgba(0, 0, 0, 0.45)");
         this.gradient4.addColorStop(1, "rgba(0, 0, 0, 0)");
 
+        this.gradient5.addColorStop(0, "rgba(255, 0, 0, 0.95)");
+        this.gradient5.addColorStop(0.65, "rgba(255, 0, 0, 0.45)");
+        this.gradient5.addColorStop(1, "rgba(255, 0, 0, 0)");
+
+
          axios.get(uri).then((response) => {
             let data = response.data.data;
             this.mes = response.data.mes;
@@ -98,6 +107,7 @@ export default {
                Labels.push(element.day);
                NumsSI.push(element.otsSI);
                NumsEP.push(element.otsEP);
+               NumsAT.push(element.otsAT);
                NumsTE.push(element.otsTE);
                NumsEN.push(element.otsEN);
                });
@@ -118,6 +128,12 @@ export default {
                     }
                     ,
                     {
+                        label: 'OTs Atrasadas',
+                        backgroundColor: this.gradient5,
+                        data: NumsAT
+                    }
+                    ,
+                    {
                         label: 'OTs Terminadas',
                         backgroundColor: this.gradient3,
                         data: NumsTE
@@ -128,6 +144,7 @@ export default {
                         backgroundColor: this.gradient4,
                         data: NumsEN
                     }
+
                 
                 ]
          }

@@ -203,7 +203,10 @@ class OrdenTrabajoController extends Controller
                 $otsSI = OrdenTrabajo::where('created_at' ,'<=', $oStart)->where('estado',1)->get()
                 ->count('id');
 
-                $otsEP = OrdenTrabajo::where('fecha_inicio' ,'<=', $oStart)->whereBetween('estado',[2,3])->get('id')
+                $otsEP = OrdenTrabajo::where('fecha_inicio' ,'<=', $oStart)->where('estado',2)->get('id')
+                ->count('id');
+
+                $otsAT = OrdenTrabajo::where('created_at' ,'<=', $oStart)->where('estado',3)->get('id')
                 ->count('id');
 
                 $otsTE = OrdenTrabajo::where('fecha_termino' , '<=', $oStart)->where('estado',4)->get('id')
@@ -217,6 +220,7 @@ class OrdenTrabajoController extends Controller
                         'day'  => $oStart->format('d'), 
                         'otsSI' => $otsSI, 
                         'otsEP' => $otsEP, 
+                        'otsAT' => $otsAT,
                         'otsTE' => $otsTE,
                         'otsEN' => $otsEN
                         
