@@ -90,6 +90,8 @@ Route::group(['namespace' => 'OrdenTrabajo' ], function () {
     Route::post('orden_trabajos', [OrdenTrabajoController::class, 'store'])->name('orden_trabajos.store');
     Route::post('orden_trabajos/opencode', [OrdenTrabajoController::class, 'opencode'])->name('orden_trabajos.opencode');
 
+    Route::get('ordenTrabajo/getChartMonth', [OrdenTrabajoController::class, 'getOtsOfMonthGraph']);
+
     Route::group(['prefix' => 'orden_trabajos/{trabajo}'], function () {
         Route::get('edit', [OrdenTrabajoController::class, 'edit'])->name('orden_trabajos.edit');
         Route::patch('/', [OrdenTrabajoController::class, 'update'])->name('orden_trabajos.update');

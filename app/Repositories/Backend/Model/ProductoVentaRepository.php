@@ -37,6 +37,13 @@ class ProductoVentaRepository extends BaseRepository
             ->paginate($paged);
     }
 
+    public function getActivePaginatedFront($paged = 25, $orderBy = 'codigo', $sort = 'asc'): LengthAwarePaginator
+    {
+        return $this->model
+            ->orderBy($orderBy, $sort)
+            ->paginate(null);
+    }
+
 
 
     public function getBuscarProductosPaginated($paged = 25, $orderBy = 'codigo', $sort = 'asc', $term): LengthAwarePaginator

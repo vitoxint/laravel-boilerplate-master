@@ -9,6 +9,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use App\Repositories\Backend\Model\OrdenTrabajoRepository;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Mail\Backend\SendOtAtrasada;
@@ -41,6 +42,63 @@ class OrdenTrabajoController extends Controller
 
         return view('backend.orden_trabajos.index')
         ->withOrdenTrabajos($this->ordenTrabajoRepository->getActivePaginated(25, 'id', 'desc'));
+    }
+
+    public function getOtsOfMonthGraph(){
+
+        $fecha = Carbon::now();
+        $mfecha = $fecha->format('m');
+        //$dfecha = $fecha->day;
+        $afecha = $fecha->format('Y');
+        
+        $dia1= $afecha . '-'.$mfecha .'-1' ;
+        $dian= $afecha . '-'.$mfecha .'-1' ;
+ 
+            $oStart = new Carbon($dia1);
+
+            
+            //$oStart = $dia1;
+            $oEnd = new Carbon($dian);
+            $oEnd = $oEnd->addMonth(1);
+
+             //aux prueba 
+
+            /*  $oStart = $oStart->addMonth(-2);
+             $oEnd = $oEnd->addMonth(-2); */
+             
+
+             //fin auxiliar
+
+             $aData = array() ;
+             //$numOts = array() ;
+
+            while ($oStart < $oEnd) {
+                
+                //array_push($aDates ,$oStart->format('d'));
+                //$aDates = $aDates . '/'.$oStart->format('d');
+                //$aDates[$i] = $oStart->format('d');
+
+                $otsI = OrdenTrabajo::whereBetween('fecha_inicio' , [$oStart, $oStart])->get('id')
+                ->count('id');
+                $otsT = OrdenTrabajo::whereBetween('fecha_termino' , [$oStart, $oStart])->get('id')
+                ->count('id');
+
+                array_push($aData, [ 'day' => $oStart->format('d'), 'otsI' => $otsI, 'otsT' => $otsT]);
+               // $numOts = $numOts .'/'.$ots;
+                
+                $oStart = $oStart->addDay(1); 
+                
+            }
+            $mes = $oStart->format('M-Y');
+
+            return response()->json([
+                'data'=> $aData,
+                'mes' => $mes,
+               
+                ]); 
+
+
+
     }
 
 

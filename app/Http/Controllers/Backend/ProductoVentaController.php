@@ -34,7 +34,7 @@ class ProductoVentaController extends Controller
     }
 
     public function getLista(){
-        return $this->productoRepository->getActivePaginated(10, 'codigo', 'asc');
+        return $this->productoRepository->getActivePaginatedFront(null, 'codigo', 'asc');
 
     }
 
@@ -131,9 +131,11 @@ class ProductoVentaController extends Controller
      * @param  \App\ProductoVenta  $productoVenta
      * @return \Illuminate\Http\Response
      */
-    public function show(ProductoVenta $productoVenta)
+
+    //funcion API RESTS
+    public function show(ProductoVenta $producto)
     {
-        //
+        return $producto;
     }
 
     /**

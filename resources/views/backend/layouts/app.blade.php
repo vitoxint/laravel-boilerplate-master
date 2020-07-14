@@ -87,6 +87,7 @@
 
     {!! script('datepicker/js/bootstrap-datetimepicker.js') !!}
     {!! script('datepicker/js/moments.js') !!}
+    
     @stack('after-scripts')
 </body>
 </html>

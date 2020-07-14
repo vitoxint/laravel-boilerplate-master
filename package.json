@@ -68,6 +68,8 @@
     "dependencies": {
         "@ttskch/select2-bootstrap4-theme": "^1.4.0",
         "bootstrap-fileinput": "^5.0.8",
-        "vue": "^2.6.11"
+        "chart.js": "^2.9.3",
+        "vue": "^2.6.11",
+        "vue-chartjs": "^3.5.0"
     }
 }

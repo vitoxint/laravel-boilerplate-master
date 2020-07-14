@@ -18,6 +18,8 @@ window.Vue = Vue;
 
 Vue.component('example-component2', require('./components/ExampleComponent2.vue').default);
 
+Vue.component('grafica-component', require('./components/graficos.vue').default);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -26,4 +28,8 @@ Vue.component('example-component2', require('./components/ExampleComponent2.vue'
 
 const app = new Vue({
     el: '#app',
+    
+
+
+
 });

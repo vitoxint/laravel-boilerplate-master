@@ -8,7 +8,7 @@ class OrdenTrabajo extends Model
 {
     protected $fillable = [
         'cliente_id', 'folio', 'representante_id','user_id', 'estado' , 'estado_pago','factura','cotizacion','orden_compra','fecha_inicio','fecha_termino','entrega_estimada',
-        'valor_total',
+        'valor_total', 'created_at'
     ];
 
     /**
