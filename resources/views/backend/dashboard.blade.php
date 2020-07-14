@@ -14,8 +14,18 @@
  
                     <div id="app">
                         <div class="row mb-4">
+
                             <div class="col">
-                                <!-- <example-component2></example-component2> -->
+                                <graficastatusots-component></graficastatusots-component> 
+                               
+                            </div>
+
+                        
+                        </div> 
+
+                        <div class="row mb-4">
+
+                            <div class="col">                               
                                 <grafica-component></grafica-component>
                             </div> 
 

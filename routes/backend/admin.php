@@ -92,6 +92,7 @@ Route::group(['namespace' => 'OrdenTrabajo' ], function () {
 
     Route::get('ordenTrabajo/getChartMonth', [OrdenTrabajoController::class, 'getOtsOfMonthGraph']);
     Route::get('ordenTrabajo/getChartMonthIngresos', [OrdenTrabajoController::class, 'getOtsOfMonthIngresosGraph']);
+    Route::get('ordenTrabajo/getGraphStatusMes', [OrdenTrabajoController::class, 'getGraphStatusMes']);
 
     Route::group(['prefix' => 'orden_trabajos/{trabajo}'], function () {
         Route::get('edit', [OrdenTrabajoController::class, 'edit'])->name('orden_trabajos.edit');
@@ -142,6 +143,8 @@ Route::group(['namespace' => 'ItemOt'], function () {
     Route::get('item_ots', [ItemOtController::class, 'index'])->name('item_ots.index');
     Route::get('item_ots/{trabajo}/create', [ItemOtController::class, 'create'])->name('item_ots.create');
     Route::post('item_ots/{trabajo}', [ItemOtController::class, 'store'])->name('item_ots.store');
+
+    //Route::get('item_ots/getGraphStatusMes', [ItemOtController::class, 'getGraphStatusMes']);
 
     Route::get('items_terminados/dataAjax', [ItemOtController::class, 'dataAjax'])->name('item_ots.dataAjax');
 

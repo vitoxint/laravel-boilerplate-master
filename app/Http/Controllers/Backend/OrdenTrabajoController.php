@@ -166,6 +166,80 @@ class OrdenTrabajoController extends Controller
     }
 
 
+    public function getGraphStatusMes(){
+
+        $fecha = Carbon::now();
+        $mfecha = $fecha->format('m');
+        //$dfecha = $fecha->day;
+        $afecha = $fecha->format('Y');
+        
+        $dia1= $afecha . '-'.$mfecha .'-1' ;
+        $dian= $afecha . '-'.$mfecha .'-1' ;
+ 
+            $oStart = new Carbon($dia1);
+
+            
+            //$oStart = $dia1;
+            $oEnd = new Carbon($dian);
+            $oEnd = $oEnd->addMonth(1);
+
+             //aux prueba 
+
+            /*   $oStart = $oStart->addMonth(-2);
+             $oEnd = $oEnd->addMonth(-2); */ 
+             
+
+             //fin auxiliar
+
+             $aData = array() ;
+             //$numOts = array() ;
+
+            while ($oStart < $oEnd) {
+                
+                //array_push($aDates ,$oStart->format('d'));
+                //$aDates = $aDates . '/'.$oStart->format('d');
+                //$aDates[$i] = $oStart->format('d');
+
+                $otsSI = OrdenTrabajo::where('created_at' ,'<=', $oStart)->get()
+                ->count('id');
+
+                $otsEP = OrdenTrabajo::where('fecha_inicio' ,'<=', $oStart)->whereBetween('estado',[2,3])->get('id')
+                ->count('id');
+
+                $otsTE = OrdenTrabajo::where('fecha_termino' , '<=', $oStart)->where('estado',4)->get('id')
+                ->count('id');
+
+                $otsEN= OrdenTrabajo::where('fecha_termino' , '<=', $oStart)->where('estado',5)->get('id')
+                ->count('id');
+
+
+                array_push($aData, [
+                     'day'  => $oStart->format('d'), 
+                     'otsSI' => $otsSI, 
+                     'otsEP' => $otsEP, 
+                     'otsTE' => $otsTE,
+                     'otsEN' => $otsEN
+                     
+                     
+                     ]);
+               // $numOts = $numOts .'/'.$ots;
+                
+                $oStart = $oStart->addDay(1); 
+                
+            }
+            $oStart = $oStart->addMonth(-1);
+            $mes = $oStart->format('M-Y');
+
+            return response()->json([
+                'data'=> $aData,
+                'mes' => $mes,
+               
+                ]); 
+
+
+    }
+
+
 
     public function buscar_ot(Request $request)
     {

@@ -20,7 +20,9 @@ Vue.component('example-component2', require('./components/ExampleComponent2.vue'
 
 Vue.component('grafica-component', require('./components/graficos.vue').default);
 
- Vue.component('graficaingresos-component', require('./components/graficosIngresos.vue').default);
+Vue.component('graficaingresos-component', require('./components/graficosIngresos.vue').default);
+
+Vue.component('graficastatusots-component', require('./components/graficosStatusOt.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

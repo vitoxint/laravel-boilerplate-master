@@ -1,6 +1,6 @@
 <template>
   <div class="small">
-    <h4>Ratio de ingresos esperables y reales por trabajos abonados y terminados {{this.mes}}</h4>
+    <h4>Ratio de abonos v/s saldos por trabajos {{this.mes}}</h4>
     
     <canvas
       ref="canvas"
@@ -94,12 +94,12 @@ export default {
                         data: NumsI
                     } , */
                     {
-                        label: 'Ratio Saldos - Ingresos',
+                        label: 'Ratio Abonos - Saldos',
                         backgroundColor: this.gradient2,
                         data: NumsC
                     }
                 
-                ]
+                ],
          }
        }
        else {
