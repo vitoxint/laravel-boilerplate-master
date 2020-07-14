@@ -73,20 +73,20 @@ export default {
         .getContext("2d")
         .createLinearGradient(0, 0, 0, 450);
 
-        this.gradient.addColorStop(0, "rgba(224, 224,224, 0.5)");
-        this.gradient.addColorStop(0.5, "rgba(224, 224, 224, 0.25)");
+        this.gradient.addColorStop(0, "rgba(224, 224,224, 0.95)");
+        this.gradient.addColorStop(0.65, "rgba(224, 224, 224, 0.45)");
         this.gradient.addColorStop(1, "rgba(224, 224, 224, 0)");
 
-        this.gradient2.addColorStop(0, "rgba(0, 255, 0, 0.5)");
-        this.gradient2.addColorStop(0.5, "rgba(0, 255, 0, 0.25)");
+        this.gradient2.addColorStop(0, "rgba(0, 255, 0, 0.95)");
+        this.gradient2.addColorStop(0.65, "rgba(0, 255, 0, 0.45)");
         this.gradient2.addColorStop(1, "rgba(0, 255, 0, 0)");
 
-        this.gradient3.addColorStop(0, "rgba(0, 0, 255, 0.5)");
-        this.gradient3.addColorStop(0.5, "rgba(0, 0, 255, 0.25)");
+        this.gradient3.addColorStop(0, "rgba(0, 0, 255, 0.95)");
+        this.gradient3.addColorStop(0.65, "rgba(0, 0, 255, 0.45)");
         this.gradient3.addColorStop(1, "rgba(0, 0, 255, 0)");
 
-        this.gradient4.addColorStop(0, "rgba(0, 0, 0, 0.5)");
-        this.gradient4.addColorStop(0.5, "rgba(0, 0, 0, 0.25)");
+        this.gradient4.addColorStop(0, "rgba(0, 0, 0, 0.95)");
+        this.gradient4.addColorStop(0.65, "rgba(0, 0, 0, 0.45)");
         this.gradient4.addColorStop(1, "rgba(0, 0, 0, 0)");
 
          axios.get(uri).then((response) => {

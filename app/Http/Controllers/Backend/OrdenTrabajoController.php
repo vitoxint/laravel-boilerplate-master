@@ -200,7 +200,7 @@ class OrdenTrabajoController extends Controller
                 //$aDates = $aDates . '/'.$oStart->format('d');
                 //$aDates[$i] = $oStart->format('d');
 
-                $otsSI = OrdenTrabajo::where('created_at' ,'<=', $oStart)->get()
+                $otsSI = OrdenTrabajo::where('created_at' ,'<=', $oStart)->where('estado',1)->get()
                 ->count('id');
 
                 $otsEP = OrdenTrabajo::where('fecha_inicio' ,'<=', $oStart)->whereBetween('estado',[2,3])->get('id')
@@ -212,16 +212,28 @@ class OrdenTrabajoController extends Controller
                 $otsEN= OrdenTrabajo::where('fecha_termino' , '<=', $oStart)->where('estado',5)->get('id')
                 ->count('id');
 
-
-                array_push($aData, [
-                     'day'  => $oStart->format('d'), 
-                     'otsSI' => $otsSI, 
-                     'otsEP' => $otsEP, 
-                     'otsTE' => $otsTE,
-                     'otsEN' => $otsEN
-                     
-                     
-                     ]);
+                if($oStart <= $fecha){
+                    array_push($aData, [
+                        'day'  => $oStart->format('d'), 
+                        'otsSI' => $otsSI, 
+                        'otsEP' => $otsEP, 
+                        'otsTE' => $otsTE,
+                        'otsEN' => $otsEN
+                        
+                        
+                    ]);
+                }
+                else{
+                    array_push($aData, [
+                        'day'  => $oStart->format('d'), 
+                        'otsSI' => 0, 
+                        'otsEP' => 0, 
+                        'otsTE' => 0,
+                        'otsEN' => 0
+                        
+                        
+                    ]);
+                }
                // $numOts = $numOts .'/'.$ots;
                 
                 $oStart = $oStart->addDay(1); 
