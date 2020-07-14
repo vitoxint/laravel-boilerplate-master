@@ -89,6 +89,7 @@ class OrdenTrabajoController extends Controller
                 $oStart = $oStart->addDay(1); 
                 
             }
+            $oStart = $oStart->addMonth(-1);
             $mes = $oStart->format('M-Y');
 
             return response()->json([
