@@ -66,10 +66,16 @@
         "node": ">=6.0.0"
     },
     "dependencies": {
+        "@syncfusion/ej2-vue-gantt": "^18.2.45",
+        "@syncfusion/ej2-vue-grids": "^18.2.45",
         "@ttskch/select2-bootstrap4-theme": "^1.4.0",
         "bootstrap-fileinput": "^5.0.8",
         "chart.js": "^2.9.3",
+        "dhtmlx-gantt": "^7.0.5",
+        "moment": "^2.27.0",
         "vue": "^2.6.11",
-        "vue-chartjs": "^3.5.0"
+        "vue-chartjs": "^3.5.0",
+        "vue-gantt-schedule-timeline-calendar": "^1.0.33",
+        "vue-ganttastic": "^0.9.25"
     }
 }

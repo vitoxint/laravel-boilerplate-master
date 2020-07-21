@@ -29,7 +29,7 @@ class ItemOtRepository extends BaseRepository
      * @return mixed
      */
 
-    public function getActivePaginated($paged = 25, $orderBy = 'folio', $sort = 'desc'): LengthAwarePaginator
+    public function getActivePaginated($paged = 25, $orderBy = 'estado', $sort = 'asc'): LengthAwarePaginator
     {
         return $this->model
             ->orderBy($orderBy, $sort)

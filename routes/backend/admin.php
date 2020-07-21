@@ -93,6 +93,7 @@ Route::group(['namespace' => 'OrdenTrabajo' ], function () {
     Route::get('ordenTrabajo/getChartMonth', [OrdenTrabajoController::class, 'getOtsOfMonthGraph']);
     Route::get('ordenTrabajo/getChartMonthIngresos', [OrdenTrabajoController::class, 'getOtsOfMonthIngresosGraph']);
     Route::get('ordenTrabajo/getGraphStatusMes', [OrdenTrabajoController::class, 'getGraphStatusMes']);
+    Route::get('ordenTrabajo/getGanttOtsMes', [OrdenTrabajoController::class, 'getGanttOtsMes']);
 
     Route::group(['prefix' => 'orden_trabajos/{trabajo}'], function () {
         Route::get('edit', [OrdenTrabajoController::class, 'edit'])->name('orden_trabajos.edit');

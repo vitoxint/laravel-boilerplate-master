@@ -101,15 +101,16 @@ export default {
          axios.get(uri).then((response) => {
             let data = response.data.data;
             this.mes = response.data.mes;
+
             if(data) {
                data.forEach(element => {
-               Dias.push(element.day);
-               Labels.push(element.day);
-               NumsSI.push(element.otsSI);
-               NumsEP.push(element.otsEP);
-               NumsAT.push(element.otsAT);
-               NumsTE.push(element.otsTE);
-               NumsEN.push(element.otsEN);
+                  Dias.push(element.day);
+                  Labels.push(element.day);
+                  NumsSI.push(element.otsSI);
+                  NumsEP.push(element.otsEP);
+                  NumsAT.push(element.otsAT);
+                  NumsTE.push(element.otsTE);
+                  NumsEN.push(element.otsEN);
                });
                //Chart
                this.datacollection={

@@ -175,6 +175,7 @@ class OrdenTrabajoController extends Controller
         
         $dia1= $afecha . '-'.$mfecha .'-1' ;
         $dian= $afecha . '-'.$mfecha .'-1' ;
+            $firstDay = new Carbon($dia1);
  
             $oStart = new Carbon($dia1);
 
@@ -214,7 +215,7 @@ class OrdenTrabajoController extends Controller
                     $otsTE = OrdenTrabajo::where('fecha_termino' , '<=', $oStart)->where('estado',4)->get('id')
                     ->count('id');
 
-                    $otsEN= OrdenTrabajo::where('fecha_termino' , '<=', $oStart)->where('estado',5)->get('id')
+                    $otsEN= OrdenTrabajo::where('fecha_termino' , '<=', $oStart)->where('estado',5)->whereBetween('created_at',[$firstDay,$oStart])->get('id')
                     ->count('id');
 
                     if($oStart <= $fecha){
@@ -258,6 +259,88 @@ class OrdenTrabajoController extends Controller
 
 
     }
+
+
+    public function getGanttOtsMes(){
+
+        $fecha = Carbon::now();
+        $mfecha = $fecha->format('m');
+        //$dfecha = $fecha->day;
+        $afecha = $fecha->format('Y');
+        
+        $dia1= $afecha . '-'.$mfecha .'-1' ;
+        $dian= $afecha . '-'.$mfecha .'-1' ;
+        $firstDay = new Carbon($dia1);
+
+        $oStart = new Carbon($dia1);
+        
+        //$oStart = $dia1;
+        $oEnd = new Carbon($dian);
+        $oEnd = $oEnd->addMonth(1);
+
+            //aux prueba 
+
+        /*   $oStart = $oStart->addMonth(-2);
+            $oEnd = $oEnd->addMonth(-2); */ 
+            
+            //fin auxiliar
+
+            $aRow = array() ;
+            $aItem = array();
+
+            //$numOts = array() ;
+
+        $ots = OrdenTrabajo::where('created_at' ,'<=', $oStart)->whereBetween('estado',[1,5])->get();
+                    
+
+/*                     $otsEP = OrdenTrabajo::where('fecha_inicio' ,'<=', $oStart)->where('estado',2)->get('id')
+                    ->count('id');
+
+                    $otsAT = OrdenTrabajo::where('created_at' ,'<=', $oStart)->where('estado',3)->get('id')
+                    ->count('id');
+
+                    $otsTE = OrdenTrabajo::where('fecha_termino' , '<=', $oStart)->where('estado',4)->get('id')
+                    ->count('id');
+
+                    $otsEN= OrdenTrabajo::where('fecha_termino' , '<=', $oStart)->where('estado',5)->whereBetween('created_at',[$firstDay,$oStart])->get('id')
+                    ->count('id'); */
+
+            //$oStart = $oStart->addMonth(-1);
+            $mes = $oStart->format('M-Y');
+
+            $labels = array();
+
+            foreach($ots as $ot){
+
+                array_push($aRow, [
+                    'id'  => $ot->folio, 
+                    'label' => $ot->cliente->razon_social, 
+               
+                ]);
+
+                array_push($aItem , [
+                    'id'  => $ot->folio, 
+                    'rowId'  => $ot->folio,
+                    'label' => $ot->cliente->razon_social, 
+                    'start' => $ot->created_at,
+                    'end' => $ot->entrega_estimada,
+                    'estado' => $ot->estado
+                    
+                ]);
+
+            }
+
+            return response()->json([
+                'aRow'=> $aRow,
+                'mes' => $mes,
+                'aItem' => $aItem,
+            
+               
+                ]); 
+
+
+    }
+
 
 
 
@@ -411,6 +494,20 @@ class OrdenTrabajoController extends Controller
         ]);
 
         $entrega_estimada = new Carbon($request->entrega_estimada);
+        $hoy = Carbon::now();
+        $estado_nuevo = $trabajo->estado;
+
+        $estado_ant = $trabajo->estado;
+        if(($estado_ant == '3')&&($entrega_estimada >= $hoy )){
+            if($trabajo->fecha_inicio){
+                $estado_nuevo = '2';
+            }else{
+                $estado_nuevo = '1';
+            }
+                           
+        }
+
+
         $entrega_estimada = $entrega_estimada->format('Y-m-d');
 
         $trabajo->update(
@@ -418,8 +515,9 @@ class OrdenTrabajoController extends Controller
                 'cotizacion' => $request->input('cotizacion'),
                 'orden_compra' => $request->input('orden_compra'),
                 'factura' => $request->input('factura'),
-                //'estado' => $request->input('estado'),
+                'estado' => $estado_nuevo,
                 'entrega_estimada' => $entrega_estimada,
+                'representante_id' => $request->input('representante_id'),
             ]
         );
 

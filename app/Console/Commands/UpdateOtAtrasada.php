@@ -52,8 +52,7 @@ class UpdateOtAtrasada extends Command
 
             $fecha_compromiso = new Carbon($ordenTrabajo->entrega_estimada);
             
-           
-
+        
              if($fecha_compromiso->addDays(1) < $hoy){
                 $ordenTrabajo->estado = '3';
                 $ordenTrabajo->save();

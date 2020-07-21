@@ -35,6 +35,15 @@
                             </div>
                         </div> 
 
+                        <div class="row mb-4">
+
+                            <div class="col">                               
+                                <ganttots-component></ganttots-component>
+                            </div> 
+
+                            
+                        </div> 
+
                         
 
                        

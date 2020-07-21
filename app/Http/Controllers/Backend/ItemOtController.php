@@ -45,7 +45,7 @@ class ItemOtController extends Controller
     public function index()
     {
         return view('backend.item_ots.index')
-        ->withItemOts($this->itemOtRepository->getActivePaginated(25, 'folio', 'desc'));
+        ->withItemOts($this->itemOtRepository->getActivePaginated(25, 'estado', 'asc'));
     
     }
 

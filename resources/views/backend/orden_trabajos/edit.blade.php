@@ -41,7 +41,22 @@
                         {{ html()->label(__('Contacto cliente'))->class('col-md-2 form-control-label')->for('representante_id') }}
 
                         <div class="col-md-6">
-                            @if($trabajo->representante)
+
+                        <?php $contactos = $trabajo->cliente->contactos; ?> 
+
+                        <select class="form-control" id="representante_id" name="representante_id">
+                                @if($trabajo->representante)
+                                     <option value="{{$trabajo->representante_id}}">{{$trabajo->representante->nombre}}</option>
+
+                                @endif
+
+                                @foreach($contactos as $contacto)
+                                     <option value="{{$contacto->id}}">{{$contacto->nombre}}</option>
+                                @endforeach
+
+
+                        </select>
+                            <!-- @if($trabajo->representante)
                                                 
                             {{ html()->text('representante_id')
                                         ->class('form-control')
@@ -59,7 +74,7 @@
                                         ->disabled()                                   
                                         }}              
                             
-                            @endif
+                            @endif -->
                                                     
                         </div>
                     </div><!--form-group--> 
