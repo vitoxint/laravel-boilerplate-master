@@ -24,6 +24,8 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         // \App\Http\Middleware\SecureHeaders::class,
+        \Fruitcake\Cors\HandleCors::class,
+        //\Barryvdh\Cors\HandleCors::class,
     ];
 
     /**
@@ -42,11 +44,14 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\LocaleMiddleware::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\ToBeLoggedOut::class,
+            
         ],
 
         'api' => [
             'throttle:60,1',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \Fruitcake\Cors\HandleCors::class,
+            //\Barryvdh\Cors\HandleCors::class,
         ],
 
         'admin' => [
@@ -54,6 +59,8 @@ class Kernel extends HttpKernel
             'password_expires',
             'permission:view backend',
         ],
+
+        'paths' => ['api/*'],
     ];
 
     /**

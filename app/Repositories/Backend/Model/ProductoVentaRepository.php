@@ -37,6 +37,11 @@ class ProductoVentaRepository extends BaseRepository
             ->paginate($paged);
     }
 
+    public function getApiIndex(){
+        return $this->model
+            ->orderBy('codigo', 'asc')->get();
+    }
+
     public function getActivePaginatedFront($paged = 25, $orderBy = 'codigo', $sort = 'asc'): LengthAwarePaginator
     {
         return $this->model

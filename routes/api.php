@@ -4,6 +4,9 @@ use Illuminate\Http\Request;
 
 use App\Http\Controllers\Backend\ProductoVentaController;
 use App\Http\Controllers\Backend\OrdenTrabajoController;
+use App\Http\Controllers\Frontend\ContactController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -20,9 +23,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('/api/contact/send', [ContactController::class, 'sendApi']);
+Route::get('/api/productos-venta/lista', [ProductoVentaController::class, 'getLista']);
+
+
 Route::group(['namespace' => 'ProductoVenta', 'prefix' => 'v1'], function () {
     
-    Route::get('productos-venta/lista', [ProductoVentaController::class, 'getLista']);
+    //Route::get('productos-venta/lista', [ProductoVentaController::class, 'getLista']);
     Route::get('productos-venta/{producto}/show', [ProductoVentaController::class, 'show']);
 /*     Route::get('productos-venta/create', [ProductoVentaController::class, 'create'])->name('productos-venta.create');
     Route::post('productos-venta', [ProductoVentaController::class, 'store'])->name('productos-venta.store');

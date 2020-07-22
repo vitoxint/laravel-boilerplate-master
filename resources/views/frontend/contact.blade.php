@@ -18,7 +18,6 @@
                             <div class="col">
                                 <div class="form-group">
                                     {{ html()->label(__('validation.attributes.frontend.name'))->for('name') }}
-
                                     {{ html()->text('name', optional(auth()->user())->name)
                                         ->class('form-control')
                                         ->placeholder(__('validation.attributes.frontend.name'))

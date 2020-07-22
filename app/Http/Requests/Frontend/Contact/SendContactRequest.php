@@ -30,7 +30,7 @@ class SendContactRequest extends FormRequest
             'name' => ['required'],
             'email' => ['required', 'email'],
             'message' => ['required'],
-            'g-recaptcha-response' => ['required_if:captcha_status,true', 'captcha'],
+            //'g-recaptcha-response' => ['required_if:captcha_status,true', 'captcha'],
         ];
     }
 
@@ -40,7 +40,7 @@ class SendContactRequest extends FormRequest
     public function messages()
     {
         return [
-            'g-recaptcha-response.required_if' => __('validation.required', ['attribute' => 'captcha']),
+            //'g-recaptcha-response.required_if' => __('validation.required', ['attribute' => 'captcha']),
         ];
     }
 }

@@ -206,6 +206,7 @@ return [
         peal\barcodegenerator\BarcodeServiceProvider::class,
         Milon\Barcode\BarcodeServiceProvider::class,
         Freshwork\ChileanBundle\Laravel\ChileanBundleServiceProvider::class,
+        //Barryvdh\Cors\ServiceProvider::class,
     ],
 
     /*

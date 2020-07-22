@@ -34,7 +34,19 @@ class ProductoVentaController extends Controller
     }
 
     public function getLista(){
-        return $this->productoRepository->getActivePaginatedFront(null, 'codigo', 'asc');
+        //return $this->productoRepository->getActivePaginatedFront(10, 'codigo', 'asc');
+
+        return response()->json([
+            'lista' => $this->productoRepository->getApiIndex(),
+            
+           
+            ]); 
+
+/*             return response()->json([
+                'data'=> 'Mensaje enviado correctamente, pronto nos contactaremos con usted para atender a su requerimiento',
+            
+            
+            ]);  */
 
     }
 
