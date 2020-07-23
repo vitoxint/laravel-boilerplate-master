@@ -34,7 +34,7 @@ class ProductoVentaController extends Controller
     }
 
     public function getLista(){
-        //return $this->productoRepository->getActivePaginatedFront(10, 'codigo', 'asc');
+        
         $lista = $this->productoRepository->getApiIndex();
 
         $listaProducto = array();
@@ -64,18 +64,54 @@ class ProductoVentaController extends Controller
             ]);
         }
 
-
         return response()->json([
             'lista' => $listaProducto,
             
            
             ]); 
 
-/*             return response()->json([
-                'data'=> 'Mensaje enviado correctamente, pronto nos contactaremos con usted para atender a su requerimiento',
+    }
+
+
+    public function getListaSearch(Request $request){
+
+        //$term = $request->get('buscar');
+        $term = $request->buscar;
+        
+        $lista = $this->productoRepository->getApiSearch($term);
+
+        $listaProducto = array();
+
+        foreach($lista as $producto){
+
+            $existencias = $producto->existencias->sum('cantidad');
+
+            if($existencias >= 1 ){
+                $entrega = 'Inmediata';
+                $stock = $existencias;
+            }else
+            {
+                $entrega = 'A pedido';
+                $stock = 'Sin Stock';
+            }
+
+            array_push( $listaProducto,[
+                'id' =>     $producto->id,
+                'codigo' => $producto->codigo,
+                'descripcion' => $producto->descripcion,
+                'marca'       => $producto->marca->nombre,
+                'familia'     => $producto->familia->nombre,
+                'stock'       => $stock,
+                'entrega'     => $entrega,
+                'image_url'   => asset( 'storage/'.$producto->imagen_url),
+            ]);
+        }
+
+        return response()->json([
+            'lista' => $listaProducto,
             
-            
-            ]);  */
+           
+            ]); 
 
     }
 

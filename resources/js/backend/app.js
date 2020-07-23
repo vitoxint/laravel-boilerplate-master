@@ -24,7 +24,7 @@ Vue.component('graficaingresos-component', require('./components/graficosIngreso
 
 Vue.component('graficastatusots-component', require('./components/graficosStatusOt.vue').default);
 
-Vue.component('ganttots-component', require('./components/ganttOtComponent.vue').default);
+/* Vue.component('ganttots-component', require('./components/ganttOtComponent.vue').default); */
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

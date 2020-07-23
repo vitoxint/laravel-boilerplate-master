@@ -26,6 +26,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/api/contact/send', [ContactController::class, 'sendApi']);
 Route::get('/api/productos-venta/lista', [ProductoVentaController::class, 'getLista']);
 
+Route::post('/api/productos-venta/lista_search', [ProductoVentaController::class, 'getListaSearch']);
+
 
 Route::group(['namespace' => 'ProductoVenta', 'prefix' => 'v1'], function () {
     

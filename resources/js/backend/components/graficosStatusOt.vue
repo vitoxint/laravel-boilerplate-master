@@ -124,7 +124,7 @@ export default {
                     ,
                     {
                         label: 'OTs En Proceso',
-                        backgroundColor: this.gradient2,
+                        backgroundColor: this.gradient3,
                         data: NumsEP
                     }
                     ,
@@ -136,7 +136,7 @@ export default {
                     ,
                     {
                         label: 'OTs Terminadas',
-                        backgroundColor: this.gradient3,
+                        backgroundColor: this.gradient2,
                         data: NumsTE
                     }
                     ,
