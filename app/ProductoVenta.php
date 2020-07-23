@@ -9,7 +9,7 @@ class ProductoVenta extends Model
     
     protected $fillable = [
 
-        'codigo' , 'descripcion' , 'marca_id' , 'familia_producto_id' , 'imagen_url' , 'procedencia' , 'precio_lista' , 'stock_seguridad' , 'exixtencias'
+        'codigo' , 'descripcion' , 'marca_id' , 'familia_producto_id' , 'imagen_url' , 'procedencia' , 'precio_lista' , 'stock_seguridad' , 'existencias'
 
     ];
 

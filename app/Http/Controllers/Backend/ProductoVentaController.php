@@ -35,9 +35,38 @@ class ProductoVentaController extends Controller
 
     public function getLista(){
         //return $this->productoRepository->getActivePaginatedFront(10, 'codigo', 'asc');
+        $lista = $this->productoRepository->getApiIndex();
+
+        $listaProducto = array();
+
+        foreach($lista as $producto){
+
+            $existencias = $producto->existencias->sum('cantidad');
+
+            if($existencias >= 1 ){
+                $entrega = 'Inmediata';
+                $stock = $existencias;
+            }else
+            {
+                $entrega = 'A pedido';
+                $stock = 'Sin Stock';
+            }
+
+            array_push( $listaProducto,[
+                'id' =>     $producto->id,
+                'codigo' => $producto->codigo,
+                'descripcion' => $producto->descripcion,
+                'marca'       => $producto->marca->nombre,
+                'familia'     => $producto->familia->nombre,
+                'stock'       => $stock,
+                'entrega'     => $entrega,
+                'image_url'   => asset( 'storage/'.$producto->imagen_url),
+            ]);
+        }
+
 
         return response()->json([
-            'lista' => $this->productoRepository->getApiIndex(),
+            'lista' => $listaProducto,
             
            
             ]); 
