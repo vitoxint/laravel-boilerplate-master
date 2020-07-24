@@ -27,7 +27,6 @@ class ProductoVentaController extends Controller
 
     public function index()
     {
-
         //return $this->productoRepository->getActivePaginated(15, 'id', 'asc')  ;
         return view('backend.productos_venta.index')
         ->withProductoVentas($this->productoRepository->getActivePaginated(10, 'codigo', 'asc'));
@@ -157,6 +156,79 @@ class ProductoVentaController extends Controller
             ]); 
 
     }
+
+
+    public function getListaCheck(Request $request){
+
+        //$marcas = array(); 
+        $marcas = $request->get('marcas');
+        $categorias  = $request->get('categorias');
+        
+
+       
+        
+
+        if(( $marcas != [])  && ($categorias != [])) {
+            $lista = ProductoVenta::whereIn('marca_id', $marcas)->whereIn('familia_producto_id', $categorias)->get(); 
+            //$lista      = $this->productoRepository->getApiIndex();
+    
+        }else{
+
+            if($marcas != []){
+                $lista = ProductoVenta::whereIn('marca_id', $marcas)->get(); 
+                }
+                else{
+                    if($categorias != []){
+                        $lista = ProductoVenta::whereIn('familia_producto_id', $categorias)->get(); 
+                    }else{
+                        $lista      = $this->productoRepository->getApiIndex();
+                    }
+
+
+            }
+        }
+        
+/*         else{ 
+            $lista      = $this->productoRepository->getApiIndex();
+        }  */
+        
+        $listaProducto = array();
+        
+
+        foreach($lista as $producto){
+
+            $existencias = $producto->existencias->sum('cantidad');
+
+            if($existencias >= 1 ){
+                $entrega = 'Inmediata';
+                $stock = $existencias;
+            }else
+            {
+                $entrega = 'A pedido';
+                $stock = 'Sin Stock';
+            }
+
+            array_push( $listaProducto,[
+                'id' =>     $producto->id,
+                'codigo' => $producto->codigo,
+                'descripcion' => $producto->descripcion,
+                'marca'       => $producto->marca->nombre,
+                'familia'     => $producto->familia->nombre,
+                'stock'       => $stock,
+                'entrega'     => $entrega,
+                'image_url'   => asset( 'storage/'.$producto->imagen_url),
+            ]);
+        }
+
+        return response()->json([
+            'lista'        => $listaProducto,
+            'marcas'  => $marcas
+            
+           
+            ]); 
+
+    }
+
 
 
     public function buscar_producto(Request $request)
