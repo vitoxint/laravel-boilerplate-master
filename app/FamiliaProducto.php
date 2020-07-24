@@ -13,4 +13,9 @@ class FamiliaProducto extends Model
     protected $hidden = [
         'remember_token'
     ];
+
+    public function producto_ventas(){
+        return $this->hasMany('App\ProductoVenta' , 'familia_producto_id' ,'id');
+    }
+
 }

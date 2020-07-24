@@ -14,4 +14,8 @@ class Marca extends Model
     protected $hidden = [
         'remember_token'
     ];
+
+    public function producto_ventas(){
+        return $this->hasMany('App\ProductoVenta' , 'marca_id' ,'id');
+    }
 }

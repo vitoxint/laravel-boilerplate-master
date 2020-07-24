@@ -35,9 +35,48 @@ class ProductoVentaController extends Controller
 
     public function getLista(){
         
-        $lista = $this->productoRepository->getApiIndex();
+        $lista      = $this->productoRepository->getApiIndex();
+        $marcas     = Marca::orderBy('nombre','asc')->get();
+        $categorias = FamiliaProducto::orderBy('nombre', 'asc')->get();
 
-        $listaProducto = array();
+
+        $listaProducto   = array();
+        $listaMarcas     = array();
+        $listaCategorias = array();
+
+
+        foreach($marcas as $marca){
+
+            $cantidad = $marca->producto_ventas->count('id');
+
+            if($cantidad >=1){
+
+                array_push( $listaMarcas,[
+                    'id'        => $marca->id,
+                    'nombre'    => $marca->nombre,
+                    'cantidad'  => $cantidad
+
+                ]);
+            }
+
+        }   
+
+        
+        foreach($categorias as $categoria){
+
+            $cantidad = $categoria->producto_ventas->count('id');
+
+            if($cantidad >=1){
+
+                array_push( $listaCategorias,[
+                    'id'        => $categoria->id,
+                    'nombre'    => $categoria->nombre,
+                    'cantidad'  => $cantidad
+
+                ]);
+            }
+
+        }          
 
         foreach($lista as $producto){
 
@@ -65,7 +104,9 @@ class ProductoVentaController extends Controller
         }
 
         return response()->json([
-            'lista' => $listaProducto,
+            'lista'            => $listaProducto,
+            'lista_marcas'     => $listaMarcas,
+            'lista_categorias' => $listaCategorias
             
            
             ]); 
@@ -79,8 +120,9 @@ class ProductoVentaController extends Controller
         $term = $request->buscar;
         
         $lista = $this->productoRepository->getApiSearch($term);
-
+        
         $listaProducto = array();
+        
 
         foreach($lista as $producto){
 
@@ -108,7 +150,8 @@ class ProductoVentaController extends Controller
         }
 
         return response()->json([
-            'lista' => $listaProducto,
+            'lista'        => $listaProducto,
+            
             
            
             ]); 
