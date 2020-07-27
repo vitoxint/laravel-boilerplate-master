@@ -112,6 +112,20 @@ class ProductoVentaController extends Controller
 
     }
 
+    public function find(Request $request){
+        $id = $request->id;
+
+        $producto = ProductoVenta::where('id', $id)->first();
+
+        return response()->json([
+            'desc'        => $producto->descripcion,
+            'url'         => asset( 'storage/'.$producto->imagen_url),
+            'marca'       => $producto->marca->nombre
+                      
+            ]); 
+        
+    }
+
 
     public function getListaSearch(Request $request){
 

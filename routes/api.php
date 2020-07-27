@@ -28,6 +28,7 @@ Route::post('/api/contact/send',         [ContactController::class, 'sendApi']);
 Route::get('/api/productos-venta/lista', [ProductoVentaController::class, 'getLista']);
 Route::post('/api/productos-venta/lista_search', [ProductoVentaController::class, 'getListaSearch']);
 Route::post('/api/productos-venta/lista_check',  [ProductoVentaController::class, 'getListaCheck']);
+Route::post('/api/productos-venta/find',         [ProductoVentaController::class, 'find']);
 
 
 Route::group(['namespace' => 'ProductoVenta', 'prefix' => 'v1'], function () {
