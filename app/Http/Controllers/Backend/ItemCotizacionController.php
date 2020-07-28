@@ -82,7 +82,7 @@ class ItemCotizacionController extends Controller
           $cotizacion->valor_neto = $cotizacion->valor_neto + $item->valor_parcial;
           $cotizacion->save();
               
-        $input = $request->all();
+        //$input = $request->all();
         return response()->json([
             'success'=>'Got Simple Ajax Request.',
             'valor_neto' => $cotizacion->valor_neto,

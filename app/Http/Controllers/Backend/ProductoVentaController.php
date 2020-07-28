@@ -105,8 +105,7 @@ class ProductoVentaController extends Controller
         return response()->json([
             'lista'            => $listaProducto,
             'lista_marcas'     => $listaMarcas,
-            'lista_categorias' => $listaCategorias
-            
+            'lista_categorias' => $listaCategorias            
            
             ]); 
 
@@ -165,8 +164,7 @@ class ProductoVentaController extends Controller
         return response()->json([
             'lista'        => $listaProducto,
             
-            
-           
+                  
             ]); 
 
     }
@@ -177,10 +175,7 @@ class ProductoVentaController extends Controller
         //$marcas = array(); 
         $marcas = $request->get('marcas');
         $categorias  = $request->get('categorias');
-        
-
-       
-        
+              
 
         if(( $marcas != [])  && ($categorias != [])) {
             $lista = ProductoVenta::whereIn('marca_id', $marcas)->whereIn('familia_producto_id', $categorias)->get(); 

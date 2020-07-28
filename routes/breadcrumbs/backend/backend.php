@@ -308,3 +308,12 @@ Breadcrumbs::for('admin.productos-venta.opencode', function ($trail) {
     $trail->push('Catálogo de productos', route('admin.productos-venta.index'));
     $trail->push('Producto encontrado por código', route('admin.productos-venta.opencode'));
 });
+
+Breadcrumbs::for('admin.s_cotizaciones.index', function ($trail) {
+    $trail->push('Solicitudes de cotización', route('admin.s_cotizaciones.index'));
+});
+
+Breadcrumbs::for('admin.s_cotizaciones.edit', function ($trail, $cotizacion) {
+    $trail->push('Solicitudes de cotización', route('admin.s_cotizaciones.index'));
+    $trail->push('Responder solicitud -'.$cotizacion->id, route('admin.s_cotizaciones.edit', $cotizacion));
+});

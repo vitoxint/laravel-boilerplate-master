@@ -25,6 +25,8 @@ use App\Http\Controllers\Backend\PagoOtController;
 use App\Http\Controllers\Backend\FileCotizacionController;
 use App\Http\Controllers\Backend\CuentaClienteController;
 use App\Http\Controllers\Backend\AbonoCuentaClienteController;
+use App\Http\Controllers\Backend\SolicitudCotizacionController;
+use App\Http\Controllers\Backend\ItemScController;
 
 
 
@@ -135,6 +137,39 @@ Route::group(['namespace' => 'Cotizacion'], function () {
 
     Route::get('cotizaciones/resultados', [CotizacionController::class, 'buscar_cotizacion'])->name('cotizaciones.buscar_cotizacion');
    
+}); 
+
+
+Route::group(['namespace' => 'SolicitudCotizacion'], function () {
+    
+    Route::get('s_cotizaciones', [SolicitudCotizacionController::class, 'index'])->name('s_cotizaciones.index');
+    //Route::get('cotizaciones/create', [CotizacionController::class, 'create'])->name('cotizaciones.create');
+    //Route::post('cotizaciones', [CotizacionController::class, 'store'])->name('cotizaciones.store');
+
+    Route::group(['prefix' => 's_cotizaciones/{cotizacion}'], function () {
+        Route::get('edit', [SolicitudCotizacionController::class, 'edit'])->name('s_cotizaciones.edit');
+        Route::get('print', [SolicitudCotizacionController::class, 'print'])->name('s_cotizaciones.print');
+        Route::get('send', [SolicitudCotizacionController::class, 'send'])->name('s_cotizaciones.send');
+        Route::patch('/', [SolicitudCotizacionController::class, 'update'])->name('s_cotizaciones.update');
+       // Route::delete('/', [CotizacionController::class, 'destroy'])->name('cotizaciones.destroy');
+    });
+
+    Route::get('s_cotizaciones/espera', [SolicitudCotizacionController::class, 'espera'])->name('s_cotizaciones.espera');
+    Route::get('s_cotizaciones/resueltas', [SolicitudCotizacionController::class, 'resueltas'])->name('s_cotizaciones.resueltas');
+    Route::get('s_cotizaciones/enviadas', [SolicitudCotizacionController::class, 'enviadas'])->name('s_cotizaciones.enviadas');
+
+    Route::get('s_cotizaciones/resultados', [SolicitudCotizacionController::class, 'buscar_cotizacion'])->name('s_cotizaciones.buscar_cotizacion');
+
+    //Route::get('s_cotizaciones/resultados', [SolicitudCotizacionController::class, 'buscar_cotizacion'])->name('cotizaciones.buscar_cotizacion');
+   
+}); 
+
+Route::group(['namespace' => 'ItemSolicitudCotizacion'], function () {
+ 
+    Route::post('item_scotizacion', [ItemScController::class, 'update'])->name('item_scotizacion.update');
+   // Route::post('item_cotizacions/destroy', [ItemCotizacionController::class, 'destroy'])->name('item_cotizacions.destroy');
+
+
 }); 
 
 

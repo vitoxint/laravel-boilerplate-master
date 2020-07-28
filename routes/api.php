@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Backend\ProductoVentaController;
 use App\Http\Controllers\Backend\OrdenTrabajoController;
 use App\Http\Controllers\Frontend\ContactController;
+use App\Http\Controllers\Backend\SolicitudCotizacionController;
 
 
 
@@ -24,6 +25,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('/api/contact/send',         [ContactController::class, 'sendApi']);
+
+Route::post('/api/s-cotizacion/recibir',         [SolicitudCotizacionController::class, 'ingresarApi']);
+
+
 
 Route::get('/api/productos-venta/lista', [ProductoVentaController::class, 'getLista']);
 Route::post('/api/productos-venta/lista_search', [ProductoVentaController::class, 'getListaSearch']);

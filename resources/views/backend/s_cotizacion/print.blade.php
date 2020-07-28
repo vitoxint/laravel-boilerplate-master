@@ -9,7 +9,7 @@
             <td style="text-align: left; width: 475px"><img src="{{ asset('img/backend/brand/marca.png') }}" width="150px" /></td>
             <td>         </td>
             <td>
-                <span style="padding-left: 500px;  font-weight: bold; font-size: 15px; color: green;">Cotización: {{$cotizacion->folio}}</span>
+                <span style="padding-left: 500px;  font-weight: bold; font-size: 15px; color: green;">Cotización: {{$cotizacion->id}}</span>
             </td>
         </tr>
     </table>
@@ -41,7 +41,7 @@
 
     <div>
         <span>
-            <p style="font-size: 10px;">Sres. <b>{{ $cotizacion->empresa }}</b> ,tenemos el agrado de cotizar para usted los siguientes trabajos requeridos en el detalle de la cotización: <p>
+            <p style="font-size: 10px;">Sres. <b>{{ $cotizacion->nombre_solicitante }}</b> ,tenemos el agrado de cotizar para usted los siguientes ítems requeridos en el detalle de la cotización: <p>
         </span>
 
     </div>
@@ -58,32 +58,40 @@
 
             <tbody>
                 <tr>
-                    <td style="padding-bottom:-10px;"> <p style="font-size: 10px; font-weight: bold; ">Cliente: </p>
-                    <td style="padding-bottom:-10px;"> <p style="font-size: 10px; ">{{$cotizacion->empresa}}</p></td>
+                    <td style="padding-bottom:-10px;"> <p style="font-size: 10px; font-weight: bold; ">Solicitante: </p>
+                    <td style="padding-bottom:-10px;"> <p style="font-size: 10px; ">{{$cotizacion->nombre_solicitante}}</p></td>
                     <td style="padding-bottom:-10px;"> <p style="font-size: 10px; font-weight: bold;">Vendedor: </p></td>
                     <td style="padding-bottom:-10px;"> <p style="font-size: 10px; ">{{ $cotizacion->usuario['first_name'] . ' '. $cotizacion->usuario['last_name'] }}</p></td>
                 </tr>
 
                 <tr>
-                    <td style="padding-bottom:-10px;"> <p style="font-size: 10px; font-weight: bold;">Contacto: </p></td>
-                    <td style="padding-bottom:-10px;"> <p style="font-size: 10px; "><?php echo $cotizacion->contacto ?></p></td>
+                    <td style="padding-bottom:-10px;"> <p style="font-size: 10px; font-weight: bold;">Email: </p></td>
+                    <td style="padding-bottom:-10px;"> <p style="font-size: 10px; "><?php echo $cotizacion->email_solicitante ?></p></td>
                     <td style="padding-bottom:-10px;"> <p style="font-size: 10px; font-weight: bold;">Email vendedor: </p></td>
                     <td style="padding-bottom:-10px;"> <p style="font-size: 10px; "><?php echo $cotizacion->usuario['email'] ?></p></td>
                 </tr>
 
                 <tr>
-                    <td style="padding-bottom:-10px;"> <p style="font-size: 10px; font-weight: bold;">Teléfono/Email: </p></td>
-                    <td style="padding-bottom:-10px;"> <p style="font-size: 10px; "><?php echo $cotizacion->telefono_contacto .' ' ?> <?php echo $cotizacion->email_contacto  ?></p></td>
-                    <?php   $fecha_cotizacion = new Carbon\Carbon($cotizacion->created_at); ?>
-                    <td style="padding-bottom:-10px;"> <p style="font-size: 10px; font-weight: bold;">Fecha/hora cotización: </p></td>
-                    <td style="padding-bottom:-10px;"> <p style="font-size: 10px; ">{{ $fecha_cotizacion->format('d/m/Y H:i') }}</p></td>
+                    <td style="padding-bottom:-10px;"> <p style="font-size: 10px; font-weight: bold;">Teléfono: </p></td>
+                    <td style="padding-bottom:-10px;"> <p style="font-size: 10px; "><?php echo $cotizacion->telefono_solicitante .' ' ?></p></td>
+                    <?php  
+                        if($cotizacion->fecha_envio != null){
+                            $fecha_cotizacion = new Carbon\Carbon($cotizacion->fecha_envio);
+                        }else{
+                            $fecha_cotizacion = null;
+                        }
+                        
+                    ?>
+                    <td style="padding-bottom:-10px;"> <p style="font-size: 10px; font-weight: bold;">Fecha cotización: </p></td>
+                    <td style="padding-bottom:-10px;"> <p style="font-size: 10px; "> <?php if($fecha_cotizacion != null){ echo $fecha_cotizacion->format('d/m/Y');} ?>  </p></td>
                 </tr>                
 
                 <tr>
-                    <td style="padding-bottom:-10px;"> <p style="font-size: 10px; font-weight: bold;">Forma de pago: </p></td>
-                    <td style="padding-bottom:-10px;"> <p style="font-size: 10px; ">{{$cotizacion->forma_pago}}</p></td>
+                    <td style="padding-bottom:-10px;"> <p style="font-size: 10px; font-weight: bold;">Fecha solicitud: </p></td>
+                    <?php   $fecha_solicitud = new Carbon\Carbon($cotizacion->created_at); ?>
+                    <td style="padding-bottom:-10px;"> <p style="font-size: 10px; ">{{$fecha_solicitud->format('d/m/Y H:i')}}</p></td>
                     <td style="padding-bottom:-10px;"> <p style="font-size: 10px; font-weight: bold;">Validez: </p></td>
-                    <td style="padding-bottom:-10px;"> <p style="font-size: 10px; "><?php echo $cotizacion->dias_validez . ' días' ?></p></td>
+                    <td style="padding-bottom:-10px;"> <p style="font-size: 10px; "><?php echo $cotizacion->validez . ' día/s' ?></p></td>
                 </tr> 
             </tbody>
         </table>
@@ -101,49 +109,50 @@
                 <tr>
                     <td style="background-color:blue;  padding-top:3px; padding-bottom:-10px; text-align:center; width:7px"><p style="color:white; font-size: 10px; ">#</p></td>
                     <td style="background-color:blue;  padding-top:3px; padding-bottom:-10px; text-align:center; width:8px"><p style=" color:white; font-size: 10px; ">Cantidad</p></td>
-                    <td style="background-color:blue;  padding-top:3px; padding-bottom:-10px; text-align:center;"><p style="color:white; font-size: 10px; ">Descripción del producto / trabajo </p></td>
-                    <td style="background-color:blue;  padding-top:3px; padding-bottom:-10px; text-align:center; width:75px"><p style="color:white; font-size: 10px; ">Valor unitario </p></td>
-                    <td style="background-color:blue;  padding-top:3px; padding-bottom:-10px; text-align:center; width:55px"><p style="color:white; font-size: 10px; ">% Dscto </p></td>
+                    <td style="background-color:blue;  padding-top:3px; padding-bottom:-10px; text-align:center;"><p style="color:white; font-size: 10px; ">Producto </p></td>
+                    <td style="background-color:blue;  padding-top:3px; padding-bottom:-10px; text-align:center; width:75px"><p style="color:white; font-size: 10px; ">Precio normal </p></td>
+                    <td style="background-color:blue;  padding-top:3px; padding-bottom:-10px; text-align:center; width:55px"><p style="color:white; font-size: 10px; ">Descuento </p></td>
                     <td style="background-color:blue;  padding-top:3px; padding-bottom:-10px; text-align:center; width:65px"><p style="color:white; font-size: 10px; ">Valor total</p></td>
                 </tr>
             </thead>
             <tbody>
                 <?php $i = 1; ?>
-                <?php foreach ($cotizacion->items_cotizacion as $item): ?>
+                <?php foreach ($cotizacion->itemsSolicitud as $item): ?>
                     <tr>
                         <td style="text-align:center; padding-top:3px; padding-bottom:-10px;"><p style="font-size: 10px; font-weight:bold; "><?php echo $i++ ?></p> </td>
                         <td style="text-align:center; padding-top:3px; padding-bottom:-10px;"><p style="font-size: 10px; font-weight:bold; "><?php echo $item["cantidad"] ?></p> </td>
-                        <td style="padding-bottom:-10px; padding-top:3px;"><p style="font-size: 10px; font-weight:bold; "><?php echo $item["descripcion"] ?></p> </td>
+                        <td style="padding-bottom:-10px; padding-top:3px;"><p style="font-size: 10px; font-weight:bold; ">  <?php echo '['. $item->producto->codigo.  '] '. $item->producto->descripcion ?></p> </td>
                         <td style="text-align:right; padding-top:3px; padding-bottom:-10px;"><p style="font-size: 10px; font-weight:bold; ">  @money($item->valor_unitario) </p> </td>
                         <td style="text-align:right; padding-top:3px; padding-bottom:-10px;"><p style="font-size: 10px; font-weight:bold; "><?php echo $item["descuento"] ?> %</p> </td>
-                        <td style="text-align:right; padding-top:3px; padding-bottom:-10px;"><p style="font-size: 10px; font-weight:bold; ">@money($item->valor_parcial) </p> </td>
+                        <td style="text-align:right; padding-top:3px; padding-bottom:-10px;"><p style="font-size: 10px; font-weight:bold; ">@money($item->valor_total) </p> </td>
                     </tr>
                 <?php endforeach; ?>
-                <tr>
-                    <td style="text-align:center;"><br></td>
-                    <td style="text-align:center;"><br></td>
-                    <td style="text-align:center;"><br></td>
-                    <td style="text-align:center;"><br></td>
-                    <td style="text-align:center;"><br></td>
-                    <td style="text-align:center;"><br></td>
+                <tr> 
+                    <td style="text-align:center;"><br><br><br></td>
+                    <td style="text-align:center;"><br><br><br></td>
+                    <td style="text-align:center;"><br><br><br></td>
+                    <td style="text-align:center;"><br><br><br></td>
+                    <td style="text-align:center;"><br><br><br></td>
+                    <td style="text-align:center;"><br><br><br></td>
                    
                 </tr>
+       
                 <tr>
-                    <td colspan="4" style="padding-bottom:-10px; padding-top:3px;"><p style="font-size: 10px; font-weight:bold; ">Observaciones</p></td>
+                    <td colspan="4" style="padding-bottom:-10px; padding-top:3px;"><p style="font-size: 10px; font-weight:bold; "></p></td>
                     <td style="padding-bottom:-10px; padding-top:3px;"><p style="font-size: 10px; font-weight:bold; padding-top:3px; padding-bottom:-10px; ">Neto</p></td>
-                    <td style="text-align:right; padding-top:3px; padding-bottom:-10px;"><p style="font-size: 10px; font-weight:bold; ">@money($cotizacion->valor_neto) </p></td>
+                    <td style="text-align:right; padding-top:3px; padding-bottom:-10px;"><p style="font-size: 10px; font-weight:bold; ">@money($cotizacion->valor_total) </p></td>
                 </tr>
                 <tr>
-                    <td colspan="4" rowspan="2" style="padding-bottom:-10px; padding-top:3px;"><p style="font-size: 10px; "><?php echo $cotizacion->observaciones ?></p></td>
+                    <td colspan="4" rowspan="2" style="padding-bottom:-10px; padding-top:3px;"><p style="font-size: 10px; "></p></td>
                     <td style="padding-bottom:-10px; padding-top:3px;"><p style="font-size: 10px; font-weight:bold;">19% (IVA)</p></td>
-                    <td style="text-align:right; padding-top:3px; padding-bottom:-10px;"><p style="font-size: 10px; font-weight:bold; "> @money($cotizacion->valor_neto * 0.19) </p></td>
+                    <td style="text-align:right; padding-top:3px; padding-bottom:-10px;"><p style="font-size: 10px; font-weight:bold; "> @money($cotizacion->valor_total * 0.19) </p></td>
                 </tr>
                 <tr>
                     <td style="padding-bottom:-10px; padding-top:3px;"><p style="font-size: 10px; font-weight:bold;">Valor Total</p></td>
-                    <td style="text-align:right; padding-top:3px; padding-bottom:-10px;"><p style="font-size: 10px; font-weight:bold; "><b>@money($cotizacion->valor_neto * 1.19)</b></p></td>
+                    <td style="text-align:right; padding-top:3px; padding-bottom:-10px;"><p style="font-size: 10px; font-weight:bold; "><b>@money($cotizacion->valor_total * 1.19)</b></p></td>
                 </tr>
                 <tr>
-                    <td colspan="6"> <p style="font-size: 10px;"><span style="font-weight: bold;">Condiciones de pago : </span> {{$cotizacion->condicion_pago}}</p> </td>
+                    <td colspan="6"> <!-- <p style="font-size: 10px;"><span style="font-weight: bold;">Condiciones de pago : </span> </p> --> </td>
                 </tr>
             </tbody>
         </table>
@@ -175,12 +184,13 @@
         </tr>
     </table>
     <br>
-    <table border="1">
+
+<!--     <table border="1">
         <tr>
             <td valign="top" style="width: 600px">
                 <p style="font-size: 10px; font-weight: bold;">Información importante para trabajos de corte y mecanizado: </p>
                 <ol>
-                    <!-- <li style="font-size: 10px;">En Difierro sólo tenemos planchas de fierro calidad ASTM A-36.</li> -->
+                   
                     <li style="font-size: 10px;">El cliente deberá entregar archivo vectorial trazado en formato DWG o DXF. En caso de enviar archivo en PDF el cliente deberá acotar las medidas de los planos.</li>
                     <li style="font-size: 10px;">Esta  cotización  ha sido  realizada según planos enviado por el cliente, por lo que cualquier modificación de estos podría  hacer variar los valores de la presente cotización.</li>
                     <li style="font-size: 10px;">Al aceptar esta cotización el cliente aprueba los planos enviados para cotizar y/o los desarrollados por los ingenieros de Maestranza Orecal.</li>
@@ -192,5 +202,5 @@
                 </ol>
             </td>
         </tr>
-    </table>
+    </table> -->
 </div>
