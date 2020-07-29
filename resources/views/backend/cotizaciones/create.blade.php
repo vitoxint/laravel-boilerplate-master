@@ -119,7 +119,7 @@
                             {{ html()->label('Observaciones')->class('col-md-2 form-control-label')->for('observaciones') }}
 
                             <div class="col-md-10">
-                                {{ html()->textarea('observaciones (opcional)')
+                                {{ html()->textarea('observaciones')
                                     ->class('form-control')
                                     ->placeholder('Observaciones')
                                     ->attribute('maxlength', 512)

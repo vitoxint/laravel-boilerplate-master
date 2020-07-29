@@ -134,7 +134,8 @@ class ItemCotizacionController extends Controller
         ]);  
         
         $cotizacion   = Cotizacion::where('id', $request->id)->first();
-        $item = ItemCotizacion::where('folio' , '=', $request->get('item'))->first();
+        //$item = ItemCotizacion::where('folio' , '=', $request->get('item'))->first();
+        $item = ItemCotizacion::where('cotizacion_id','=', $request->id)->where('folio','=',$request->get('item'))->first();
 
         $item->update([
             'descripcion'    => $request->get('desc'),
@@ -170,7 +171,7 @@ class ItemCotizacionController extends Controller
     public function destroy(Request $request)
     {
              
-        $item = ItemCotizacion::where('cotizacion_id','=', $request->id)->where('descripcion','=',$request->get('desc'))->first();
+        $item = ItemCotizacion::where('cotizacion_id','=', $request->id)->where('folio','=',$request->get('item'))->first();
         
         $cotizacion = Cotizacion::find($request->id);
 

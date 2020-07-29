@@ -106,6 +106,7 @@ class CotizacionController extends Controller
             'dias_validez' => $request->input('dias_validez'),
             'user_id' => Auth::user()->id, 
             'valor_neto' => 0,
+            'observaciones' => $request->input('observaciones'),
             
           ]);
         
@@ -174,6 +175,7 @@ class CotizacionController extends Controller
                 'condicion_pago' => $request->input('condicion_pago'),
                 'forma_pago' => $request->input('forma_pago'),
                 'dias_validez' => $request->input('dias_validez'),
+                'observaciones' => $request->input('observaciones'),
             ]
         );
 
