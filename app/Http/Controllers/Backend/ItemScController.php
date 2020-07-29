@@ -102,10 +102,7 @@ class ItemScController extends Controller
             'user_id' => Auth::user()->id, 
         ]);
 
-    //$cotizacion->valor_neto = $cotizacion->valor_neto + $item->valor_parcial;
-        //$cotizacion->save();
-            
-      //$input = $request->all();
+
       return response()->json([
           'success'=>'Got Simple Ajax Request.',
           'valor_neto' => $sc->valor_total,

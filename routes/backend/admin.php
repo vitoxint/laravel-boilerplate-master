@@ -201,6 +201,7 @@ Route::group(['namespace' => 'ItemCotizacion'], function () {
  
     Route::post('item_cotizacions', [ItemCotizacionController::class, 'store'])->name('item_cotizacions.store');
     Route::post('item_cotizacions/destroy', [ItemCotizacionController::class, 'destroy'])->name('item_cotizacions.destroy');
+    Route::post('item_cotizacion', [ItemCotizacionController::class, 'update'])->name('item_cotizacions.update');
 
 
 }); 

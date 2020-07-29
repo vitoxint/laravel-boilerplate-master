@@ -42,7 +42,7 @@
                             <tr>
                                 <td> {{$cotizacion->id}} </td>
                                 <?php   $fecha_solicitud = new Carbon\Carbon($cotizacion->created_at); ?>
-                                <td> {{ $fecha_solicitud->format('d/m/Y') }} </td>
+                                <td> {{ $fecha_solicitud->format('d/m/Y H:i') }} </td>
                                 <td> {{ $cotizacion->nombre_solicitante}}</td>
                                 <td> @if($cotizacion->validez) {{ $cotizacion->validez}} día/s @endif</td>
                                 <td> @if($cotizacion->usuario) {{ $cotizacion->usuario->first_name. ' ' .$cotizacion->usuario->last_name}} @endif</td>

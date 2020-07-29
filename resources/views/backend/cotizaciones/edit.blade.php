@@ -284,6 +284,7 @@
                                     <td><input class='form-control input-sm' style='width:100%;' type="text" id="pr_des{{$item->folio}}" value="{{$item->descuento}}" oninput='multiply("{{$item->folio}}");' name="pr_des[]"></td>
                                     <td class="custom-tbl"><input class='estimated_cost form-control input-sm' id="pr_cpi{{$item->folio}}" value="{{$item->valor_parcial}}" style='width:100%;' type="text" name="pr_cpi[]" readonly></td>
                                     <td class="custom-tbl"><button type="button" id="{{$item->folio}}" class="btn-info btn-sm btn_add" name="add"><span class="fas fa-plus"></span></button>
+                                                           <!-- <button  id="{{$item->folio}}" class="btn-success btn-sm btn_update" name="actualizar"><span class="fas fa-sync"></span></button> -->
                                                            <button type="button" name="remove" id="{{$item->folio}}" class="btn-danger btn-sm btn_remove"><span class="fas fa-times"></span></button>
                                     </td>
                                 </tr>
@@ -402,6 +403,52 @@
           var postURL = "<?php echo url('addmore'); ?>";
           var i= "{{$max_folio}}";
 
+          
+          $(document).on('click', '.btn_update',function(){
+ 
+                   var up_id = $(this).attr("id"); 
+ 
+                   var item = add_id;
+                   var qty =  $("#pr_qty" + up_id).val();
+                   var desc=  $('#pr_desc'+ up_id).val();
+                   var cpu =  $("#pr_cpu" + up_id).val();
+                   var des =  $("#pr_des" + up_id).val();
+                   var cpi =  $("#pr_cpi" + up_id).val();
+   
+   
+                   $.ajax({
+                   type:'POST',
+                   url:'{{route("admin.item_cotizacions.update")}}?id='+ "<?php echo $cotizacion->id; ?>",
+                   headers: {
+                           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                       },
+                   data:{item:item, qty:qty , decs:desc cpu:cpu , des:des , cpi:cpi},
+                   success:function(data){
+   
+                       var neto = data.valor_neto;
+                       var iva  = data.iva;
+                       var total= data.total;
+   
+                       var netoFinal = parseFloat(neto);
+                       var ivaFinal = parseFloat(iva);
+                       var totalFinal = parseFloat(total);
+   
+                       document.getElementById('valor_neto').value = formatter.format(netoFinal.toFixed(0));
+                       document.getElementById('iva').value = formatter.format(ivaFinal.toFixed(0));
+                       document.getElementById('valor_incluido').value = formatter.format(totalFinal.toFixed(0));
+                       // $('iva').val(data.iva);
+                       // $('valor_incluido').val(data.total);
+                       //grandTotal();
+   
+                   },
+                   error: function() {
+                       console.log("No se ha podido obtener la información");
+                   }
+   
+                   });           
+                       
+               }); 
+
 
           $(document).on('click', '.btn_add',function(){
 
@@ -491,6 +538,8 @@
 
           });
 
+
+
           $.ajaxSetup({
               headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -500,10 +549,11 @@
 
         });
 
-
-
+   
 
     </script>
+
+    
     
     
     <script type="text/javascript">
@@ -512,6 +562,10 @@
                 var total1 = parseFloat( parseFloat($('#pr_qty'+id).val()) - ( parseFloat($('#pr_qty'+id).val()) * ( parseFloat($('#pr_des'+id).val()) /100 ) ) ) * parseFloat($('#pr_cpu'+id).val());
                 $("input[id=pr_cpi" + id + "]").val(total1);
                 grandTotal();
+
+
+
+
             }
         function grandTotal()
             {

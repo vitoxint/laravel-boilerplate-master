@@ -121,9 +121,44 @@ class ItemCotizacionController extends Controller
      * @param  \App\ItemCotizacion  $itemCotizacion
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ItemCotizacion $itemCotizacion)
+    public function update(Request $request)
     {
-        //
+        $this->validate($request, [
+            
+            'item' => 'required',
+            'qty' => 'required|numeric',
+            'cpu' => 'required|numeric',
+            'des' => 'required|numeric',
+            'cpi' => 'required|numeric',
+            
+        ]);  
+        
+        $cotizacion   = Cotizacion::where('id', $request->id)->first();
+        $item = ItemCotizacion::where('folio' , '=', $request->get('item'))->first();
+
+        $item->update([
+            'descripcion'    => $request->get('desc'),
+            'valor_unitario' => $request->get('cpu'),
+            'descuento'      => $request->get('des'),
+            'valor_parcial'  => $request->get('cpi')
+
+        ]);
+
+
+
+        $cotizacion->update([
+            'valor_neto' => $cotizacion->items_cotizacion->sum('valor_parcial'),
+            
+        ]);
+
+
+      return response()->json([
+        'success'=>'Got Simple Ajax Request.',
+        'valor_neto' => $cotizacion->valor_neto,
+        'iva' => (float)$cotizacion->valor_neto * 0.19,
+        'total' => (float)$cotizacion->valor_neto * 1.19,
+ 
+          ]); 
     }
 
     /**
