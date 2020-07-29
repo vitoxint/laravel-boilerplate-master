@@ -317,3 +317,23 @@ Breadcrumbs::for('admin.s_cotizaciones.edit', function ($trail, $cotizacion) {
     $trail->push('Solicitudes de cotización', route('admin.s_cotizaciones.index'));
     $trail->push('Responder solicitud -'.$cotizacion->id, route('admin.s_cotizaciones.edit', $cotizacion));
 });
+
+Breadcrumbs::for('admin.s_cotizaciones.buscar_cotizacion', function ($trail) {
+    $trail->push('Solicitudes de cotización', route('admin.s_cotizaciones.index'));
+    $trail->push('Resultados de la búsqueda', route('admin.s_cotizaciones.buscar_cotizacion'));
+});
+
+Breadcrumbs::for('admin.s_cotizaciones.espera', function ($trail) {
+    $trail->push('Solicitudes de cotización', route('admin.s_cotizaciones.index'));
+    $trail->push('En espera', route('admin.s_cotizaciones.espera'));
+});
+
+Breadcrumbs::for('admin.s_cotizaciones.resueltas', function ($trail) {
+    $trail->push('Solicitudes de cotización', route('admin.s_cotizaciones.index'));
+    $trail->push('Resueltas', route('admin.s_cotizaciones.resueltas'));
+});
+
+Breadcrumbs::for('admin.s_cotizaciones.enviadas', function ($trail) {
+    $trail->push('Solicitudes de cotización', route('admin.s_cotizaciones.index'));
+    $trail->push('Respondidas', route('admin.s_cotizaciones.enviadas'));
+});

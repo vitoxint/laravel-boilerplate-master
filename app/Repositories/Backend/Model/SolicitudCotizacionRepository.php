@@ -38,7 +38,7 @@ class SolicitudCotizacionRepository extends BaseRepository
 
     
 
-    public function getVigentesPaginated($paged = 25, $orderBy = 'created_at', $sort = 'desc'): LengthAwarePaginator
+    public function getEsperaPaginated($paged = 25, $orderBy = 'created_at', $sort = 'desc'): LengthAwarePaginator
     {
         return $this->model
             ->where('estado','=','1')
@@ -46,7 +46,7 @@ class SolicitudCotizacionRepository extends BaseRepository
             ->paginate($paged);
     }
 
-    public function getAceptadasPaginated($paged = 25, $orderBy = 'created_at', $sort = 'desc'): LengthAwarePaginator
+    public function getResueltasPaginated($paged = 25, $orderBy = 'created_at', $sort = 'desc'): LengthAwarePaginator
     {
         return $this->model
             //->whereBetween('estado', ['1', '4'])
@@ -55,11 +55,20 @@ class SolicitudCotizacionRepository extends BaseRepository
             ->paginate($paged);
     }
 
+    public function getEnviadasPaginated($paged = 25, $orderBy = 'created_at', $sort = 'desc'): LengthAwarePaginator
+    {
+        return $this->model
+            //->whereBetween('estado', ['1', '4'])
+            ->where('estado','=','4')
+            ->orderBy($orderBy, $sort)
+            ->paginate($paged);
+    }   
+
 
     public function getBuscarCotizacionPaginated($paged = 25, $orderBy = 'created_at', $sort = 'desc', $term): LengthAwarePaginator
     {
         return $this->model
-            ->where('empresa', 'LIKE', "%{$term}%")->orWhere('contacto', 'LIKE', "%{$term}%")
+            ->where('nombre_solicitante', 'LIKE', "%{$term}%")
             ->orderBy($orderBy, $sort)
             ->paginate($paged);
     }

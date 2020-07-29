@@ -33,11 +33,35 @@ class SolicitudCotizacionController extends Controller
         ->withSolicitudCotizacions($this->s_cotizacionRepository->getActivePaginated(10, 'estado', 'asc'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+   
+    public function espera()
+    {
+
+        return view('backend.s_cotizacion.index')
+        ->withSolicitudCotizacions($this->s_cotizacionRepository->getEsperaPaginated(25, 'id', 'desc'));
+    }
+
+    public function resueltas()
+    {
+        return view('backend.s_cotizacion.index')
+        ->withSolicitudCotizacions($this->s_cotizacionRepository->getResueltasPaginated(25, 'id', 'desc'));
+    }
+
+    public function enviadas()
+    {
+        return view('backend.s_cotizacion.index')
+        ->withSolicitudCotizacions($this->s_cotizacionRepository->getEnviadasPaginated(25, 'id', 'desc'));
+    }
+
+
+
+    public function buscar_cotizacion(Request $request)
+    {
+        $term = $request->input('buscar');
+        return view('backend.s_cotizacion.index')
+        ->withSolicitudCotizacions($this->s_cotizacionRepository->getBuscarCotizacionPaginated(25, 'id', 'desc', $term));
+    }
+
     public function create()
     {
         //
