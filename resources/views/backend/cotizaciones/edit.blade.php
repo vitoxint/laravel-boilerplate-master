@@ -284,7 +284,7 @@
                                     <td><input class='form-control input-sm' style='width:100%;' type="text" id="pr_des{{$item->folio}}" value="{{$item->descuento}}" oninput='multiply("{{$item->folio}}");' name="pr_des[]"></td>
                                     <td class="custom-tbl"><input class='estimated_cost form-control input-sm' id="pr_cpi{{$item->folio}}" value="{{$item->valor_parcial}}" style='width:100%;' type="text" name="pr_cpi[]" readonly></td>
                                     <td class="custom-tbl"><button type="button" id="{{$item->folio}}" class="btn-info btn-sm btn_add" name="add"><span class="fas fa-plus"></span></button>
-                                                           <!-- <button  id="{{$item->folio}}" class="btn-success btn-sm btn_update" name="actualizar"><span class="fas fa-sync"></span></button> -->
+                                                           
                                                            <button type="button" name="remove" id="{{$item->folio}}" class="btn-danger btn-sm btn_remove"><span class="fas fa-times"></span></button>
                                     </td>
                                 </tr>
@@ -404,7 +404,7 @@
           var i= "{{$max_folio}}";
 
           
-          $(document).on('click', '.btn_update',function(){
+/*           $(document).on('click', '.btn_update',function(){
  
                    var up_id = $(this).attr("id"); 
  
@@ -447,7 +447,7 @@
    
                    });           
                        
-               }); 
+               });  */
 
 
           $(document).on('click', '.btn_add',function(){
