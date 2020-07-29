@@ -130,6 +130,7 @@ class ItemCotizacionController extends Controller
             'cpu' => 'required|numeric',
             'des' => 'required|numeric',
             'cpi' => 'required|numeric',
+            'desc' => 'required'
             
         ]);  
         
@@ -141,7 +142,8 @@ class ItemCotizacionController extends Controller
             'descripcion'    => $request->get('desc'),
             'valor_unitario' => $request->get('cpu'),
             'descuento'      => $request->get('des'),
-            'valor_parcial'  => $request->get('cpi')
+            'valor_parcial'  => $request->get('cpi'),
+            
 
         ]);
 

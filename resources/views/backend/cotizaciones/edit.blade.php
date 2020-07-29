@@ -284,7 +284,7 @@
                                     <td><input class='form-control input-sm' style='width:100%;' type="text" id="pr_des{{$item->folio}}" value="{{$item->descuento}}" oninput='multiply("{{$item->folio}}");' name="pr_des[]"></td>
                                     <td class="custom-tbl"><input class='estimated_cost form-control input-sm' id="pr_cpi{{$item->folio}}" value="{{$item->valor_parcial}}" style='width:100%;' type="text" name="pr_cpi[]" readonly></td>
                                     <td class="custom-tbl"><button type="button" id="{{$item->folio}}" class="btn-info btn-sm btn_add" name="add"><span class="fas fa-plus"></span></button>
-                                                           <button type="button" name="up" id="{{$item->folio}}"  class="btn-success btn-sm btn_update"><span class="fas fa-sync"></span></button>
+                                                           <button type="button"  id="{{$item->folio}}" name="up" class="btn-success btn-sm btn_update"><span class="fas fa-sync"></span></button>
                                                            <button type="button" name="remove" id="{{$item->folio}}" class="btn-danger btn-sm btn_remove"><span class="fas fa-times"></span></button>
                                     </td>
                                 </tr>
@@ -299,7 +299,9 @@
                                     <td><input class='form-control input-sm' style='width:100%;' type="text" id="pr_cpu{{$max_folio}}" oninput='multiply("{{$max_folio}}");' name="pr_cpu[]"></td>
                                     <td><input class='form-control input-sm' style='width:100%;' type="text" id="pr_des{{$max_folio}}" oninput='multiply("{{$max_folio}}");' name="pr_des[]"></td>
                                     <td class="custom-tbl"><input class='estimated_cost form-control input-sm' id="pr_cpi{{$max_folio}}" style='width:100%;' type="text" name="pr_cpi[]" readonly></td>
-                                    <td class="custom-tbl"><button type="button" id="{{$cotizacion->items_cotizacion->max('folio') + 1}}"  class="btn-info btn-sm btn_add" name="add"><span class="fas fa-plus"></span></button>
+                                    <td class="custom-tbl">
+                                    <button type="button" id="{{$cotizacion->items_cotizacion->max('folio') + 1}}"  class="btn-info btn-sm btn_add" name="add"><span class="fas fa-plus"></span></button>
+                                    <span id="sync{{$cotizacion->items_cotizacion->max('folio') + 1}}"> </span>
                                     <button type="button" name="remove" id="{{$cotizacion->items_cotizacion->max('folio') + 1}}" class="btn-danger btn-sm btn_remove"><span class="fas fa-times"></span></button></td>
                                 </tr>                            
 
@@ -426,10 +428,12 @@
                     },
                 data:{item:item, qty:qty, desc:desc , cpu:cpu , des:des , cpi:cpi},
                 success:function(data){
+                    $("#sync"+i).html('<button type="button" name="up" id="'+i+'" class="btn-success btn-sm btn_update"><span class="fas fa-sync"></span></button>');
                     i++;  
-                     $('#dynamic_field').append('<tr id="row'+i+'" class="dynamic-added"><td class="custom-tbl"><input id="pr_item'+i+'" class="form-control input-sm"style="width:100%;" type="text" value="'+i+'" name="pr_item[]" readonly required></td>               <td class="custom-tbl"><input id="pr_qty'+i+'"class="form-control input-sm" style="width:100%;" type="text" oninput="multiply('+i+');" name="pr_qty[]"></td>               <td class="custom-tbl"><input id="pr_desc'+i+'" class="form-control input-sm" style="width:100%;" type="text" name="pr_desc[]"></td>               <td class="custom-tbl"><input id="pr_cpu'+i+'" class="form-control input-sm" style="width:100%;" type="text" oninput="multiply('+i+');" name="pr_cpu[]"></td>               <td class="custom-tbl"><input id="pr_des'+i+'" class="form-control input-sm" style="width:100%;" type="text" oninput="multiply('+i+');" name="pr_des[]"></td>               <td class="custom-tbl"><input id="pr_cpi'+i+'" class="estimated_cost form-control input-sm" style="width:100%;" type="text" name="pr_cpi[]" readonly></td>       <td class="custom-tbl"><button type="button" id="'+i+'" class="btn-info btn-sm btn_add" name="add"><span class="fas fa-plus"></span></button> <button type="button" name="remove" id="'+i+'" class="btn-danger btn-sm btn_remove"><span class="fas fa-times"></span></button></td></tr>');            
+                     $('#dynamic_field').append('<tr id="row'+i+'" class="dynamic-added"><td class="custom-tbl"><input id="pr_item'+i+'" class="form-control input-sm"style="width:100%;" type="text" value="'+i+'" name="pr_item[]" readonly required></td>   <td class="custom-tbl"><input id="pr_qty'+i+'"class="form-control input-sm" style="width:100%;" type="text" oninput="multiply('+i+');" name="pr_qty[]"></td>               <td class="custom-tbl"><input id="pr_desc'+i+'" class="form-control input-sm" style="width:100%;" type="text" name="pr_desc[]"></td>               <td class="custom-tbl"><input id="pr_cpu'+i+'" class="form-control input-sm" style="width:100%;" type="text" oninput="multiply('+i+');" name="pr_cpu[]"></td>               <td class="custom-tbl"><input id="pr_des'+i+'" class="form-control input-sm" style="width:100%;" type="text" oninput="multiply('+i+');" name="pr_des[]"></td>               <td class="custom-tbl"><input id="pr_cpi'+i+'" class="estimated_cost form-control input-sm" style="width:100%;" type="text" name="pr_cpi[]" readonly></td>       <td class="custom-tbl"><button type="button" id="'+i+'" class="btn-info btn-sm btn_add" name="add"><span class="fas fa-plus"></span></button>    <button type="button" name="remove" id="'+i+'" class="btn-danger btn-sm btn_remove"><span class="fas fa-times"></span></button></td></tr>');            
                     //alert(data.success);
                      //$('valor_neto').val(data.valor_neto);
+                     
 
                     var neto = data.valor_neto;
                     var iva  = data.iva;
@@ -442,6 +446,8 @@
                      document.getElementById('valor_neto').value = formatter.format(netoFinal.toFixed(0));
                      document.getElementById('iva').value = formatter.format(ivaFinal.toFixed(0));
                      document.getElementById('valor_incluido').value = formatter.format(totalFinal.toFixed(0));
+
+                     document.getElementById('valor_total').value = formatter.format(netoFinal.toFixed(0));
                     // $('iva').val(data.iva);
                     // $('valor_incluido').val(data.total);
                     //grandTotal();
@@ -477,12 +483,22 @@
                     $('#row'+button_id+'').remove();  
                      //console.log(data.success);
 
+                    var neto = data.valor_neto;
+                    var iva  = data.iva;
+                    var total= data.total;
 
-                     document.getElementById('valor_neto').value = data.valor_neto;
-                     document.getElementById('iva').value = data.iva;
-                     document.getElementById('valor_incluido').value = data.total;
+                    var netoFinal = parseFloat(neto);
+                    var ivaFinal = parseFloat(iva);
+                    var totalFinal = parseFloat(total);
+
+
+                     document.getElementById('valor_neto').value = formatter.format(netoFinal.toFixed(0));
+                     document.getElementById('iva').value = formatter.format(ivaFinal.toFixed(0));
+                     document.getElementById('valor_incluido').value = formatter.format(totalFinal.toFixed(0));
+
+                     document.getElementById('valor_total').value = formatter.format(netoFinal.toFixed(0));
                      
-                    grandTotal();       
+                    //grandTotal();       
                  
                 },
                 error: function() {
@@ -500,7 +516,7 @@
             
             var up_id = $(this).attr("id"); 
 
-            var item = id;
+            var item = up_id;
             var qty =  $("#pr_qty" + up_id).val();
             var desc=  $('#pr_desc'+ up_id).val();
             var cpu =  $("#pr_cpu" + up_id).val();
@@ -513,7 +529,7 @@
                 headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                data:{item:item, qty:qty , decs:desc ,  cpu:cpu , des:des , cpi:cpi},
+                data:{item:item, qty:qty , desc:desc ,  cpu:cpu , des:des , cpi:cpi},
                 success:function(data){
 
                     var neto = data.valor_neto;
@@ -527,6 +543,8 @@
                     document.getElementById('valor_neto').value = formatter.format(netoFinal.toFixed(0));
                     document.getElementById('iva').value = formatter.format(ivaFinal.toFixed(0));
                     document.getElementById('valor_incluido').value = formatter.format(totalFinal.toFixed(0));
+
+                    document.getElementById('valor_total').value = formatter.format(netoFinal.toFixed(0));
                     // $('iva').val(data.iva);
                     // $('valor_incluido').val(data.total);
                     //grandTotal();
