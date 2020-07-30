@@ -358,7 +358,7 @@
             		<td>
             			<div class="text" style="padding: 0 2.5em; text-align: center;">
             				<h2>Se ha respondido a su solicitud de cotización</h2>
-            				<h3>Estimado(a) cliente, tenemos el agrado de responder a su solicitud de cotización, su cotizacion requerida se encuentra adjunta en este correo</h3>
+            				<h3>Estimado/a {{$cotizacion->nombre_solicitante}}, tenemos el agrado de responder a su solicitud de cotización, su cotizacion requerida se encuentra adjunta en este correo</h3>
                             <h3><b class="bg_green">Saludos cordiales !</b></h3>
             				<p><a href="https://orecal.cl" target="_blank" class="btn btn-primary">Visitanos en nuestra página web</a></p>
             			</div>

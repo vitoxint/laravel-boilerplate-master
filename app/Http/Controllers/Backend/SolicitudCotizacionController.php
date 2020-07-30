@@ -8,10 +8,12 @@ use App\Repositories\Backend\Model\SolicitudCotizacionRepository;
 
 use App\SolicitudCotizacion;
 use App\ItemSc;
+use App\Models\Auth\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 use App\Mail\Backend\SendRespuestaSolicitudCotizacion;
+use App\Mail\Backend\RecibirSolicitudCotizacion;
 use Carbon\Carbon;
 
 use PDF;
@@ -98,6 +100,17 @@ class SolicitudCotizacionController extends Controller
 
                 ]);
             } 
+
+            $cotizacion = $solicitud;
+
+            $usuarios = User::permission('administrar cotizaciones')->get();
+            //$usuario = User::find(1);
+
+            foreach($usuarios as $usuario){
+
+                Mail::send(new RecibirSolicitudCotizacion($cotizacion, $usuario));
+
+            }
 
             return response()->json([
                 'respuesta'    => 'La solicitud ha sido ingresada, en tiempo breve responderemos a su solicitud , Atentamente Orecal Ltda',

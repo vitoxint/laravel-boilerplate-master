@@ -14,4 +14,8 @@ class Role extends SpatieRole implements Recordable
 {
     use RecordableTrait,
         RoleMethod;
+
+
 }
+
+

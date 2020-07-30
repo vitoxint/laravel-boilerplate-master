@@ -7,9 +7,11 @@ use App\Cotizacion;
 use App\ItemCotizacion;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Repositories\Backend\Model\CotizacionRepository;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Auth\User;
 use Illuminate\Support\Facades\Validator;
 
 use App\Mail\Backend\SendCotizacion;
@@ -37,8 +39,13 @@ class CotizacionController extends Controller
     public function index()
     {
 
-        return view('backend.cotizaciones.index')
-        ->withCotizaciones($this->cotizacionRepository->getActivePaginated(25, 'id', 'desc'));
+         //$usuarios = User::whereHas("permissions", function($q){ $q->where("name", "administrar cotizaciones"); })->get();
+
+         
+        
+         
+          return view('backend.cotizaciones.index')
+        ->withCotizaciones($this->cotizacionRepository->getActivePaginated(25, 'id', 'desc')); 
     }
 
     public function vigentes()

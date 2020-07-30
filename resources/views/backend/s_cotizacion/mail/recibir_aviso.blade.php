@@ -326,7 +326,7 @@
     <div style="display: none; font-size: 1px;max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; mso-hide: all; font-family: sans-serif;">
       &zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
     </div>
-    <div style="max-width: 600px; margin: 0 auto;" class="email-container">
+    <div style="max-width: 800px; margin: 0 auto;" class="email-container">
     	<!-- BEGIN BODY -->
       <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: auto;">
       	<tr>
@@ -357,10 +357,11 @@
             	<tr>
             		<td>
             			<div class="text" style="padding: 0 2.5em; text-align: center;">
-            				<h2>Has recibido una nueva cotización</h2>
-            				<h3>Estimado(a) cliente, se le ha enviado la cotización solicitada por los trabajos indicados por usted. Puedes visualizar la cotización adjunta en este correo</h3>
-                            <h3><b class="bg_green">Saludos cordiales !</b></h3>
-            				<p><a href="https://orecal.cl" target="_blank" class="btn btn-primary">Visitanos en nuestra página web</a></p>
+            				<h3>Nueva solicitud de cotización</h3>
+                            <h4>Estimado(a) {{$usuario->first_name .' '. $usuario->last_name }}, tienes una nueva solicitud de cotización, el detalle se encuentra al final de este mail.</h4>
+                            <h4><b class="bg_green">¡ Saludos cordiales !</b></h4> 
+
+                           
             			</div>
             		</td>
             	</tr>
@@ -369,61 +370,71 @@
 	      </tr><!-- end tr -->
       <!-- 1 Column Text + Button : END -->
       </table>
- <!--      <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: auto;">
-      	<tr>
-          <td valign="middle" class="bg_light footer email-section">
-            <table>
-            	<tr>
-                <td valign="top" width="33.333%" style="padding-top: 20px;">
-                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                    <tr>
-                      <td style="text-align: left; padding-right: 10px;">
-                      	<h3 class="heading">About</h3>
-                      	<p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-                <td valign="top" width="33.333%" style="padding-top: 20px;">
-                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                    <tr>
-                      <td style="text-align: left; padding-left: 5px; padding-right: 5px;">
-                      	<h3 class="heading">Contact Info</h3>
-                      	<ul>
-					                <li><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
-					                <li><span class="text">+2 392 3929 210</span></a></li>
-					              </ul>
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-                <td valign="top" width="33.333%" style="padding-top: 20px;">
-                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                    <tr>
-                      <td style="text-align: left; padding-left: 10px;">
-                      	<h3 class="heading">Useful Links</h3>
-                      	<ul>
-					                <li><a href="#">Home</a></li>
-					                <li><a href="#">About</a></li>
-					                <li><a href="#">Services</a></li>
-					                <li><a href="#">Work</a></li>
-					              </ul>
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr><!-- end: tr -->
-   <!--      <tr>
-          <td class="bg_light" style="text-align: center;">
-          	<p>No longer want to receive these email? You can <a href="#" style="color: rgba(0,0,0,.8);">Unsubscribe here</a></p>
-          </td>
-        </tr>
-      </table> -->
+
  
     </div>
   </center>
+
+  <div style="width: 100%; background-color: #f1f1f1;">
+  <div style="width: 100%; margin: 0 auto;" class="email-container hero bg_white">
+            <table class="hero bg_white">
+
+                <tr>
+            		<td>
+            			<div class="text">
+            				
+            				<h4>N° solicitud: <b style="color:blue;">{{$cotizacion->id }} </b>
+                            <?php $fecha = new Carbon\Carbon($cotizacion->fecha_solicitud); ?>
+                            , Fecha: <b style="color:blue;">{{$fecha->format('d/m/Y H:i')}}</b></h4>
+
+                            <h4>Solicitante: <b style="color:blue;">{{$cotizacion->nombre_solicitante }} </b>                            
+                            <br> Email: <b style="color:blue;">{{$cotizacion->email_solicitante}}</b>
+                            <br> Teléfono: <b style="color:blue;">{{$cotizacion->telefono_solicitante}}</b></h4>      
+            				
+            			</div>
+            		</td>
+                </tr>
+                               
+
+            </table>
+            <table style="border:1px #000000;">
+            	<tr>
+            		<th style="margin-right:15px;" >
+                        Código
+                    </th>
+                    <th style="margin-right:15px; text-align:left; ">
+                        Descripción
+                    </th>
+                    <th>
+                        Cantidad
+            		</th>
+
+                    
+            	</tr>
+
+                @foreach($cotizacion->itemsSolicitud as $item)  
+            	<tr>
+            		<td>
+                        {{$item->producto->codigo}}
+                    </td>
+                    <td style="text-align:left;">
+                        {{$item->producto->descripcion}}
+                    </td>
+                    <td style="text-align:right; padding-right:5px;">
+                        {{$item->cantidad}}
+            		</td>
+
+                    
+            	</tr>
+
+                @endforeach  
+
+                </div>            
+            </table>
+
+
+    </div>
+</div>
+
 </body>
 </html>
