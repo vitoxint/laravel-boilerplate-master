@@ -58,7 +58,7 @@ class SendOrdenTrabajo extends Mailable
             $nombre_destino = $this->trabajo->cliente->nombre;            
         }    
  
-        return $this->to($this->trabajo->representante->email, $this->trabajo->representante->nombre )
+        return $this->to($this->trabajo->representante->email, $this->trabajo->representante->nombre )->to($this->trabajo->usuario->email, $this->trabajo->usuario->first_name . ' ' .$this->trabajo->usuario->last_name)
             ->html($cssToInlineStyles->convert($html))
             ->attachData($pdf->output(), 'OrdenTrabajo_'.$this->trabajo->folio.'.pdf', [
                 'mime' => 'application/pdf',

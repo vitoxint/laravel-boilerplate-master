@@ -60,7 +60,7 @@ class SendCotizacion extends Mailable
 
         //return $cssToInlineStyles->convert($html);
 
-        return $this->to($this->cotizacion->email_contacto, $this->cotizacion->contacto)
+        return $this->to($this->cotizacion->email_contacto, $this->cotizacion->contacto)->to($this->cotizacion->usuario->email, $this->cotizacion->usuario->first_name . ' ' .$this->cotizacion->usuario->last_name)
             //->view('backend.cotizaciones.mail.send_cotizacion')
             //->text($cssToInlineStyles->convert($html))
             ->html($cssToInlineStyles->convert($html))

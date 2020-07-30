@@ -77,9 +77,9 @@ export default {
         .getContext("2d")
         .createLinearGradient(0, 0, 0, 450);
 
-        this.gradient.addColorStop(0, "rgba(224, 224,224, 0.95)");
-        this.gradient.addColorStop(0.65, "rgba(224, 224, 224, 0.45)");
-        this.gradient.addColorStop(1, "rgba(224, 224, 224, 0)");
+        this.gradient.addColorStop(0, "rgba(250, 202,3, 0.95)");
+        this.gradient.addColorStop(0.65, "rgba(250, 202, 3, 0.45)");
+        this.gradient.addColorStop(1, "rgba(224, 250, 3, 0)");
 
         this.gradient2.addColorStop(0, "rgba(0, 255, 0, 0.95)");
         this.gradient2.addColorStop(0.65, "rgba(0, 255, 0, 0.45)");

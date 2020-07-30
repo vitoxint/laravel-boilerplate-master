@@ -335,7 +335,11 @@
                         <i class="fas fa-file-pdf" style="color:red;"></i> Exportar Taller
                     </a>
 
-                    <a href="{{ route('admin.orden_trabajos.send', $trabajo) }}" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Enviar OT">
+                    <a href="{{ route('admin.orden_trabajos.send', $trabajo) }}" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Enviar OT" 
+                        name="confirm_item"
+                        data-trans-button-cancel="@lang('buttons.general.cancel')"
+                        data-trans-button-confirm="@lang('buttons.general.continue')"
+                        data-trans-title="@lang('strings.backend.general.are_you_sure')">
                         <i class="fas fa-envelope" style="color:green;"></i> Enviar 
                     </a> 
 

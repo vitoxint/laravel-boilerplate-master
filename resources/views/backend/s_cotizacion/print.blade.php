@@ -41,7 +41,7 @@
 
     <div>
         <span>
-            <p style="font-size: 10px;">Sres. <b>{{ $cotizacion->nombre_solicitante }}</b> ,tenemos el agrado de cotizar para usted los siguientes ítems requeridos en el detalle de la cotización: <p>
+            <p style="font-size: 10px;">Estimado/a. <b>{{ $cotizacion->nombre_solicitante }}</b> ,tenemos el agrado de cotizar para usted los siguientes ítems requeridos en el detalle de la cotización: <p>
         </span>
 
     </div>

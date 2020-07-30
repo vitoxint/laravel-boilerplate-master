@@ -1,9 +1,9 @@
 <footer class="app-footer">
     <div>
         <strong>@lang('labels.general.copyright') &copy; {{ date('Y') }}
-            <a href="https://orecal.cl">
+            <!-- <a href="https://orecal.cl">
                 Ingeniería y Maestranza ORECAL
-            </a>
+            </a> -->
         </strong> @lang('strings.backend.general.all_rights_reserved')
     </div>
 

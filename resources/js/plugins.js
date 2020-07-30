@@ -22,6 +22,24 @@ function addDeleteForms() {
         .attr('onclick', '$(this).find("form").submit();');
 }
 
+
+function addSendForms() {
+    $('[data-method]').append(function () {
+        if (!$(this).find('form').length > 0) {
+            return "\n<form action='" + $(this).attr('href') + "' method='GET' name='send_item' style='display:none'>\n" +
+                "<input type='hidden' name='_method' value='" + $(this).attr('data-method') + "'>\n" +
+                "<input type='hidden' name='_token' value='" + $('meta[name="csrf-token"]').attr('content') + "'>\n" +
+                '</form>\n';
+        } else { return '' }
+    })
+        .attr('href', '#')
+        .attr('style', 'cursor:pointer;')
+        .attr('onclick', '$(this).find("form").submit();');
+}
+
+
+
+
 /**
  * Place any jQuery/helper plugins in here.
  */
@@ -30,6 +48,7 @@ $(function () {
      * Add the data-method="delete" forms to all delete links
      */
     addDeleteForms();
+    addSendForms();
 
     /**
      * Disable all submit buttons once clicked
@@ -83,5 +102,63 @@ $(function () {
         });
     });
 
+
+
+
+        /**
+     * Generic confirm form send using Sweet Alert
+     */
+    $('body').on('submit', 'form[name=send_item]', function (e) {
+        e.preventDefault();
+
+        const form = this;
+        const link = $('a[data-method="send"]');
+        const cancel = (link.attr('data-trans-button-cancel')) ? link.attr('data-trans-button-cancel') : 'Cancelar';
+        const confirm = (link.attr('data-trans-button-confirm')) ? link.attr('data-trans-button-confirm') : 'Sí, Enviar';
+        const title = (link.attr('data-trans-title')) ? link.attr('data-trans-title') : '¿ Está seguro de enviar este email?';
+
+        Swal.fire({
+            title: title,
+            showCancelButton: true,
+            confirmButtonText: confirm,
+            cancelButtonText: cancel,
+            icon: 'warning'
+        }).then((result) => {
+            result.value && form.submit();
+        });
+    }).on('click', 'a[name=confirm_item]', function (e) {
+        /**
+         * Generic 'are you sure' confirm box
+         */
+        e.preventDefault();
+
+        const link = $(this);
+        const title = (link.attr('data-trans-title')) ? link.attr('data-trans-title') : '¿ Está seguro de enviar este email?';
+        const cancel = (link.attr('data-trans-button-cancel')) ? link.attr('data-trans-button-cancel') : 'Cancelar';
+        const confirm = (link.attr('data-trans-button-confirm')) ? link.attr('data-trans-button-confirm') : 'Continuar';
+
+        Swal.fire({
+            title: title,
+            showCancelButton: true,
+            confirmButtonText: confirm,
+            cancelButtonText: cancel,
+            icon: 'info'
+        }).then((result) => {
+            result.value && window.location.assign(link.attr('href'));
+        });
+    });
+
+
+
+
+
     $('[data-toggle="tooltip"]').tooltip();
 });
+
+
+
+
+
+
+
+

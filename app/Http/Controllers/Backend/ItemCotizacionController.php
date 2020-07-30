@@ -190,7 +190,6 @@ class ItemCotizacionController extends Controller
                 'total' => (float)$cotizacion->valor_neto * 1.19,
        
                 ]); 
-
    
         }
 
