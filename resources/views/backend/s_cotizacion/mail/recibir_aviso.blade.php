@@ -387,7 +387,7 @@
                             <?php $fecha = new Carbon\Carbon($cotizacion->fecha_solicitud); ?>
                             , Fecha: <b style="color:blue;">{{$fecha->format('d/m/Y H:i')}}</b></h4>
 
-                            <h4>Solicitante: <b style="color:blue;">{{$cotizacion->nombre_solicitante }} </b>                            
+                            <h4> Solicitante: <b style="color:blue;">{{$cotizacion->nombre_solicitante }} </b>                            
                             <br> Email: <b style="color:blue;">{{$cotizacion->email_solicitante}}</b>
                             <br> Teléfono: <b style="color:blue;">{{$cotizacion->telefono_solicitante}}</b></h4>      
             				
@@ -403,6 +403,9 @@
                         Código
                     </th>
                     <th style="margin-right:15px; text-align:left; ">
+                        Marca
+                    </th>
+                    <th style="margin-right:15px; text-align:left; ">
                         Descripción
                     </th>
                     <th>
@@ -416,6 +419,9 @@
             	<tr>
             		<td>
                         {{$item->producto->codigo}}
+                    </td>
+                    <td style="text-align:left;">
+                        {{$item->producto->marca->nombre}}
                     </td>
                     <td style="text-align:left;">
                         {{$item->producto->descripcion}}
