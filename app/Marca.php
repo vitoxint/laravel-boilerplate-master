@@ -18,4 +18,6 @@ class Marca extends Model
     public function producto_ventas(){
         return $this->hasMany('App\ProductoVenta' , 'marca_id' ,'id');
     }
+
+    
 }

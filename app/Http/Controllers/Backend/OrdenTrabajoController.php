@@ -18,6 +18,7 @@ use App\Mail\Backend\SendOrdenTrabajo;
 use Illuminate\Support\Facades\Mail;
 use PDF;
 
+
 class OrdenTrabajoController extends Controller
 {
 
@@ -40,9 +41,21 @@ class OrdenTrabajoController extends Controller
 
     public function index()
     {
+        $ot_count = OrdenTrabajo::get()->count('id');
+        $count_si = OrdenTrabajo::where('estado','1')->get()->count('id');
+        $count_ep = OrdenTrabajo::where('estado','2')->get()->count('id');
+        $count_at = OrdenTrabajo::where('estado','3')->get()->count('id');
+        $count_te = OrdenTrabajo::where('estado','4')->get()->count('id');
+        $count_en = OrdenTrabajo::where('estado','5')->get()->count('id');
 
         return view('backend.orden_trabajos.index')
-        ->withOrdenTrabajos($this->ordenTrabajoRepository->getActivePaginated(25, 'id', 'desc'));
+        ->withOrdenTrabajos($this->ordenTrabajoRepository->getActivePaginated(25, 'id', 'desc'))->with( 
+                                                                                                        ['ot_count'=> $ot_count, 
+                                                                                                         'count_si'=> $count_si,
+                                                                                                         'count_ep'=> $count_ep,
+                                                                                                         'count_at'=> $count_at,
+                                                                                                         'count_te'=> $count_te,
+                                                                                                         'count_en'=> $count_en ]);
     }
 
     public function getOtsOfMonthGraph(){
@@ -310,24 +323,31 @@ class OrdenTrabajoController extends Controller
 
             $labels = array();
 
+            $count = 0;
+
             foreach($ots as $ot){
+                //$str = 'gsgsgs';
 
-                array_push($aRow, [
+                array_push($aRow, [ $ot->folio => [
                     'id'  => $ot->folio, 
-                    'label' => $ot->cliente->razon_social, 
+                    'label' => $ot->cliente->razon_social, ]
                
-                ]);
+                  ] );
 
-                array_push($aItem , [
+                array_push($aItem , [ $ot->folio => [
                     'id'  => $ot->folio, 
                     'rowId'  => $ot->folio,
                     'label' => $ot->cliente->razon_social, 
-                    'start' => $ot->created_at,
-                    'end' => $ot->entrega_estimada,
-                    'estado' => $ot->estado
+                    'time' => [
+                        'start' => $ot->created_at,
+                        'end' => $ot->entrega_estimada,
+                    ],
+                    
+                    //'estado' => $ot->estado  
+                     ]
                     
                 ]);
-
+                $count++;
             }
 
             return response()->json([
@@ -346,37 +366,179 @@ class OrdenTrabajoController extends Controller
 
     public function buscar_ot(Request $request)
     {
+
+        $ot_count = OrdenTrabajo::get()->count('id');
+        $count_si = OrdenTrabajo::where('estado','1')->get()->count('id');
+        $count_ep = OrdenTrabajo::where('estado','2')->get()->count('id');
+        $count_at = OrdenTrabajo::where('estado','3')->get()->count('id');
+        $count_te = OrdenTrabajo::where('estado','4')->get()->count('id');
+        $count_en = OrdenTrabajo::where('estado','5')->get()->count('id');
+
         $term = $request->input('buscar');
         return view('backend.orden_trabajos.index')
-        ->withOrdenTrabajos($this->ordenTrabajoRepository->getBuscarOtPaginated(25, 'id', 'desc', $term));
+        ->withOrdenTrabajos($this->ordenTrabajoRepository->getBuscarOtPaginated(25, 'id', 'desc', $term))->with( 
+            ['ot_count'=> $ot_count, 
+             'count_si'=> $count_si,
+             'count_ep'=> $count_ep,
+             'count_at'=> $count_at,
+             'count_te'=> $count_te,
+             'count_en'=> $count_en ]);
     }
 
     public function anuladas()
     {
+        $ot_count = OrdenTrabajo::get()->count('id');
+        $count_si = OrdenTrabajo::where('estado','1')->get()->count('id');
+        $count_ep = OrdenTrabajo::where('estado','2')->get()->count('id');
+        $count_at = OrdenTrabajo::where('estado','3')->get()->count('id');
+        $count_te = OrdenTrabajo::where('estado','4')->get()->count('id');
+        $count_en = OrdenTrabajo::where('estado','5')->get()->count('id');
 
         return view('backend.orden_trabajos.index')
-        ->withOrdenTrabajos($this->ordenTrabajoRepository->getAnuladasPaginated(25, 'id', 'desc'));
+        ->withOrdenTrabajos($this->ordenTrabajoRepository->getAnuladasPaginated(25, 'id', 'desc'))->with( 
+            ['ot_count'=> $ot_count, 
+             'count_si'=> $count_si,
+             'count_ep'=> $count_ep,
+             'count_at'=> $count_at,
+             'count_te'=> $count_te,
+             'count_en'=> $count_en ]);
     }
 
 
     public function entregadas()
     {
 
+        $ot_count = OrdenTrabajo::get()->count('id');
+        $count_si = OrdenTrabajo::where('estado','1')->get()->count('id');
+        $count_ep = OrdenTrabajo::where('estado','2')->get()->count('id');
+        $count_at = OrdenTrabajo::where('estado','3')->get()->count('id');
+        $count_te = OrdenTrabajo::where('estado','4')->get()->count('id');
+        $count_en = OrdenTrabajo::where('estado','5')->get()->count('id');
+
         return view('backend.orden_trabajos.index')
-        ->withOrdenTrabajos($this->ordenTrabajoRepository->getPendientesPaginated(25, 'id', 'desc'));
+        ->withOrdenTrabajos($this->ordenTrabajoRepository->getPendientesPaginated(25, 'id', 'desc'))->with( 
+            ['ot_count'=> $ot_count, 
+             'count_si'=> $count_si,
+             'count_ep'=> $count_ep,
+             'count_at'=> $count_at,
+             'count_te'=> $count_te,
+             'count_en'=> $count_en ]);
     }
 
     public function pendientes()
     {
+        $ot_count = OrdenTrabajo::get()->count('id');
+        $count_si = OrdenTrabajo::where('estado','1')->get()->count('id');
+        $count_ep = OrdenTrabajo::where('estado','2')->get()->count('id');
+        $count_at = OrdenTrabajo::where('estado','3')->get()->count('id');
+        $count_te = OrdenTrabajo::where('estado','4')->get()->count('id');
+        $count_en = OrdenTrabajo::where('estado','5')->get()->count('id');
+
         return view('backend.orden_trabajos.index')
-        ->withOrdenTrabajos($this->ordenTrabajoRepository->getEntregadasPaginated(25, 'entrega_estimada', 'ASC'));
+        ->withOrdenTrabajos($this->ordenTrabajoRepository->getEntregadasPaginated(25, 'entrega_estimada', 'ASC'))->with( 
+            ['ot_count'=> $ot_count, 
+             'count_si'=> $count_si,
+             'count_ep'=> $count_ep,
+             'count_at'=> $count_at,
+             'count_te'=> $count_te,
+             'count_en'=> $count_en ]);
+    }
+
+    public function sin_iniciar()
+    {
+
+        $ot_count = OrdenTrabajo::get()->count('id');
+        $count_si = OrdenTrabajo::where('estado','1')->get()->count('id');
+        $count_ep = OrdenTrabajo::where('estado','2')->get()->count('id');
+        $count_at = OrdenTrabajo::where('estado','3')->get()->count('id');
+        $count_te = OrdenTrabajo::where('estado','4')->get()->count('id');
+        $count_en = OrdenTrabajo::where('estado','5')->get()->count('id');
+
+        return view('backend.orden_trabajos.index')
+        ->withOrdenTrabajos($this->ordenTrabajoRepository->getSinIniciarPaginated(25, 'entrega_estimada', 'ASC'))->with( 
+            ['ot_count'=> $ot_count, 
+             'count_si'=> $count_si,
+             'count_ep'=> $count_ep,
+             'count_at'=> $count_at,
+             'count_te'=> $count_te,
+             'count_en'=> $count_en ]);
+    }
+
+    public function en_proceso()
+    {
+
+        $ot_count = OrdenTrabajo::get()->count('id');
+        $count_si = OrdenTrabajo::where('estado','1')->get()->count('id');
+        $count_ep = OrdenTrabajo::where('estado','2')->get()->count('id');
+        $count_at = OrdenTrabajo::where('estado','3')->get()->count('id');
+        $count_te = OrdenTrabajo::where('estado','4')->get()->count('id');
+        $count_en = OrdenTrabajo::where('estado','5')->get()->count('id');
+
+        return view('backend.orden_trabajos.index')
+        ->withOrdenTrabajos($this->ordenTrabajoRepository->getEnProcesoPaginated(25, 'entrega_estimada', 'ASC'))->with( 
+            ['ot_count'=> $ot_count, 
+             'count_si'=> $count_si,
+             'count_ep'=> $count_ep,
+             'count_at'=> $count_at,
+             'count_te'=> $count_te,
+             'count_en'=> $count_en ]);
+    }
+
+    public function atrasadas()
+    {
+        $ot_count = OrdenTrabajo::get()->count('id');
+        $count_si = OrdenTrabajo::where('estado','1')->get()->count('id');
+        $count_ep = OrdenTrabajo::where('estado','2')->get()->count('id');
+        $count_at = OrdenTrabajo::where('estado','3')->get()->count('id');
+        $count_te = OrdenTrabajo::where('estado','4')->get()->count('id');
+        $count_en = OrdenTrabajo::where('estado','5')->get()->count('id');
+
+        return view('backend.orden_trabajos.index')
+        ->withOrdenTrabajos($this->ordenTrabajoRepository->getAtrasadasPaginated(25, 'entrega_estimada', 'ASC'))->with( 
+            ['ot_count'=> $ot_count, 
+             'count_si'=> $count_si,
+             'count_ep'=> $count_ep,
+             'count_at'=> $count_at,
+             'count_te'=> $count_te,
+             'count_en'=> $count_en ]);
+    }
+
+    public function terminadas()
+    {
+        $ot_count = OrdenTrabajo::get()->count('id');
+        $count_si = OrdenTrabajo::where('estado','1')->get()->count('id');
+        $count_ep = OrdenTrabajo::where('estado','2')->get()->count('id');
+        $count_at = OrdenTrabajo::where('estado','3')->get()->count('id');
+        $count_te = OrdenTrabajo::where('estado','4')->get()->count('id');
+        $count_en = OrdenTrabajo::where('estado','5')->get()->count('id');
+
+        return view('backend.orden_trabajos.index')
+        ->withOrdenTrabajos($this->ordenTrabajoRepository->getTerminadasPaginated(25, 'entrega_estimada', 'ASC'))->with( 
+            ['ot_count'=> $ot_count, 
+             'count_si'=> $count_si,
+             'count_ep'=> $count_ep,
+             'count_at'=> $count_at,
+             'count_te'=> $count_te,
+             'count_en'=> $count_en ]);
     }
 
     public function px_entregas($dias)
     {
+        $ot_count = OrdenTrabajo::get()->count('id');
+        $count_si = OrdenTrabajo::where('estado','1')->get()->count('id');
+        $count_ep = OrdenTrabajo::where('estado','2')->get()->count('id');
+        $count_at = OrdenTrabajo::where('estado','3')->get()->count('id');
+        $count_te = OrdenTrabajo::where('estado','4')->get()->count('id');
+        $count_en = OrdenTrabajo::where('estado','5')->get()->count('id');
 
         return view('backend.orden_trabajos.index')
-        ->withOrdenTrabajos($this->ordenTrabajoRepository->getProximasEntregasPaginated(25, 'entrega_estimada', 'ASC', $dias));
+        ->withOrdenTrabajos($this->ordenTrabajoRepository->getProximasEntregasPaginated(25, 'entrega_estimada', 'ASC', $dias))->with( 
+            ['ot_count'=> $ot_count, 
+             'count_si'=> $count_si,
+             'count_ep'=> $count_ep,
+             'count_at'=> $count_at,
+             'count_te'=> $count_te,
+             'count_en'=> $count_en ]);
     }
 
     /**
@@ -553,7 +715,7 @@ class OrdenTrabajoController extends Controller
         $usuario = $trabajo->usuario;
         $pdf = PDF::loadView('backend.orden_trabajos.printTaller', compact('trabajo','usuario'));
   
-        return $pdf->stream('0rdenTrabajo_'.$trabajo->folio.'.pdf');
+        return $pdf->stream('OrdenTrabajo_'.$trabajo->folio.'.pdf');
     }
 
     public function send(OrdenTrabajo $trabajo){
@@ -563,4 +725,53 @@ class OrdenTrabajoController extends Controller
         return redirect()->back()->withFlashSuccess(__('Orden de Trabajo enviada'));
 
     }
+
+
+    public function get_calendario_ot(){
+
+        //$start = $request->start;
+
+        //$end = $request->end;
+
+ 
+         //$ots = OrdenTrabajo::whereDate('created_at', '>=', $start)->whereDate('created_at', '<=', $end)->get('folio as title' , 'created_at as start' , 'entrega_estimada as end');
+            $ots = OrdenTrabajo::get();
+
+        //$data = array();
+
+        $data = array();
+
+         foreach( $ots as $ot ) {
+            array_push($data, [
+                'id'    => $ot->id,
+                'title' => '[ '. $ot->folio .' ]'.  $ot->cliente->razon_social,
+                'start' => $ot->created_at,
+                'end'   => $ot->entrega_estimada
+                ]
+        );
+        } 
+        
+        return $data;
+
+  /*              
+         return response()->json([
+             
+           'data' =>  $data
+        
+         ]); */
+
+         return response()->json([
+             
+            'data' =>  $data
+         
+          ]);
+    
+        
+    }
+
+    public function calendario_ot(){
+        return view('backend.orden_trabajos.calendario');
+    }
+
+
 }

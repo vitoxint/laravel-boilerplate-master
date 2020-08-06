@@ -35,6 +35,7 @@ Route::redirect('/', '/admin/dashboard', 301);
 Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 
+
 Route::group(['namespace' => 'Cliente'], function () {
     
     Route::get('clientes', [ClienteController::class, 'index'])->name('clientes.index');
@@ -111,9 +112,18 @@ Route::group(['namespace' => 'OrdenTrabajo' ], function () {
     Route::get('orden_trabajos/entregadas', [OrdenTrabajoController::class, 'entregadas'])->name('orden_trabajos.entregadas');
     Route::get('orden_trabajos/anuladas', [OrdenTrabajoController::class, 'anuladas'])->name('orden_trabajos.anuladas');
 
+    Route::get('orden_trabajos/sin_iniciar', [OrdenTrabajoController::class, 'sin_iniciar'])->name('orden_trabajos.sin_iniciar');
+    Route::get('orden_trabajos/en_proceso', [OrdenTrabajoController::class, 'en_proceso'])->name('orden_trabajos.en_proceso');
+    Route::get('orden_trabajos/atrasadas', [OrdenTrabajoController::class, 'atrasadas'])->name('orden_trabajos.atrasadas');
+    Route::get('orden_trabajos/terminadas', [OrdenTrabajoController::class, 'terminadas'])->name('orden_trabajos.terminadas');
+
+
     Route::get('orden_trabajos/{dias}', [OrdenTrabajoController::class, 'px_entregas'])->name('orden_trabajos.px_entregas');
 
     Route::get('ordenTrabajos/resultados', [OrdenTrabajoController::class, 'buscar_ot'])->name('orden_trabajos.buscar_trabajo');
+
+    Route::get('calendario_ot' , [OrdenTrabajoController::class, 'calendario_ot'])->name('orden_trabajos.calendario_ot');
+    Route::get('get_calendario_ot' , [OrdenTrabajoController::class, 'get_calendario_ot']);
 });  
 
 

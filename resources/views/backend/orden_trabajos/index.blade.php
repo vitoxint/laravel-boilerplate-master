@@ -25,20 +25,29 @@
         
                 <div class="row mt-4 mb-4">
                     <div class="col">
-                    <div class="form-group row has-search">
-                       
+                        <div class="form-group row has-search">
+                        
 
-                        <div class="col-md-3">    
-                        <span class="fa fa-search form-control-feedback"></span>                   
-                            <input id="codigo_id" name="codigo_id" class="form-control" placeholder="Buscar por código" >                                                                                
-                        </div><!--col-->
-                    
-                    <div class="col text">
-                        {{ form_submit('Abrir') }}
-                    </div><!--col-->
-                    </div><!--row-->
-            
-                    {{ html()->form()->close() }}
+                            <div class="col-md-3">    
+                                <span class="fa fa-search form-control-feedback"></span>                   
+                                <input id="codigo_id" name="codigo_id" class="form-control" placeholder="Buscar por código" >                                                                                
+                            </div><!--col-->
+                        
+                            <div class="col text">
+                                {{ form_submit('Abrir')}}
+                            </div><!--col-->
+                            {{ html()->form()->close() }}
+
+                           <div class="col-md-8">
+                                <a href="{{ route('admin.orden_trabajos.index') }}">  <span class="badge btn-default" style="border-radius:10px; border: 1px solid black;"><p style="color:black; margin:2px; font-size:12px;"> Todas : {{$ot_count}} </p></span> </a>
+                                <a href="{{ route('admin.orden_trabajos.sin_iniciar') }}">  <span class="badge btn-secondary" style="border-radius:10px; "><p style="  color:white; margin:2px; font-size:12px;"> Sin Iniciar : {{$count_si}} </p></span> </a>
+                                <a href="{{ route('admin.orden_trabajos.en_proceso') }}">  <span class="badge btn-primary" style="border-radius:10px; "><p style="  color:white; margin:2px; font-size:12px;"> En Proceso : {{$count_ep}} </p></span> </a>
+                                <a href="{{ route('admin.orden_trabajos.atrasadas') }}">  <span class="badge btn-danger" style="border-radius:10px; "><p style="  color:white; margin:2px; font-size:12px;"> Atrasada : {{$count_at}} </p></span> </a>
+                                <a href="{{ route('admin.orden_trabajos.terminadas') }}">  <span class="badge btn-success" style="border-radius:10px; "><p style="  color:white; margin:2px; font-size:12px;"> Terminada : {{$count_te}} </p></span> </a>
+                                <a href="{{ route('admin.orden_trabajos.entregadas') }}">  <span class="badge btn-dark" style="border-radius:10px; "><p style="  color:white; margin:2px; font-size:12px;"> Entregada : {{$count_en}} </p></span> </a>
+                           </div><!--col-->
+                        </div><!--row-->
+                       
                 </row>
         
 
@@ -184,7 +193,7 @@
         <div class="row">
             <div class="col-7">
                 <div class="float-left">
-                    {!! $ordenTrabajos->count() !!} 
+                   Mostrando  {!! $ordenTrabajos->count() !!} òrdenes
                 </div>
             </div><!--col-->
 

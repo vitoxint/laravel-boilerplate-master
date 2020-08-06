@@ -62,6 +62,38 @@ class OrdenTrabajoRepository extends BaseRepository
             ->paginate($paged);
     }
 
+    public function getSinIniciarPaginated($paged = 25, $orderBy = 'entrega_estimada', $sort = 'asc'): LengthAwarePaginator
+    {
+        return $this->model
+            ->where('estado', 1)
+            ->orderBy($orderBy, $sort)
+            ->paginate($paged);
+    }
+
+    public function getEnProcesoPaginated($paged = 25, $orderBy = 'entrega_estimada', $sort = 'asc'): LengthAwarePaginator
+    {
+        return $this->model
+            ->where('estado',2)
+            ->orderBy($orderBy, $sort)
+            ->paginate($paged);
+    }
+
+    public function getAtrasadasPaginated($paged = 25, $orderBy = 'entrega_estimada', $sort = 'asc'): LengthAwarePaginator
+    {
+        return $this->model
+            ->where('estado',3)
+            ->orderBy($orderBy, $sort)
+            ->paginate($paged);
+    }
+
+    public function getTerminadasPaginated($paged = 25, $orderBy = 'fecha_termino', $sort = 'asc'): LengthAwarePaginator
+    {
+        return $this->model
+            ->whereBetween('estado', 4)
+            ->orderBy($orderBy, $sort)
+            ->paginate($paged);
+    }
+
     public function getProximasEntregasPaginated($paged = 25, $orderBy = 'entrega_estimada', $sort = 'ASC' , $dias): LengthAwarePaginator
     {
         $fecha = Carbon::now()->addDay($dias)->format('Y-m-d');

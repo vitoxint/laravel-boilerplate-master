@@ -63,6 +63,7 @@ Breadcrumbs::for('admin.orden_trabajos.index', function ($trail) {
 });
 
 Breadcrumbs::for('admin.orden_trabajos.anuladas', function ($trail) {
+    $trail->push('Orden Trabajos', route('admin.orden_trabajos.index'));
     $trail->push('Orden Trabajos Anuladas', route('admin.orden_trabajos.anuladas'));
 });
 
@@ -71,11 +72,33 @@ Breadcrumbs::for('admin.orden_trabajos.pendientes', function ($trail) {
 });
 
 Breadcrumbs::for('admin.orden_trabajos.entregadas', function ($trail) {
+    $trail->push('Orden Trabajos', route('admin.orden_trabajos.index'));
     $trail->push('Orden Trabajos Entregadas', route('admin.orden_trabajos.entregadas'));
 });
 
 Breadcrumbs::for('admin.orden_trabajos.px_entregas', function ($trail, $dias) {
+    $trail->push('Orden Trabajos', route('admin.orden_trabajos.index'));
     $trail->push('Entregas pendientes en los próximos '.$dias.' días', route('admin.orden_trabajos.px_entregas',$dias));
+});
+
+Breadcrumbs::for('admin.orden_trabajos.sin_iniciar', function ($trail) {
+    $trail->push('Orden Trabajos', route('admin.orden_trabajos.index'));
+    $trail->push('Sin iniciar', route('admin.orden_trabajos.sin_iniciar'));
+});
+
+Breadcrumbs::for('admin.orden_trabajos.en_proceso', function ($trail) {
+    $trail->push('Orden Trabajos', route('admin.orden_trabajos.index'));
+    $trail->push('En proceso', route('admin.orden_trabajos.en_proceso'));
+});
+
+Breadcrumbs::for('admin.orden_trabajos.atrasadas', function ($trail) {
+    $trail->push('Orden Trabajos', route('admin.orden_trabajos.index'));
+    $trail->push('Atrasadas', route('admin.orden_trabajos.atrasadas'));
+});
+
+Breadcrumbs::for('admin.orden_trabajos.terminadas', function ($trail) {
+    $trail->push('Orden Trabajos', route('admin.orden_trabajos.index'));
+    $trail->push('Terminadas', route('admin.orden_trabajos.terminadas'));
 });
 
 Breadcrumbs::for('admin.orden_trabajos.create', function ($trail) {
@@ -91,6 +114,10 @@ Breadcrumbs::for('admin.orden_trabajos.buscar_trabajo', function ($trail) {
 Breadcrumbs::for('admin.orden_trabajos.edit', function ($trail, $trabajo) {
     $trail->parent('admin.orden_trabajos.index', route('admin.orden_trabajos.index'));
     $trail->push($trabajo->folio, route('admin.orden_trabajos.edit',$trabajo));
+});
+
+Breadcrumbs::for('admin.orden_trabajos.calendario_ot', function ($trail) {
+    $trail->push('Calendario OT', route('admin.orden_trabajos.calendario_ot'));
 });
 
 Breadcrumbs::for('admin.item_ots.create', function ($trail,$trabajo) {
