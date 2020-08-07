@@ -51,6 +51,20 @@
                 </row>
         
 
+        <div class="row">
+            <div class="col-7">
+                <div class="float-left">
+                   Mostrando  {!! $ordenTrabajos->count() !!} de {{$ot_count}}
+                </div>
+            </div><!--col-->
+
+            <div class="col-5">
+                <div class="float-right">
+                    {!! $ordenTrabajos->render() !!}
+                </div>
+            </div><!--col-->
+        </div><!--row-->
+
 
         <div class="row mt-4">
             <div class="col">

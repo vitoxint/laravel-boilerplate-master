@@ -49,7 +49,7 @@ class OrdenTrabajoController extends Controller
         $count_en = OrdenTrabajo::where('estado','5')->get()->count('id');
 
         return view('backend.orden_trabajos.index')
-        ->withOrdenTrabajos($this->ordenTrabajoRepository->getActivePaginated(25, 'id', 'desc'))->with( 
+        ->withOrdenTrabajos($this->ordenTrabajoRepository->getActivePaginated(50, 'id', 'desc'))->with( 
                                                                                                         ['ot_count'=> $ot_count, 
                                                                                                          'count_si'=> $count_si,
                                                                                                          'count_ep'=> $count_ep,
@@ -435,7 +435,7 @@ class OrdenTrabajoController extends Controller
         $count_en = OrdenTrabajo::where('estado','5')->get()->count('id');
 
         return view('backend.orden_trabajos.index')
-        ->withOrdenTrabajos($this->ordenTrabajoRepository->getEntregadasPaginated(25, 'entrega_estimada', 'ASC'))->with( 
+        ->withOrdenTrabajos($this->ordenTrabajoRepository->getEntregadasPaginated(50, 'entrega_estimada', 'ASC'))->with( 
             ['ot_count'=> $ot_count, 
              'count_si'=> $count_si,
              'count_ep'=> $count_ep,

@@ -31,7 +31,7 @@ class OrdenTrabajoRepository extends BaseRepository
      * @return mixed
      */
 
-    public function getActivePaginated($paged = 25, $orderBy = 'entrega_estimada', $sort = 'desc'): LengthAwarePaginator
+    public function getActivePaginated($paged = 50, $orderBy = 'entrega_estimada', $sort = 'desc'): LengthAwarePaginator
     {
         return $this->model
             ->orderBy($orderBy, $sort)
@@ -46,7 +46,7 @@ class OrdenTrabajoRepository extends BaseRepository
             ->paginate($paged);
     }
 
-    public function getPendientesPaginated($paged = 25, $orderBy = 'entrega_estimada', $sort = 'asc'): LengthAwarePaginator
+    public function getPendientesPaginated($paged = 50, $orderBy = 'entrega_estimada', $sort = 'asc'): LengthAwarePaginator
     {
         return $this->model
             ->where('estado','=','5')

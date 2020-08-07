@@ -131,17 +131,20 @@
             <div class="card">
                 <div class="card-header">
                     <strong>@lang('strings.backend.dashboard.welcome') {{ $logged_in_user->name }}!</strong>
-                </div><!--card-header-->
+                </div>
                 <div class="card-body" >
-                   <!--  {!! __('strings.backend.welcome') !!} -->
+                   
  
                     <div id="app">
                         <div class="row mb-4">
 
-                            <div class="col">
-                                <fullcalendar-component></fullcalendar-component> 
-                               
+                        <div class="row">
+                            <div class="col-md-12">
+                                    <div class="card p-3">
+                                        <calendar />
+                                    </div>
                             </div>
+                        </div>
 
                         
                         </div> 
@@ -149,16 +152,12 @@
 
                     </div>
 
-              <!--       <div class="row">
-                        <div class="col col-md-5">
-                                <grafica-component></grafica-component>
-                        </div>
-                    </row> -->
+    
 
                                       
 
 
-                </div><!--card-body-->
+                </div>
             </div><!--card-->
         </div><!--col-->
     </div><!--row-->

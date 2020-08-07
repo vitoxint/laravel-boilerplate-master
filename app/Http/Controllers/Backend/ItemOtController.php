@@ -113,7 +113,9 @@ class ItemOtController extends Controller
               
               ]);
 
-              return redirect()->route('admin.orden_trabajos.edit',$trabajo)->withFlashSuccess('Se ha agregado un nuevo ítem');
+        $item_ot = $item;
+
+        return redirect()->route('admin.item_ots.edit',[$item_ot , $trabajo ])->withFlashSuccess('Se ha agregado un nuevo ítem, ahora complete con informacion anexa');
         
     }
 

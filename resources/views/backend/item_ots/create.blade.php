@@ -89,7 +89,7 @@
                     </div><!--col-->
 
                     <div class="col text-right">
-                        {{ form_submit('Agregar') }}
+                        {{ form_submit('Siguiente') }}
                     </div><!--col-->
                 </div><!--row-->
             </div><!--card-footer-->
