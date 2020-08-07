@@ -33,7 +33,7 @@
     <ul class="nav navbar-nav ml-auto">
        
     
-    <li class="nav-item d-md-down-none">
+<!--         <li class="nav-item d-md-down-none">
             <a class="nav-link" href="#">
                 <i class="fas fa-bell"></i>
                 
@@ -48,7 +48,7 @@
             <a class="nav-link" href="#">
                 <i class="fas fa-map-marker-alt"></i>
             </a>
-        </li>
+        </li> -->
 
 
 
