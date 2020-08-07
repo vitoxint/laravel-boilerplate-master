@@ -89,7 +89,7 @@ class OrdenTrabajoRepository extends BaseRepository
     public function getTerminadasPaginated($paged = 25, $orderBy = 'fecha_termino', $sort = 'asc'): LengthAwarePaginator
     {
         return $this->model
-            ->whereBetween('estado', 4)
+            ->where('estado', 4)
             ->orderBy($orderBy, $sort)
             ->paginate($paged);
     }
