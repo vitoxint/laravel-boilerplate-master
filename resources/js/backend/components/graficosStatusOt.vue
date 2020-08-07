@@ -1,6 +1,6 @@
 <template>
   <div class="small">
-    <h4>Cantidad de trabajos segun estado de cumplimiento al {{this.mes}}</h4>
+    <h4>Cantidad de trabajos segun estado de cumplimiento en {{this.mes}}</h4>
     
     <canvas
       ref="canvas"

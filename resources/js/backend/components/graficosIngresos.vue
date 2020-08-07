@@ -1,6 +1,6 @@
 <template>
   <div class="small">
-    <h4>Ratio de abonos v/s saldos por trabajos {{this.mes}}</h4>
+    <h4>Ratio de abonos v/s saldos por trabajos en {{this.mes}}</h4>
     
     <canvas
       ref="canvas"

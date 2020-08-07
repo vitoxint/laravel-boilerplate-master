@@ -104,7 +104,7 @@ class OrdenTrabajoController extends Controller
                 
             }
             $oStart = $oStart->addMonth(-1);
-            $mes = $oStart->format('M-Y');
+            $mes = $oStart->translatedFormat('F Y');
 
             return response()->json([
                 'data'=> $aData,
@@ -166,7 +166,7 @@ class OrdenTrabajoController extends Controller
                 
             }
             $oStart = $oStart->addMonth(-1);
-            $mes = $oStart->format('M-Y');
+            $mes = $oStart->translatedFormat('F Y');
 
             return response()->json([
                 'data'=> $aData,
@@ -180,6 +180,8 @@ class OrdenTrabajoController extends Controller
 
 
     public function getGraphStatusMes(){
+
+        Carbon::setLocale('es');
 
         $fecha = Carbon::now();
         $mfecha = $fecha->format('m');
@@ -262,7 +264,8 @@ class OrdenTrabajoController extends Controller
 
 
             $oStart = $oStart->addMonth(-1);
-            $mes = $oStart->format('M-Y');
+
+            $mes = $oStart->translatedFormat('F Y');
 
             return response()->json([
                 'data'=> $aData,

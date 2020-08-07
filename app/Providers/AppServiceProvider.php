@@ -25,6 +25,9 @@ class AppServiceProvider extends ServiceProvider
 
             // Load third party local aliases
             $loader->alias('Debugbar', \Barryvdh\Debugbar\Facade::class);
+
+            config(['app.locale' => 'es']);
+            \Carbon\Carbon::setLocale('es');
         }
     }
 
