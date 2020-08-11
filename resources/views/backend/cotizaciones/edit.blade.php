@@ -211,7 +211,7 @@
                         <i class="fas fa-file-pdf" style="color:red;"></i> Exportar PDF
                     </a>
 
-                    <a href="{{ route('admin.cotizaciones.send', $cotizacion) }}" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Enviar cotización"                    
+                    <a href="{{ route('admin.cotizaciones.send', $cotizacion) }}" class="btn btn-default btn-sm btn-bordered" data-toggle="tooltip" data-placement="top" title="Enviar cotización"                    
                         name="confirm_item"
                         data-trans-button-cancel="@lang('buttons.general.cancel')"
                         data-trans-button-confirm="@lang('buttons.general.continue')"

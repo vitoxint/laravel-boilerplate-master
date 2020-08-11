@@ -242,6 +242,64 @@
             </tbody>
         </table>
 
+        <!-- IMAGENES -->
+
+
+        <table class="table table-bordered" style="border:1px; padding-top:-15px;">
+            <thead>
+                <tr>
+                    <!-- <td style="background-color:grey;  padding-top:3px; padding-bottom:-10px; text-align:center; width:7px"><p style="color:white; font-size: 10px; ">#</p></td> -->
+                    <td colspan="3" style="background-color:grey;  padding-top:3px; padding-bottom:-10px;  "><p style=" color:white; font-size: 10px; ">Imágenes relacionadas</p></td>
+
+                </tr>
+            </thead>
+            
+            <tbody>
+            <?php $l = 1; ?>
+            
+                    <?php $imgs = $imagenes->where('itemot_id', $item->id) ?> 
+                
+                    @foreach($imgs as $imagen)  
+
+                        @if($l % 3 == 1)
+                            <tr>
+                        @endif
+
+                           
+                                <td style="text-align:center; padding-top:3px; padding-bottom:-10px;"><p style="font-size: 10px; font-weight:bold; ">  
+
+                                        <div class="border border-secondary" style="padding-top:15px;">                                      
+                                            <img src="{{asset('storage/'. $imagen->url)}}" class="center" style=" align-content:center; max-width: 185px; max-height:170px;" />                                                                                 
+                                        </div>
+                                </td>
+
+                                @if($l % 3 == 0)
+                                </tr>
+                                @endif
+                                                      
+                             <?php $l++; ?>
+
+                           
+                    @endforeach
+
+                    @if($l % 3 != 0)
+                        </tr>
+                    @endif
+                     
+               
+                
+                <tr >
+                    <td colspan="4" style=" text-align:center;  padding-bottom:-10px; padding-left:5px; padding-top:3px;"> <p style=" font-size: 10px;">**************************************************** </p> </td>
+                </tr>
+                  
+            </tbody>
+        </table>
+
+        <!-- <div style="page-break-after:always;"></div> -->
+
+
+
+
         <?php endforeach; ?>
         
     </div>

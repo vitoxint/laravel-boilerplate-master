@@ -331,11 +331,11 @@
                         <i class="fas fa-file-pdf" style="color:red;"></i> Exportar Cliente
                     </a>
 
-                    <a href="{{ route('admin.orden_trabajos.printTaller', $trabajo) }}" target="_blank" class="btn btn-default btn-sm btn-bordered" data-toggle="tooltip" data-placement="top" title="Imprimir PDF">
+                    <a href="{{ route('admin.orden_trabajos.printTallerOp', $trabajo) }}" target="_blank" class="btn btn-default btn-sm btn-bordered" data-toggle="tooltip" data-placement="top" title="Imprimir PDF">
                         <i class="fas fa-file-pdf" style="color:red;"></i> Exportar Taller
                     </a>
 
-                    <a href="{{ route('admin.orden_trabajos.send', $trabajo) }}" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Enviar OT" 
+                    <a href="{{ route('admin.orden_trabajos.send', $trabajo) }}" class="btn btn-default btn-sm btn-bordered" data-toggle="tooltip" data-placement="top" title="Enviar OT" 
                         name="confirm_item"
                         data-trans-button-cancel="@lang('buttons.general.cancel')"
                         data-trans-button-confirm="@lang('buttons.general.continue')"

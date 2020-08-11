@@ -116,6 +116,14 @@ Breadcrumbs::for('admin.orden_trabajos.edit', function ($trail, $trabajo) {
     $trail->push($trabajo->folio, route('admin.orden_trabajos.edit',$trabajo));
 });
 
+
+Breadcrumbs::for('admin.orden_trabajos.printTallerOp', function ($trail, $trabajo) {
+    $trail->parent('admin.orden_trabajos.index', route('admin.orden_trabajos.index'));
+    $trail->push($trabajo->folio, route('admin.orden_trabajos.edit',$trabajo));
+    $trail->push('Opciones de impresión (control interno)', route('admin.orden_trabajos.printTallerOp' ,$trabajo));
+});
+
+
 Breadcrumbs::for('admin.orden_trabajos.calendario_ot', function ($trail) {
     $trail->push('Calendario OT', route('admin.orden_trabajos.calendario_ot'));
 });

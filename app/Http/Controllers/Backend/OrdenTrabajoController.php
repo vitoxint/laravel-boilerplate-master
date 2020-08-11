@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 
 use App\OrdenTrabajo;
 use App\ItemOt;
+use App\ImagenItemOt;
 use App\PagoOt;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Repositories\Backend\Model\OrdenTrabajoRepository;
@@ -173,8 +174,6 @@ class OrdenTrabajoController extends Controller
                 'mes' => $mes,
                
                 ]); 
-
-
 
     }
 
@@ -720,6 +719,44 @@ class OrdenTrabajoController extends Controller
   
         return $pdf->stream('OrdenTrabajo_'.$trabajo->folio.'.pdf');
     }
+
+
+    public function printTallerOp(OrdenTrabajo $trabajo){
+        // return 'Funcionalidad pendiente , para control interno';
+         //$usuario = $trabajo->usuario;
+         //$pdf = PDF::loadView('backend.orden_trabajos.printTaller', compact('trabajo','usuario'));
+   
+         //return $pdf->stream('OrdenTrabajo_'.$trabajo->folio.'.pdf');
+         return view('backend.orden_trabajos.preImpresionTaller',compact('trabajo'));
+     }
+
+     public function printTallerOpExportar(Request $request ,OrdenTrabajo $trabajo){
+
+        //return $request->all();
+
+
+       // return $request->input('img',[]);
+        $id_img = $request->input('img',[]);
+
+        $imagenes = ImagenItemOt::whereIn('id' , $id_img)->get();
+
+       // return $imagenes; 
+
+        $usuario = $trabajo->usuario;
+        $pdf = PDF::loadView('backend.orden_trabajos.printTaller', compact('trabajo','usuario', 'imagenes'));
+  
+        return $pdf->stream('OrdenTrabajo_'.$trabajo->folio.'.pdf');
+        //return $request->team;
+
+     }
+
+
+
+
+
+
+
+
 
     public function send(OrdenTrabajo $trabajo){
 

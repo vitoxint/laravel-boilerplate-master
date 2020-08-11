@@ -105,7 +105,14 @@ Route::group(['namespace' => 'OrdenTrabajo' ], function () {
 
         Route::get('send', [OrdenTrabajoController::class, 'send'])->name('orden_trabajos.send');
         Route::get('printCliente', [OrdenTrabajoController::class, 'printCliente'])->name('orden_trabajos.printCliente');
-        Route::get('printTaller', [OrdenTrabajoController::class, 'printTaller'])->name('orden_trabajos.printTaller');
+        //Route::get('printTaller', [OrdenTrabajoController::class, 'printTaller'])->name('orden_trabajos.printTaller');
+
+        Route::get('printTaller', [OrdenTrabajoController::class, 'printTallerOp'])->name('orden_trabajos.printTallerOp');
+        Route::post('printTaller', [OrdenTrabajoController::class, 'printTallerOpExportar'])->name('orden_trabajos.printTallerOpExportar');
+
+
+
+
     });
 
     Route::get('orden_trabajos/pendientes', [OrdenTrabajoController::class, 'pendientes'])->name('orden_trabajos.pendientes');
