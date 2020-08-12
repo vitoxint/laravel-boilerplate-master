@@ -151,10 +151,12 @@
                     <a style="color:white;" href="{{ route('admin.item_ots.print_etq', [$item_ot,$item_ot->ordenTrabajo]) }}" target="_blank" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Imprimir PDF">
                         <i class="fas fa-print" style="color:white;"></i> Etiqueta
                     </a>   
-                    <a href="{{ route('admin.orden_trabajos.printTaller',$item_ot->ordenTrabajo) }}" target="_blank" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Imprimir OT Asociada">
-                        <i class="fas fa-file-pdf" style="color:red;"></i> Exportar
+                    <a href="{{ route('admin.orden_trabajos.printTallerOp',$item_ot->ordenTrabajo) }}" target="_blank" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Imprimir OT Asociada">
+                        <i class="fas fa-file-pdf" style="color:red;"></i> Exportar Taller
                     </a>              
-                        {{ form_cancel(route('admin.orden_trabajos.edit',$item_ot->ordenTrabajo), __('buttons.general.cancel')) }}
+                        @can('administrar ordenes de trabajo')   
+                            {{ form_cancel(route('admin.orden_trabajos.edit' , $trabajo), __('buttons.general.cancel')) }}
+                        @endcan
                     </div><!--col-->
 
                     <div class="col text-right">
@@ -284,7 +286,11 @@
                     </div><!--col-->
 
                     <div class="col-sm-7">
-                        @include('backend.etapa_itemots.includes.header-buttons')
+
+                    @can('administrar ordenes de trabajo' )   
+                         @include('backend.etapa_itemots.includes.header-buttons')
+                    @endcan
+                        
                     </div><!--col-->
                 </div><!--row-->
 

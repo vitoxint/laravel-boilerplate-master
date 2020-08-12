@@ -116,8 +116,15 @@
                         <button type="submit" class="btn btn-default btn-sm btn-bordered" data-toggle="tooltip" data-placement="top" title="Exportar PDF">
                         <i class="fas fa-file-pdf" style="color:red;"></i> Exportar Taller
                     </button>
+                       
+                    @can('administrar ordenes de trabajo' , 'ver trabajos')   
                         {{ form_cancel(route('admin.orden_trabajos.edit' , $trabajo), __('buttons.general.cancel')) }}
-                        
+                    @endcan
+
+                    @can('ver trabajos')
+                        {{ form_cancel(route('admin.orden_trabajos.editTaller' , $trabajo), __('buttons.general.cancel')) }}
+                    @endcan
+                                               
                     </div><!--row-->
                 </div><!--row-->
             </div><!--card-footer-->

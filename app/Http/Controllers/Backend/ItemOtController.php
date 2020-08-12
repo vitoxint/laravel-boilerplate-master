@@ -186,7 +186,16 @@ class ItemOtController extends Controller
    
            ]);
 
-       $estado_item_nuevo = $request->input('estado');
+       if(($request->input('estado') != '5')&&($request->input('estado') != '3')){
+
+            $estado_item_nuevo = $request->input('estado');
+       }else{
+
+            $estado_item_nuevo = $item_ot->estado;
+       }
+       
+
+
        if($estado_item_nuevo == '2' && $item_ot->estado == '1'){
                $fecha_inicio = Carbon::now();
                $fecha_inicio = $fecha_inicio->format('Y-m-d'); 
@@ -207,7 +216,7 @@ class ItemOtController extends Controller
            'cantidad' => $request->input('cantidad'),
            'valor_unitario' => $request->input('valor_unitario'),
            'valor_parcial' => $request->input('valor_parcial'),
-           'estado' => $request->input('estado'),
+           'estado' => $estado_item_nuevo,
            'especificaciones' => $request->input('especificaciones'),
            'fecha_inicio' => $fecha_inicio,
            'fecha_termino' => $fecha_termino,
