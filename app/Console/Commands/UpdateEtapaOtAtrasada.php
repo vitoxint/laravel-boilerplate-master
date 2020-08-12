@@ -42,7 +42,7 @@ class UpdateEtapaOtAtrasada extends Command
         
         $ahora = Carbon::now();
 
-        $etapasItemsOt = EtapaItemOt::where('estado_avance','=',1)->orWhere('estado_avance','=',2)->orWhere('estado_avance','=',5)->get();
+        $etapasItemsOt = EtapaItemOt::whereBetween('estado_avance',[1,2])->get();
 
         foreach($etapasItemsOt as $etapa){
 

@@ -46,12 +46,12 @@
 
                         <select class="form-control" id="representante_id" name="representante_id">
                                 @if($trabajo->representante)
-                                     <option value="{{$trabajo->representante_id}}">{{$trabajo->representante->nombre}}</option>
+                                     <option value="{{$trabajo->representante_id}}">{{$trabajo->representante->nombre}} [{{$trabajo->representante->telefono}}] [{{$trabajo->representante->email}}]</option>
 
                                 @endif
 
                                 @foreach($contactos as $contacto)
-                                     <option value="{{$contacto->id}}">{{$contacto->nombre}}</option>
+                                     <option value="{{$contacto->id}}">{{$contacto->nombre}} [{{$trabajo->representante->telefono}}] [{{$trabajo->representante->email}}]</option>
                                 @endforeach
 
 

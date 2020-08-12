@@ -30,7 +30,7 @@ Vue.component('graficastatusots-component', require('./components/graficosStatus
 
 Vue.component('ganttots-component', require('./components/ganttOtComponent.vue').default);
 
-/* Vue.component('calendar', require('./components/Calendar.vue').default); */
+ Vue.component('calendar', require('./components/Calendar.vue').default); 
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

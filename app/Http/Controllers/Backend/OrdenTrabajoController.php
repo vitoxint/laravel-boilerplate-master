@@ -785,13 +785,13 @@ class OrdenTrabajoController extends Controller
             array_push($data, [
                 'id'    => $ot->id,
                 'title' => '[ '. $ot->folio .' ]'.  $ot->cliente->razon_social,
-                'start' => $ot->created_at,
+                'start' => $ot->fecha_inicio,
                 'end'   => $ot->entrega_estimada
                 ]
         );
         } 
         
-        return $data;
+        //return $data;
 
   /*              
          return response()->json([
