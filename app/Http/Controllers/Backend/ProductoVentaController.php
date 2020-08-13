@@ -14,6 +14,9 @@ use App\FamiliaProducto;
 use Illuminate\Http\Request;
 use PDF;
 
+use App\Exports\ProductoVentasExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class ProductoVentaController extends Controller
 {
@@ -31,6 +34,11 @@ class ProductoVentaController extends Controller
         return view('backend.productos_venta.index')
         ->withProductoVentas($this->productoRepository->getActivePaginated(10, 'codigo', 'asc'));
     }
+
+    public function exportarxls(){
+        return Excel::download(new ProductoVentasExport, 'inventario.xlsx');
+    }
+
 
     public function getLista(){
         

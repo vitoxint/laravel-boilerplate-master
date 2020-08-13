@@ -11,6 +11,9 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use App\Repositories\Backend\Model\ClienteRepository;
 use Freshwork\ChileanBundle\Rut;
 
+use App\Exports\ClientesExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 class ClienteController extends Controller
 {
 
@@ -39,6 +42,10 @@ class ClienteController extends Controller
         return view('backend.clientes.index')
             ->withClientes($this->clienteRepository->getActivePaginated(25, 'id', 'asc'));
 
+    }
+
+    public function exportarxls(){
+        return Excel::download(new ClientesExport, 'clientes.xlsx');
     }
 
     public function buscar_clientes(Request $request)

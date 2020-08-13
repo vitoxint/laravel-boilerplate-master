@@ -19,6 +19,9 @@ use App\Mail\Backend\SendOrdenTrabajo;
 use Illuminate\Support\Facades\Mail;
 use PDF;
 
+use App\Exports\OrdenTrabajosExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class OrdenTrabajoController extends Controller
 {
@@ -57,6 +60,10 @@ class OrdenTrabajoController extends Controller
                                                                                                          'count_at'=> $count_at,
                                                                                                          'count_te'=> $count_te,
                                                                                                          'count_en'=> $count_en ]);
+    }
+
+    public function exportarxls(){
+        return Excel::download(new OrdenTrabajosExport, 'trabajos.xlsx');
     }
 
     public function getOtsOfMonthGraph(){

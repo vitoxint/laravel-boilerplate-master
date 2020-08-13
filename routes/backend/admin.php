@@ -50,6 +50,10 @@ Route::group(['namespace' => 'Cliente'], function () {
     });
 
     Route::get('clientes/resultados', [ClienteController::class, 'buscar_clientes'])->name('clientes.buscar_clientes');
+
+    Route::get('clientes/exportarxls', [ClienteController::class, 'exportarxls'])->name('clientes.exportarxls');
+
+
 });  
 
 
@@ -110,10 +114,9 @@ Route::group(['namespace' => 'OrdenTrabajo' ], function () {
         Route::get('printTaller', [OrdenTrabajoController::class, 'printTallerOp'])->name('orden_trabajos.printTallerOp');
         Route::post('printTaller', [OrdenTrabajoController::class, 'printTallerOpExportar'])->name('orden_trabajos.printTallerOpExportar');
 
-
-
-
     });
+
+    Route::get('orden_trabajos/exportarxls', [OrdenTrabajoController::class, 'exportarxls'])->name('orden_trabajos.exportarxls');
 
     Route::get('orden_trabajos/pendientes', [OrdenTrabajoController::class, 'pendientes'])->name('orden_trabajos.pendientes');
     Route::get('orden_trabajos/entregadas', [OrdenTrabajoController::class, 'entregadas'])->name('orden_trabajos.entregadas');
@@ -404,6 +407,8 @@ Route::group(['namespace' => 'ProductoVenta'], function () {
 
 
     Route::get('productos-venta/resultados', [ProductoVentaController::class, 'buscar_producto'])->name('productos-venta.buscar_producto');
+
+    Route::get('productos-venta/exportarxls', [ProductoVentaController::class, 'exportarxls'])->name('productos-venta.exportarxls');
 
 
 });
