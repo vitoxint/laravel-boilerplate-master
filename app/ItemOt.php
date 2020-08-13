@@ -46,7 +46,6 @@ class ItemOt extends Model
     public function materialOt(){
         return $this->hasMany('App\TrabajoUseMaterial', 'itemot_id', 'id');
     }
-
     
     public function solicitudMaterialOt(){
         return $this->hasMany('App\SolicitudMaterialOt', 'itemot_id', 'id')->where('estado','=',1);

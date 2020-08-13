@@ -172,6 +172,52 @@
                             </div><!--col-->
                         </div><!--form-group-->
 
+                        <div class="form-group row">
+
+                        {{ html()->label('Costos ')->class('col-md-2 form-control-label')->for('') }}   
+
+                            {{ html()->label('C. Procesos :')->class('col-md-1 form-control-label')->for('cprocesos') }}
+
+                            <div class="col-md-2">
+                                {{ html()->text('cprocesos')
+                                    ->class('form-control')
+                                    ->value('$  '. number_format($item_ot->procesosOt->sum('valor_proceso'),0, ',' , '.'  ))                                   
+                                    ->attribute('maxlength', 191)
+                                    ->disabled()      
+                                    ->autofocus()
+                                    
+                                    ->required() }}
+                            </div><!--col-->
+
+                            {{ html()->label('C. Materiales :')->class('col-md-1 form-control-label')->for('cmateriales') }}
+
+                            <div class="col-md-2">
+                                {{ html()->text('cmateriales')
+                                    ->class('form-control')
+                                    ->value('$  '.number_format( ($item_ot->materialOt->sum('valor_total') + $item_ot->solicitudMaterialOt->sum('valor_total')),0, ',' , '.'  ))            
+                                    ->attribute('maxlength', 191)  
+                                    ->disabled()      
+                                    ->autofocus()
+                                    
+                                     }}
+                            </div><!--col-->
+
+                            {{ html()->label('Δ Margen:')->class('col-md-1 form-control-label')->for('cdelta') }}
+
+                            <div class="col-md-2">
+                                {{ html()->text('cdelta')
+                                    ->class('form-control')
+                                    ->attribute('maxlength', 191)
+                                    ->value('$  '.number_format( $item_ot->valor_parcial - ( $item_ot->procesosOt->sum('valor_proceso') + $item_ot->materialOt->sum('valor_total') + $item_ot->solicitudMaterialOt->sum('valor_total'))  ,0, ',' , '.'  ))    
+                                    ->disabled()        
+                                    ->autofocus()
+                                    
+                                     }}
+                            </div><!--col-->
+
+                        </div><!--form-group-->    
+
+
                         </div><!--col-->
                     </div><!--row-->
 
@@ -955,7 +1001,15 @@ var postURL = "<?php echo url('addmore'); ?>";
             success:function(data){
                 
                 $('#row'+button_id+'').remove();  
-                    console.log(data.success);      
+
+                var valor_material = parseFloat(data.valor_material);
+                var valor_delta    = parseFloat(data.valor_delta);
+              
+
+                $("#cmateriales").val(formatter.format(valor_material.toFixed(2) ));
+                $("#cdelta").val(formatter.format( valor_delta.toFixed(2) ));
+
+                console.log(data.success);      
                 
             },
             error: function() {
@@ -1330,13 +1384,21 @@ var postURL = "<?php echo url('addmore'); ?>";
                 success:function(data){
                     //i++;  
                     $('#dynamic_field').append('<tr id="row'+data.id+'" class="dynamic-added"><td class="custom-tbl" hidden="true"><input id="pr_item'+data.id+'" class="form-control input-sm"style="width:100%;" type="text" value="'+data.id+'" name="pr_item[]" readonly required></td> <td id="material_tr'+data.id+'" class="custom-tbl"> <input id="material_id'+data.id+'"  name="material_id[]" class="form-control" value="'+data.material+'" / >     </td>         <td class="custom-tbl"><input id="pr_largo'+data.id+'" class="form-control input-sm" style="width:100%;" type="text" name="pr_largo[]" value="'+data.dimension_largo+'"></td>   <td class="custom-tbl"><input id="pr_ancho'+data.id+'" class="form-control input-sm" style="width:100%;" type="text" oninput="multiply('+data.id+');" name="pr_ancho[]" value="'+data.dimension_ancho+'"></td>               <td class="custom-tbl"><input id="pr_unit'+data.id+'" class="form-control input-sm" style="width:100%;" type="text" oninput="multiply('+data.id+');" name="pr_unit[]" value="'+data.valor_unit+'"></td>               <td class="custom-tbl"><input id="pr_cpi'+data.id+'" class="estimated_cost form-control input-sm" style="width:100%; text-align:right;" type="text" name="pr_cpi[]" value="'+data.valor_total+'" readonly></td>      <td><span class="badge btn-secondary" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> En espera </p></span></td>     <td class="custom-tbl"><!--<button type="button" id="'+data.id+'" class="btn-info btn-sm btn_add" hidden="true" name="add"><span class="fas fa-plus"></span></button> --><button type="button" name="remove" id="'+data.id+'" class="btn-danger btn-sm btn_remove"><span class="fas fa-times"></span></button></td></tr>');            
-                    //$('#dynamic_field').append('<tr id="row'+i+'" class="dynamic-added"><td class="custom-tbl"><input id="pr_item'+i+'" class="form-control input-sm"style="width:100%;" type="text" value="'+i+'" name="pr_item[]" readonly required></td> <td id="material_tr'+i+'" class="custom-tbl">  </td>         <td class="custom-tbl"><input id="pr_largo'+i+'" class="form-control input-sm" style="width:100%;" type="text" name="pr_largo[]"></td>   <td class="custom-tbl"><input id="pr_ancho'+i+'" class="form-control input-sm" style="width:100%;" type="text" oninput="multiply('+i+');" name="pr_ancho[]"></td>               <td class="custom-tbl"><input id="pr_unit'+i+'" class="form-control input-sm" style="width:100%;" type="text" oninput="multiply('+i+');" name="pr_unit[]"></td>               <td class="custom-tbl"><input id="pr_cpi'+i+'" class="estimated_cost form-control input-sm" style="width:100%;" type="text" name="pr_cpi[]" readonly></td>       <td class="custom-tbl"><button type="button" id="'+i+'" class="btn-info btn-sm btn_add" name="add"><span class="fas fa-plus"></span></button> <button type="button" name="remove" id="'+i+'" class="btn-danger btn-sm btn_remove"><span class="fas fa-times"></span></button></td></tr>');  
+                  
                     var format_total = parseFloat(data.total);
                     var format_parcial = parseFloat(data.valor_total);
 
                     $("#pr_cpi"+data.id).val(formatter.format( format_parcial.toFixed(2) )   );
                     $("#valor_total").val(formatter.format( format_total.toFixed(2) ) );
-                    //alert( formatter.format( format_total.toFixed(2) ));
+
+
+                    var valor_material = parseFloat(data.valor_material);
+                    var valor_delta    = parseFloat(data.valor_delta   );
+                    
+
+                    $("#cmateriales").val(formatter.format( valor_material.toFixed(2) ));
+                    $("#cdelta").val(formatter.format( valor_delta.toFixed(2) ));
+                   
                    
                 
                 },

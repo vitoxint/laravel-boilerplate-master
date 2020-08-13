@@ -72,6 +72,10 @@ class SolicitudMaterialOtController extends Controller
         ->where('itemot_id','=', $item_ot->id)
         ->sum('valor_total');
 
+        
+        $valor_material =  ($item_ot->materialOt->sum('valor_total') + $item_ot->solicitudMaterialOt->sum('valor_total'));
+        $valor_delta    =  $item_ot->valor_parcial - ( $item_ot->procesosOt->sum('valor_proceso') + $item_ot->materialOt->sum('valor_total') + $item_ot->solicitudMaterialOt->sum('valor_total') ) ;
+
         if($material_agr){
             return response()->json([
                 'success'=>'Got Simple Ajax Request.',
@@ -82,6 +86,8 @@ class SolicitudMaterialOtController extends Controller
                 'valor_unit' => $material_agr->valor_unit,
                 'valor_total' => $material_agr->valor_total,
                 'total' => $valor_total,
+                'valor_material' => $valor_material,
+                'valor_delta' => $valor_delta,
     
                 ]); 
         }
@@ -165,6 +171,9 @@ class SolicitudMaterialOtController extends Controller
         $item_ot = ItemOt::find($material_elim->itemot_id);
         $material_elim->delete();
 
+        $valor_material =  ($item_ot->materialOt->sum('valor_total') + $item_ot->solicitudMaterialOt->sum('valor_total'));
+        $valor_delta    =  $item_ot->valor_parcial - ( $item_ot->procesosOt->sum('valor_proceso') + $item_ot->materialOt->sum('valor_total') + $item_ot->solicitudMaterialOt->sum('valor_total') ) ;
+
         //$valor_total = $item_ot->materialOt->sum('valor_total');
 
         /* $valor_total = DB::table('trabajo_use_materials')
@@ -173,6 +182,8 @@ class SolicitudMaterialOtController extends Controller
  */
         return response()->json([
             'success'=>'Eliminado.',
+            'valor_material' => $valor_material,
+            'valor_delta' => $valor_delta,
             //'valor_total' => $valor_total,
    
             ]); 
