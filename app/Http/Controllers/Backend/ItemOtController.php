@@ -174,7 +174,7 @@ class ItemOtController extends Controller
            'cantidad' => 'required|numeric',
            'valor_unitario' => 'required|numeric',
            'valor_parcial' => 'required|numeric',
-           'estado' => 'required',
+           //'estado' => 'required',
            'especificaciones' => '',
               
        ]);
@@ -186,17 +186,17 @@ class ItemOtController extends Controller
    
            ]);
 
-       if(($request->input('estado') != '5')&&($request->input('estado') != '3')){
+/*        if(($request->input('estado') != '5')&&($request->input('estado') != '3')){
 
             $estado_item_nuevo = $request->input('estado');
        }else{
 
             $estado_item_nuevo = $item_ot->estado;
-       }
+       } */
        
 
 
-       if($estado_item_nuevo == '2' && $item_ot->estado == '1'){
+/*        if($estado_item_nuevo == '2' && $item_ot->estado == '1'){
                $fecha_inicio = Carbon::now();
                $fecha_inicio = $fecha_inicio->format('Y-m-d'); 
        }else{
@@ -207,23 +207,23 @@ class ItemOtController extends Controller
                $fecha_termino = $fecha_termino->format('Y-m-d'); 
        }else{
               $fecha_termino = null;
-       }       
+       }  */      
        
        $update2 = DB::table('item_ots')
-       ->where('id', '=', $item_ot->id)
-       ->update([
+        ->where('id', '=', $item_ot->id)
+        ->update([
            'descripcion' => $request->input('descripcion'),
            'cantidad' => $request->input('cantidad'),
            'valor_unitario' => $request->input('valor_unitario'),
            'valor_parcial' => $request->input('valor_parcial'),
-           'estado' => $estado_item_nuevo,
+           //'estado' => $estado_item_nuevo,
            'especificaciones' => $request->input('especificaciones'),
-           'fecha_inicio' => $fecha_inicio,
-           'fecha_termino' => $fecha_termino,
+           //'fecha_inicio' => $fecha_inicio,
+           //'fecha_termino' => $fecha_termino, 
           
-           ]);
+        ]);
        
-       if (ItemOt::where('estado', '=', '2')->where('ot_id', '=', $trabajo->id)->exists()) {
+/*        if (ItemOt::where('estado', '=', '2')->where('ot_id', '=', $trabajo->id)->exists()) {
            $update1 = DB::table('orden_trabajos')
              ->where('id', '=', $trabajo->id)
              ->update([
@@ -237,9 +237,9 @@ class ItemOtController extends Controller
                       ]);                
            }
            
-        }
+        } */
        
-       if (ItemOt::where('estado', '=', '4')->where('ot_id', '=', $trabajo->id)->count('id') == 
+/*        if (ItemOt::where('estado', '=', '4')->where('ot_id', '=', $trabajo->id)->count('id') == 
                ItemOt::where('ot_id', '=', $trabajo->id)->count('id')) {
            
            $update1 = DB::table('orden_trabajos')
@@ -255,16 +255,16 @@ class ItemOtController extends Controller
                       ]);                
            }
            
-        } 
+        }  */
 
-        if (ItemOt::where('estado', '=', '5')->where('ot_id', '=', $trabajo->id)->count('id') == 
+/*         if (ItemOt::where('estado', '=', '5')->where('ot_id', '=', $trabajo->id)->count('id') == 
             ItemOt::where('ot_id', '=', $trabajo->id)->count('id')) {
         
         $update1 = DB::table('orden_trabajos')
         ->where('id', '=', $trabajo->id)
         ->update([
             'estado' =>  '5',
-        ]);
+        ]); */
         
 /*         if($trabajo->estado != '5'){
             $update1 = DB::table('orden_trabajos')
@@ -274,7 +274,7 @@ class ItemOtController extends Controller
                 ]);                
         } */
     
- } 
+ //} 
     
         return redirect()->route('admin.orden_trabajos.edit',$trabajo)->withFlashSuccess('Se ha actualizado el ítem de la Orden de Trabajo');
       

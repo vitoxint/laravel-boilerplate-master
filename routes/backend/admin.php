@@ -275,7 +275,7 @@ Route::group(['namespace' => 'Empleado'], function () {
 
 Route::group(['namespace' => 'EtapaItemOt'], function () {
     
-       //Route::get('item_ots', [ItemOtController::class, 'index'])->name('item_ots.index');
+       Route::get('etapa_itemots', [EtapaItemOtController::class, 'index'])->name('etapa_itemots.index');
        Route::get('etapa_itemots/{item_ot}', [EtapaItemOtController::class, 'create'])->name('etapa_itemots.create');
        Route::post('etapa_itemots/{item_ot}', [EtapaItemOtController::class, 'store'])->name('etapa_itemots.store');
 
@@ -375,6 +375,10 @@ Route::group(['namespace' => 'ExistenciaMaterial'], function () {
     Route::get('existencia_material/create', [ExistenciaMaterialController::class, 'create'])->name('existencia_material.create');
     Route::post('existencia_material', [ExistenciaMaterialController::class, 'store'])->name('existencia_material.store');
     Route::get('existencia_material/dataAjax', [ExistenciaMaterialController::class, 'dataAjax'])->name('existencia-material.dataAjax');
+
+    Route::get('existencia_material/exportarxls', [ExistenciaMaterialController::class, 'exportarxls'])->name('existencia_material.exportarxls');;
+
+
 
     Route::group(['prefix' => 'existencia_material/{existenciaMaterial}'], function () {
         Route::get('edit', [ExistenciaMaterialController::class, 'edit'])->name('existencia_material.edit');

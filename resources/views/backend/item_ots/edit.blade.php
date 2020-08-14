@@ -112,12 +112,12 @@
                         {{ html()->label('Estado  :')->class('col-md-1 form-control-label')->for('estado') }}
                             <div class="col-md-2">
 
-                                {{ html()->select('estado',array('1' => 'Sin iniciar', '2' => 'En proceso', '3' =>'Atrasada', '4' => 'Terminada', '5' => 'Entregada',  '6' => 'Anulada'), $item_ot->estado)
+<!--                                 {{ html()->select('estado',array('1' => 'Sin iniciar', '2' => 'En proceso', '3' =>'Atrasada', '4' => 'Terminada', '5' => 'Entregada',  '6' => 'Anulada'), $item_ot->estado)
                                     ->class('form-control')
                                     ->attribute('maxlength', 191) 
                                     ->required()
                                     
-                                }}                           
+                                }}   -->                         
 
                                 @switch($item_ot->estado) 
                                         @case ('1') 
@@ -657,6 +657,11 @@ $('#cantidad').on('change', function() {
  
   var total = parseFloat($('#valor_unitario').val())*parseFloat(this.value);
   $('#valor_parcial').val(total);
+
+  let costo_total = <?php echo ($item_ot->procesosOt->sum('valor_proceso') + $item_ot->materialOt->sum('valor_total') + $item_ot->solicitudMaterialOt->sum('valor_total')) ?> 
+  let margen = total - costo_total;
+
+  $("#cdelta").val(formatter.format( margen.toFixed(2) ));
   
 });
 
@@ -664,6 +669,11 @@ $('#valor_unitario').on('change', function() {
   
   var total = parseFloat($('#cantidad').val())*parseFloat(this.value);
   $('#valor_parcial').val(total);
+
+  let costo_total = <?php echo ($item_ot->procesosOt->sum('valor_proceso') + $item_ot->materialOt->sum('valor_total') + $item_ot->solicitudMaterialOt->sum('valor_total')) ?> 
+  let margen = total - costo_total;
+
+  $("#cdelta").val(formatter.format( margen.toFixed(2) ));
   
 });
 

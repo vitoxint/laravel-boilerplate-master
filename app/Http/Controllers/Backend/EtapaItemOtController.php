@@ -11,16 +11,36 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use DB;
 
+use Illuminate\Pagination\LengthAwarePaginator;
+use App\Repositories\Backend\Model\EtapaItemOtRepository;
+
 class EtapaItemOtController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+ 
+    protected $etapaItemOtRepository;
+
+    public function __construct(EtapaItemOtRepository $etapaItemOtRepository)
+    {
+        $this->etapaItemOtRepository = $etapaItemOtRepository;
+    }
+
     public function index()
     {
-        //
+        $et_count = EtapaItemOt::get()->count('id');
+        $count_si = EtapaItemOt::where('estado_avance',1)->get()->count('id');
+        $count_ep = EtapaItemOt::where('estado_avance',2)->get()->count('id');
+        $count_at = EtapaItemOt::where('estado_avance',3)->get()->count('id');
+        $count_te = EtapaItemOt::where('estado_avance',4)->get()->count('id');
+       
+
+        return view('backend.etapa_itemots.index')
+        ->withEtapaOts($this->etapaItemOtRepository->getActivePaginated(50, 'estado_avance', 'asc'))->with( 
+                                                                                                        ['et_count'=> $et_count, 
+                                                                                                         'count_si'=> $count_si,
+                                                                                                         'count_ep'=> $count_ep,
+                                                                                                         'count_at'=> $count_at,
+                                                                                                         'count_te'=> $count_te
+                                                                                                          ]);
     }
 
     /**
@@ -79,25 +99,47 @@ class EtapaItemOtController extends Controller
 
         $proc_id = Proceso::find($request->input('proceso_id'));
  
-           $proceso = EtapaItemOt::create([
-            'itemot_id' => $item_ot->id,
-            'codigo' => $proc_id->codigo.'/'.$maxPr,
-            'detalle' => $request->input('detalle'),
-            'fh_limite'=> $limite,
-            'proceso_id' => $request->input('proceso_id'),
-            'maquina_id' => $request->input('maquina_id'),
+        $proceso = EtapaItemOt::create([
+            'itemot_id'       => $item_ot->id,
+            'codigo'          => $proc_id->codigo.'/'.$maxPr,
+            'detalle'         => $request->input('detalle'),
+            'fh_limite'       => $limite,
+            'proceso_id'      => $request->input('proceso_id'),
+            'maquina_id'      => $request->input('maquina_id'),
             //'empleado_id' => $request->input('operador_id'),
-            'valor_unitario' => $request->input('valor_unitario'),
-            'cantidad' => $request->input('cantidad'),
-            'valor_proceso' => $request->input('valor_proceso'),
+            'valor_unitario'  => $request->input('valor_unitario'),
+            'cantidad'        => $request->input('cantidad'),
+            'valor_proceso'   => $request->input('valor_proceso'),
             'tiempo_asignado' => $request->input('tiempo_asignado'),
-            'estado_avance' => 1 ,
+            'estado_avance'   => 1 ,
                        
-        ]);  
+        ]);
+
+
+        $etapas_iniciadas = EtapaItemOt::where('estado_avance',2)->orWhere('estado_avance', 4)->where('itemot_id', $item_ot->id)->count('id');
+
+        if( ($etapas_iniciadas > 0) && ($item_ot->estado != '3') && ($item_ot->estado != '5') ){
+         
+            $item_ot->update([
+                'estado'        => 2,
+                'fecha_termino' => NULL,
+            ]);
+
+            $item_ot->ordenTrabajo->update([
+                'estado'        => 2,
+                'fecha_termino' => NULL,
+            ]);
+
+        }
+        
 
         return redirect()->route('admin.item_ots.edit',[$item_ot, $item_ot->ordenTrabajo])->withFlashSuccess(__('Proceso agregado'));
 
-     if($proceso != null){
+  
+  
+  
+  
+        if($proceso != null){
             return response()->json([
                 
                 'success'=> 'true',
@@ -582,7 +624,63 @@ class EtapaItemOtController extends Controller
         $item_ot = $aux->itemOt;
         $trabajo = $item_ot->ordenTrabajo;
 
-        $etapaItemOt->delete();
+        if($etapaItemOt->estado_avance == 1){
+
+            $etapaItemOt->delete();
+
+            //ITEM
+            $ep = EtapaItemOt::where('itemot_id', $item_ot->id)->where('estado_avance' , 2)->count('id');
+            $te = EtapaItemOt::where('itemot_id', $item_ot->id)->where('estado_avance', 4)->count('id');
+            $to = EtapaItemOt::where('itemot_id', $item_ot->id)->count('id');
+
+            $fecha_termino = Carbon::now();
+            $fecha_termino = $fecha_termino->format('Y-m-d');
+
+            if(($to == $te)&&($to > 0)){
+                $item_ot->estado = '4';
+                $item_ot->fecha_termino = $fecha_termino;
+                $item_ot->save();
+            }
+
+            if(($ep > 0 )&&($te < $to)){
+                $item_ot->estado = '2';
+                $item_ot->save();
+            }
+
+            //OT
+            $item_ep = ItemOt::where('ot_id', $trabajo->id)->where('estado' , '2')->count('id');
+            $item_te = ItemOt::where('ot_id', $trabajo->id)->where('estado' , '4')->count('id');
+            $item_to = ItemOt::where('ot_id', $trabajo->id)->count('id');
+
+
+
+            if(($item_to == $item_te)&&($item_to > 0)){
+                $trabajo->estado = '4';
+                $trabajo->fecha_termino = $fecha_termino;
+                $trabajo->save();
+            }
+
+            if(($item_ep > 0 )&&($item_te < $item_to)){
+                $trabajo->estado = '2';
+                $trabajo->save();
+            }
+
+
+            return redirect()->back()->withFlashSuccess('Se ha eliminado el proceso');
+
+        }else{
+
+     
+            return redirect()->back()->withFlashSuccess('No se puede eliminar el proceso porque ya está confirmado o terminado');
+
+
+        }
+
+            
+
+        
+
+
 
         $procs = Proceso::orderBy('codigo')->get();
 

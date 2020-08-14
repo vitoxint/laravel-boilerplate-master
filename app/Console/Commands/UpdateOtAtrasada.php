@@ -57,6 +57,15 @@ class UpdateOtAtrasada extends Command
                 $ordenTrabajo->estado = '3';
                 $ordenTrabajo->save();
 
+                $items = $ordenTrabajo->item_ots;
+
+                foreach($items as $item ){
+                    $item->estado = 3;
+                    $item->save();
+
+                }
+
+
                 Mail::send(new SendOtAtrasada($ordenTrabajo));
             } 
             

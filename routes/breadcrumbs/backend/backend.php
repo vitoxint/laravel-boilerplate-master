@@ -245,6 +245,13 @@ Breadcrumbs::for('admin.etapa_itemots.edit', function ($trail,$etapaItemOt) {
     $trail->push( $etapaItemOt->codigo, route('admin.etapa_itemots.edit',$etapaItemOt));
 });
 
+
+Breadcrumbs::for('admin.etapa_itemots.index', function ($trail) {
+    $trail->push('Procesos y tareas de Ordenes de Trabajo', route('admin.etapa_itemots.index'));
+});
+
+
+
 Breadcrumbs::for('admin.materiales.index', function ($trail) {
     $trail->push('Base de materiales', route('admin.materiales.index'));
 });

@@ -220,6 +220,17 @@
                         </li>
                         @endcan
 
+                        @can('administrar ordenes de trabajo')
+                        <li class="nav-item">
+                            <a class="nav-link {{
+                                active_class(Route::is('admin/etapa_itemots*'))
+                            }}" href="{{ route('admin.etapa_itemots.index') }}">
+                                Procesos y Tareas
+                            </a>
+                        </li>
+                        @endcan
+
+
                     </ul>
                 </li>
 

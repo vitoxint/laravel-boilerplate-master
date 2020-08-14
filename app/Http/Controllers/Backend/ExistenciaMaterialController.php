@@ -13,6 +13,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use DB;
 
+use App\Exports\ExistenciaMaterialExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 class ExistenciaMaterialController extends Controller
 {
     protected $existenciaMaterialRepository;
@@ -26,6 +29,10 @@ class ExistenciaMaterialController extends Controller
     {
         return view('backend.existencias_material.index')
         ->withExistencias($this->existenciaMaterialRepository->getActivePaginated(25, 'estado_consumo', 'asc'));
+    }
+
+    public function exportarxls(){
+        return Excel::download(new ExistenciaMaterialExport, 'existencia_material_trozados.xlsx');
     }
 
     /**
