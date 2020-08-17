@@ -627,6 +627,7 @@ class EtapaItemOtController extends Controller
             }
             
          }
+         
         
         if (EtapaItemOt::where('estado_avance', '=', 4)->where('itemot_id', '=', $item_ot->id)->count('id') == 
                 EtapaItemOt::where('itemot_id', '=', $item_ot->id)->count('id')) {
@@ -685,6 +686,36 @@ class EtapaItemOtController extends Controller
         } 
 
 
+            //ITEM
+            $si = EtapaItemOt::where('itemot_id', $item_ot->id)->where('estado_avance' , 1)->count('id');
+            $ep = EtapaItemOt::where('itemot_id', $item_ot->id)->where('estado_avance' , 2)->count('id');
+            $te = EtapaItemOt::where('itemot_id', $item_ot->id)->where('estado_avance', 4)->count('id');
+            $to = EtapaItemOt::where('itemot_id', $item_ot->id)->count('id');
+
+            $fecha_termino = Carbon::now();
+            $fecha_termino = $fecha_termino->format('Y-m-d');
+
+            if(($to == $te)&&($to > 0)){
+                $item_ot->estado = '4';
+                $item_ot->fecha_termino = $fecha_termino;
+                $item_ot->save();
+            }
+
+            if(($ep > 0 )&&($te < $to)){
+                $item_ot->estado = '2';
+                $item_ot->save();
+            }
+
+            if(($to == $si)||($to == 0)){
+
+                $item_ot->estado = '1';
+                $item_ot->save();
+
+            }
+
+            
+
+
  
 /*          if (ItemOt::where('estado', '=', '5')->where('ot_id', '=', $trabajo->id)->count('id') == 
              ItemOt::where('ot_id', '=', $trabajo->id)->count('id')) {
@@ -711,11 +742,12 @@ class EtapaItemOtController extends Controller
         $item_ot = $aux->itemOt;
         $trabajo = $item_ot->ordenTrabajo;
 
-        if(($etapaItemOt->estado_avance == 1)||($etapaItemOt->estado_avance == 1)){
+        if(($etapaItemOt->estado_avance == 1)||($etapaItemOt->estado_avance == 2)){
 
             $etapaItemOt->delete();
 
             //ITEM
+            $si = EtapaItemOt::where('itemot_id', $item_ot->id)->where('estado_avance' , 1)->count('id');
             $ep = EtapaItemOt::where('itemot_id', $item_ot->id)->where('estado_avance' , 2)->count('id');
             $te = EtapaItemOt::where('itemot_id', $item_ot->id)->where('estado_avance', 4)->count('id');
             $to = EtapaItemOt::where('itemot_id', $item_ot->id)->count('id');
@@ -734,24 +766,47 @@ class EtapaItemOtController extends Controller
                 $item_ot->save();
             }
 
+            if(($to == $si)||($to == 0)){
+
+                $item_ot->estado = '1';
+                $item_ot->save();
+
+            }
+
             //OT
+
+            $item_si = ItemOt::where('ot_id', $trabajo->id)->where('estado' , '1')->count('id');
             $item_ep = ItemOt::where('ot_id', $trabajo->id)->where('estado' , '2')->count('id');
             $item_te = ItemOt::where('ot_id', $trabajo->id)->where('estado' , '4')->count('id');
+            $item_en = ItemOt::where('ot_id', $trabajo->id)->where('estado' , '5')->count('id');
             $item_to = ItemOt::where('ot_id', $trabajo->id)->count('id');
 
 
 
             if(($item_to == $item_te)&&($item_to > 0)){
                 $trabajo->estado = '4';
-                $trabajo->fecha_termino = $fecha_termino;
+                //$trabajo->fecha_termino = $fecha_termino;
                 $trabajo->save();
             }
 
-            if(($item_ep > 0 )&&($item_te < $item_to)){
+            if(($item_to == $item_en)&&($item_to > 0)){
+                $trabajo->estado = '5';
+                
+                $trabajo->save();
+            }
+
+            //if(($item_ep > 0 )&&($item_te < $item_to)){
+            if(($item_ep > 0 && $item_ep < $item_to ) || ($item_te > 0  && $item_te < $item_to ) || ($item_en > 0  && $item_en < $item_to ) ){
                 $trabajo->estado = '2';
                 $trabajo->save();
             }
 
+            if(($item_to == $item_si)||($item_to == 0)){
+
+                $trabajo->estado = '1';
+                $trabajo->save();
+
+            }
 
             return redirect()->back()->withFlashSuccess('Se ha eliminado el proceso');
 

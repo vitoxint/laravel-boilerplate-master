@@ -113,6 +113,32 @@ class ItemOtController extends Controller
               
               ]);
 
+              $item_si = ItemOt::where('ot_id', $trabajo->id)->where('estado' , '1')->count('id');
+              $item_ep = ItemOt::where('ot_id', $trabajo->id)->where('estado' , '2')->count('id');
+              $item_te = ItemOt::where('ot_id', $trabajo->id)->where('estado' , '4')->count('id');
+              $item_to = ItemOt::where('ot_id', $trabajo->id)->count('id');
+  
+  
+  
+              if(($item_to == $item_te)&&($item_to > 0)){
+                  $trabajo->estado = '4';
+                  $trabajo->fecha_termino = $fecha_termino;
+                  $trabajo->save();
+              }
+  
+              if(($item_ep > 0 )||($item_si < $item_to)){
+                  $trabajo->estado = '2';
+                  $trabajo->save();
+              }
+  
+              if(($item_to == $item_si)||($item_to == 0)){
+  
+                  $trabajo->estado = '1';
+                  $trabajo->save();
+  
+              }
+
+
         $item_ot = $item;
 
         return redirect()->route('admin.item_ots.edit',[$item_ot , $trabajo ])->withFlashSuccess('Se ha agregado un nuevo ítem, ahora complete con informacion anexa');
@@ -300,6 +326,43 @@ class ItemOtController extends Controller
         }
 
         $item_ot->delete();
+
+
+            //OT
+
+            $item_si = ItemOt::where('ot_id', $trabajo->id)->where('estado' , '1')->count('id');
+            $item_ep = ItemOt::where('ot_id', $trabajo->id)->where('estado' , '2')->count('id');
+            $item_te = ItemOt::where('ot_id', $trabajo->id)->where('estado' , '4')->count('id');
+            $item_en = ItemOt::where('ot_id', $trabajo->id)->where('estado' , '5')->count('id');
+            $item_to = ItemOt::where('ot_id', $trabajo->id)->count('id');
+
+
+
+            if(($item_to == $item_te)&&($item_to > 0)){
+                $trabajo->estado = '4';
+                //$trabajo->fecha_termino = $fecha_termino;
+                $trabajo->save();
+            }
+
+            if(($item_to == $item_en)&&($item_to > 0)){
+                $trabajo->estado = '5';
+                
+                $trabajo->save();
+            }
+
+            //if(($item_ep > 0 )&&($item_te < $item_to)){
+            if(($item_ep > 0 && $item_ep < $item_to ) || ($item_te > 0  && $item_te < $item_to ) || ($item_en > 0  && $item_en < $item_to ) ){
+                $trabajo->estado = '2';
+                $trabajo->save();
+            }
+
+            if(($item_to == $item_si)||($item_to == 0)){
+
+                $trabajo->estado = '1';
+                $trabajo->save();
+
+            }
+
 
         return redirect()->route('admin.orden_trabajos.edit',$trabajo)->withFlashSuccess('Se ha eliminado el ítem');
     }
