@@ -250,6 +250,25 @@ Breadcrumbs::for('admin.etapa_itemots.index', function ($trail) {
     $trail->push('Procesos y tareas de Ordenes de Trabajo', route('admin.etapa_itemots.index'));
 });
 
+Breadcrumbs::for('admin.etapa_itemots.sin_iniciar', function ($trail) {
+    $trail->push('Procesos y tareas de Ordenes de Trabajo', route('admin.etapa_itemots.index'));
+    $trail->push('Sin iniciar', route('admin.etapa_itemots.sin_iniciar'));
+});
+
+Breadcrumbs::for('admin.etapa_itemots.en_proceso', function ($trail) {
+    $trail->push('Procesos y tareas de Ordenes de Trabajo', route('admin.etapa_itemots.index'));
+    $trail->push('En Proceso', route('admin.etapa_itemots.en_proceso'));
+});
+
+Breadcrumbs::for('admin.etapa_itemots.atrasadas', function ($trail) {
+    $trail->push('Procesos y tareas de Ordenes de Trabajo', route('admin.etapa_itemots.index'));
+    $trail->push('Atrasadas', route('admin.etapa_itemots.atrasadas'));
+});
+
+Breadcrumbs::for('admin.etapa_itemots.terminadas', function ($trail) {
+    $trail->push('Procesos y tareas de Ordenes de Trabajo', route('admin.etapa_itemots.index'));
+    $trail->push('Terminadas', route('admin.etapa_itemots.terminadas'));
+});
 
 
 Breadcrumbs::for('admin.materiales.index', function ($trail) {

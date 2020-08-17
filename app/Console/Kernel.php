@@ -34,7 +34,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
-        $schedule->command('schedule:vencida')->everyMinute();
+        $schedule->command('schedule:vencida')->everyMinute();//cotizacion
         $schedule->command('schedule:etapaotatrasada')->everyMinute();
         $schedule->command('schedule:updateestadomaquina')->everyMinute();
 

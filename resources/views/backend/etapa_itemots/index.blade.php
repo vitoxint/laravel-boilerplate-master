@@ -17,7 +17,8 @@
             </div><!--col-->
 
             <div class="col-sm-7">
-            
+
+                @include('backend.etapa_itemots.includes.header-buttons')
             </div><!--col-->
         </div><!--row-->
         
@@ -26,11 +27,11 @@
                         <div class="form-group row has-search">
                         
                            <div class="col-md-8">
-                                <a href="{{ route('admin.orden_trabajos.index') }}">  <span class="badge btn-default" style="border-radius:10px; border: 1px solid black;"><p style="color:black; margin:2px; font-size:12px;"> Todas : {{$et_count}} </p></span> </a>
-                                <a href="{{ route('admin.orden_trabajos.sin_iniciar') }}">  <span class="badge btn-secondary" style="border-radius:10px; "><p style="  color:white; margin:2px; font-size:12px;"> Sin Iniciar : {{$count_si}} </p></span> </a>
-                                <a href="{{ route('admin.orden_trabajos.en_proceso') }}">  <span class="badge btn-primary" style="border-radius:10px; "><p style="  color:white; margin:2px; font-size:12px;"> En Proceso : {{$count_ep}} </p></span> </a>
-                                <a href="{{ route('admin.orden_trabajos.atrasadas') }}">  <span class="badge btn-danger" style="border-radius:10px; "><p style="  color:white; margin:2px; font-size:12px;"> Atrasada : {{$count_at}} </p></span> </a>
-                                <a href="{{ route('admin.orden_trabajos.terminadas') }}">  <span class="badge btn-success" style="border-radius:10px; "><p style="  color:white; margin:2px; font-size:12px;"> Terminada : {{$count_te}} </p></span> </a>
+                                <a href="{{ route('admin.etapa_itemots.index') }}">  <span class="badge btn-default" style="border-radius:10px; border: 1px solid black;"><p style="color:black; margin:2px; font-size:12px;"> Todas : {{$et_count}} </p></span> </a>
+                                <a href="{{ route('admin.etapa_itemots.sin_iniciar') }}">  <span class="badge btn-secondary" style="border-radius:10px; "><p style="  color:white; margin:2px; font-size:12px;"> Sin Iniciar : {{$count_si}} </p></span> </a>
+                                <a href="{{ route('admin.etapa_itemots.en_proceso') }}">  <span class="badge btn-primary" style="border-radius:10px; "><p style="  color:white; margin:2px; font-size:12px;"> En Proceso : {{$count_ep}} </p></span> </a>
+                                <a href="{{ route('admin.etapa_itemots.atrasadas') }}">  <span class="badge btn-danger" style="border-radius:10px; "><p style="  color:white; margin:2px; font-size:12px;"> Atrasada : {{$count_at}} </p></span> </a>
+                                <a href="{{ route('admin.etapa_itemots.terminadas') }}">  <span class="badge btn-success" style="border-radius:10px; "><p style="  color:white; margin:2px; font-size:12px;"> Terminada : {{$count_te}} </p></span> </a>
                                
                            </div><!--col-->
                         </div><!--row-->
@@ -75,7 +76,7 @@
                             <tr data-toggle="collapse" data-target="#data{{$etapaItemOt->id}}" class="accordion-toggle">
 
                                 <td data-title="Folio:">  {{ $etapaItemOt->codigo }}            </td>
-                                <td data-title="Item:">   {{ $etapaItemOt->itemOt->folio }}    </td>
+                                <td data-title="Item:">    <a href="{{route('admin.item_ots.editTaller', [$etapaItemOt->itemOt ,$etapaItemOt->itemOt->ordenTrabajo ])}}"> {{ $etapaItemOt->itemOt->folio }} </a>    </td>
                                 <td data-title="Proceso:">{{ $etapaItemOt->proceso->descripcion}}    </td>
                                 <td data-title="Máquinar:"> {{ $etapaItemOt->maquina->nombre }} </td>                               
                                     <!-- <td>avance</td> -->
@@ -133,8 +134,18 @@
                                 <td colspan="8" class="hiddenRow">
                                     <div class="accordian-body collapse p-1" id="data{{$etapaItemOt->id}}">
 
+                                    <?php $flimite= new Carbon\Carbon($etapaItemOt->fh_limite);
+                                    $flimite = $flimite->format('d-m-Y h:i'); ?>
+                                     <?php $finicio= new Carbon\Carbon($etapaItemOt->fh_inicio);
+                                    $finicio = $finicio->format('d-m-Y h:i'); ?>
+                                     <?php $ftermino= new Carbon\Carbon($etapaItemOt->fh_termino);
+                                    $ftermino = $ftermino->format('d-m-Y h:i'); ?>
 
-
+                                    <p><b>Ítem :         </b> {{$etapaItemOt->itemOt->descripcion}}</p>
+                                    <p><b>Detalle :      </b> {{$etapaItemOt->detalle}}</p>
+                                    <p><b>Hora inicio :  </b> {{$finicio}}             </p>
+                                    <p><b>Hora termino : </b> {{$ftermino}}            </p>
+                                    <p><b>Plazo termino :</b> {{$flimite}}             </p>
 
 
 

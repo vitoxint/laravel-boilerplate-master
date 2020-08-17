@@ -60,8 +60,14 @@ class UpdateOtAtrasada extends Command
                 $items = $ordenTrabajo->item_ots;
 
                 foreach($items as $item ){
-                    $item->estado = 3;
-                    $item->save();
+
+                    if(($item->estado == '1')||($item->estado == '2')){
+                        $item->update([
+                            'estado' => '3',
+                        ]);
+
+                    }
+
 
                 }
 

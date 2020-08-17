@@ -60,40 +60,40 @@ class EtapaItemOtRepository extends BaseRepository
             ->whereBetween('estado', ['1', '4'])
             ->orderBy($orderBy, $sort)
             ->paginate($paged);
-    }
+    }*/
 
-    public function getSinIniciarPaginated($paged = 25, $orderBy = 'entrega_estimada', $sort = 'asc'): LengthAwarePaginator
+    public function getSinIniciarPaginated($paged = 25, $orderBy = 'fh_limite', $sort = 'asc'): LengthAwarePaginator
     {
         return $this->model
-            ->where('estado', 1)
+            ->where('estado_avance', 1)
             ->orderBy($orderBy, $sort)
             ->paginate($paged);
     }
 
-    public function getEnProcesoPaginated($paged = 25, $orderBy = 'entrega_estimada', $sort = 'asc'): LengthAwarePaginator
+    public function getEnProcesoPaginated($paged = 25, $orderBy = 'fh_limite', $sort = 'asc'): LengthAwarePaginator
     {
         return $this->model
-            ->where('estado',2)
+            ->where('estado_avance',2)
             ->orderBy($orderBy, $sort)
             ->paginate($paged);
     }
 
-    public function getAtrasadasPaginated($paged = 25, $orderBy = 'entrega_estimada', $sort = 'asc'): LengthAwarePaginator
+    public function getAtrasadaPaginated($paged = 25, $orderBy = 'fh_limite', $sort = 'asc'): LengthAwarePaginator
     {
         return $this->model
-            ->where('estado',3)
+            ->where('estado_avance',3)
             ->orderBy($orderBy, $sort)
             ->paginate($paged);
     }
 
-    public function getTerminadasPaginated($paged = 25, $orderBy = 'fecha_termino', $sort = 'asc'): LengthAwarePaginator
+    public function getTerminadaPaginated($paged = 25, $orderBy = 'fh_limite', $sort = 'asc'): LengthAwarePaginator
     {
         return $this->model
-            ->where('estado', 4)
+            ->where('estado_avance', 4)
             ->orderBy($orderBy, $sort)
             ->paginate($paged);
     }
-
+/*
     public function getProximasEntregasPaginated($paged = 25, $orderBy = 'entrega_estimada', $sort = 'ASC' , $dias): LengthAwarePaginator
     {
         $fecha = Carbon::now()->addDay($dias)->format('Y-m-d');

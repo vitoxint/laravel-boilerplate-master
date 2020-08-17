@@ -14,6 +14,9 @@ use DB;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Repositories\Backend\Model\EtapaItemOtRepository;
 
+use App\Exports\EtapaItemOtExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 class EtapaItemOtController extends Controller
 {
  
@@ -41,6 +44,90 @@ class EtapaItemOtController extends Controller
                                                                                                          'count_at'=> $count_at,
                                                                                                          'count_te'=> $count_te
                                                                                                           ]);
+    }
+
+    public function sin_iniciar()
+    {
+        $et_count = EtapaItemOt::get()->count('id');
+        $count_si = EtapaItemOt::where('estado_avance',1)->get()->count('id');
+        $count_ep = EtapaItemOt::where('estado_avance',2)->get()->count('id');
+        $count_at = EtapaItemOt::where('estado_avance',3)->get()->count('id');
+        $count_te = EtapaItemOt::where('estado_avance',4)->get()->count('id');
+       
+
+        return view('backend.etapa_itemots.index')
+        ->withEtapaOts($this->etapaItemOtRepository->getSinIniciarPaginated(50, 'fh_limite', 'asc'))->with( 
+                                                                                                        ['et_count'=> $et_count, 
+                                                                                                         'count_si'=> $count_si,
+                                                                                                         'count_ep'=> $count_ep,
+                                                                                                         'count_at'=> $count_at,
+                                                                                                         'count_te'=> $count_te
+                                                                                                          ]);
+    }
+
+    public function en_proceso()
+    {
+
+        $et_count = EtapaItemOt::get()->count('id');
+        $count_si = EtapaItemOt::where('estado_avance',1)->get()->count('id');
+        $count_ep = EtapaItemOt::where('estado_avance',2)->get()->count('id');
+        $count_at = EtapaItemOt::where('estado_avance',3)->get()->count('id');
+        $count_te = EtapaItemOt::where('estado_avance',4)->get()->count('id');
+       
+
+        return view('backend.etapa_itemots.index')
+        ->withEtapaOts($this->etapaItemOtRepository->getEnProcesoPaginated(50, 'fh_limite', 'asc'))->with( 
+                                                                                                        ['et_count'=> $et_count, 
+                                                                                                         'count_si'=> $count_si,
+                                                                                                         'count_ep'=> $count_ep,
+                                                                                                         'count_at'=> $count_at,
+                                                                                                         'count_te'=> $count_te
+                                                                                                          ]);
+    }
+
+    public function atrasadas()
+    {
+        $et_count = EtapaItemOt::get()->count('id');
+        $count_si = EtapaItemOt::where('estado_avance',1)->get()->count('id');
+        $count_ep = EtapaItemOt::where('estado_avance',2)->get()->count('id');
+        $count_at = EtapaItemOt::where('estado_avance',3)->get()->count('id');
+        $count_te = EtapaItemOt::where('estado_avance',4)->get()->count('id');
+       
+
+        return view('backend.etapa_itemots.index')
+        ->withEtapaOts($this->etapaItemOtRepository->getAtrasadaPaginated(50, 'fh_limite', 'asc'))->with( 
+                                                                                                        ['et_count'=> $et_count, 
+                                                                                                         'count_si'=> $count_si,
+                                                                                                         'count_ep'=> $count_ep,
+                                                                                                         'count_at'=> $count_at,
+                                                                                                         'count_te'=> $count_te
+                                                                                                          ]);
+    }
+
+    public function terminadas()
+    {
+        $et_count = EtapaItemOt::get()->count('id');
+        $count_si = EtapaItemOt::where('estado_avance',1)->get()->count('id');
+        $count_ep = EtapaItemOt::where('estado_avance',2)->get()->count('id');
+        $count_at = EtapaItemOt::where('estado_avance',3)->get()->count('id');
+        $count_te = EtapaItemOt::where('estado_avance',4)->get()->count('id');
+       
+
+        return view('backend.etapa_itemots.index')
+        ->withEtapaOts($this->etapaItemOtRepository->getTerminadaPaginated(50, 'fh_limite', 'asc'))->with( 
+                                                                                                        ['et_count'=> $et_count, 
+                                                                                                         'count_si'=> $count_si,
+                                                                                                         'count_ep'=> $count_ep,
+                                                                                                         'count_at'=> $count_at,
+                                                                                                         'count_te'=> $count_te
+                                                                                                          ]);
+    }
+
+
+    public function exportarxls(){
+
+        return Excel::download(new EtapaItemOtExport, 'procesosTrabajos.xlsx');
+
     }
 
     /**
@@ -624,7 +711,7 @@ class EtapaItemOtController extends Controller
         $item_ot = $aux->itemOt;
         $trabajo = $item_ot->ordenTrabajo;
 
-        if($etapaItemOt->estado_avance == 1){
+        if(($etapaItemOt->estado_avance == 1)||($etapaItemOt->estado_avance == 1)){
 
             $etapaItemOt->delete();
 

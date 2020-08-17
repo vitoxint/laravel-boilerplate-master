@@ -279,6 +279,8 @@ Route::group(['namespace' => 'EtapaItemOt'], function () {
        Route::get('etapa_itemots/{item_ot}', [EtapaItemOtController::class, 'create'])->name('etapa_itemots.create');
        Route::post('etapa_itemots/{item_ot}', [EtapaItemOtController::class, 'store'])->name('etapa_itemots.store');
 
+       Route::get('etapa-exportarxls', [EtapaItemOtController::class, 'exportarxls'])->name('etapa_itemots.exportarxls');
+
         Route::group(['prefix' => 'etapa_itemots/{etapaItemOt}'], function () {
            Route::get('edit', [EtapaItemOtController::class, 'edit'])->name('etapa_itemots.edit');
            Route::patch('/', [EtapaItemOtController::class, 'update'])->name('etapa_itemots.update');
@@ -290,6 +292,13 @@ Route::group(['namespace' => 'EtapaItemOt'], function () {
            Route::get('comenzar_taller', [EtapaItemOtController::class, 'comenzarTaller'])->name('etapa_itemots.comenzarTaller');
            Route::get('terminar_taller', [EtapaItemOtController::class, 'terminarTaller'])->name('etapa_itemots.terminarTaller');
        }); 
+
+       Route::get('etapa_itemots-sin_iniciar', [EtapaItemOtController::class, 'sin_iniciar'])->name('etapa_itemots.sin_iniciar');
+       Route::get('etapa_itemots-en_proceso', [EtapaItemOtController::class, 'en_proceso'])->name('etapa_itemots.en_proceso');
+       Route::get('etapa_itemots-atrasadas', [EtapaItemOtController::class, 'atrasadas'])->name('etapa_itemots.atrasadas');
+       Route::get('etapa_itemots-terminadas', [EtapaItemOtController::class, 'terminadas'])->name('etapa_itemots.terminadas');
+
+
    });
 
 
