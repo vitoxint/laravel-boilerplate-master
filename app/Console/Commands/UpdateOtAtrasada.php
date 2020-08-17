@@ -47,7 +47,7 @@ class UpdateOtAtrasada extends Command
         //$hoy = $hoy->addDays(1);
 
         //$sts = ['1','2'];
-        $ordenTrabajos = OrdenTrabajo::whereIn('estado',['1','2'])->get();
+        $ordenTrabajos = OrdenTrabajo::whereIn('estado',['1','2','3'])->get();
 
         foreach($ordenTrabajos as $ordenTrabajo){
 

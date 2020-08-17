@@ -669,9 +669,23 @@ class OrdenTrabajoController extends Controller
         $estado_nuevo = $trabajo->estado;
 
         $estado_ant = $trabajo->estado;
+
         if(($estado_ant == '3')&&($entrega_estimada >= $hoy )){
             if($trabajo->fecha_inicio){
                 $estado_nuevo = '2';
+                
+                    foreach($trabajo->items_ot as $it){
+                        if(($it->estado == '3')&&($it->fecha_inicio)){
+                            $it->estado = '2';
+                            $it->save();
+                        }
+                        if(($it->estado == '3')&&($it->fecha_inicio == NULL)){
+                            $it->estado = '1';
+                            $it->save();
+                        }
+                    }
+
+
             }else{
                 $estado_nuevo = '1';
             }
