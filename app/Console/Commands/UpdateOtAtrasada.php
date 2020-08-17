@@ -58,7 +58,7 @@ class UpdateOtAtrasada extends Command
                 $ordenTrabajo->estado = '3';
                 $ordenTrabajo->save();
 
-                $items = $ordenTrabajo->item_ots;
+                $items = $ordenTrabajo->items_ot;
 
                 foreach($items as $item ){
 
