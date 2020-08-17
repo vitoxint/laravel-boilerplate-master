@@ -486,7 +486,7 @@
                         </h4>
                     </div><!--col-->
                     <div class="col-sm-7">
-                        @include('backend.etapa_itemots.includes.header-buttons')
+                        @include('backend.etapa_itemots.includes.header-buttonsItem')
                     </div><!--col-->
                 </div><!--row-->
 

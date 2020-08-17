@@ -46,7 +46,8 @@ class UpdateOtAtrasada extends Command
         $hoy = Carbon::now();
         //$hoy = $hoy->addDays(1);
 
-        $ordenTrabajos = OrdenTrabajo::where('estado','=','1')->orwhere('estado','=','2')->orwhere('estado','=','3')->get();
+        //$sts = ['1','2'];
+        $ordenTrabajos = OrdenTrabajo::whereIn('estado',['1','2'])->get();
 
         foreach($ordenTrabajos as $ordenTrabajo){
 
@@ -61,14 +62,12 @@ class UpdateOtAtrasada extends Command
 
                 foreach($items as $item ){
 
-                    if(($item->estado == '1')||($item->estado == '2')){
+                    if(($item->estado != '4')&&($item->estado != '5')){
                         $item->update([
                             'estado' => '3',
                         ]);
 
                     }
-
-
                 }
 
 
