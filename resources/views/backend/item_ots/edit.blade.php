@@ -136,7 +136,7 @@
                                         <span class="badge btn-dark" style="border-radius:12px;"><p style="margin:4px; font-size:16px;"> Entregada </p>  </span>
                                     @break;
                                     @case ('6') 
-                                        <span class="badge btn-warning" style="border-radius:12px;"><p style="margin:4px; font-size:16px;"> Anulada </p> </span>
+                                        <span class="badge btn-warning" style="border-radius:12px;"><p style="margin:4px; color:white; font-size:16px;"> En Pausa </p> </span>
                                     @break;
 
                                     @default
@@ -522,7 +522,7 @@
                                         <td data-title="Maquina:">{{ $etapaItemOt->maquina->codigo }}</td>
                                         <!-- <td data-title="Operador:"></td> -->
                                                 <?php $flimite= new Carbon\Carbon($etapaItemOt->fh_limite);
-                                                    $flimite = $flimite->format('d-m-Y h:i'); ?>
+                                                    $flimite = $flimite->format('d-m-Y H:i'); ?>
                                         <td date-title="Hora planificada">{{$flimite}}</td>
                                         <td date-tittle="Cantidad/Tiempo">
                                         @switch($etapaItemOt->proceso->tipo_valorizacion)
@@ -540,7 +540,7 @@
                                         </td>
 
                                                 <?php $finicio= new Carbon\Carbon($etapaItemOt->fh_inicio);
-                                                    $finicio = $finicio->format('d-m-Y h:i'); ?>
+                                                    $finicio = $finicio->format('d-m-Y H:i'); ?>
                                         <!-- <td data-title="Hora Inicio">{{$finicio}}</td> -->
                                         <td data-title="Valor proceso" style="text-align:right;">@money($etapaItemOt->valor_proceso)</th>
                                         <td data-title="Estado" style="text-align:center;">
@@ -557,11 +557,9 @@
                                             @case ('4') 
                                                 <span class="badge btn-success" style="border-radius:10px;"> <p style="color:white; margin:3px; font-size:12px;"> Terminada </p></span>
                                             @break;
+                                
                                             @case ('5') 
-                                                <span class="badge btn-dark" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Detenida </p></span>
-                                            @break;
-                                            @case ('6') 
-                                                <span class="badge btn-warning" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Anulada </p></span>
+                                                <span class="badge btn-warning" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> En Pausa </p></span>
                                             @break;
 
                                             @default
@@ -569,8 +567,8 @@
                                             @break;                     
                                             @endSwitch 
                                         </td>
-                                         <!--        <?php $ftermino= new Carbon\Carbon($etapaItemOt->fh_termino);
-                                                      $ftermino = $ftermino->format('d-m-Y h:i'); ?>                                       
+                                         <!-- <?php $ftermino= new Carbon\Carbon($etapaItemOt->fh_termino);
+                                                    $ftermino = $ftermino->format('d-m-Y H:i'); ?>                                       
                                         <td data-title="Hora Termino">{{$ftermino}}</td> -->
 
                                         <td data-title="Acciones" class="btn-td">@include('backend.etapa_itemots.includes.actions', ['etapaItemOt' => $etapaItemOt])</td>

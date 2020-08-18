@@ -43,25 +43,26 @@ class UpdateEstadoMaquina extends Command
 
         foreach($maquinas as $maquina){
 
-            $count = 0;
-            foreach($maquina->etapaItemOt as $proceso){
-                if($proceso->estado_avance == 2 || $proceso->estado_avance == 3 ){
-                    $count++;
+                $count = 0;
+                foreach($maquina->etapaItemOt as $proceso){
+                    if($proceso->estado_avance == 2 || $proceso->estado_avance == 3 ){
+                        $count++;
+                    }
+                }
+
+                if($count >= 1 ){
+                    $maquina->update([
+                        'estado' => '3',
+                    ]); 
+                    
+                }else{
+                    if($maquina->estado != '2' || $maquina->estado != '4'){
+                        $maquina->update([
+                        'estado' => '1',
+                    ]); 
                 }
             }
-            if($count >= 1 ){
-                $maquina->update([
-                    'estado' => '3',
-                ]); 
-                
-            }else{
-                if($maquina->estado != '2' || $maquina->estado != '4'){
-                    $maquina->update([
-                    'estado' => '1',
-                ]); 
-            }
         }
-    }
         
     }
 }

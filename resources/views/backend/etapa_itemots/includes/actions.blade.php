@@ -7,11 +7,18 @@
         </a>
     @endif
 
+    @if($etapaItemOt->estado_avance == 2 || $etapaItemOt->estado_avance == 5)
+        <a href="{{ route('admin.etapa_itemots.pausar', $etapaItemOt) }}" class="btn btn-warning" data-toggle="tooltip" style="color:white;" data-placement="top" title="Pausar/Reanudar">
+            <i class="fas fa-pause"></i> 
+        </a>
+    @endif   
+
     @if($etapaItemOt->estado_avance == 2 || $etapaItemOt->estado_avance == 3)
         <a href="{{ route('admin.etapa_itemots.terminar', $etapaItemOt) }}" class="btn btn-success" data-toggle="tooltip" data-placement="top" title="Terminar">
             <i class="fas fa-check"></i> 
         </a>
     @endif
+
 
         <a href="{{ route('admin.etapa_itemots.edit', $etapaItemOt) }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="@lang('buttons.general.crud.edit')">
             <i class="fas fa-edit"></i>

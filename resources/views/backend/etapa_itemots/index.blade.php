@@ -37,7 +37,7 @@
                         </div><!--row-->
                        
                    </div>
-</div>
+                </div>
         
 
         <div class="row">
@@ -78,10 +78,10 @@
                                 <td data-title="Folio:">  {{ $etapaItemOt->codigo }}            </td>
                                 <td data-title="Item:">    <a href="{{route('admin.item_ots.editTaller', [$etapaItemOt->itemOt ,$etapaItemOt->itemOt->ordenTrabajo ])}}"> {{ $etapaItemOt->itemOt->folio }} </a>    </td>
                                 <td data-title="Proceso:">{{ $etapaItemOt->proceso->descripcion}}    </td>
-                                <td data-title="Máquinar:"> {{ $etapaItemOt->maquina->nombre }} </td>                               
+                                <td data-title="Máquina:"> {{ $etapaItemOt->maquina->nombre }} </td>                               
                                     <!-- <td>avance</td> -->
                                     <?php $flimite= new Carbon\Carbon($etapaItemOt->fh_limite);
-                                    $flimite = $flimite->format('d-m-Y h:i'); ?>
+                                    $flimite = $flimite->format('d-m-Y H:i'); ?>
                                 <td date-title="Plazo termino">{{$flimite}}</td>
 
                                 <td date-tittle="Recurso proceso">
@@ -135,22 +135,21 @@
                                     <div class="accordian-body collapse p-1" id="data{{$etapaItemOt->id}}">
 
                                     <?php $flimite= new Carbon\Carbon($etapaItemOt->fh_limite);
-                                    $flimite = $flimite->format('d-m-Y h:i'); ?>
+                                    $flimite = $flimite->format('d-m-Y H:i'); ?>
                                      <?php $finicio= new Carbon\Carbon($etapaItemOt->fh_inicio);
-                                    $finicio = $finicio->format('d-m-Y h:i'); ?>
+                                    $finicio = $finicio->format('d-m-Y H:i'); ?>
                                      <?php $ftermino= new Carbon\Carbon($etapaItemOt->fh_termino);
-                                    $ftermino = $ftermino->format('d-m-Y h:i'); ?>
+                                    $ftermino = $ftermino->format('d-m-Y H:i'); ?>
+                                    <?php $fentrega= new Carbon\Carbon($etapaItemOt->itemOt->ordenTrabajo->entrega_estimada);
+                                    $fentrega = $fentrega->format('d-m-Y'); ?>                                    
 
+                                    <p><b>Cliente :      </b> {{$etapaItemOt->itemOt->ordenTrabajo->cliente->razon_social}}</p>                                   
                                     <p><b>Ítem :         </b> {{$etapaItemOt->itemOt->descripcion}}</p>
+                                    <p><b>Fecha de entrega :  </b> {{$fentrega}}       </p>
                                     <p><b>Detalle :      </b> {{$etapaItemOt->detalle}}</p>
                                     <p><b>Hora inicio :  </b> {{$finicio}}             </p>
                                     <p><b>Hora termino : </b> {{$ftermino}}            </p>
                                     <p><b>Plazo termino :</b> {{$flimite}}             </p>
-
-
-
-
-
 
                                     </div>  
                                 </td> 

@@ -85,7 +85,7 @@
                                                 <span class="badge btn-dark" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Entregada </p></span>
                                             @break;
                                             @case ('6') 
-                                                <span class="badge btn-warning" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Anulada </p></span>
+                                                <span class="badge btn-warning" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> En Pausa </p></span>
                                             @break;
 
                                             @default
@@ -150,23 +150,21 @@
 
                                                         <td data-title="Estado" style="text-align:center;">
                                                             @switch($etapaItemOt->estado_avance) 
-                                                            @case ('1') 
+                                                            @case (1) 
                                                             <span class="badge btn-secondary" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Sin Iniciar </p></span>
                                                             @break;
-                                                            @case ('2') 
+                                                            @case (2) 
                                                                 <span class="badge btn-primary" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> En Proceso </p></span>
                                                             @break;
-                                                            @case ('3')
+                                                            @case (3)
                                                                 <span class="badge btn-danger" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Atrasada </p></span>
                                                             @break;
-                                                            @case ('4') 
+                                                            @case (4) 
                                                                 <span class="badge btn-success" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Terminada </p> </span>
                                                             @break;
-                                                            @case ('5') 
-                                                                <span class="badge btn-dark" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Detenida </p></span>
-                                                            @break;
-                                                            @case ('6') 
-                                                                <span class="badge btn-warning" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Anulada </p></span>
+                                                         
+                                                            @case (5) 
+                                                                <span class="badge btn-warning" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> En Pausa </p></span>
                                                             @break;
 
                                                             @default

@@ -7,6 +7,7 @@ use App\EtapaItemOt;
 use App\Proceso;
 use App\OrdenTrabajo;
 use App\ItemOt;
+use App\Maquina;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use DB;
@@ -325,8 +326,281 @@ class EtapaItemOtController extends Controller
             
         } 
 
+        //MAQUINA
+
+        $maquinas = Maquina::all();
+
+        foreach($maquinas as $maquina){
+
+                $count = 0;
+                foreach($maquina->etapaItemOt as $proceso){
+                    if($proceso->estado_avance == 2 || $proceso->estado_avance == 3 ){
+                        $count++;
+                    }
+                }
+
+                if($count >= 1 ){
+                    $maquina->update([
+                        'estado' => '3',
+                    ]); 
+                    
+                }else{
+                    if($maquina->estado != '2' || $maquina->estado != '4'){
+                        $maquina->update([
+                        'estado' => '1',
+                    ]); 
+                }
+            }
+        }
+
         return redirect()->route('admin.item_ots.edit',[$item_ot, $item_ot->ordenTrabajo])->withFlashSuccess(__('Proceso actualizado'));       
     }
+
+
+
+    public function pausar(EtapaItemOt $etapaItemOt){
+ 
+        $estado_proceso_nuevo = 5;
+        $estado_proceso_anterior = $etapaItemOt->estado_avance;
+
+        $item_ot = $etapaItemOt->itemOt;
+        $estado_item_anterior = $item_ot->estado;
+        $trabajo = $item_ot->ordenTrabajo;
+
+/*         if($estado_proceso_nuevo == 2 && $etapaItemOt->estado_avance == 1){
+                $fecha_inicio = Carbon::now();
+                $fecha_inicio = $fecha_inicio->format('Y-m-d H:i:s'); 
+        }else{
+               $fecha_inicio = $etapaItemOt->fh_inicio;
+        } */
+
+        switch($estado_proceso_anterior){
+
+            case 2:
+                $etapaItemOt->update([
+                    'estado_avance' => 5,
+                    //'fh_inicio' => $fecha_inicio,                          
+                ]);
+
+            break;
+
+            case 5:
+                $etapaItemOt->update([
+                    'estado_avance' => 2,
+                    //'fh_inicio' => $fecha_inicio,                          
+                ]);
+            break;
+            default:
+
+            break;      
+        }
+
+        //ITEM
+        $si = EtapaItemOt::where('itemot_id', $item_ot->id)->where('estado_avance' , 1)->count('id');
+        $ep = EtapaItemOt::where('itemot_id', $item_ot->id)->where('estado_avance' , 2)->count('id');
+        $te = EtapaItemOt::where('itemot_id', $item_ot->id)->where('estado_avance', 4)->count('id');
+        $de = EtapaItemOt::where('itemot_id', $item_ot->id)->where('estado_avance', 5)->count('id');
+        $to = EtapaItemOt::where('itemot_id', $item_ot->id)->count('id');
+
+        $fecha_termino = Carbon::now();
+        $fecha_termino = $fecha_termino->format('Y-m-d');
+
+        if(($to == $te)&&($to > 0)){
+            $item_ot->estado = '4';
+            $item_ot->fecha_termino = $fecha_termino;
+            $item_ot->save();
+        }
+
+        if(($ep > 0 )&&($te < $to)&&($de != $to)){
+            $item_ot->estado = '2';
+            $item_ot->save();
+        }
+
+        if(($de > 0)&&($to > 0)&&($ep == 0)){
+            $item_ot->estado = '6';
+           
+            $item_ot->save();
+        }
+
+        if(($to == $si)||($to == 0)){
+
+            $item_ot->estado = '1';
+            $item_ot->save();
+
+        }
+
+
+       
+
+/*         // CONSULTAS DE ACTUALIZACION DE ESTADOS SUPERIORES CASO ITEM OT
+/* 
+        if (EtapaItemOt::where('estado_avance', '=', 2)->where('itemot_id', '=', $item_ot->id)->exists()) {
+            $update1 = DB::table('item_ots')
+              ->where('id', '=', $item_ot->id)
+              ->update([
+                  'estado' =>  '2',
+                  ]);
+
+            if($estado_item_anterior == 1){
+                $update1 = DB::table('item_ots')
+                   ->where('id', '=', $item_ot->id)
+                   ->update([
+                       'fecha_inicio' =>  $fecha_inicio,
+                       ]);                
+            }           
+         } */ 
+
+        // CONSULTAS DE ACTUALIZACION DE ESTADOS SUPERIORES CASO ORDEN TRABAJO
+
+/*         $estado_ot_anterior = $item_ot->ordenTrabajo->estado;
+
+        if (ItemOt::where('estado', '=', '2')->where('ot_id', '=', $item_ot->ordenTrabajo->id)->exists()) {
+            $update1 = DB::table('orden_trabajos')
+            ->where('id', '=', $item_ot->ordenTrabajo->id)
+            ->update([
+                'estado' =>  '2',
+                ]);
+
+            if($estado_ot_anterior == 1){
+                $update1 = DB::table('orden_trabajos')
+                ->where('id', '=', $item_ot->ordenTrabajo->id)
+                ->update([
+                    'fecha_inicio' =>  $fecha_inicio,
+                    ]);                
+            }
+            
+        }  */
+
+        //MAQUINA
+
+        $maquinas = Maquina::all();
+
+        foreach($maquinas as $maquina){
+
+                $count = 0;
+                foreach($maquina->etapaItemOt as $proceso){
+                    if($proceso->estado_avance == 2 || $proceso->estado_avance == 3 ){
+                        $count++;
+                    }
+                }
+
+                if($count >= 1 ){
+                    $maquina->update([
+                        'estado' => '3',
+                    ]); 
+                    
+                }else{
+                    if($maquina->estado != '2' || $maquina->estado != '4'){
+                        $maquina->update([
+                        'estado' => '1',
+                    ]); 
+                }
+            }
+        }
+
+        return redirect()->route('admin.item_ots.edit',[$item_ot, $item_ot->ordenTrabajo])->withFlashSuccess(__('Proceso actualizado'));       
+    }
+
+
+
+    public function pausarTaller(EtapaItemOt $etapaItemOt){
+ 
+        $estado_proceso_nuevo = 5;
+        $estado_proceso_anterior = $etapaItemOt->estado_avance;
+
+        $item_ot = $etapaItemOt->itemOt;
+        $estado_item_anterior = $item_ot->estado;
+        $trabajo = $item_ot->ordenTrabajo;
+
+
+
+        switch($estado_proceso_anterior){
+
+            case 2:
+                $etapaItemOt->update([
+                    'estado_avance' => 5,
+                    //'fh_inicio' => $fecha_inicio,                          
+                ]);
+
+            break;
+
+            case 5:
+                $etapaItemOt->update([
+                    'estado_avance' => 2,
+                    //'fh_inicio' => $fecha_inicio,                          
+                ]);
+            break;
+            default:
+
+            break;      
+        }
+
+        //ITEM
+        $si = EtapaItemOt::where('itemot_id', $item_ot->id)->where('estado_avance' , 1)->count('id');
+        $ep = EtapaItemOt::where('itemot_id', $item_ot->id)->where('estado_avance' , 2)->count('id');
+        $te = EtapaItemOt::where('itemot_id', $item_ot->id)->where('estado_avance', 4)->count('id');
+        $de = EtapaItemOt::where('itemot_id', $item_ot->id)->where('estado_avance', 5)->count('id');
+        $to = EtapaItemOt::where('itemot_id', $item_ot->id)->count('id');
+
+        $fecha_termino = Carbon::now();
+        $fecha_termino = $fecha_termino->format('Y-m-d');
+
+        if(($to == $te)&&($to > 0)){
+            $item_ot->estado = '4';
+            $item_ot->fecha_termino = $fecha_termino;
+            $item_ot->save();
+        }
+
+        if(($ep > 0 )&&($te < $to)&&($de != $to)){
+            $item_ot->estado = '2';
+            $item_ot->save();
+        }
+
+        if(($de > 0)&&($to > 0)&&($ep == 0)){
+            $item_ot->estado = '6';
+           
+            $item_ot->save();
+        }
+
+        if(($to == $si)||($to == 0)){
+
+            $item_ot->estado = '1';
+            $item_ot->save();
+
+        }
+
+
+        //MAQUINA
+
+        $maquinas = Maquina::all();
+
+        foreach($maquinas as $maquina){
+
+                $count = 0;
+                foreach($maquina->etapaItemOt as $proceso){
+                    if($proceso->estado_avance == 2 || $proceso->estado_avance == 3 ){
+                        $count++;
+                    }
+                }
+
+                if($count >= 1 ){
+                    $maquina->update([
+                        'estado' => '3',
+                    ]); 
+                    
+                }else{
+                    if($maquina->estado != '2' || $maquina->estado != '4'){
+                        $maquina->update([
+                        'estado' => '1',
+                    ]); 
+                }
+            }
+        }
+
+        return redirect()->route('admin.item_ots.editTaller',[$item_ot, $item_ot->ordenTrabajo])->withFlashSuccess(__('Proceso actualizado'));        
+    }
+
+
 
   
     public function terminar(EtapaItemOt $etapaItemOt){
@@ -393,6 +667,34 @@ class EtapaItemOtController extends Controller
             }
             
         } 
+
+
+        //MAQUINA
+
+        $maquinas = Maquina::all();
+
+        foreach($maquinas as $maquina){
+
+                $count = 0;
+                foreach($maquina->etapaItemOt as $proceso){
+                    if($proceso->estado_avance == 2 || $proceso->estado_avance == 3 ){
+                        $count++;
+                    }
+                }
+
+                if($count >= 1 ){
+                    $maquina->update([
+                        'estado' => '3',
+                    ]); 
+                    
+                }else{
+                    if($maquina->estado != '2' || $maquina->estado != '4'){
+                        $maquina->update([
+                        'estado' => '1',
+                    ]); 
+                }
+            }
+        }
         return redirect()->route('admin.item_ots.edit',[$item_ot, $item_ot->ordenTrabajo])->withFlashSuccess(__('Proceso actualizado'));
 
 
@@ -462,6 +764,34 @@ class EtapaItemOtController extends Controller
             
         } 
 
+
+        //MAQUINA
+
+        $maquinas = Maquina::all();
+
+        foreach($maquinas as $maquina){
+
+                $count = 0;
+                foreach($maquina->etapaItemOt as $proceso){
+                    if($proceso->estado_avance == 2 || $proceso->estado_avance == 3 ){
+                        $count++;
+                    }
+                }
+
+                if($count >= 1 ){
+                    $maquina->update([
+                        'estado' => '3',
+                    ]); 
+                    
+                }else{
+                    if($maquina->estado != '2' || $maquina->estado != '4'){
+                        $maquina->update([
+                        'estado' => '1',
+                    ]); 
+                }
+            }
+        }
+
         return redirect()->route('admin.item_ots.editTaller',[$item_ot, $item_ot->ordenTrabajo])->withFlashSuccess(__('Proceso actualizado'));       
     }
 
@@ -526,6 +856,35 @@ class EtapaItemOtController extends Controller
             }
             
         } 
+
+
+        //MAQUINA
+
+        $maquinas = Maquina::all();
+
+        foreach($maquinas as $maquina){
+
+                $count = 0;
+                foreach($maquina->etapaItemOt as $proceso){
+                    if($proceso->estado_avance == 2 || $proceso->estado_avance == 3 ){
+                        $count++;
+                    }
+                }
+
+                if($count >= 1 ){
+                    $maquina->update([
+                        'estado' => '3',
+                    ]); 
+                    
+                }else{
+                    if($maquina->estado != '2' || $maquina->estado != '4'){
+                        $maquina->update([
+                        'estado' => '1',
+                    ]); 
+                }
+            }
+        }
+
         return redirect()->route('admin.item_ots.editTaller',[$item_ot, $item_ot->ordenTrabajo])->withFlashSuccess(__('Proceso actualizado'));
 
 
@@ -713,7 +1072,35 @@ class EtapaItemOtController extends Controller
 
             }
 
-            
+
+            //MAQUINA
+
+            $maquinas = Maquina::all();
+
+            foreach($maquinas as $maquina){
+    
+                    $count = 0;
+                    foreach($maquina->etapaItemOt as $proceso){
+                        if($proceso->estado_avance == 2 || $proceso->estado_avance == 3 ){
+                            $count++;
+                        }
+                    }
+    
+                    if($count >= 1 ){
+                        $maquina->update([
+                            'estado' => '3',
+                        ]); 
+                        
+                    }else{
+                        if($maquina->estado != '2' || $maquina->estado != '4'){
+                            $maquina->update([
+                            'estado' => '1',
+                        ]); 
+                    }
+                }
+            }
+
+
 
 
  
@@ -806,6 +1193,32 @@ class EtapaItemOtController extends Controller
                 $trabajo->estado = '1';
                 $trabajo->save();
 
+            }
+
+            //MAQUINA
+            $maquinas = Maquina::all();
+
+            foreach($maquinas as $maquina){
+    
+                    $count = 0;
+                    foreach($maquina->etapaItemOt as $proceso){
+                        if($proceso->estado_avance == 2 || $proceso->estado_avance == 3 ){
+                            $count++;
+                        }
+                    }
+    
+                    if($count >= 1 ){
+                        $maquina->update([
+                            'estado' => '3',
+                        ]); 
+                        
+                    }else{
+                        if($maquina->estado != '2' || $maquina->estado != '4'){
+                            $maquina->update([
+                            'estado' => '1',
+                        ]); 
+                    }
+                }
             }
 
             return redirect()->back()->withFlashSuccess('Se ha eliminado el proceso');

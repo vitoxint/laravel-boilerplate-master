@@ -9,6 +9,12 @@
         </a>
     @endif
 
+    @if($etapaItemOt->estado_avance == 2 || $etapaItemOt->estado_avance == 5)
+        <a href="{{ route('admin.etapa_itemots.pausarTaller', $etapaItemOt) }}" class="btn btn-warning" data-toggle="tooltip" style="color:white;" data-placement="top" title="Pausar/Reanudar">
+            <i class="fas fa-pause"></i> 
+        </a>
+    @endif  
+
     @if($etapaItemOt->estado_avance == 2 || $etapaItemOt->estado_avance == 3)
         <a href="{{ route('admin.etapa_itemots.terminarTaller', $etapaItemOt) }}" class="btn btn-success" data-toggle="tooltip" data-placement="top" title="Terminar">
             <i class="fas fa-check"></i> 

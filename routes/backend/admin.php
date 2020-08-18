@@ -288,9 +288,12 @@ Route::group(['namespace' => 'EtapaItemOt'], function () {
 
            Route::get('comenzar', [EtapaItemOtController::class, 'comenzar'])->name('etapa_itemots.comenzar');
            Route::get('terminar', [EtapaItemOtController::class, 'terminar'])->name('etapa_itemots.terminar');
+           Route::get('pausar',   [EtapaItemOtController::class, 'pausar'])->name('etapa_itemots.pausar');
+
 
            Route::get('comenzar_taller', [EtapaItemOtController::class, 'comenzarTaller'])->name('etapa_itemots.comenzarTaller');
            Route::get('terminar_taller', [EtapaItemOtController::class, 'terminarTaller'])->name('etapa_itemots.terminarTaller');
+           Route::get('pausar_taller',   [EtapaItemOtController::class, 'pausarTaller'])->name('etapa_itemots.pausarTaller');
        }); 
 
        Route::get('etapa_itemots-sin_iniciar', [EtapaItemOtController::class, 'sin_iniciar'])->name('etapa_itemots.sin_iniciar');
