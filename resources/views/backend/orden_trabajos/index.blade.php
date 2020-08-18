@@ -178,7 +178,7 @@
                                                                         @break                                  
                                                                 
                                                                     @case(6)
-                                                                        <span class="badge btn-warning" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Anulada </p></span>
+                                                                        <span class="badge btn-warning" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> En Pausa </p></span>
                                                                         @break   
                                                                     @default
                                                                     <span>Something went wrong, please try again</span>
