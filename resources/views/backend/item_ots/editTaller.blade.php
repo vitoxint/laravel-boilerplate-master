@@ -105,7 +105,7 @@
                                                 <span class="badge btn-dark" style="border-radius:12px;"><p style="margin:4px; font-size:16px;"> Entregada </p>  </span>
                                             @break;
                                             @case ('6') 
-                                                <span class="badge btn-warning" style="border-radius:12px;"><p style="margin:4px; font-size:16px;"> Anulada </p> </span>
+                                                <span class="badge btn-warning" style="border-radius:12px;"><p style="margin:4px; color:white; font-size:16px;"> En Pausa </p> </span>
                                             @break;
 
                                             @default
@@ -360,7 +360,7 @@
                                                 <span class="badge btn-success" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Terminada </p> </span>
                                             @break;
                                             @case ('5') 
-                                                <span class="badge btn-dark" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Detenida </p></span>
+                                                <span class="badge btn-warning" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> En Pausa </p></span>
                                             @break;
                                             @case ('6') 
                                                 <span class="badge btn-warning" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Anulada </p></span>

@@ -31,9 +31,9 @@ class EtapaItemOtRepository extends BaseRepository
      * @return mixed
      */
 
-    public function getActivePaginated($paged = 50, $orderBy = 'estado_avance', $sort = 'asc'): LengthAwarePaginator
+    public function getActivePaginated($paged = 50, $orderBy = 'fh_limite', $sort = 'desc'): LengthAwarePaginator
     {
-        return $this->model
+        return $this->model->whereNotIn('estado_avance', [4])
             ->orderBy($orderBy, $sort)
             ->paginate($paged);
     }
