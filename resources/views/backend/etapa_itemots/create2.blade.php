@@ -141,9 +141,13 @@
                         <div class='input-group date' id='fh_limite' name="fh_limite" >
                             <input type='text' class="form-control" id='fh_limiten' name="fh_limiten" />
                             <span class="input-group-addon">
-                                <span class="fa fa-calendar btn btn-lg"></span>
+                                <span class="fa fa-calendar btn btn-xs"></span>
                             </span>
                         </div>
+
+                        <?php $fecha = new Carbon\Carbon($item_ot->ordenTrabajo->entrega_estimada); ?>
+                        <?php $fecha = $fecha->format('d-m-Y'); ?> 
+                        Nota: Considere que el proceso no puede terminar despues del {{$fecha}}
 
                         </div><!--col-->
 

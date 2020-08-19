@@ -84,13 +84,16 @@
                             <div class='input-group date' id='fh_limite' name="fh_limite">
                                 <input type='text' class="form-control" required="true" />
                                 <span class="input-group-addon">
-                                    <span class="fa fa-calendar btn btn-lg"></span>
+                                    <span class="fa fa-calendar"></span>
                                 </span>
                             </div>
 
                             </div><!--col-->
+                            Nota: Considerar que el proceso no puede terminar despues del {{$item_ot->ordenTrabajo->fecha_estimada}}
 
                         </div><!--form-group-->
+
+                       
 
 
                     </div><!--col-->
