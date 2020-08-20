@@ -121,7 +121,7 @@
                     <tr>
                         <td style="text-align:center; padding-top:3px; padding-bottom:-10px;"><p style="font-size: 10px; font-weight:bold; "><?php echo $i++ ?></p> </td>
                         <td style="text-align:center; padding-top:3px; padding-bottom:-10px;"><p style="font-size: 10px; font-weight:bold; "><?php echo $item["cantidad"] ?></p> </td>
-                        <td style="padding-bottom:-10px; padding-top:3px;"><p style="font-size: 10px; font-weight:bold; ">  <?php echo '['. $item->producto->codigo.  '] '. $item->producto->descripcion ?></p> </td>
+                        <td style="padding-bottom:-10px; padding-top:3px;"><p style="font-size: 10px; font-weight:bold; ">  <?php echo '['. $item->producto->codigo.  '] '. $item->producto->descripcion .'-'. $item->producto->marca->nombre?></p> </td>
                         <td style="text-align:right; padding-top:3px; padding-bottom:-10px;"><p style="font-size: 10px; font-weight:bold; ">  @money($item->valor_unitario) </p> </td>
                         <td style="text-align:right; padding-top:3px; padding-bottom:-10px;"><p style="font-size: 10px; font-weight:bold; "><?php echo $item["descuento"] ?> %</p> </td>
                         <td style="text-align:right; padding-top:3px; padding-bottom:-10px;"><p style="font-size: 10px; font-weight:bold; ">@money($item->valor_total) </p> </td>

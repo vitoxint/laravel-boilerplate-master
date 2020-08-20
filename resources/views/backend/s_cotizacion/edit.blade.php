@@ -211,7 +211,7 @@
                         <i class="fas fa-file-pdf" style="color:red;"></i> Exportar PDF
                     </a>
 
-                    <a href="{{ route('admin.s_cotizaciones.send', $cotizacion) }}" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Enviar cotización"
+                    <a href="{{ route('admin.s_cotizaciones.send', $cotizacion) }}" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Enviar cotización"
                         name="confirm_item"
                         data-trans-button-cancel="@lang('buttons.general.cancel')"
                         data-trans-button-confirm="@lang('buttons.general.continue')"
@@ -266,7 +266,7 @@
                                 <tr id="row{{$item->id}}">
                                     <td class="custom-tbl"><input class='form-control input-sm'style='width:100%;' type="text" value="{{$item->producto->codigo}}" id="pr_item{{$item->id}}" name="pr_item[]" readonly required></td>
                                     <td class="custom-tbl"><input class='form-control input-sm' style='width:100%;' type="text" value="{{$item->cantidad}}" id="pr_qty{{$item->id}}" oninput='multiply("{{$item->id}}");' name="pr_qty[]" readonly></td>                                    
-                                    <td class="custom-tbl"><input class='form-control input-sm' style='width:100%;' type="text" value="{{$item->producto->descripcion}}" id="pr_desc{{$item->id}}" name="pr_desc[]"></td>
+                                    <td class="custom-tbl"><input class='form-control input-sm' style='width:100%;' type="text" value="{{$item->producto->descripcion}} - {{$item->producto->marca->nombre}}" id="pr_desc{{$item->id}}" name="pr_desc[]"></td>
                                     <td><input class='form-control input-sm' style='width:100%;' type="text" id="pr_cpu{{$item->id}}" value="{{$item->valor_unitario}}" placeholder="{{$item->producto->precio_lista}}" oninput='multiply("{{$item->id}}");' name="pr_cpu[]"></td>
                                     <td><input class='form-control input-sm' style='width:100%;' type="text" id="pr_des{{$item->id}}" value="{{$item->descuento}}" oninput='multiply("{{$item->id}}");' name="pr_des[]"></td>
                                     <td class="custom-tbl"><input class='estimated_cost form-control input-sm' id="pr_cpi{{$item->id}}" value="{{$item->valor_total}}" style='width:100%;' type="text" name="pr_cpi[]" readonly></td>
