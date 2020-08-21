@@ -63,7 +63,7 @@
                         </div><!--col-->
                     </div><!--form-group-->
 
-
+                    <hr/>
                     <div class="form-group row">
                         
                         {{ html()->label('Valorización:')->class('col-md-2 form-control-label')->for('') }}
@@ -118,10 +118,12 @@
                         </div><!--col--> 
                     </div>       
 
-
+                    <hr/>
                     <div class="form-group row">
                     
-                    {{ html()->label('Tiempo asignado:')->class('col-md-1 form-control-label')->for('tiempo_asignado') }}
+                    {{ html()->label('Estimación :')->class('col-md-2 form-control-label')->for('x') }}
+
+                    {{ html()->label('Tiempo a emplear:')->class('col-md-1 form-control-label')->for('tiempo_asignado') }}
                         <div class="col-md-2">
                         {{ html()->time('tiempo_asignado')
                                 ->class('form-control')
@@ -131,7 +133,7 @@
                             </span>
                         </div><!--col-->
 
-                        {{ html()->label('Termino estimado:')->class('col-md-1 form-control-label')->for('fh_limite') }}
+                        {{ html()->label('Finalización estimada:')->class('col-md-1 form-control-label')->for('fh_limite') }}
                        
                         <div class="col-md-3">
                         <div class='input-group date' id='fh_limite' name="fh_limite" >
@@ -151,8 +153,11 @@
                         </div><!--col-->
 
                     </div><!--form-group--> 
+                    <hr/>
 
                     <div class="form-group row">
+                            {{ html()->label('Avance real :')->class('col-md-2 form-control-label')->for('y') }}
+
                             {{ html()->label('Estado avance:')->class('col-md-1 form-control-label')->for('estado_avance') }}
 
                             <div class="col-md-2">
@@ -209,6 +214,24 @@
                 <div class="row">
                     <div class="col">
                         {{ form_cancel(route('admin.item_ots.edit',[$etapaItemOt->itemOt, $etapaItemOt->itemOt->ordenTrabajo]), __('buttons.general.cancel')) }}
+
+                        @if($etapaItemOt->estado_avance == 1)
+                            <a href="{{ route('admin.etapa_itemots.comenzar', $etapaItemOt) }}" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Comenzar">
+                                <i class="fas fa-play"></i> Comenzar
+                            </a>
+                        @endif
+
+                        @if($etapaItemOt->estado_avance == 2 || $etapaItemOt->estado_avance == 5)
+                            <a href="{{ route('admin.etapa_itemots.pausar', $etapaItemOt) }}" class="btn btn-warning btn-sm" data-toggle="tooltip" style="color:white;" data-placement="top" title="Pausar/Reanudar">
+                                <i class="fas fa-pause"></i> Pausar/Reanudar
+                            </a>
+                        @endif   
+
+                        @if($etapaItemOt->estado_avance == 2 || $etapaItemOt->estado_avance == 3)
+                            <a href="{{ route('admin.etapa_itemots.terminar', $etapaItemOt) }}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Terminar">
+                                <i class="fas fa-check"></i> Terminar
+                            </a>
+                        @endif
                     </div><!--col-->
 
                     <div class="col text-right">
