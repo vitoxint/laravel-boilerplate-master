@@ -204,7 +204,7 @@ class EtapaItemOtController extends Controller
         ]);
 
 
-        $etapas_iniciadas = EtapaItemOt::where('estado_avance',2)->orWhere('estado_avance', 4)->where('itemot_id', $item_ot->id)->count('id');
+        $etapas_iniciadas = EtapaItemOt::whereIn('estado_avance',[2,4])->where('itemot_id', $item_ot->id)->count('id');
 
         if( ($etapas_iniciadas > 0) && ($item_ot->estado != '3') && ($item_ot->estado != '5') ){
          
