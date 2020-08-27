@@ -944,12 +944,17 @@ class EtapaItemOtController extends Controller
                $fecha_inicio = $etapaItemOt->fh_inicio;
         }
 
-        if($estado_proceso_nuevo == 4  && ($etapaItemOt->estado_avance == 3 || $etapaItemOt->estado_avance == 2 )){
+        if($estado_proceso_nuevo == 4  && ($etapaItemOt->estado_avance == 3 || $etapaItemOt->estado_avance == 2 ) ){
                 $fecha_termino = Carbon::now();
                 $fecha_termino = $fecha_termino->format('Y-m-d H:i:s'); 
         }else{
+            
                $fecha_termino = null;
         } 
+
+        if(($etapaItemOt->fh_termino != null)&&($estado_proceso_nuevo == 4)&& ($etapaItemOt->estado_avance == 4)){
+            $fecha_termino = $etapaItemOt->fh_termino;
+        }
 
  
            $etapaItemOt->update([

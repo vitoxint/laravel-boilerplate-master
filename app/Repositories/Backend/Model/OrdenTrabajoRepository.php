@@ -57,7 +57,7 @@ class OrdenTrabajoRepository extends BaseRepository
     public function getEntregadasPaginated($paged = 25, $orderBy = 'entrega_estimada', $sort = 'desc'): LengthAwarePaginator
     {
         return $this->model
-            ->whereBetween('estado', ['1', '4'])
+            ->whereNotIn('estado', ['5'])
             ->orderBy($orderBy, $sort)
             ->paginate($paged);
     }
