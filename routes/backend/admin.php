@@ -246,6 +246,7 @@ Route::group(['namespace' => 'Maquina'], function () {
     Route::get('maquinas/create', [MaquinaController::class, 'create'])->name('maquinas.create');
     Route::post('maquinas', [MaquinaController::class, 'store'])->name('maquinas.store');
     Route::get('maquinas/dataAjax', [MaquinaController::class, 'dataAjax'])->name('maquinas.dataAjax');
+    Route::get('maquinas/getDisponibilidad', [MaquinaController::class, 'getDisponibilidad'])->name('maquinas.get-disponibilidad');
 
     Route::group(['prefix' => 'maquinas/{maquina}'], function () {
         Route::get('edit', [MaquinaController::class, 'edit'])->name('maquinas.edit');

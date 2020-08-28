@@ -241,8 +241,8 @@
                     <a class="nav-link nav-dropdown-toggle {{
                         active_class(Route::is('admin/procesos*'))
                     }}" href="#">
-                        <i class="nav-icon fas fa-cogs"></i>
-                        Configuración
+                        <i class="nav-icon fas fa-border-all"></i>
+                        Taller
 
                         @if ($pending_approval > 0)
                             <span class="badge badge-danger">{{ $pending_approval }}</span>
@@ -250,7 +250,16 @@
                     </a>
 
                     <ul class="nav-dropdown-items">
-                       @can('registro procesos')
+                        @can('registro maquinas')
+                        <li class="nav-item">
+                            <a class="nav-link {{
+                                active_class(Route::is('admin/maquinas*'))
+                            }}" href="{{ route('admin.maquinas.index') }}">
+                                Disponibilidad de máquinas
+                            </a>
+                        </li>
+                        @endcan
+                        @can('registro procesos')
                         <li class="nav-item">
                             <a class="nav-link {{
                                 active_class(Route::is('admin/procesos*'))
@@ -258,16 +267,7 @@
                                 Clasificación de procesos
                             </a>
                         </li>
-                        @endcan
-                        @can('registro maquinas')
-                        <li class="nav-item">
-                            <a class="nav-link {{
-                                active_class(Route::is('admin/maquinas*'))
-                            }}" href="{{ route('admin.maquinas.index') }}">
-                                Registro de máquinas
-                            </a>
-                        </li>
-                        @endcan
+                        @endcan                        
                     </ul>
                 </li>
                 @endcan

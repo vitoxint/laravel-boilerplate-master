@@ -47,6 +47,8 @@
 
                             </div><!--col-->
 
+                            
+
                             {{ html()->label('Operador:')->class('col-md-1 form-control-label')->for('operador_id') }}
                             <div class="col-md-3">
                                     <select name="operador_id" id="operador_id" class="form-control" required="true">

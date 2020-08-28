@@ -11,6 +11,7 @@ use App\Proceso;
 use App\ProcesoHasMaquina;
 use Illuminate\Http\Request;
 use DB;
+use Carbon\Carbon;
 
 class MaquinaController extends Controller
 {
@@ -194,15 +195,52 @@ class MaquinaController extends Controller
     public function getMaquinaList(Request $request)
     {
 
-      return  $maquinas = DB::table('maquinas')
-        ->leftjoin('proceso_has_maquinas', function ($join) {
-            $join->on('maquina_id', '=', 'maquinas.id');
-                 
-        })->where('proceso_has_maquinas.proceso_id',  $request->proceso_id)
-        ->where('maquinas.estado', '=', '1')->orWhere('maquinas.estado', '=', '3')
-        ->pluck(DB::raw("CONCAT(codigo,' - ',nombre) AS name"),"maquinas.id");
+       /*  return  $maquinas = DB::table('maquinas')
+            ->leftjoin('proceso_has_maquinas', function ($join) {
+                $join->on('maquina_id', '=', 'maquinas.id');
+                    
+            })->where('proceso_has_maquinas.proceso_id',  $request->proceso_id)
+            ->where('maquinas.estado', '=', '1')->orWhere('maquinas.estado', '=', '3')
+            ->pluck(DB::raw("CONCAT(codigo,' - ',nombre) AS name"),"maquinas.id"); */
+
+            $procesos = ProcesoHasMaquina::where('proceso_id',$request->proceso_id)->get();
+
+            $maquinas = Maquina::join("proceso_has_maquinas","maquinas.id","=","proceso_has_maquinas.maquina_id")
+            ->where('proceso_has_maquinas.proceso_id', '=', $request->proceso_id )
+            //->where('users.estado','=',1)
+            ->pluck('maquinas.nombre', 'maquinas.id');
+
+            return $maquinas;
+
+            //return $procesos->maquina->pluck(DB::raw("CONCAT(codigo,' - ',nombre) AS name"),"maquinas.id");
+
+
 
         //return response()->json($maquinas);
+
+    }
+
+
+    public function getDisponibilidad(Request $request){
+
+        $maquina = Maquina::where('id' , $request->maquina_id)->first();
+
+        $num_procesos = $maquina->etapaItemOt->whereIn('estado_avance',[2,3])->where('fh_inicio', '!=' ,null)->count('id');
+
+        if($num_procesos > 0){
+            $f_limit = new Carbon($maquina->etapaItemOt->whereIn('estado_avance',[2,3])->where('fh_inicio', '!=' ,null)->max('fh_limite') );
+            
+            $respuesta = 'La máquina tiene '.$num_procesos. ' proceso en ejecución y estará disponible a partir del '. $f_limit->format('d/m/Y H:i');
+
+
+        }else{
+            $respuesta = "Disponible en este momento";
+        }
+
+        return response()->json([
+            'respuesta'    => $respuesta,
+                                      
+            ]); 
 
     }
 }

@@ -40,6 +40,8 @@
                                 <select name="maquina_id" id="maquina_id" class="form-control" required="true" >
                                 </select>
 
+                                <div id="observacion"></div>
+
                         </div><!--col-->
 
 <!--                         {{ html()->label('Operador:')->class('col-md-1 form-control-label')->for('operador_id') }}
@@ -48,6 +50,7 @@
                                 </select>
                         </div> --><!--col-->
                     </div><!--form-group-->
+                    <hr/>
 
                     <div class="form-group row">
                         {{ html()->label('Detalle: ')->class('col-md-2 form-control-label')->for('detalle') }}
@@ -238,6 +241,8 @@ $(document).ready(function(){
                         $("#maquina_id").append('<option value="'+key+'">'+value+'</option>');
                     });
 
+                    $("#observacion").empty();
+
                 }else{
                    $("#maquina_id").empty();
                 }
@@ -297,6 +302,37 @@ $(document).ready(function(){
 
         }else{
             $("#maquina_id").empty();
+          
+        }      
+       });
+
+
+       $('#maquina_id').on('change', function() {
+        
+        var maquinaID = this.value;  
+        
+        
+        if(maquinaID){
+
+             $.ajax({
+            
+            url: "{{ route('admin.maquinas.get-disponibilidad') }}?maquina_id=" + $(this).val(),
+            method: 'GET',
+            success:function(data){               
+            if(data){
+                $("#observacion").html(data.respuesta);
+                //$("#valor_unitario").val(data.valor_unitario);
+               
+            }else{
+               
+               console.log('no se puede obtener la información');
+            }
+           }
+        });         
+
+
+        }else{
+            //$("#maquina_id").empty();
           
         }      
        });

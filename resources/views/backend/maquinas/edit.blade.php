@@ -1,6 +1,6 @@
 @extends('backend.layouts.app')
 
-@section('title','Registro de máquinas' . ' | ' . 'Editar máquina')
+@section('title','Disponibilidad de máquinas' . ' | ' . 'Editar máquina')
 
 @section('content')
 
@@ -11,7 +11,7 @@
                 <div class="row">
                     <div class="col-sm-5">
                         <h4 class="card-title mb-0">
-                            Registro de máquinas
+                            Disponibilidad de máquinas
                             <small class="text-muted">Editar máquina: {{$maquina->codigo}}</small>
                         </h4>
                     </div><!--col-->
@@ -86,6 +86,21 @@
                             }}
                             </div><!--col-->
                         </div><!--form-group--> 
+
+                    <div class="form-group row">
+
+                        {{ html()->label('Observaciones  ')->class('col-md-2 form-control-label')->for('') }}
+                            <div class="col-md-10">
+
+                                @if($maquina->etapaItemOt->whereIn('estado_avance',[2,3])->where('fh_inicio', '!=' ,null)->count() > 0)
+                                    <?php $f_limit = new Carbon\Carbon($maquina->etapaItemOt->whereIn('estado_avance',[2,3])->where('fh_inicio', '!=' ,null)->max('fh_limite'));?>
+
+                                    Disponible a partir del {{$f_limit->format('d/m/Y H:i') }}
+
+                                @endif
+
+                            </div><!--col-->
+                    </div><!--form-group--> 
 
 <!--                     <div class="form-group row">                    
                         {{ html()->label('Operadores')->class('col-md-2 form-control-label')->for('operadores') }}

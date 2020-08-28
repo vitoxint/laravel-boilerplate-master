@@ -199,7 +199,7 @@ Breadcrumbs::for('admin.procesos.edit', function ($trail,$proceso) {
 });
 
 Breadcrumbs::for('admin.maquinas.index', function ($trail) {
-    $trail->push('Registro de máquinas', route('admin.maquinas.index'));
+    $trail->push('Disponibilidad de máquinas', route('admin.maquinas.index'));
 });
 
 Breadcrumbs::for('admin.maquinas.create', function ($trail) {

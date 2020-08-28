@@ -1,6 +1,6 @@
 @extends('backend.layouts.app')
 
-@section('title', app_name() . ' | ' . 'Registro de máquinas')
+@section('title', app_name() . ' | ' . 'Disponibilidad de máquinas')
 
 
 @section('content')
@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col-sm-5">
                 <h4 class="card-title mb-0">
-                    Registro de máquinas <small class="text-muted">Todas las máquinas</small>
+                    Disponibilidad de máquinas <small class="text-muted">Todas las máquinas</small>
                 </h4>
             </div><!--col-->
 
@@ -25,10 +25,10 @@
                         <thead class="cf">
                         <tr>
                              <th style="width:35px;">Código</th>
-                             <th>Nombre máquina</th>
+                             <th>Máquina</th>
                              <th>Procesos en ejecución
-                         <!--     <th> Operadores asignados </th>
-                             <th style="width:60px;">Valor HH.MM</th> -->
+                             <th>Observación </th>
+                         <!--    <th style="width:60px;">Valor HH.MM</th> -->
                              <th style="width:35px; text-align:center;">Estado</th>
 
                              <th style="width:45px;">@lang('labels.general.actions')</th>
@@ -39,14 +39,25 @@
                             <tr>
                                 <td data-title="Código">{{ $maquina->codigo }}</td>
                                 <td data-title="Nombre:">{{ $maquina->nombre }}</td>
-                                 <td data-title="Procesos en ejecución">  
+                                <td data-title="Procesos en ejecución">  
                                      @foreach($maquina->etapaItemOt->whereIn('estado_avance',[2,3])->where('fh_inicio', '!=' ,null) as $etapaItemOt)
-                                     <h6> <a href="{{route('admin.item_ots.edit', [$etapaItemOt->itemOt ,$etapaItemOt->itemOt->ordenTrabajo ])}}"> {{ $etapaItemOt->itemOt->folio }} </a> ->  
+                                     <h6> <a href="{{route('admin.item_ots.edit', [$etapaItemOt->itemOt ,$etapaItemOt->itemOt->ordenTrabajo ])}}"> {{ $etapaItemOt->itemOt->folio }} </a> &rarr;  
                                           <a href="{{route('admin.etapa_itemots.edit', [$etapaItemOt])}}"> {{ $etapaItemOt->codigo }} </a>: {{$etapaItemOt->proceso->descripcion}} </h6><br>    
                                          
                                     @endforeach
                                    
-                                </td> 
+                                </td>
+                                
+                                <td data-title="Observaciones">
+
+                                @if($maquina->etapaItemOt->whereIn('estado_avance',[2,3])->where('fh_inicio', '!=' ,null)->count() > 0)
+                                    <?php $f_limit = new Carbon\Carbon($maquina->etapaItemOt->whereIn('estado_avance',[2,3])->where('fh_inicio', '!=' ,null)->max('fh_limite'));?>
+
+                                    Disponible a partir del {{$f_limit->format('d/m/Y H:i') }}
+
+                                @endif
+
+                                </td>
                                 <!-- <td data-title="Valor hora" style="text-align:right;">@money($maquina->valor_hora) </td> -->
 
                                 <td data-title="Estado disponibilidad:" style="text-align:center;">
