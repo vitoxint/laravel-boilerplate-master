@@ -233,7 +233,7 @@ class MaquinaController extends Controller
         if(($num_procesos > 0)&&($num_procesosAt > 0)){
             $f_limit = new Carbon($maquina->etapaItemOt->whereIn('estado_avance',[2,3])->where('fh_inicio', '!=' ,null)->max('fh_limite') );
             
-            $respuesta = 'La máquina tiene '.$num_procesos. ' proceso en ejecución y '.$num_procesosAt .' atrasado y estará disponible a partir del '. $f_limit->format('d/m/Y H:i');
+            $respuesta = 'La máquina tiene '.$num_procesos. ' proceso/s en ejecución y '.$num_procesosAt .' proceso/s atrasado y estará disponible a partir del '. $f_limit->format('d/m/Y H:i');
 
         }
 
@@ -247,7 +247,7 @@ class MaquinaController extends Controller
         if(($num_procesos == $num_procesosAt)&&($num_procesos > 0)){
             $f_limit = new Carbon($maquina->etapaItemOt->whereIn('estado_avance',[3])->where('fh_inicio', '!=' ,null)->max('fh_limite') );
             
-            $respuesta = 'La máquina tiene ' .$num_procesosAt .' atrasado y el ultimo deberia haber terminado el '. $f_limit->format('d/m/Y H:i');
+            $respuesta = 'La máquina tiene ' .$num_procesosAt .' proceso/s atrasado y el ultimo deberia haber terminado el '. $f_limit->format('d/m/Y H:i');
 
         }
         
