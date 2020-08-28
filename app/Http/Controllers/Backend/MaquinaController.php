@@ -226,16 +226,33 @@ class MaquinaController extends Controller
         $maquina = Maquina::where('id' , $request->maquina_id)->first();
 
         $num_procesos = $maquina->etapaItemOt->whereIn('estado_avance',[2,3])->where('fh_inicio', '!=' ,null)->count('id');
+        $num_procesosAt = $maquina->etapaItemOt->whereIn('estado_avance',[3])->where('fh_inicio', '!=' ,null)->count('id');
 
-        if($num_procesos > 0){
-            $f_limit = new Carbon($maquina->etapaItemOt->whereIn('estado_avance',[2,3])->where('fh_inicio', '!=' ,null)->max('fh_limite') );
+        $respuesta = "Disponible en este momento";
+
+        if(($num_procesos > 0)&&($num_procesosAt > 0)){
+            $f_limit = new Carbon($maquina->etapaItemOt->whereIn('estado_avance',[2])->where('fh_inicio', '!=' ,null)->max('fh_limite') );
+            
+            $respuesta = 'La máquina tiene '.$num_procesos. ' proceso en ejecución y '.$num_procesoAt .' atrasado y estará disponible a partir del '. $f_limit->format('d/m/Y H:i');
+
+        }
+
+        if(($num_procesos > 0)&&($num_procesosAt == 0)){
+            $f_limit = new Carbon($maquina->etapaItemOt->whereIn('estado_avance',[2])->where('fh_inicio', '!=' ,null)->max('fh_limite') );
             
             $respuesta = 'La máquina tiene '.$num_procesos. ' proceso en ejecución y estará disponible a partir del '. $f_limit->format('d/m/Y H:i');
 
-
-        }else{
-            $respuesta = "Disponible en este momento";
         }
+
+        if(($num_procesos == $num_procesosAt)&&($num_procesos != 0)){
+            $f_limit = new Carbon($maquina->etapaItemOt->whereIn('estado_avance',[3])->where('fh_inicio', '!=' ,null)->max('fh_limite') );
+            
+            $respuesta = 'La máquina tiene ' .$num_procesoAt .' atrasado y el ultimo deberia haber terminado el '. $f_limit->format('d/m/Y H:i');
+
+        }
+        
+        
+       
 
         return response()->json([
             'respuesta'    => $respuesta,
