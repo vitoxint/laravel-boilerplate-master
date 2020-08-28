@@ -47,6 +47,10 @@ class ItemOt extends Model
         $terminados = EtapaItemOt::where('itemot_id','=',$this->id)->where('estado_avance','=',4)->count();
         $totales = EtapaItemOt::where('itemot_id','=',$this->id)->count();
 
+        if($totales == 0){
+            $totales = 1;
+        }
+
         $porcentaje = ($terminados/$totales)*100;
 
         return round($porcentaje);
