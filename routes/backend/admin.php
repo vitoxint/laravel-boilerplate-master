@@ -298,6 +298,7 @@ Route::group(['namespace' => 'EtapaItemOt'], function () {
 
        Route::get('etapa_itemots-sin_iniciar', [EtapaItemOtController::class, 'sin_iniciar'])->name('etapa_itemots.sin_iniciar');
        Route::get('etapa_itemots-en_proceso', [EtapaItemOtController::class, 'en_proceso'])->name('etapa_itemots.en_proceso');
+       Route::get('etapa_itemots-en_pausa', [EtapaItemOtController::class, 'en_pausa'])->name('etapa_itemots.en_pausa');
        Route::get('etapa_itemots-atrasadas', [EtapaItemOtController::class, 'atrasadas'])->name('etapa_itemots.atrasadas');
        Route::get('etapa_itemots-terminadas', [EtapaItemOtController::class, 'terminadas'])->name('etapa_itemots.terminadas');
 

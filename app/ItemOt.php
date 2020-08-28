@@ -43,6 +43,15 @@ class ItemOt extends Model
         return $terminados.' de ' . $totales;
     }
 
+    public function porcentajeAvanceItemOt(){
+        $terminados = EtapaItemOt::where('itemot_id','=',$this->id)->where('estado_avance','=',4)->count();
+        $totales = EtapaItemOt::where('itemot_id','=',$this->id)->count();
+
+        $porcentaje = ($terminados/$totales)*100;
+
+        return round($porcentaje);
+    }
+
     public function materialOt(){
         return $this->hasMany('App\TrabajoUseMaterial', 'itemot_id', 'id');
     }

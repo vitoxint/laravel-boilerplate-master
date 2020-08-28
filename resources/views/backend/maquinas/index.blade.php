@@ -26,7 +26,7 @@
                         <tr>
                              <th style="width:35px;">Código</th>
                              <th>Nombre máquina</th>
-                  
+                             <th>Procesos en ejecución
                          <!--     <th> Operadores asignados </th>
                              <th style="width:60px;">Valor HH.MM</th> -->
                              <th style="width:35px; text-align:center;">Estado</th>
@@ -39,13 +39,14 @@
                             <tr>
                                 <td data-title="Código">{{ $maquina->codigo }}</td>
                                 <td data-title="Nombre:">{{ $maquina->nombre }}</td>
-<!--                                 <td data-title="Operadores asignados">  
-                                    @foreach($maquina->maquina_has_operador as $operador)
-                                     <h6> <span class="badge badge-default">{{$operador->operador->nombres.' '.$operador->operador->apellidos}}</span>
+                                 <td data-title="Procesos en ejecución">  
+                                     @foreach($maquina->etapaItemOt->where('estado_avance',2) as $etapaItemOt)
+                                     <h6> <a href="{{route('admin.item_ots.edit', [$etapaItemOt->itemOt ,$etapaItemOt->itemOt->ordenTrabajo ])}}"> {{ $etapaItemOt->itemOt->folio }} </a> ->  
+                                          <a href="{{route('admin.etapa_itemots.edit', [$etapaItemOt])}}"> {{ $etapaItemOt->codigo }} </a>: {{$etapaItemOt->proceso->descripcion}} </h6><br>    
                                          
                                     @endforeach
-                                    </h6>
-                                </td> -->
+                                   
+                                </td> 
                                 <!-- <td data-title="Valor hora" style="text-align:right;">@money($maquina->valor_hora) </td> -->
 
                                 <td data-title="Estado disponibilidad:" style="text-align:center;">

@@ -35,6 +35,7 @@ class EtapaItemOtController extends Controller
         $count_ep = EtapaItemOt::where('estado_avance',2)->get()->count('id');
         $count_at = EtapaItemOt::where('estado_avance',3)->get()->count('id');
         $count_te = EtapaItemOt::where('estado_avance',4)->get()->count('id');
+        $count_de = EtapaItemOt::where('estado_avance',5)->get()->count('id');
        
 
         return view('backend.etapa_itemots.index')
@@ -43,7 +44,8 @@ class EtapaItemOtController extends Controller
                                                                                                          'count_si'=> $count_si,
                                                                                                          'count_ep'=> $count_ep,
                                                                                                          'count_at'=> $count_at,
-                                                                                                         'count_te'=> $count_te
+                                                                                                         'count_te'=> $count_te,
+                                                                                                         'count_de'=> $count_de
                                                                                                           ]);
     }
 
@@ -54,6 +56,7 @@ class EtapaItemOtController extends Controller
         $count_ep = EtapaItemOt::where('estado_avance',2)->get()->count('id');
         $count_at = EtapaItemOt::where('estado_avance',3)->get()->count('id');
         $count_te = EtapaItemOt::where('estado_avance',4)->get()->count('id');
+        $count_de = EtapaItemOt::where('estado_avance',5)->get()->count('id');
        
 
         return view('backend.etapa_itemots.index')
@@ -62,7 +65,8 @@ class EtapaItemOtController extends Controller
                                                                                                          'count_si'=> $count_si,
                                                                                                          'count_ep'=> $count_ep,
                                                                                                          'count_at'=> $count_at,
-                                                                                                         'count_te'=> $count_te
+                                                                                                         'count_te'=> $count_te,
+                                                                                                         'count_de'=> $count_de
                                                                                                           ]);
     }
 
@@ -74,6 +78,7 @@ class EtapaItemOtController extends Controller
         $count_ep = EtapaItemOt::where('estado_avance',2)->get()->count('id');
         $count_at = EtapaItemOt::where('estado_avance',3)->get()->count('id');
         $count_te = EtapaItemOt::where('estado_avance',4)->get()->count('id');
+        $count_de = EtapaItemOt::where('estado_avance',5)->get()->count('id');
        
 
         return view('backend.etapa_itemots.index')
@@ -82,7 +87,30 @@ class EtapaItemOtController extends Controller
                                                                                                          'count_si'=> $count_si,
                                                                                                          'count_ep'=> $count_ep,
                                                                                                          'count_at'=> $count_at,
-                                                                                                         'count_te'=> $count_te
+                                                                                                         'count_te'=> $count_te,
+                                                                                                         'count_de'=> $count_de
+                                                                                                          ]);
+    }
+
+    public function en_pausa()
+    {
+
+        $et_count = EtapaItemOt::get()->count('id');
+        $count_si = EtapaItemOt::where('estado_avance',1)->get()->count('id');
+        $count_ep = EtapaItemOt::where('estado_avance',2)->get()->count('id');
+        $count_at = EtapaItemOt::where('estado_avance',3)->get()->count('id');
+        $count_te = EtapaItemOt::where('estado_avance',4)->get()->count('id');
+        $count_de = EtapaItemOt::where('estado_avance',5)->get()->count('id');
+       
+
+        return view('backend.etapa_itemots.index')
+        ->withEtapaOts($this->etapaItemOtRepository->getEnPausaPaginated(50, 'fh_limite', 'asc'))->with( 
+                                                                                                        ['et_count'=> $et_count, 
+                                                                                                         'count_si'=> $count_si,
+                                                                                                         'count_ep'=> $count_ep,
+                                                                                                         'count_at'=> $count_at,
+                                                                                                         'count_te'=> $count_te,
+                                                                                                         'count_de'=> $count_de
                                                                                                           ]);
     }
 
@@ -93,6 +121,7 @@ class EtapaItemOtController extends Controller
         $count_ep = EtapaItemOt::where('estado_avance',2)->get()->count('id');
         $count_at = EtapaItemOt::where('estado_avance',3)->get()->count('id');
         $count_te = EtapaItemOt::where('estado_avance',4)->get()->count('id');
+        $count_de = EtapaItemOt::where('estado_avance',5)->get()->count('id');
        
 
         return view('backend.etapa_itemots.index')
@@ -101,7 +130,8 @@ class EtapaItemOtController extends Controller
                                                                                                          'count_si'=> $count_si,
                                                                                                          'count_ep'=> $count_ep,
                                                                                                          'count_at'=> $count_at,
-                                                                                                         'count_te'=> $count_te
+                                                                                                         'count_te'=> $count_te,
+                                                                                                         'count_de'=> $count_de
                                                                                                           ]);
     }
 
@@ -112,6 +142,7 @@ class EtapaItemOtController extends Controller
         $count_ep = EtapaItemOt::where('estado_avance',2)->get()->count('id');
         $count_at = EtapaItemOt::where('estado_avance',3)->get()->count('id');
         $count_te = EtapaItemOt::where('estado_avance',4)->get()->count('id');
+        $count_de = EtapaItemOt::where('estado_avance',5)->get()->count('id');
        
 
         return view('backend.etapa_itemots.index')
@@ -120,7 +151,8 @@ class EtapaItemOtController extends Controller
                                                                                                          'count_si'=> $count_si,
                                                                                                          'count_ep'=> $count_ep,
                                                                                                          'count_at'=> $count_at,
-                                                                                                         'count_te'=> $count_te
+                                                                                                         'count_te'=> $count_te,
+                                                                                                         'count_de'=> $count_de
                                                                                                           ]);
     }
 

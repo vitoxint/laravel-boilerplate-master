@@ -409,7 +409,21 @@
                                         <td align="right" data-title="Valor Unitario:">@money($item_ot->valor_unitario )</td>
                                         <td align="right" data-title="Valor Parcial:"> @money($item_ot->valor_parcial ) </td>
                                         
-                                        <td data-title="Avance:" align="center">{{$item_ot->avanceItemOt()}}</td>
+                                        <td data-title="Avance:" align="center">{{$item_ot->porcentajeAvanceItemOt()}}%
+
+                                            @if($item_ot->porcentajeAvanceItemOt() < 100)
+                                                <div class="progress">
+                                                    <div class="progress-bar progress-bar-striped" role="progressbar" text="sskjksj" style="width: {{$item_ot->porcentajeAvanceItemOt()}}%" aria-valuenow="{{$item_ot->porcentajeAvanceItemOt()}}" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            @endif
+
+                                            @if($item_ot->porcentajeAvanceItemOt() == 100)
+                                                <div class="progress">
+                                                    <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: {{$item_ot->porcentajeAvanceItemOt()}}%" aria-valuenow="{{$item_ot->porcentajeAvanceItemOt()}}" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            @endif                                        
+
+                                        </td>
                                         <td style="text-align:center;" data-title="Estado ítem OT:" id="itemOt{{$item_ot->id}}">
                                             @switch($item_ot->estado)
                                                 @case(1)

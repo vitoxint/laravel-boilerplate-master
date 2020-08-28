@@ -77,30 +77,43 @@
                              <th>Contacto</th>
                              <th>Digitador</th>
                              <!-- <th>Avance</th> -->
-                             <th>Entrega Comprometida</th>
+                             <th>Fecha Entrega</th>
                              <th>Estado OT</th>  
                              <th>@lang('labels.general.actions')</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($ordenTrabajos as $trabajo)
-                            <tr data-toggle="collapse" data-target="#data{{$trabajo->id}}" class="accordion-toggle">
-                                <td data-title="Folio:">{{ $trabajo->folio }}</td>
-                                <td data-title="Cliente:">{{ $trabajo->cliente->razon_social }}</td>
-                                <td data-title="Contacto:">
+                            <tr>
+                          
+                                <td data-toggle="collapse" data-target="#data{{$trabajo->id}}" class="accordion-toggle" data-title="Folio:">{{ $trabajo->folio }}</td>
+                                <td data-toggle="collapse" data-target="#data{{$trabajo->id}}" class="accordion-toggle" data-title="Cliente:">{{ $trabajo->cliente->razon_social }}</td>
+                                <td data-toggle="collapse" data-target="#data{{$trabajo->id}}" class="accordion-toggle" data-title="Contacto:">
                                     @if($trabajo->representante)
                                         {{ $trabajo->representante->nombre }}
                                         @else
                                         {{ '( no definido ) '}}
                                     @endif
                                 </td>
-                                <td data-title="Digitador:"> {{ $trabajo->usuario->first_name }} {{ $trabajo->usuario->last_name }}</td>                               
+                                <td data-toggle="collapse" data-target="#data{{$trabajo->id}}" class="accordion-toggle" data-title="Digitador:"> {{ $trabajo->usuario->first_name }} {{ $trabajo->usuario->last_name }}</td>                               
                                 <!-- <td>avance</td> -->
                                 <?php   $entrega_estimada = new Carbon\Carbon($trabajo->entrega_estimada); ?>
-                                <td data-title="Entrega comprometida:">{{ $entrega_estimada->format('d/m/Y') }}</td>
+                                <td data-toggle="collapse" data-target="#data{{$trabajo->id}}" class="accordion-toggle" data-title="Fecha Entrega:">
+                                @if($trabajo->estado == '5')
+                                    Est:
+                                @endif
+                                {{ $entrega_estimada->format('d/m/Y') }}
+                                
+                                @if($trabajo->estado == '5')
+                                <?php   $entrega_real = new Carbon\Carbon($trabajo->entregasOt->max('hora_entrega')); ?>
+                                    ,Real: {{$entrega_real->format('d/m/Y H:i')}}
+
+                                @endif
+                                
+                                </td>
 
 
-                                <td style="text-align:center" data-title="Estado OT:">
+                                <td data-toggle="collapse" data-target="#data{{$trabajo->id}}" class="accordion-toggle" style="text-align:center" data-title="Estado OT:">
                                     @switch($trabajo->estado) 
                                             @case ('1') 
                                                <span class="badge btn-secondary" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Sin Iniciar </p></span>
@@ -157,7 +170,21 @@
                                                             <td align="right" data-title="Valor Unitario:">@money($item_ot->valor_unitario )</td>
                                                             <td align="right" data-title="Valor Parcial:"> @money($item_ot->valor_parcial ) </td>
                                                             
-                                                            <td align="center">{{$item_ot->avanceItemOt()}}</td>
+                                                            <td data-title="Avance:" align="center">{{$item_ot->porcentajeAvanceItemOt()}}%
+
+                                                                @if($item_ot->porcentajeAvanceItemOt() < 100)
+                                                                    <div class="progress">
+                                                                        <div class="progress-bar progress-bar-striped" role="progressbar" text="sskjksj" style="width: {{$item_ot->porcentajeAvanceItemOt()}}%" aria-valuenow="{{$item_ot->porcentajeAvanceItemOt()}}" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                    </div>
+                                                                @endif
+
+                                                                @if($item_ot->porcentajeAvanceItemOt() == 100)
+                                                                    <div class="progress">
+                                                                        <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: {{$item_ot->porcentajeAvanceItemOt()}}%" aria-valuenow="{{$item_ot->porcentajeAvanceItemOt()}}" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                    </div>
+                                                                @endif  
+
+                                                            </td>
                                                             <td style="text-align:center;" data-title="Estado ítem OT:">
                                                                 @switch($item_ot->estado)
                                                                     @case(1)

@@ -260,6 +260,11 @@ Breadcrumbs::for('admin.etapa_itemots.en_proceso', function ($trail) {
     $trail->push('En Proceso', route('admin.etapa_itemots.en_proceso'));
 });
 
+Breadcrumbs::for('admin.etapa_itemots.en_pausa', function ($trail) {
+    $trail->push('Procesos y tareas de Ordenes de Trabajo', route('admin.etapa_itemots.index'));
+    $trail->push('En Pausa', route('admin.etapa_itemots.en_pausa'));
+});
+
 Breadcrumbs::for('admin.etapa_itemots.atrasadas', function ($trail) {
     $trail->push('Procesos y tareas de Ordenes de Trabajo', route('admin.etapa_itemots.index'));
     $trail->push('Atrasadas', route('admin.etapa_itemots.atrasadas'));

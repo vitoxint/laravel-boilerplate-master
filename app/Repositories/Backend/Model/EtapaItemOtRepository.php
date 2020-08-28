@@ -78,6 +78,14 @@ class EtapaItemOtRepository extends BaseRepository
             ->paginate($paged);
     }
 
+    public function getEnPausaPaginated($paged = 25, $orderBy = 'fh_limite', $sort = 'asc'): LengthAwarePaginator
+    {
+        return $this->model
+            ->where('estado_avance',5)
+            ->orderBy($orderBy, $sort)
+            ->paginate($paged);
+    }
+
     public function getAtrasadaPaginated($paged = 25, $orderBy = 'fh_limite', $sort = 'asc'): LengthAwarePaginator
     {
         return $this->model

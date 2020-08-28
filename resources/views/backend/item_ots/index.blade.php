@@ -49,25 +49,41 @@
                              <th style="width:18px;">O.T
                              <th style="width:10px;">Ctd.</th>
                              <th>Descripción</th>
-                             <th style="width:15px;">Avance</th>
-                             <th style="width:25px;">F.Entrega</th>
-                             <th style="width:15px;">Estado</th>  
+                             <th>Avance</th>
+                             <th style="width:28px;">F.Entrega comprometida</th>
+                             <th style="width:28px;">Estado</th>  
                              <th style="width:18px;">@lang('labels.general.actions')</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($itemOts as $item_ot)
-                            <tr data-toggle="collapse" data-target="#data{{$item_ot->id}}" class="accordion-toggle">
-                                <td data-title="Folio:">{{ $item_ot->folio }}</td>
-                                <td data-title="OT:">{{ $item_ot->ordenTrabajo->folio }}</td>
-                                <td data-title="Cantidad:">{{ $item_ot->cantidad }}</td>
-                                <td data-title="Descripción:">{{ $item_ot->descripcion }}</td>
-                                <td align="center" data-title="Avance:">{{$item_ot->avanceItemOt()}}</td>                              
+                            <tr>
+                                <td data-toggle="collapse" data-target="#data{{$item_ot->id}}" class="accordion-toggle" data-title="Folio:">{{ $item_ot->folio }}</td>
+                                <td data-toggle="collapse" data-target="#data{{$item_ot->id}}" class="accordion-toggle" data-title="OT:">{{ $item_ot->ordenTrabajo->folio }}</td>
+                                <td data-toggle="collapse" data-target="#data{{$item_ot->id}}" class="accordion-toggle" data-title="Cantidad:">{{ $item_ot->cantidad }}</td>
+                                <td data-toggle="collapse" data-target="#data{{$item_ot->id}}" class="accordion-toggle" data-title="Descripción:">{{ $item_ot->descripcion }}</td>
+                                
+                                <td data-toggle="collapse" data-target="#data{{$item_ot->id}}" class="accordion-toggle" align="center" data-title="Avance:">{{$item_ot->porcentajeAvanceItemOt()}}%
+
+                                    @if($item_ot->porcentajeAvanceItemOt() < 100)
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-striped" role="progressbar" text="sskjksj" style="width: {{$item_ot->porcentajeAvanceItemOt()}}%" aria-valuenow="{{$item_ot->porcentajeAvanceItemOt()}}" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    @endif
+
+                                    @if($item_ot->porcentajeAvanceItemOt() == 100)
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: {{$item_ot->porcentajeAvanceItemOt()}}%" aria-valuenow="{{$item_ot->porcentajeAvanceItemOt()}}" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    @endif  
+
+
+                                </td>                              
                                 <?php   $entrega_estimada = new Carbon\Carbon($item_ot->ordenTrabajo->entrega_estimada); ?>
-                                <td data-title="Entrega comprometida:">{{ $entrega_estimada->format('d/m/Y') }}</td>
+                                <td data-toggle="collapse" data-target="#data{{$item_ot->id}}" class="accordion-toggle" data-title="Entrega comprometida:">{{ $entrega_estimada->format('d/m/Y') }}</td>
 
 
-                                <td data-title="Estado:">
+                                <td data-toggle="collapse" data-target="#data{{$item_ot->id}}" class="accordion-toggle" data-title="Estado:">
                                     @switch($item_ot->estado) 
                                             @case ('1') 
                                                <span class="badge btn-secondary" style="border-radius:10px;"><p style="color:white; margin:3px; font-size:12px;"> Sin Iniciar </p></span>
