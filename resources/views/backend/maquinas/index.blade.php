@@ -40,7 +40,7 @@
                                 <td data-title="Código">{{ $maquina->codigo }}</td>
                                 <td data-title="Nombre:">{{ $maquina->nombre }}</td>
                                  <td data-title="Procesos en ejecución">  
-                                     @foreach($maquina->etapaItemOt->where('estado_avance',2) as $etapaItemOt)
+                                     @foreach($maquina->etapaItemOt->whereIn('estado_avance',[2,3])->where('fh_inicio', '!=' ,null) as $etapaItemOt)
                                      <h6> <a href="{{route('admin.item_ots.edit', [$etapaItemOt->itemOt ,$etapaItemOt->itemOt->ordenTrabajo ])}}"> {{ $etapaItemOt->itemOt->folio }} </a> ->  
                                           <a href="{{route('admin.etapa_itemots.edit', [$etapaItemOt])}}"> {{ $etapaItemOt->codigo }} </a>: {{$etapaItemOt->proceso->descripcion}} </h6><br>    
                                          

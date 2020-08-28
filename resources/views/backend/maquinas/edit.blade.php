@@ -151,7 +151,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($maquina->etapaItemOt->where('estado_avance',2) as $etapaItemOt)
+                        @foreach($maquina->etapaItemOt->whereIn('estado_avance',[2,3])->where('fh_inicio', '!=', null) as $etapaItemOt)
                             <tr data-toggle="collapse" data-target="#data{{$etapaItemOt->id}}" class="accordion-toggle">
 
                                 <td data-title="Folio:">  {{ $etapaItemOt->codigo }}            </td>
