@@ -414,12 +414,14 @@
                                             @if($item_ot->porcentajeAvanceItemOt() < 100)
                                                 <div class="progress">
                                                     <div class="progress-bar progress-bar-striped" role="progressbar" text="sskjksj" style="width: {{$item_ot->porcentajeAvanceItemOt()}}%" aria-valuenow="{{$item_ot->porcentajeAvanceItemOt()}}" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    <!-- <medium class="justify-content-center d-flex position-absolute w-100" style="color:white; font-weight:bold;">{{$item_ot->porcentajeAvanceItemOt()}}% completado</medium> -->
                                                 </div>
                                             @endif
 
                                             @if($item_ot->porcentajeAvanceItemOt() == 100)
-                                                <div class="progress">
+                                                <div class="progress  position-relative">
                                                     <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: {{$item_ot->porcentajeAvanceItemOt()}}%" aria-valuenow="{{$item_ot->porcentajeAvanceItemOt()}}" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    <!-- <medium class="justify-content-center d-flex position-absolute w-100" style="color:white; font-weight:bold;">{{$item_ot->porcentajeAvanceItemOt()}}% completado</medium> -->
                                                 </div>
                                             @endif                                        
 
