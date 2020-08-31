@@ -14,6 +14,8 @@ use App\Proceso;
 use DB;
 use Carbon\Carbon;
 use PDF;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 
 
@@ -205,12 +207,7 @@ class ItemOtController extends Controller
               
        ]);
   
-       $update1 = DB::table('orden_trabajos')
-       ->where('id', '=', $trabajo->id)
-       ->update([
-           'valor_total' =>  $trabajo->valor_total - $item_ot->valor_parcial  + $request->input('valor_parcial'),
-   
-           ]);
+
 
 /*        if(($request->input('estado') != '5')&&($request->input('estado') != '3')){
 
@@ -248,6 +245,13 @@ class ItemOtController extends Controller
            //'fecha_termino' => $fecha_termino, 
           
         ]);
+
+        $update1 = DB::table('orden_trabajos')
+        ->where('id', '=', $trabajo->id)
+        ->update([
+            'valor_total' =>  $trabajo->items_ot->sum('valor_parcial'),
+    
+            ]);
        
 /*        if (ItemOt::where('estado', '=', '2')->where('ot_id', '=', $trabajo->id)->exists()) {
            $update1 = DB::table('orden_trabajos')
@@ -315,18 +319,45 @@ class ItemOtController extends Controller
     public function destroy(ItemOt $item_ot, OrdenTrabajo $trabajo)
     {
            
-        $trabajo->update(
-            [    
-            'valor_total' => $trabajo->valor_total - $item_ot->valor_parcial,        
-            ]);   
+ 
+
+        //return $item_ot->imagenes;
             
-        foreach($item_ot->imagenes() as $imagen){
+/*         foreach($item_ot->imagenes as $imagen){
             Storage::disk('public')->delete($imagen->url);
             $imagen->delete();           
+        } */
+        $imagenesEsc = $item_ot->imagenes->count();
+        $procesosEsc = EtapaItemOt::where('itemot_id', $item_ot->id)->whereNotIn('estado_avance' , ['1','5'])->count('id');
+        $solicitudMatEscUT = $item_ot->solicitudMaterialOtUT->count();
+        $solicitudMatEsc = $item_ot->solicitudMaterialOt->count();
+
+        if($imagenesEsc >0){
+            return redirect()->route('admin.orden_trabajos.edit',$trabajo)->withFlashDanger('No se puede eliminar el ítem porque tiene archivos asociados al trabajo, debes eliminar los archivos adjuntos antes de eliminar el ítem');
+        }
+
+        if($procesosEsc > 0){
+            return redirect()->route('admin.orden_trabajos.edit',$trabajo)->withFlashDanger('No se puede eliminar el ítem porque tiene procesos que ya han sido iniciados, estan en ejecución o ya han sido terminados');
+        }
+
+        if($solicitudMatEscUT > 0){
+            return redirect()->route('admin.orden_trabajos.edit',$trabajo)->withFlashDanger('No se puede eliminar el ítem porque tiene materiales que han sido asignados y/o utilizados para este ítem');
+        }
+
+        foreach($item_ot->procesosOt as $proceso){
+            $proceso->delete();
+        }
+
+        foreach($item_ot->solicitudMaterialOt as $solicitud){
+            $solicitud->delete();
         }
 
         $item_ot->delete();
 
+        $trabajo->update(
+            [    
+            'valor_total' => $trabajo->items_ot->sum('valor_parcial'),        
+        ]);  
 
             //OT
 

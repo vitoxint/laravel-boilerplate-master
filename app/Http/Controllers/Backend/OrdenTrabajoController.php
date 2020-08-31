@@ -718,7 +718,21 @@ class OrdenTrabajoController extends Controller
      */
     public function destroy(OrdenTrabajo $trabajo)
     {
-        ItemOt::where('ot_id' ,'=', $trabajo->id)->delete();
+
+        if($trabajo->abonosOt->count() > 0){
+            return redirect()->route('admin.orden_trabajos.index')->withFlashSuccess('No se puede eliminar la OT porque tiene abonos realizados');
+        }
+        if($trabajo->entregasOt->count() > 0){
+            return redirect()->route('admin.orden_trabajos.index')->withFlashSuccess('No se puede eliminar la OT porque tiene entregas realizadas');
+        }
+
+        if($trabajo->items_ot->count() > 0){
+            return redirect()->route('admin.orden_trabajos.index')->withFlashSuccess('No se puede eliminar la OT porque registra a lo menos un trabajo, deberá eliminar todos los ítems');
+        }
+
+
+
+        //ItemOt::where('ot_id' ,'=', $trabajo->id)->delete();
 
         $trabajo->delete();
 

@@ -18,6 +18,9 @@ use App\Mail\Backend\SendCotizacion;
 use Illuminate\Support\Facades\Mail;
 use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
+
 use PDF;
 
 class CotizacionController extends Controller
@@ -199,8 +202,13 @@ class CotizacionController extends Controller
     {
         ItemCotizacion::where('cotizacion_id' ,'=', $cotizacion->id)->delete();
 
+        foreach($cotizacion->imagenes as $imagen){
+            Storage::disk('public')->delete($imagen->url);
+            $imagen->delete();
+        }
+
         $cotizacion->delete();
 
-        return redirect()->route('admin.cotizaciones.index')->withFlashSuccess('Cotizacion eliminada');
+        return redirect()->route('admin.cotizaciones.index')->withFlashSuccess('La cotizacion ha sido eliminada exitósamente');
     }
 }
