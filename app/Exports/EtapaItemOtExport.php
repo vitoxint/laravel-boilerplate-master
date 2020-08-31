@@ -55,7 +55,7 @@ class EtapaItemOtExport implements FromCollection ,WithHeadings,ShouldAutoSize ,
                 'fecha_termino'=> $item->fh_termino,
                 'tiempo_asignado'=> $item->tiempo_asignado,
                 'valor_unitario'  => $item->valor_unitario,
-                'cantidad'        => $item->proceso->cantidad,
+                'cantidad'        => $item->cantidad,
                 'medicion'        => $medicion, //tipo_valorizacion
                 'valor_proceso'   => $item->valor_proceso
                 
