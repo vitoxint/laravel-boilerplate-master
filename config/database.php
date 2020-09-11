@@ -63,6 +63,19 @@ return [
             ]) : [],
         ],
 
+        'bsale_test'  => [
+            'driver'     => 'mysql',
+            'host'       => env('BSALE_HOST', 'localhost'),
+            'port'       => env('BSALE_PORT', '3306'),
+            'database'   => env('BSALE_DATABASE', 'forge'),
+            'username'   => env('BSALE_USERNAME', 'forge'),
+            'password'   => env('BSALE_PASSWORD', ''),
+            'charset'    => 'utf8',
+            'collation'  => 'utf8_unicode_ci',
+            'prefix'     => '',
+            'strict'     => false,
+             ],
+
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),

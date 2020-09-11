@@ -13,6 +13,17 @@ use Illuminate\Http\Request;
 |
 */
 
-/*Route::middleware('auth:api')->get('/user', function (Request $request) {
+Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
-});*/
+});
+
+use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\ProductController;
+
+Route::get('/api/productos-venta/lista', [ProductController::class, 'getLista']);
+
+Route::post('/api/productos-venta/categoria', [ProductController::class, 'getListaCategoria']);
+
+Route::post('/api/productos-venta/buscar', [ProductController::class, 'getListaSearch']);
+
+
