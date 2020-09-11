@@ -20,10 +20,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ProductController;
 
-Route::get('/api/productos-venta/lista', [ProductController::class, 'getLista']);
+Route::group(['middleware' => ['cors']], function () {
+    Route::get('/api/productos-venta/lista', [ProductController::class, 'getLista']);
 
-Route::post('/api/productos-venta/categoria', [ProductController::class, 'getListaCategoria']);
+    Route::post('/api/productos-venta/categoria', [ProductController::class, 'getListaCategoria']);
 
-Route::post('/api/productos-venta/buscar', [ProductController::class, 'getListaSearch']);
+    Route::post('/api/productos-venta/buscar', [ProductController::class, 'getListaSearch']);
+});
+
+
 
 
