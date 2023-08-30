@@ -18,11 +18,21 @@
 
 ### Alcances y funcionalidades del proyecto
 
-# Elaborador y envío de cotizaciones.
-# Administración y planificación de las Ordenes de trabajo del taller.
-# Administración de personal del taller , disponibilidad de máquinas.
-# Gestión de las tareas del taller.
-# Cubicación y registro de inventario de materiales.
-# Calcular costos de un trabajo.
+* Elaborador y envío de cotizaciones.
+* Administración y planificación de las Ordenes de trabajo del taller.
+* Administración de personal del taller , disponibilidad de máquinas.
+* Gestión de las tareas del taller.
+* Cubicación y registro de inventario de materiales.
+* Calcular costos de un trabajo.
+
+### Demostración del proyecto
+
+* Página Principal
+![imagen](https://github.com/vitoxint/laravel-boilerplate-master/assets/11872923/dd3eee9d-e47a-4799-a929-1bf16e19c607)
+
+* Orden de Trabajo
+![imagen](https://github.com/vitoxint/laravel-boilerplate-master/assets/11872923/a902a5c9-1701-4954-a363-deb1d619e709)
+
+
 
 
